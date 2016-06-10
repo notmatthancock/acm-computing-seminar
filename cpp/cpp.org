@@ -1,0 +1,132 @@
+#+title: ACM C++ Guide
+#+author: Matt Hancock
+#+date: 
+#+options: html-postamble:nil
+#+html_head: <link rel="stylesheet" type="text/css" href="./css/main.css">
+#+html: <div id="main">
+
+* Introduction
+
+Welcome to the ACM C++ guide, a guide to quickly learning C++
+for mathematical and scientific computing applications. The goal of this
+guide is not to make you a C++ expert, but to quickly teach you enough
+of the C++ fundamentals and design patterns to help you off the ground.
+If you should like to go beyond this guide, a few references are listed
+below.
+
+This guide is split into sections. The sections are ordered in such a way
+that topics in later sections often depend on topics from previous ones. 
+You'll find code snippets peppered throughout the sections.
+
+** A little about the language
+Before you dive in, here is a little about the C++ programming language:
+
+C++ is an extension of the C programming language. Both C and C++ are 
+*statically-typed* and *compiled* languages, which means that the *type* 
+of variables used in your source code must declared explicitly and is 
+checked at when the program is compiled (i.e., translated into a machine 
+executable file).
+
+One (among many) difference between C++ and C, however, is that C++ provides 
+many data structures for the object-oriented programming paradigm. This 
+essentially allows the software writer (that's you) to create custom, complex, 
+reusable data structures. The object-oriented paradigm is extremely useful, 
+but we will only touch the surface of it in this guide.
+
+** Additional references
+
+- [[http://www.cplusplus.com/doc/tutorial][C++ tutorials]]
+- [[https://en.wikipedia.org/wiki/C%2B%2B][C++ wiki]]
+- [[http://stackoverflow.com/questions/388242/the-definitive-c-book-guide-and-list][A compiled list of C++ textbooks from stackoverflow]]
+
+* Getting started
+The particular programming tools that you choose to use will
+likely be largely influenced by the operating system that you use.
+We will use free tools (often developed for GNU / Linux systems) in
+this guide. These tools are mostly available in other (non UNIX-like)
+operating systems as well. For example, on Windows, you could use
+[[https://www.cygwin.com/][Cygwin]], or install a dual boot with some Linux distribution 
+(e.g., [[http://www.ubuntu.com/][Ubuntu]]a). On the other hand, MAC OSX, being a BSD-derived system, 
+has many of the required tools already available (although, a command 
+line utility, [[http://brew.sh][Brew]], makes building and installing other tools quite simple).
+
+In the following two sections, we'll talk about the two basic types of 
+software that you'll need to begin writing C++ programs.
+
+** Text editors
+
+The text editor that you choose to use should be be any program 
+capable of editing plain text files. However, you may find that it's 
+more productive to write in an editor who offers features such as 
+syntax highlighting, code-completion, bracket-matching, or other features. 
+Here are some popular free text editors:
+
+- [[https://atom.io/][Atom]] is a recently open-sourced GUI editor which some have compared to the very popular non-free editor, [[https://sublimetext.com][Sublime Text]].
+- [[https://wiki.gnome.org/Apps/Gedit][Gedit]] is a nice and simple GUI editor, which is the default in GNOME desktop environment.
+- [[https://kate-editor.org][Kate]] is a another simple GUI editor, which is the default in the KDE desktop environment.
+- [[https://www.gnu.org/software/emacs/][Emacs]] is another powerful editor, which allows for highly optimized workflows.
+- [[http://www.vim.org][Vim]] is a modal editor with a steep learning curve. It offers highly efficient means to edit text, and is available (or it's predecessor, vi) by default on nearly all UNIX-like operating systems.
+
+** Compilers
+
+Second, you'll need a program called a *compiler*. A compiler translates 
+the high-level C++ language into an executable program. In this guide, we 
+will use the =g++= compiler which is freely available through the 
+[[https://gcc.gnu.org/][gnu compiler collection (gcc)]].
+
+=g++= is a program which you typically call from the command line, which 
+takes as input, your C++ source code file, and produces as output, a 
+binary executable file.
+
+** Writing a program
+
+Let's create our first C++ program, the obligatory "Hello, world!". First, 
+fire-up your text editor and create a file called, =hello.cpp=, with the 
+following contents:
+
+#+begin_src cpp -n
+  #include <iostream>
+
+  int main() {
+    std::cout << "Hello, world!";
+    return 0;
+  }
+#+end_src
+
+Now, to compile the program, execute:
+
+#+begin_src sh
+  g++ hello.cpp
+#+end_src
+
+Followed by:
+#+begin_src
+  ./a.out
+#+end_src
+
+By default, =g++= calls the resulting binary executable, =a.out=, but
+you can specify a different output file name by using the =-o= flag:
+
+#+begin_src
+  g++ hello.cpp -o my_executable_file.bin
+#+end_src
+
+Note that in Windows, executable files typically end in =.exe=. In Unix-like
+systems, there is no particular file-extension type for executables.
+
+*** Deconstruction of the "Hello, world!" program
+Let's look at this program line-by-line:
+
+1. In line 1, we are including a library called =iostream=. A standard library (one that is included with C++) is usually included inside angular brackets. The =iostream= library is used for printing to the screen or prompting for user input.
+
+2. Line 2 is blank. Whitespace is ignored in C++.
+
+3. In line 3, we are declaring a function called =main= which has a return type of =int= (short for integer). Functions are followed by parentheses, listing their arguments (our =main= funcion has no arguments in this case), followed by the function body. The function body is enclosed by brackets. The function =main= is special - it is the main function (surprise) that is executed when you actually run your program.
+
+4. In line 4, we are giving the =Hello, world!= string to an object called =cout=, which prints the string. Note that =cout= is prefixed by =std=. The syntax, =std::cout=, means that =cout= belongs to the *namespace* called =std=. Namespaces are mechanisms for preventing name conflicts.
+
+5. In line 5, we return the value 0. This signifies to the program that called the executable =hello.cpp= program (the parent program, you could say) that our program exited successfully (i.e., without error).
+
+6. Line 6 closes the the the body of the function, =main=.
+
+#+html: </div>
