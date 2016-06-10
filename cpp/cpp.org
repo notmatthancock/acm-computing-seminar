@@ -62,9 +62,9 @@ syntax highlighting, code-completion, bracket-matching, or other features.
 Here are some popular free text editors:
 
 - [[https://atom.io/][Atom]] is a recently open-sourced GUI editor which some have compared to the very popular non-free editor, [[https://sublimetext.com][Sublime Text]].
+- [[https://www.gnu.org/software/emacs/][Emacs]] is another powerful editor, which allows for highly optimized workflows.
 - [[https://wiki.gnome.org/Apps/Gedit][Gedit]] is a nice and simple GUI editor, which is the default in GNOME desktop environment.
 - [[https://kate-editor.org][Kate]] is a another simple GUI editor, which is the default in the KDE desktop environment.
-- [[https://www.gnu.org/software/emacs/][Emacs]] is another powerful editor, which allows for highly optimized workflows.
 - [[http://www.vim.org][Vim]] is a modal editor with a steep learning curve. It offers highly efficient means to edit text, and is available (or it's predecessor, vi) by default on nearly all UNIX-like operating systems.
 
 ** Compilers
