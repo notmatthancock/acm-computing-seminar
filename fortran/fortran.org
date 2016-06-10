@@ -1,0 +1,333 @@
+#+title: Fortran code snippets
+#+author: Joseph P. McKenna
+#+email: joepatmckenna@gmail.com
+
+* Structure of program
+#+name: hello_world 
+#+begin_src fortran :exports code :tangle hello_world.f90
+  program main
+    print*, 'hello world'
+  end program main
+#+end_src
+
+#+begin_src sh :results output :exports both
+  gfortran hello_world.f90 -o hello
+  ./hello
+#+end_src
+
+#+name: module_template
+#+begin_src fortran :exports code :comments yes
+  module header
+    implicit none
+    ! variable declarations and assignments
+    ! interface definitions
+  contains
+    ! function and subroutine definitions
+  end module header
+#+end_src
+
+#+name: program_template
+#+begin_src fortran :exports code :comments yes
+  program main
+    use constants
+    implicit none
+    ! variable declarations and assignments
+    ! function and subroutine calls
+  contains
+    ! function and subroutine definitions
+  end program main
+#+end_src
+
+#+name: compile_template
+#+begin_src sh :exports code
+  gfortran -c header.f90
+  gfortran main.f90 header.o -o executable 
+  ./executable
+#+end_src
+
+* Computing ${n\choose k}$
+#+name: choose
+#+begin_src fortran :exports both
+  program main
+    implicit none
+    print*, choose(4,0), choose(4,1), &
+         choose(4,2), choose(4,3), choose(4,4)
+  contains
+    function choose(n,k) result(c)
+      integer, intent(in) :: n, k
+      integer :: c, i
+      c = 1
+      do i = 1, min(k,n-k)
+         c = c * (n-i+1) / i
+      end do
+    end function choose
+  end program main
+#+end_src
+* Setting precision of variables
+#+begin_src fortran :exports code
+  module constants
+    implicit none
+    integer, parameter :: sp = kind(0.), dp = kind(0.d0)
+    integer, parameter :: rp = dp
+  end module constants
+#+end_src
+
+#+begin_src sh :exports both
+  gfortran -c precision.f90
+#+end_src
+
+#+begin_src fortran :exports code
+  program main
+    use constants
+    implicit none
+    real(rp) :: x, y
+    x = 1._rp
+    y = real(1,rp)
+  end program main
+#+end_src
+
+#+begin_src sh :exports code
+gfortran main.f90 constants.o -o executable
+./executable
+#+end_src
+
+* Determining Machine Epsilon
+#+begin_src fortran :exports code :tangle constants.f90
+  module constants
+    implicit none
+
+    integer, parameter :: sp = kind(0.), dp = kind(0.d0)
+    integer, parameter :: rp = dp
+
+    interface machine_epsilon
+       module procedure machine_epsilon_sp, machine_epsilon_dp
+    end interface machine_epsilon
+
+  contains
+
+    function machine_epsilon_sp(x) result(e)
+      implicit none
+      real(sp), intent(in) :: x
+      real :: e
+      e = .5
+      do while (1._sp + e > 1._sp)
+         e = .5 * e
+      end do
+    end function machine_epsilon_sp
+
+    function machine_epsilon_dp(x) result(e)
+      implicit none
+      real(dp), intent(in) :: x
+      real :: e
+      e = .5
+      do while (1._dp + e > 1._dp)
+         e = .5 * e
+      end do
+    end function machine_epsilon_dp
+
+  end module constants
+#+end_src
+
+#+name: machine_epsilon
+#+begin_src fortran :exports code :tangle machine_epsilon.f90
+  program main
+    use constants
+    implicit none
+    print*, machine_epsilon(0._sp), &
+         machine_epsilon(0._dp), &
+         machine_epsilon(0._rp)
+  end program main
+#+end_src
+
+#+begin_src sh :exports both
+gfortran -c machine_epsilon_module.f90
+gfortran machine_epsilon.f90 machine_epsilon_module.o -o machine_epsilon
+./machine_epsilon
+#+end_src
+ 
+* Rootfinding
+
+#+begin_src fortran :exports code :tangle rootfind_functions.f90
+  module functions
+    implicit none
+
+  contains
+
+    function f1(x)
+      real, intent(in) :: x
+      real :: f1
+      f1 = sin(x)
+    end function f1
+
+    function df1dx(x)
+      real, intent(in) :: x
+      real :: df1dx
+      df1dx = cos(x)
+    end function df1dx
+
+  end module functions
+#+end_src
+
+#+begin_src fortran :exports code :tangle rootfinding.f90
+  module rootfinding
+    implicit none
+
+    interface
+       function fun(x)
+         real, intent(in) :: x
+         real :: fun
+       end function fun
+    end interface
+
+  contains
+
+    function newton(f,dfdx,x0,tol,maxstep) result(xn)
+      procedure(fun), pointer :: f, dfdx
+      real, intent(in) :: x0, tol
+      integer, intent(in) :: maxstep
+      real :: xn
+      integer :: n = 0
+
+      xn = x0
+      do while (abs(f(xn))>tol .and. n<maxstep)
+         xn = xn - f(xn)/dfdx(xn)
+         n = n + 1
+      end do
+    end function newton
+
+  end module rootfinding
+#+end_src
+
+#+begin_src fortran :exports code :tangle rootfind.f90
+  program main
+  	use functions
+    use rootfinding
+    implicit none
+
+    procedure(fun), pointer :: f, dfdx
+    real :: x = 1., tol = 1e-5
+    integer :: maxstep = 100
+    f => f1
+    dfdx => df1dx
+    print*, newton(f,dfdx,x,tol,maxstep)
+
+  end program main
+#+end_src
+
+#+begin_src sh :results output :exports both
+gfortran -c rootfind_functions.f90
+gfortran -c rootfinding.f90
+gfortran rootfind.f90 rootfind_functions.o rootfinding.o -o rootfind
+./rootfind
+#+end_src
+
+* Quadrature
+
+#+begin_src fortran :exports code :tangle functions.f90
+  module functions
+    implicit none
+
+  contains
+
+    function f1(x)
+      real, intent(in) :: x
+      real :: f1
+      f1 = x
+    end function f1
+
+  end module functions
+#+end_src
+
+#+begin_src fortran :exports code :tangle quadrature.f90
+  module quadrature
+    implicit none
+
+    interface
+       function integrand(x)
+         real, intent(in) :: x
+         real :: integrand
+       end function integrand
+    end interface
+
+  contains
+
+    function midpoint_rule(f,a,b,n) result(I)
+      implicit none
+      procedure(integrand), pointer :: f
+      real :: a, b
+      integer :: n
+      real :: I
+      I = 0
+    end function midpoint_rule
+
+  end module quadrature
+#+end_src
+
+#+begin_src fortran :exports code :tangle midpoint.f90
+  program main
+    use functions
+    use quadrature
+    implicit none
+
+    procedure(integrand), pointer :: f
+    real :: a, b
+    integer :: n
+    f => f1
+    print*, midpoint_rule(f,a,b,n)
+
+  end program main
+#+end_src
+
+#+begin_src sh :exports both
+  gfortran -c functions.f90
+  gfortran -c quadrature.f90
+  gfortran midpoint.f90 functions.o quadrature.o -o midpoint
+  ./midpoint
+#+end_src
+* Matrix multiplication
+#+name: matrix_multiplication
+#+begin_src fortran :results output :exports both
+  program main
+    implicit none
+
+    real :: A(4,4), B(4,4)
+    A=1; B=2
+
+    print*, matrix_multiply(A,B)
+
+  contains
+
+    function matrix_multiply(A,B) result(C)
+      implicit none
+      real :: A(4,4), B(4,4), C(4,4)
+      integer :: i,j,k
+
+      C = 0
+      do i=1,4
+         do j=1,4
+            do k=1,4
+               C(i,j) = C(i,j) + A(i,k)*B(k,j)
+            end do
+         end do
+      end do
+
+      end function matrix_multiply
+
+  end program main
+#+end_src
+* Summing $\sum_{n=0}^{\infty}\frac1{n!}$
+#+NAME: series
+#+BEGIN_SRC fortran
+integer :: n = 1, nf = 1
+real :: a, s
+do while (1./real(nf) > 0)
+	n = n + 1
+  nf = nf * n
+end do
+s = 1./real(nf)
+do while (n > 0)
+	nf = nf / n
+  n = n - 1
+  s = s + 1./real(nf)
+end do
+#+END_SRC
