@@ -1,0 +1,44 @@
+#+title: ACM Computing Seminar Schedule
+#+author: 
+#+date: 
+#+options: toc:nil html-postamble:nil
+
+
+# Ideally, we'd specify the css in a separate file, but that's too much to fuss over for this one small table.
+#+HTML_HEAD_EXTRA: <style>table.weekly { margin: 0 auto; border: 1px solid #000; } table.weekly td { border-right: 1px solid #000; }</style>
+
+#+attr_html: :class weekly
+|------+----------------------------+--------------+-------------------------------+----------------------+-----------------------------------|
+| Week | C++                        | Fortran      | Common                        | Examples             | Assignment                        |
+| <c>  |                            |              |                               |                      |                                   |
+|------+----------------------------+--------------+-------------------------------+----------------------+-----------------------------------|
+| 1    |                            |              | - Compilers                   | - Hello, world.      | Write some simple program.        |
+|      |                            |              | - Editors                     |                      |                                   |
+|      |                            |              | - OS-specific stuff           |                      |                                   |
+|      |                            |              | - Basic printing              |                      |                                   |
+|------+----------------------------+--------------+-------------------------------+----------------------+-----------------------------------|
+| 2    | - Const type               |              | - Built-in data types         | - Binomial coef.     | Sum a convergent series,          |
+|      | - Typedef                  |              | - Control structures          | - Fibonacci sequence | return and print final value      |
+|      |                            |              |                               | - Euler's method     | when a specified tolerance        |
+|      |                            |              |                               |                      | is met.                           |
+|------+----------------------------+--------------+-------------------------------+----------------------+-----------------------------------|
+| 3    |                            |              | - Functions                   | - Function stuff?    | Function values sampled uniformly |
+|      |                            |              | - File I/O                    | - Read a file        | are stored in a file. Write a     |
+|      |                            |              |                               | - Write to a file    | function to read the file and     |
+|      |                            |              |                               |                      | compute the sampled function's    |
+|      |                            |              |                               |                      | integral.                         |
+|------+----------------------------+--------------+-------------------------------+----------------------+-----------------------------------|
+| 4    | - Pointers                 |              | - Arrays                      | - Inner product      | Convolve a noisy vector with a    |
+|      |                            |              |                               | - Linear combination | gaussian filter with various      |
+|      |                            |              |                               | - Convolution        | bandwidth values.                 |
+|------+----------------------------+--------------+-------------------------------+----------------------+-----------------------------------|
+| 5    | - Constructors             | - Fortran OO | - Object-oriented programming | - Dense matrix class | Extend examples classes in some   |
+|      | - Destructors              |              |                               |                      | way. Maybe add a member function  |
+|      | - Private / public methods |              |                               |                      | or two.                           |
+|      | - Friend functions         |              |                               |                      |                                   |
+|      | - Operator overloading     |              |                               |                      |                                   |
+|------+----------------------------+--------------+-------------------------------+----------------------+-----------------------------------|
+| 6    |                            |              |                               | - Non C++ / Fortran? |                                   |
+|      |                            |              |                               | - Plotting?          |                                   |
+|      |                            |              |                               | - Can we do this?    |                                   |
+|------+----------------------------+--------------+-------------------------------+----------------------+-----------------------------------|
