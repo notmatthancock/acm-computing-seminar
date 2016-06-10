@@ -2,7 +2,7 @@
 #+author: Joseph P. McKenna
 #+email: joepatmckenna@gmail.com
 #+options: html-postamble:nil
-#+html_head: <link rel="stylesheet" type="text/css" href="./css/main.css">
+#+html_head: <link rel="stylesheet" type="text/css" href="../css/main.css">
 #+html: <div id="main">
 
 * Structure of program
@@ -335,4 +335,4 @@ do while (n > 0)
 end do
 #+END_SRC
 
-#+html </div>
+#+html: </div>
