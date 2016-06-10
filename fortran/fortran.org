@@ -1,6 +1,9 @@
 #+title: Fortran code snippets
 #+author: Joseph P. McKenna
 #+email: joepatmckenna@gmail.com
+#+options: html-postamble:nil
+#+html_head: <link rel="stylesheet" type="text/css" href="./css/main.css">
+#+html: <div id="main">
 
 * Structure of program
 #+name: hello_world 
@@ -331,3 +334,5 @@ do while (n > 0)
   s = s + 1./real(nf)
 end do
 #+END_SRC
+
+#+html </div>
