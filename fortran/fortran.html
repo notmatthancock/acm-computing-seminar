@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>Fortran code snippets</title>
-<!-- 2016-06-10 Fri 17:20 -->
+<!-- 2016-06-11 Sat 09:49 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Joseph P. McKenna" />
@@ -203,9 +203,9 @@ for the JavaScript code in this tag.
 <div class="outline-text-2" id="text-1">
 <div class="org-src-container">
 
-<pre class="src src-fortran" id="hello_world">program main
-  print*, 'hello world'
-end program main
+<pre class="src src-fortran" id="hello_world"><span style="color: #a020f0;">program</span> <span style="color: #0000ff;">main</span>
+  <span style="color: #a020f0;">print</span>*, <span style="color: #8b2252;">'hello world'</span>
+<span style="color: #a020f0;">end</span> <span style="color: #a020f0;">program</span> <span style="color: #0000ff;">main</span>
 </pre>
 </div>
 
@@ -223,25 +223,25 @@ hello world
 <div class="org-src-container">
 
 <pre class="src src-fortran" id="module_template">module header
-  implicit none
-  ! variable declarations and assignments
-  ! interface definitions
-contains
-  ! function and subroutine definitions
-end module header
+  <span style="color: #228b22;">implicit none</span>
+  <span style="color: #b22222;">! </span><span style="color: #b22222;">variable declarations and assignments</span>
+  <span style="color: #b22222;">! </span><span style="color: #b22222;">interface definitions</span>
+<span style="color: #b22222;">c</span><span style="color: #b22222;">ontains</span>
+  <span style="color: #b22222;">! </span><span style="color: #b22222;">function and subroutine definitions</span>
+<span style="color: #a020f0;">end</span> module header
 </pre>
 </div>
 
 <div class="org-src-container">
 
-<pre class="src src-fortran" id="program_template">program main
+<pre class="src src-fortran" id="program_template"><span style="color: #a020f0;">program</span> <span style="color: #0000ff;">main</span>
   use constants
-  implicit none
-  ! variable declarations and assignments
-  ! function and subroutine calls
-contains
-  ! function and subroutine definitions
-end program main
+  <span style="color: #228b22;">implicit none</span>
+  <span style="color: #b22222;">! </span><span style="color: #b22222;">variable declarations and assignments</span>
+  <span style="color: #b22222;">! </span><span style="color: #b22222;">function and subroutine calls</span>
+<span style="color: #b22222;">c</span><span style="color: #b22222;">ontains</span>
+  <span style="color: #b22222;">! </span><span style="color: #b22222;">function and subroutine definitions</span>
+<span style="color: #a020f0;">end</span> <span style="color: #a020f0;">program</span> <span style="color: #0000ff;">main</span>
 </pre>
 </div>
 
@@ -260,20 +260,20 @@ gfortran main.f90 header.o -o executable
 <div class="outline-text-2" id="text-2">
 <div class="org-src-container">
 
-<pre class="src src-fortran" id="choose">program main
-  implicit none
-  print*, choose(4,0), choose(4,1), &amp;
+<pre class="src src-fortran" id="choose"><span style="color: #a020f0;">program</span> <span style="color: #0000ff;">main</span>
+  <span style="color: #228b22;">implicit none</span>
+  <span style="color: #a020f0;">print</span>*, choose(4,0), choose(4,1), &amp;
        choose(4,2), choose(4,3), choose(4,4)
-contains
-  function choose(n,k) result(c)
-    integer, intent(in) :: n, k
-    integer :: c, i
+<span style="color: #b22222;">c</span><span style="color: #b22222;">ontains</span>
+  <span style="color: #a020f0;">function</span> <span style="color: #0000ff;">choose</span>(n,k) result(c)
+    <span style="color: #228b22;">integer</span>, intent(in) :: n, k
+    <span style="color: #228b22;">integer</span> :: c, i
     c = 1
-    do i = 1, min(k,n-k)
+    <span style="color: #a020f0;">do</span> i = 1, <span style="color: #483d8b;">min</span>(k,n-k)
        c = c * (n-i+1) / i
-    end do
-  end function choose
-end program main
+    <span style="color: #a020f0;">end</span> <span style="color: #a020f0;">do</span>
+  <span style="color: #a020f0;">end</span> <span style="color: #a020f0;">function</span> <span style="color: #0000ff;">choose</span>
+<span style="color: #a020f0;">end</span> <span style="color: #a020f0;">program</span> <span style="color: #0000ff;">main</span>
 </pre>
 </div>
 </div>
@@ -284,10 +284,10 @@ end program main
 <div class="org-src-container">
 
 <pre class="src src-fortran">module constants
-  implicit none
-  integer, parameter :: sp = kind(0.), dp = kind(0.d0)
-  integer, parameter :: rp = dp
-end module constants
+  <span style="color: #228b22;">implicit none</span>
+  <span style="color: #228b22;">integer</span>, <span style="color: #228b22;">parameter</span> :: sp = kind(0.), dp = kind(0.d0)
+  <span style="color: #228b22;">integer</span>, <span style="color: #228b22;">parameter</span> :: rp = dp
+<span style="color: #a020f0;">end</span> module constants
 </pre>
 </div>
 
@@ -299,13 +299,13 @@ end module constants
 
 <div class="org-src-container">
 
-<pre class="src src-fortran">program main
+<pre class="src src-fortran"><span style="color: #a020f0;">program</span> <span style="color: #0000ff;">main</span>
   use constants
-  implicit none
-  real(rp) :: x, y
+  <span style="color: #228b22;">implicit none</span>
+  <span style="color: #228b22;">real</span>(<span style="color: #a0522d;">rp</span>) :: x, y
   x = 1._rp
-  y = real(1,rp)
-end program main
+  y = <span style="color: #228b22;">real</span>(<span style="color: #a0522d;">1</span>,<span style="color: #a0522d;">rp</span>)
+<span style="color: #a020f0;">end</span> <span style="color: #a020f0;">program</span> <span style="color: #0000ff;">main</span>
 </pre>
 </div>
 
@@ -324,50 +324,50 @@ end program main
 <div class="org-src-container">
 
 <pre class="src src-fortran">module constants
-  implicit none
+  <span style="color: #228b22;">implicit none</span>
 
-  integer, parameter :: sp = kind(0.), dp = kind(0.d0)
-  integer, parameter :: rp = dp
+  <span style="color: #228b22;">integer</span>, <span style="color: #228b22;">parameter</span> :: sp = kind(0.), dp = kind(0.d0)
+  <span style="color: #228b22;">integer</span>, <span style="color: #228b22;">parameter</span> :: rp = dp
 
   interface machine_epsilon
-     module procedure machine_epsilon_sp, machine_epsilon_dp
-  end interface machine_epsilon
+     <span style="color: #8b2252;">m</span>odule procedure machine_epsilon_sp, machine_epsilon_dp
+  <span style="color: #a020f0;">end</span> interface machine_epsilon
 
-contains
+<span style="color: #b22222;">c</span><span style="color: #b22222;">ontains</span>
 
-  function machine_epsilon_sp(x) result(e)
-    implicit none
-    real(sp), intent(in) :: x
-    real :: e
+  <span style="color: #a020f0;">function</span> <span style="color: #0000ff;">machine_epsilon_sp</span>(x) result(e)
+    <span style="color: #228b22;">implicit none</span>
+    <span style="color: #228b22;">real</span>(<span style="color: #a0522d;">sp</span>), intent(in) :: x
+    <span style="color: #228b22;">real</span> :: e
     e = .5
-    do while (1._sp + e &gt; 1._sp)
+    <span style="color: #a020f0;">do</span> <span style="color: #a020f0;">while</span> (1._sp + e &gt; 1._sp)
        e = .5 * e
-    end do
-  end function machine_epsilon_sp
+    <span style="color: #a020f0;">end</span> <span style="color: #a020f0;">do</span>
+  <span style="color: #a020f0;">end</span> <span style="color: #a020f0;">function</span> <span style="color: #0000ff;">machine_epsilon_sp</span>
 
-  function machine_epsilon_dp(x) result(e)
-    implicit none
-    real(dp), intent(in) :: x
-    real :: e
+  <span style="color: #a020f0;">function</span> <span style="color: #0000ff;">machine_epsilon_dp</span>(x) result(e)
+    <span style="color: #228b22;">implicit none</span>
+    <span style="color: #228b22;">real</span>(<span style="color: #a0522d;">dp</span>), intent(in) :: x
+    <span style="color: #228b22;">real</span> :: e
     e = .5
-    do while (1._dp + e &gt; 1._dp)
+    <span style="color: #a020f0;">do</span> <span style="color: #a020f0;">while</span> (1._dp + e &gt; 1._dp)
        e = .5 * e
-    end do
-  end function machine_epsilon_dp
+    <span style="color: #a020f0;">end</span> <span style="color: #a020f0;">do</span>
+  <span style="color: #a020f0;">end</span> <span style="color: #a020f0;">function</span> <span style="color: #0000ff;">machine_epsilon_dp</span>
 
-end module constants
+<span style="color: #a020f0;">end</span> module constants
 </pre>
 </div>
 
 <div class="org-src-container">
 
-<pre class="src src-fortran" id="machine_epsilon">program main
+<pre class="src src-fortran" id="machine_epsilon"><span style="color: #a020f0;">program</span> <span style="color: #0000ff;">main</span>
   use constants
-  implicit none
-  print*, machine_epsilon(0._sp), &amp;
+  <span style="color: #228b22;">implicit none</span>
+  <span style="color: #a020f0;">print</span>*, machine_epsilon(0._sp), &amp;
        machine_epsilon(0._dp), &amp;
        machine_epsilon(0._rp)
-end program main
+<span style="color: #a020f0;">end</span> <span style="color: #a020f0;">program</span> <span style="color: #0000ff;">main</span>
 </pre>
 </div>
 
@@ -388,73 +388,73 @@ gfortran machine_epsilon.f90 machine_epsilon_module.o -o machine_epsilon
 <div class="org-src-container">
 
 <pre class="src src-fortran">module functions
-  implicit none
+  <span style="color: #228b22;">implicit none</span>
 
-contains
+<span style="color: #b22222;">c</span><span style="color: #b22222;">ontains</span>
 
-  function f1(x)
-    real, intent(in) :: x
-    real :: f1
-    f1 = sin(x)
-  end function f1
+  <span style="color: #a020f0;">function</span> <span style="color: #0000ff;">f1</span>(x)
+    <span style="color: #228b22;">real</span>, intent(in) :: x
+    <span style="color: #228b22;">real</span> :: f1
+    f1 = <span style="color: #483d8b;">sin</span>(x)
+  <span style="color: #a020f0;">end</span> <span style="color: #a020f0;">function</span> <span style="color: #0000ff;">f1</span>
 
-  function df1dx(x)
-    real, intent(in) :: x
-    real :: df1dx
-    df1dx = cos(x)
-  end function df1dx
+  <span style="color: #a020f0;">function</span> <span style="color: #0000ff;">df1dx</span>(x)
+    <span style="color: #228b22;">real</span>, intent(in) :: x
+    <span style="color: #228b22;">real</span> :: df1dx
+    df1dx = <span style="color: #483d8b;">cos</span>(x)
+  <span style="color: #a020f0;">end</span> <span style="color: #a020f0;">function</span> <span style="color: #0000ff;">df1dx</span>
 
-end module functions
+<span style="color: #a020f0;">end</span> module functions
 </pre>
 </div>
 
 <div class="org-src-container">
 
 <pre class="src src-fortran">module rootfinding
-  implicit none
+  <span style="color: #228b22;">implicit none</span>
 
   interface
-     function fun(x)
-       real, intent(in) :: x
-       real :: fun
-     end function fun
-  end interface
+     <span style="color: #a020f0;">function</span> <span style="color: #0000ff;">fun</span>(x)
+       <span style="color: #228b22;">real</span>, intent(in) :: x
+       <span style="color: #228b22;">real</span> :: fun
+     <span style="color: #8b2252;">e</span>nd <span style="color: #a020f0;">function</span> <span style="color: #0000ff;">fun</span>
+  <span style="color: #a020f0;">end</span> interface
 
-contains
+<span style="color: #b22222;">c</span><span style="color: #b22222;">ontains</span>
 
-  function newton(f,dfdx,x0,tol,maxstep) result(xn)
+  <span style="color: #a020f0;">function</span> <span style="color: #0000ff;">newton</span>(f,dfdx,x0,tol,maxstep) result(xn)
     procedure(fun), pointer :: f, dfdx
-    real, intent(in) :: x0, tol
-    integer, intent(in) :: maxstep
-    real :: xn
-    integer :: n = 0
+    <span style="color: #228b22;">real</span>, intent(in) :: x0, tol
+    <span style="color: #228b22;">integer</span>, intent(in) :: maxstep
+    <span style="color: #228b22;">real</span> :: xn
+    <span style="color: #228b22;">integer</span> :: n = 0
 
     xn = x0
-    do while (abs(f(xn))&gt;tol .and. n&lt;maxstep)
+    <span style="color: #a020f0;">do</span> <span style="color: #a020f0;">while</span> (<span style="color: #483d8b;">abs</span>(f(xn))&gt;tol <span style="color: #a020f0;">.and.</span> n&lt;maxstep)
        xn = xn - f(xn)/dfdx(xn)
        n = n + 1
-    end do
-  end function newton
+    <span style="color: #a020f0;">end</span> <span style="color: #a020f0;">do</span>
+  <span style="color: #a020f0;">end</span> <span style="color: #a020f0;">function</span> <span style="color: #0000ff;">newton</span>
 
-end module rootfinding
+<span style="color: #a020f0;">end</span> module rootfinding
 </pre>
 </div>
 
 <div class="org-src-container">
 
-<pre class="src src-fortran">program main
+<pre class="src src-fortran"><span style="color: #a020f0;">program</span> <span style="color: #0000ff;">main</span>
       use functions
   use rootfinding
-  implicit none
+  <span style="color: #228b22;">implicit none</span>
 
   procedure(fun), pointer :: f, dfdx
-  real :: x = 1., tol = 1e-5
-  integer :: maxstep = 100
+  <span style="color: #228b22;">real</span> :: x = 1., tol = 1e-5
+  <span style="color: #228b22;">integer</span> :: maxstep = 100
   f =&gt; f1
   dfdx =&gt; df1dx
-  print*, newton(f,dfdx,x,tol,maxstep)
+  <span style="color: #a020f0;">print</span>*, newton(f,dfdx,x,tol,maxstep)
 
-end program main
+<span style="color: #a020f0;">end</span> <span style="color: #a020f0;">program</span> <span style="color: #0000ff;">main</span>
 </pre>
 </div>
 
@@ -475,61 +475,61 @@ gfortran rootfind.f90 rootfind_functions.o rootfinding.o -o rootfind
 <div class="org-src-container">
 
 <pre class="src src-fortran">module functions
-  implicit none
+  <span style="color: #228b22;">implicit none</span>
 
-contains
+<span style="color: #b22222;">c</span><span style="color: #b22222;">ontains</span>
 
-  function f1(x)
-    real, intent(in) :: x
-    real :: f1
+  <span style="color: #a020f0;">function</span> <span style="color: #0000ff;">f1</span>(x)
+    <span style="color: #228b22;">real</span>, intent(in) :: x
+    <span style="color: #228b22;">real</span> :: f1
     f1 = x
-  end function f1
+  <span style="color: #a020f0;">end</span> <span style="color: #a020f0;">function</span> <span style="color: #0000ff;">f1</span>
 
-end module functions
+<span style="color: #a020f0;">end</span> module functions
 </pre>
 </div>
 
 <div class="org-src-container">
 
 <pre class="src src-fortran">module quadrature
-  implicit none
+  <span style="color: #228b22;">implicit none</span>
 
   interface
-     function integrand(x)
-       real, intent(in) :: x
-       real :: integrand
-     end function integrand
-  end interface
+     <span style="color: #a020f0;">function</span> <span style="color: #0000ff;">integrand</span>(x)
+       <span style="color: #228b22;">real</span>, intent(in) :: x
+       <span style="color: #228b22;">real</span> :: integrand
+     <span style="color: #8b2252;">e</span>nd <span style="color: #a020f0;">function</span> <span style="color: #0000ff;">integrand</span>
+  <span style="color: #a020f0;">end</span> interface
 
-contains
+<span style="color: #b22222;">c</span><span style="color: #b22222;">ontains</span>
 
-  function midpoint_rule(f,a,b,n) result(I)
-    implicit none
+  <span style="color: #a020f0;">function</span> <span style="color: #0000ff;">midpoint_rule</span>(f,a,b,n) result(I)
+    <span style="color: #228b22;">implicit none</span>
     procedure(integrand), pointer :: f
-    real :: a, b
-    integer :: n
-    real :: I
+    <span style="color: #228b22;">real</span> :: a, b
+    <span style="color: #228b22;">integer</span> :: n
+    <span style="color: #228b22;">real</span> :: I
     I = 0
-  end function midpoint_rule
+  <span style="color: #a020f0;">end</span> <span style="color: #a020f0;">function</span> <span style="color: #0000ff;">midpoint_rule</span>
 
-end module quadrature
+<span style="color: #a020f0;">end</span> module quadrature
 </pre>
 </div>
 
 <div class="org-src-container">
 
-<pre class="src src-fortran">program main
+<pre class="src src-fortran"><span style="color: #a020f0;">program</span> <span style="color: #0000ff;">main</span>
   use functions
   use quadrature
-  implicit none
+  <span style="color: #228b22;">implicit none</span>
 
   procedure(integrand), pointer :: f
-  real :: a, b
-  integer :: n
+  <span style="color: #228b22;">real</span> :: a, b
+  <span style="color: #228b22;">integer</span> :: n
   f =&gt; f1
-  print*, midpoint_rule(f,a,b,n)
+  <span style="color: #a020f0;">print</span>*, midpoint_rule(f,a,b,n)
 
-end program main
+<span style="color: #a020f0;">end</span> <span style="color: #a020f0;">program</span> <span style="color: #0000ff;">main</span>
 </pre>
 </div>
 
@@ -549,33 +549,33 @@ gfortran midpoint.f90 functions.o quadrature.o -o midpoint
 <div class="outline-text-2" id="text-7">
 <div class="org-src-container">
 
-<pre class="src src-fortran" id="matrix_multiplication">program main
-  implicit none
+<pre class="src src-fortran" id="matrix_multiplication"><span style="color: #a020f0;">program</span> <span style="color: #0000ff;">main</span>
+  <span style="color: #228b22;">implicit none</span>
 
-  real :: A(4,4), B(4,4)
+  <span style="color: #228b22;">real</span> :: A(4,4), B(4,4)
   A=1; B=2
 
-  print*, matrix_multiply(A,B)
+  <span style="color: #a020f0;">print</span>*, matrix_multiply(A,B)
 
-contains
+<span style="color: #b22222;">c</span><span style="color: #b22222;">ontains</span>
 
-  function matrix_multiply(A,B) result(C)
-    implicit none
-    real :: A(4,4), B(4,4), C(4,4)
-    integer :: i,j,k
+  <span style="color: #a020f0;">function</span> <span style="color: #0000ff;">matrix_multiply</span>(A,B) result(C)
+    <span style="color: #228b22;">implicit none</span>
+    <span style="color: #228b22;">real</span> :: A(4,4), B(4,4), C(4,4)
+    <span style="color: #228b22;">integer</span> :: i,j,k
 
     C = 0
-    do i=1,4
-       do j=1,4
-	  do k=1,4
-	     C(i,j) = C(i,j) + A(i,k)*B(k,j)
-	  end do
-       end do
-    end do
+    <span style="color: #a020f0;">do</span> i=1,4
+       <span style="color: #a020f0;">do</span> j=1,4
+          <span style="color: #a020f0;">do</span> k=1,4
+             C(i,j) = C(i,j) + A(i,k)*B(k,j)
+          <span style="color: #a020f0;">end</span> <span style="color: #a020f0;">do</span>
+       <span style="color: #a020f0;">end</span> <span style="color: #a020f0;">do</span>
+    <span style="color: #a020f0;">end</span> <span style="color: #a020f0;">do</span>
 
-    end function matrix_multiply
+    <span style="color: #a020f0;">end</span> <span style="color: #a020f0;">function</span> <span style="color: #0000ff;">matrix_multiply</span>
 
-end program main
+<span style="color: #a020f0;">end</span> <span style="color: #a020f0;">program</span> <span style="color: #0000ff;">main</span>
 </pre>
 </div>
 </div>
@@ -585,18 +585,18 @@ end program main
 <div class="outline-text-2" id="text-8">
 <div class="org-src-container">
 
-<pre class="src src-fortran" id="series">integer :: n = 1, nf = 1
-real :: a, s
-do while (1./real(nf) &gt; 0)
-	n = n + 1
+<pre class="src src-fortran" id="series"><span style="color: #228b22;">integer</span> :: n = 1, nf = 1
+<span style="color: #228b22;">real</span> :: a, s
+<span style="color: #b22222;">d</span><span style="color: #b22222;">o while (1./real(nf) &gt; 0)</span>
+        n = n + 1
   nf = nf * n
-end do
-s = 1./real(nf)
-do while (n &gt; 0)
-	nf = nf / n
+<span style="color: #a020f0;">end</span> <span style="color: #a020f0;">do</span>
+s = 1./<span style="color: #228b22;">real</span>(<span style="color: #a0522d;">nf</span>)
+<span style="color: #b22222;">d</span><span style="color: #b22222;">o while (n &gt; 0)</span>
+        nf = nf / n
   n = n - 1
-  s = s + 1./real(nf)
-end do
+  s = s + 1./<span style="color: #228b22;">real</span>(<span style="color: #a0522d;">nf</span>)
+<span style="color: #a020f0;">end</span> <span style="color: #a020f0;">do</span>
 </pre>
 </div>
 
