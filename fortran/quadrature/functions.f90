@@ -1,4 +1,4 @@
-program main
+! [[file:../fortran.org::*Quadrature][Quadrature:1]]
 module functions
   implicit none
 
@@ -11,4 +11,4 @@ contains
   end function f1
 
 end module functions
-end program main
+! Quadrature:1 ends here

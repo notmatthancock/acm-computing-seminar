@@ -1,5 +1,5 @@
-program main
-module rootfinding
+! [[file:../fortran.org::*Rootfinding][Rootfinding:3]]
+module rootfind
   implicit none
 
   interface
@@ -25,5 +25,5 @@ contains
     end do
   end function newton
 
-end module rootfinding
-end program main
+end module rootfind
+! Rootfinding:3 ends here

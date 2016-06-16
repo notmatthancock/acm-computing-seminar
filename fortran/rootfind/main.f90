@@ -1,6 +1,7 @@
+! [[file:../fortran.org::*Rootfinding][Rootfinding:5]]
 program main
   use functions
-  use rootfinding
+  use rootfind
   implicit none
 
   procedure(fun), pointer :: f, dfdx
@@ -11,3 +12,4 @@ program main
   print*, newton(f,dfdx,x,tol,maxstep)
 
 end program main
+! Rootfinding:5 ends here

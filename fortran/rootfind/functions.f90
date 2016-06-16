@@ -1,4 +1,4 @@
-program main
+! [[file:../fortran.org::*Rootfinding][Rootfinding:1]]
 module functions
   implicit none
 
@@ -17,4 +17,4 @@ contains
   end function df1dx
 
 end module functions
-end program main
+! Rootfinding:1 ends here

@@ -1,4 +1,4 @@
-program main
+! [[file:../fortran.org::*Machine%20Epsilon][Machine\ Epsilon:1]]
 module constants
   implicit none
 
@@ -32,4 +32,4 @@ contains
   end function machine_epsilon_dp
 
 end module constants
-end program main
+! Machine\ Epsilon:1 ends here

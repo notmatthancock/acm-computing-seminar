@@ -2,37 +2,46 @@
 #+author: Joseph P. McKenna
 #+email: joepatmckenna@gmail.com
 #+options: html-postamble:nil
-#+html_head: <link rel="stylesheet" type="text/css" href="./css/main.css">
+#+html_head: <link rel="stylesheet" type="text/css" href="../css/main.css">
+#+property: header-args :mkdirp yes :cache yes :comments yes
+#+property: header-args:fortran :exports code
+#+property: header-args:sh :exports both
+#+startup: latexpreview
 #+html: <div id="main">
-
-* Structure of program
-#+name: hello_world 
-#+begin_src fortran :exports code :tangle hello_world.f90
+ 
+* Hello world
+#+begin_src fortran :tangle hello/main.f90
   program main
     print*, 'hello world'
   end program main
 #+end_src
 
-#+begin_src sh :results output :exports both
-  gfortran hello_world.f90 -o hello
-  ./hello
+#+begin_src sh :dir hello
+  gfortran main.f90
 #+end_src
 
-#+name: module_template
-#+begin_src fortran :exports code :comments yes
+#+begin_src sh :dir hello
+  ./a.out
+#+end_src
+
+* Project template
+
+#+begin_src fortran :tangle template/header.f90
   module header
     implicit none
     ! variable declarations and assignments
-    ! interface definitions
   contains
     ! function and subroutine definitions
   end module header
 #+end_src
 
-#+name: program_template
-#+begin_src fortran :exports code :comments yes
+#+begin_src sh :dir template
+gfortran -c header.f90
+#+end_src
+
+#+begin_src fortran :tangle template/main.f90
   program main
-    use constants
+    use header
     implicit none
     ! variable declarations and assignments
     ! function and subroutine calls
@@ -41,16 +50,35 @@
   end program main
 #+end_src
 
-#+name: compile_template
-#+begin_src sh :exports code
-  gfortran -c header.f90
-  gfortran main.f90 header.o -o executable 
-  ./executable
+#+begin_src sh :dir template
+gfortran main.f90 header.o -o main
 #+end_src
 
-* Computing ${n\choose k}$
-#+name: choose
-#+begin_src fortran :exports both
+#+begin_src sh :dir template
+./main
+#+end_src
+
+#+begin_src make :exports code :tangle template/makefile
+  FC = gfortran
+  SRC = main.f90
+  EXE = main
+  OBJ = header.o
+
+  all: $(EXE)
+  $(EXE): $(OBJ)
+    $(FC) $(OBJ) $(SRC) -o $(EXE)
+  %.o: %.f90
+    $(FC) -c $< -o $@
+  clean:
+    $(RM) *.o $(EXE)
+#+end_src
+
+#+begin_src sh :dir template
+make
+#+end_src
+
+* ${n \choose k}$
+#+begin_src fortran :tangle choose/main.f90
   program main
     implicit none
     print*, choose(4,0), choose(4,1), &
@@ -66,8 +94,17 @@
     end function choose
   end program main
 #+end_src
+
+#+begin_src sh :dir choose
+gfortran main.f90 -o main
+#+end_src
+
+#+begin_src sh :dir choose
+./main
+#+end_src
+
 * Setting precision of variables
-#+begin_src fortran :exports code
+#+begin_src fortran :tangle precision/constants.f90
   module constants
     implicit none
     integer, parameter :: sp = kind(0.), dp = kind(0.d0)
@@ -75,11 +112,11 @@
   end module constants
 #+end_src
 
-#+begin_src sh :exports both
-  gfortran -c precision.f90
+#+begin_src sh :dir precision
+gfortran -c constants.f90
 #+end_src
 
-#+begin_src fortran :exports code
+#+begin_src fortran :tangle precision/main.f90
   program main
     use constants
     implicit none
@@ -89,13 +126,31 @@
   end program main
 #+end_src
 
-#+begin_src sh :exports code
-gfortran main.f90 constants.o -o executable
-./executable
+#+begin_src sh :dir precision
+gfortran main.f90 constants.o -o main
 #+end_src
 
-* Determining Machine Epsilon
-#+begin_src fortran :exports code :tangle constants.f90
+#+begin_src sh :dir precision
+./main
+#+end_src
+
+#+begin_src make :exports none :tangle precision/makefile
+  FC = gfortran
+  SRC = main.f90
+  EXE = main
+  OBJ = constants.o
+
+  all: $(EXE)
+  $(EXE): $(OBJ)
+    $(FC) $(OBJ) $(SRC) -o $(EXE) 
+  %.o: %.f90
+    $(FC) -c $< -o $@
+  clean:
+    $(RM) *.o $(EXE)
+#+end_src
+
+* Machine Epsilon
+#+begin_src fortran :tangle epsilon/constants.f90
   module constants
     implicit none
 
@@ -131,26 +186,48 @@ gfortran main.f90 constants.o -o executable
   end module constants
 #+end_src
 
-#+name: machine_epsilon
-#+begin_src fortran :exports code :tangle machine_epsilon.f90
+#+begin_src sh :dir epsilon
+gfortran -c constants.f90
+#+end_src
+
+#+begin_src fortran :tangle epsilon/main.f90
   program main
     use constants
     implicit none
-    print*, machine_epsilon(0._sp), &
-         machine_epsilon(0._dp), &
-         machine_epsilon(0._rp)
+    print*, machine_epsilon(0._sp), machine_epsilon(0._dp)
   end program main
 #+end_src
 
-#+begin_src sh :exports both
-gfortran -c machine_epsilon_module.f90
-gfortran machine_epsilon.f90 machine_epsilon_module.o -o machine_epsilon
-./machine_epsilon
+#+begin_src sh :dir epsilon
+gfortran main.f90 constants.o -o main
 #+end_src
  
+#+begin_src sh :dir epsilon
+./main
+#+end_src
+
+#+begin_src make :exports none :tangle epsilon/makefile
+  FC = gfortran
+  SRC = main.f90
+  EXE = main
+  OBJ = constants.o
+
+  all: $(EXE)
+  $(EXE): $(OBJ)
+    $(FC) $(OBJ) $(SRC) -o $(EXE) 
+  %.o: %.f90
+    $(FC) -c $< -o $@
+  clean:
+    $(RM) *.o $(EXE)
+#+end_src
+
+#+begin_src fortran :exports both
+  print*, epsilon(0.), epsilon(0.d0)
+#+end_src
+
 * Rootfinding
 
-#+begin_src fortran :exports code :tangle rootfind_functions.f90
+#+begin_src fortran :tangle rootfind/functions.f90
   module functions
     implicit none
 
@@ -171,8 +248,12 @@ gfortran machine_epsilon.f90 machine_epsilon_module.o -o machine_epsilon
   end module functions
 #+end_src
 
-#+begin_src fortran :exports code :tangle rootfinding.f90
-  module rootfinding
+#+begin_src sh :dir rootfind
+gfortran -c functions.f90
+#+end_src
+
+#+begin_src fortran :tangle rootfind/rootfind.f90
+  module rootfind
     implicit none
 
     interface
@@ -198,13 +279,17 @@ gfortran machine_epsilon.f90 machine_epsilon_module.o -o machine_epsilon
       end do
     end function newton
 
-  end module rootfinding
+  end module rootfind
 #+end_src
 
-#+begin_src fortran :exports code :tangle rootfind.f90
+#+begin_src sh :dir rootfind
+gfortran -c rootfind.f90
+#+end_src
+
+#+begin_src fortran :tangle rootfind/main.f90
   program main
   	use functions
-    use rootfinding
+    use rootfind
     implicit none
 
     procedure(fun), pointer :: f, dfdx
@@ -217,16 +302,32 @@ gfortran machine_epsilon.f90 machine_epsilon_module.o -o machine_epsilon
   end program main
 #+end_src
 
-#+begin_src sh :results output :exports both
-gfortran -c rootfind_functions.f90
-gfortran -c rootfinding.f90
-gfortran rootfind.f90 rootfind_functions.o rootfinding.o -o rootfind
-./rootfind
+#+begin_src sh :dir rootfind
+gfortran main.f90 functions.o rootfind.o -o main
+#+end_src
+
+#+begin_src make :exports none :tangle rootfind/makefile
+  FC = gfortran
+  SRC = main.f90
+  EXE = main
+  OBJ = functions.o rootfind.o
+
+  all: $(EXE)
+  $(EXE): $(OBJ)
+    $(FC) $(OBJ) $(SRC) -o $(EXE) 
+  %.o: %.f90
+    $(FC) -c $< -o $@
+  clean:
+    $(RM) *.o $(EXE)
+#+end_src
+
+#+begin_src sh :dir rootfind
+./main
 #+end_src
 
 * Quadrature
 
-#+begin_src fortran :exports code :tangle functions.f90
+#+begin_src fortran :tangle quadrature/functions.f90
   module functions
     implicit none
 
@@ -241,55 +342,80 @@ gfortran rootfind.f90 rootfind_functions.o rootfinding.o -o rootfind
   end module functions
 #+end_src
 
-#+begin_src fortran :exports code :tangle quadrature.f90
+#+begin_src sh :dir quadrature
+  gfortran -c functions.f90
+#+end_src
+
+#+begin_src fortran :tangle quadrature/quadrature.f90
   module quadrature
     implicit none
-
-    interface
-       function integrand(x)
-         real, intent(in) :: x
-         real :: integrand
-       end function integrand
-    end interface
 
   contains
 
     function midpoint_rule(f,a,b,n) result(I)
-      implicit none
-      procedure(integrand), pointer :: f
+      interface
+         function f(x)
+           real, intent(in) :: x
+           real :: f
+         end function f
+      end interface
       real :: a, b
-      integer :: n
-      real :: I
+      integer :: n, j
+      real :: I, dx
+
+      dx = (b-a)/real(n)
       I = 0
+      do j = 0,n-1
+         I = I + f(a + (j+.5)*dx)
+      end do
+      I = dx*I
     end function midpoint_rule
 
   end module quadrature
 #+end_src
 
-#+begin_src fortran :exports code :tangle midpoint.f90
+#+begin_src sh :dir quadrature
+  gfortran -c quadrature.f90
+#+end_src
+
+#+begin_src fortran :tangle quadrature/main.f90
   program main
     use functions
     use quadrature
     implicit none
 
-    procedure(integrand), pointer :: f
-    real :: a, b
-    integer :: n
-    f => f1
-    print*, midpoint_rule(f,a,b,n)
+    real :: a = 0, b = 1
+    integer :: n = 5
+    print*, midpoint_rule(f1,a,b,n)
 
   end program main
 #+end_src
 
-#+begin_src sh :exports both
-  gfortran -c functions.f90
-  gfortran -c quadrature.f90
-  gfortran midpoint.f90 functions.o quadrature.o -o midpoint
-  ./midpoint
+#+begin_src sh :dir quadrature
+  gfortran main.f90 functions.o quadrature.o -o main
 #+end_src
+
+#+begin_src make :exports none :tangle quadrature/makefile
+  FC = gfortran
+  SRC = main.f90
+  EXE = main
+  OBJ = functions.o quadrature.o
+
+  all: $(EXE)
+  $(EXE): $(OBJ)
+    $(FC) $(OBJ) $(SRC) -o $(EXE) 
+  %.o: %.f90
+    $(FC) -c $< -o $@
+  clean:
+    $(RM) *.o $(EXE)
+#+end_src
+
+#+begin_src sh :dir quadrature
+  ./main
+#+end_src
+
 * Matrix multiplication
-#+name: matrix_multiplication
-#+begin_src fortran :results output :exports both
+#+begin_src fortran :exports both :tangle matmul/main.f90
   program main
     implicit none
 
@@ -318,21 +444,20 @@ gfortran rootfind.f90 rootfind_functions.o rootfinding.o -o rootfind
 
   end program main
 #+end_src
-* Summing $\sum_{n=0}^{\infty}\frac1{n!}$
-#+NAME: series
-#+BEGIN_SRC fortran
-integer :: n = 1, nf = 1
-real :: a, s
-do while (1./real(nf) > 0)
-	n = n + 1
-  nf = nf * n
-end do
-s = 1./real(nf)
-do while (n > 0)
-	nf = nf / n
-  n = n - 1
-  s = s + 1./real(nf)
-end do
-#+END_SRC
+* $\sum_{n=0}^{\infty}\frac1{n!}$
+#+begin_src fortran :exports both :tangle series/main.f90
+  program main
+    implicit none
+    integer :: n = 0, nf = 1
+    real :: s = 0
+    do while (1./real(nf) > 0)
+       s = s + 1./real(nf)
+       n = n + 1
+       nf = nf * n
+    end do
+    print*, s, exp(1.)-s
+  end program main
+#+end_src
 
-#+html </div>
+#+html: </div>
+ 
