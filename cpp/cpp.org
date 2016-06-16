@@ -2,7 +2,7 @@
 #+author: Matt Hancock
 #+date: 
 #+options: html-postamble:nil
-#+html_head: <link rel="stylesheet" type="text/css" href="./css/main.css">
+#+html_head: <link rel="stylesheet" type="text/css" href="../css/main.css">
 #+html: <div id="main">
 
 * Introduction
