@@ -3,10 +3,13 @@
 #+email: joepatmckenna@gmail.com
 #+options: html-postamble:nil
 #+html_head: <link rel="stylesheet" type="text/css" href="../css/main.css">
+<<<<<<< HEAD
 #+property: header-args :mkdirp yes :cache yes :comments yes
 #+property: header-args:fortran :exports code
 #+property: header-args:sh :exports both
 #+startup: latexpreview
+=======
+>>>>>>> 59f5e1d9b507a5c533dac1e24476e681c555fbfe
 #+html: <div id="main">
  
 * Hello world
@@ -444,6 +447,7 @@ gfortran main.f90 functions.o rootfind.o -o main
 
   end program main
 #+end_src
+<<<<<<< HEAD
 * $\sum_{n=0}^{\infty}\frac1{n!}$
 #+begin_src fortran :exports both :tangle series/main.f90
   program main
@@ -461,3 +465,23 @@ gfortran main.f90 functions.o rootfind.o -o main
 
 #+html: </div>
  
+=======
+* Summing $\sum_{n=0}^{\infty}\frac1{n!}$
+#+NAME: series
+#+BEGIN_SRC fortran
+integer :: n = 1, nf = 1
+real :: a, s
+do while (1./real(nf) > 0)
+	n = n + 1
+  nf = nf * n
+end do
+s = 1./real(nf)
+do while (n > 0)
+	nf = nf / n
+  n = n - 1
+  s = s + 1./real(nf)
+end do
+#+END_SRC
+
+#+html: </div>
+>>>>>>> 59f5e1d9b507a5c533dac1e24476e681c555fbfe
