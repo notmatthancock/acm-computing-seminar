@@ -1,5 +1,9 @@
 *~
 [#]*[#]
+
+*.mod
+*.o
 fortran/ltxpng
 a.out
 main
+.directory
