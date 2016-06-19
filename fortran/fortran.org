@@ -1,12 +1,12 @@
 #+title: Fortran code snippets
 #+author: Joseph P. McKenna
 #+email: joepatmckenna@gmail.com
-#+options: html-postamble:nil
-#+html_head: <link rel="stylesheet" type="text/css" href="../css/main.css">
-#+property: header-args :mkdirp yes :cache yes :comments yes
+#+property: header-args :mkdirp yes :cache yes
 #+property: header-args:fortran :exports code
 #+property: header-args:sh :exports both
 #+startup: latexpreview
+#+options: html-postamble:nil
+#+html_head: <link rel="stylesheet" type="text/css" href="../css/main.css">
 #+html: <div id="main">
  
 * Hello world
