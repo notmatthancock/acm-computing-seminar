@@ -100,34 +100,34 @@ Now, to compile the program, execute:
 #+end_src
 
 Followed by:
-#+begin_src
+#+begin_src sh
   ./a.out
 #+end_src
 
 By default, =g++= calls the resulting binary executable, =a.out=, but
 you can specify a different output file name by using the =-o= flag:
 
-#+begin_src
+#+begin_src sh
   g++ hello.cpp -o my_executable_file.bin
 #+end_src
 
 Note that in Windows, executable files typically end in =.exe=. In Unix-like
 systems, there is no particular file-extension type for executables.
 
-*** Deconstruction of the "Hello, world!" program
-Let's look at this program line-by-line:
-
-1. In line 1, we are including a library called =iostream=. A standard library (one that is included with C++) is usually included inside angular brackets. The =iostream= library is used for printing to the screen or prompting for user input.
-
-2. Line 2 is blank. Whitespace is ignored in C++.
-
-3. In line 3, we are declaring a function called =main= which has a return type of =int= (short for integer). Functions are followed by parentheses, listing their arguments (our =main= funcion has no arguments in this case), followed by the function body. The function body is enclosed by brackets. The function =main= is special - it is the main function (surprise) that is executed when you actually run your program.
-
-4. In line 4, we are giving the =Hello, world!= string to an object called =cout=, which prints the string. Note that =cout= is prefixed by =std=. The syntax, =std::cout=, means that =cout= belongs to the *namespace* called =std=. Namespaces are mechanisms for preventing name conflicts.
-
-5. In line 5, we return the value 0. This signifies to the program that called the executable =hello.cpp= program (the parent program, you could say) that our program exited successfully (i.e., without error).
-
-6. Line 6 closes the the the body of the function, =main=.
+;; *** Deconstruction of the "Hello, world!" program
+;; Let's look at this program line-by-line:
+;; 
+;; 1. In line 1, we are including a library called =iostream=. A standard library (one that is included with C++) is usually included inside angular brackets. The =iostream= library is used for printing to the screen or prompting for user input.
+;; 
+;; 2. Line 2 is blank. Whitespace is ignored in C++.
+;; 
+;; 3. In line 3, we are declaring a function called =main= which has a return type of =int= (short for integer). Functions are followed by parentheses, listing their arguments (our =main= funcion has no arguments in this case), followed by the function body. The function body is enclosed by brackets. The function =main= is special - it is the main function (surprise) that is executed when you actually run your program.
+;; 
+;; 4. In line 4, we are giving the =Hello, world!= string to an object called =cout=, which prints the string. Note that =cout= is prefixed by =std=. The syntax, =std::cout=, means that =cout= belongs to the *namespace* called =std=. Namespaces are mechanisms for preventing name conflicts.
+;; 
+;; 5. In line 5, we return the value 0. This signifies to the program that called the executable =hello.cpp= program (the parent program, you could say) that our program exited successfully (i.e., without error).
+;; 
+;; 6. Line 6 closes the the the body of the function, =main=.
    
 * Data types
 As we [[A little about the language][discussed previously]], you must explicitly declare the type of a 

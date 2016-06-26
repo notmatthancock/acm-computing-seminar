@@ -3,23 +3,30 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<title>ACM C++ Guide</title>
-<!-- 2016-06-26 Sun 10:49 -->
+<!-- 2016-06-26 Sun 18:37 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="viewport" content="width=device-width, initial-scale=1" />
+<title>ACM C++ Guide</title>
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Matt Hancock" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
-  .title  { text-align: center; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
   .todo   { font-family: monospace; color: red; }
-  .done   { color: green; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
   .tag    { background-color: #eee; font-family: monospace;
             padding: 2px; font-size: 80%; font-weight: normal; }
   .timestamp { color: #bebebe; }
   .timestamp-kwd { color: #5f9ea0; }
-  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
   .underline { text-decoration: underline; }
   #postamble p, #preamble p { font-size: 90%; margin: .2em; }
   p.verse { margin-left: 3%; }
@@ -58,15 +65,14 @@
   caption.t-above { caption-side: top; }
   caption.t-bottom { caption-side: bottom; }
   td, th { vertical-align:top;  }
-  th.right  { text-align: center;  }
-  th.left   { text-align: center;   }
-  th.center { text-align: center; }
-  td.right  { text-align: right;  }
-  td.left   { text-align: left;   }
-  td.center { text-align: center; }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
   dt { font-weight: bold; }
-  .footpara:nth-child(2) { display: inline; }
-  .footpara { display: block; }
+  .footpara { display: inline; }
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
@@ -135,48 +141,28 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
-<script type="text/javascript" src="http://orgmode.org/mathjax/MathJax.js"></script>
-<script type="text/javascript">
-<!--/*--><![CDATA[/*><!--*/
+<script type="text/x-mathjax-config">
     MathJax.Hub.Config({
-        // Only one of the two following lines, depending on user settings
-        // First allows browser-native MathML display, second forces HTML/CSS
-        //  config: ["MMLorHTML.js"], jax: ["input/TeX"],
-            jax: ["input/TeX", "output/HTML-CSS"],
-        extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js",
-                     "TeX/noUndefined.js"],
-        tex2jax: {
-            inlineMath: [ ["\\(","\\)"] ],
-            displayMath: [ ['$$','$$'], ["\\[","\\]"], ["\\begin{displaymath}","\\end{displaymath}"] ],
-            skipTags: ["script","noscript","style","textarea","pre","code"],
-            ignoreClass: "tex2jax_ignore",
-            processEscapes: false,
-            processEnvironments: true,
-            preview: "TeX"
-        },
-        showProcessingMessages: true,
         displayAlign: "center",
-        displayIndent: "2em",
+        displayIndent: "0em",
 
-        "HTML-CSS": {
-             scale: 100,
-             availableFonts: ["STIX","TeX"],
-             preferredFont: "TeX",
-             webFont: "TeX",
-             imageFont: "TeX",
-             showMathMenu: true,
-        },
-        MMLorHTML: {
-             prefer: {
-                 MSIE:    "MML",
-                 Firefox: "MML",
-                 Opera:   "HTML",
-                 other:   "HTML"
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
              }
-        }
-    });
-/*]]>*///-->
+});
 </script>
+<script type="text/javascript"
+        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
@@ -185,63 +171,59 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">1. Introduction</a>
+<li><a href="#orgheadline3">1. Introduction</a>
 <ul>
-<li><a href="#sec-1-1">1.1. A little about the language</a></li>
-<li><a href="#sec-1-2">1.2. Additional references</a></li>
+<li><a href="#orgheadline1">1.1. A little about the language</a></li>
+<li><a href="#orgheadline2">1.2. Additional references</a></li>
 </ul>
 </li>
-<li><a href="#sec-2">2. Getting started</a>
+<li><a href="#orgheadline7">2. Getting started</a>
 <ul>
-<li><a href="#sec-2-1">2.1. Text editors</a></li>
-<li><a href="#sec-2-2">2.2. Compilers</a></li>
-<li><a href="#sec-2-3">2.3. Writing a program</a>
-<ul>
-<li><a href="#sec-2-3-1">2.3.1. Deconstruction of the "Hello, world!" program</a></li>
+<li><a href="#orgheadline4">2.1. Text editors</a></li>
+<li><a href="#orgheadline5">2.2. Compilers</a></li>
+<li><a href="#orgheadline6">2.3. Writing a program</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li><a href="#sec-3">3. Data types</a>
+<li><a href="#orgheadline19">3. Data types</a>
 <ul>
-<li><a href="#sec-3-1">3.1. Boolean</a></li>
-<li><a href="#sec-3-2">3.2. Integer types</a></li>
-<li><a href="#sec-3-3">3.3. Floating point types</a></li>
-<li><a href="#sec-3-4">3.4. Casting</a></li>
-<li><a href="#sec-3-5">3.5. The const modifier</a></li>
-<li><a href="#sec-3-6">3.6. The typedef keyword</a></li>
-<li><a href="#sec-3-7">3.7. Pointers</a></li>
-<li><a href="#sec-3-8">3.8. Arrays</a>
+<li><a href="#orgheadline9">3.1. Boolean</a></li>
+<li><a href="#orgheadline10">3.2. Integer types</a></li>
+<li><a href="#orgheadline11">3.3. Floating point types</a></li>
+<li><a href="#orgheadline12">3.4. Casting</a></li>
+<li><a href="#orgheadline13">3.5. The const modifier</a></li>
+<li><a href="#orgheadline14">3.6. The typedef keyword</a></li>
+<li><a href="#orgheadline15">3.7. Pointers</a></li>
+<li><a href="#orgheadline18">3.8. Arrays</a>
 <ul>
-<li><a href="#sec-3-8-1">3.8.1. Fixed length arrays</a></li>
-<li><a href="#sec-3-8-2">3.8.2. Dynamic length arrays</a></li>
+<li><a href="#orgheadline16">3.8.1. Fixed length arrays</a></li>
+<li><a href="#orgheadline17">3.8.2. Dynamic length arrays</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#sec-4">4. Control structures</a>
+<li><a href="#orgheadline26">4. Control structures</a>
 <ul>
-<li><a href="#sec-4-1">4.1. Conditionals</a></li>
-<li><a href="#sec-4-2">4.2. Loops</a>
+<li><a href="#orgheadline20">4.1. Conditionals</a></li>
+<li><a href="#orgheadline24">4.2. Loops</a>
 <ul>
-<li><a href="#sec-4-2-1">4.2.1. The for loop</a></li>
-<li><a href="#sec-4-2-2">4.2.2. The while loop</a></li>
-<li><a href="#sec-4-2-3">4.2.3. The break keyword</a></li>
+<li><a href="#orgheadline21">4.2.1. The for loop</a></li>
+<li><a href="#orgheadline22">4.2.2. The while loop</a></li>
+<li><a href="#orgheadline23">4.2.3. The break keyword</a></li>
 </ul>
 </li>
-<li><a href="#sec-4-3">4.3. Exercises</a></li>
+<li><a href="#orgheadline25">4.3. Exercises</a></li>
 </ul>
 </li>
-<li><a href="#sec-5">5. Functions</a></li>
-<li><a href="#sec-6">6. Object-oriented programming</a></li>
-<li><a href="#sec-7">7. </a></li>
+<li><a href="#orgheadline27">5. Functions</a></li>
+<li><a href="#orgheadline8">6. Object-oriented programming</a></li>
+<li><a href="#orgheadline28">7. </a></li>
 </ul>
 </div>
 </div>
 <div id="main">
 
-<div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> Introduction</h2>
+<div id="outline-container-orgheadline3" class="outline-2">
+<h2 id="orgheadline3"><span class="section-number-2">1</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Welcome to the ACM C++ guide, a manual for quickly learning C++
@@ -260,8 +242,8 @@ each major section, you'll find exercises for practice.
 </p>
 </div>
 
-<div id="outline-container-sec-1-1" class="outline-3">
-<h3 id="sec-1-1"><span class="section-number-3">1.1</span> A little about the language</h3>
+<div id="outline-container-orgheadline1" class="outline-3">
+<h3 id="orgheadline1"><span class="section-number-3">1.1</span> A little about the language</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 Before you dive in, here is a little about the C++ programming language:
@@ -285,25 +267,21 @@ but we will only touch the surface of it in this guide.
 </div>
 </div>
 
-<div id="outline-container-sec-1-2" class="outline-3">
-<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Additional references</h3>
+<div id="outline-container-orgheadline2" class="outline-3">
+<h3 id="orgheadline2"><span class="section-number-3">1.2</span> Additional references</h3>
 <div class="outline-text-3" id="text-1-2">
 <ul class="org-ul">
-<li><a href="http://cppreference.com">C++ reference</a>
-</li>
-<li><a href="http://www.cplusplus.com/doc/tutorial">C++ tutorials</a>
-</li>
-<li><a href="https://en.wikipedia.org/wiki/C++">C++ wiki</a>
-</li>
-<li><a href="http://stackoverflow.com/questions/388242/the-definitive-c-book-guide-and-list">A compiled list of C++ textbooks from stackoverflow</a>
-</li>
+<li><a href="http://cppreference.com/">C++ reference</a></li>
+<li><a href="http://www.cplusplus.com/doc/tutorial">C++ tutorials</a></li>
+<li><a href="https://en.wikipedia.org/wiki/C++">C++ wiki</a></li>
+<li><a href="http://stackoverflow.com/questions/388242/the-definitive-c-book-guide-and-list">A compiled list of C++ textbooks from stackoverflow</a></li>
 </ul>
 </div>
 </div>
 </div>
 
-<div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> Getting started</h2>
+<div id="outline-container-orgheadline7" class="outline-2">
+<h2 id="orgheadline7"><span class="section-number-2">2</span> Getting started</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 The particular programming tools that you choose to use will
@@ -314,7 +292,7 @@ operating systems as well. For example, on Windows, you could use
 <a href="https://www.cygwin.com/">Cygwin</a>, or install a dual boot with some Linux distribution 
 (e.g., <a href="http://www.ubuntu.com/">Ubuntu</a>). On the other hand, MAC OSX, being a BSD-derived system, 
 has many of the required tools already available (although, a command 
-line utility, <a href="http://brew.sh">Brew</a>, makes building and installing other tools quite simple).
+line utility, <a href="http://brew.sh/">Brew</a>, makes building and installing other tools quite simple).
 </p>
 
 <p>
@@ -323,8 +301,8 @@ software that you'll need to begin writing C++ programs.
 </p>
 </div>
 
-<div id="outline-container-sec-2-1" class="outline-3">
-<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Text editors</h3>
+<div id="outline-container-orgheadline4" class="outline-3">
+<h3 id="orgheadline4"><span class="section-number-3">2.1</span> Text editors</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 The text editor that you choose to use should be be any program 
@@ -335,22 +313,17 @@ Here are some popular free text editors:
 </p>
 
 <ul class="org-ul">
-<li><a href="https://atom.io/">Atom</a> is a recently open-sourced GUI editor which some have compared to the very popular non-free editor, <a href="https://sublimetext.com">Sublime Text</a>.
-</li>
-<li><a href="https://www.gnu.org/software/emacs/">Emacs</a> is another powerful editor, which allows for highly optimized workflows.
-</li>
-<li><a href="https://wiki.gnome.org/Apps/Gedit">Gedit</a> is a nice and simple GUI editor, which is the default in GNOME desktop environment.
-</li>
-<li><a href="https://kate-editor.org">Kate</a> is a another simple GUI editor, which is the default in the KDE desktop environment.
-</li>
-<li><a href="http://www.vim.org">Vim</a> is a modal editor with a steep learning curve. It offers highly efficient means to edit text, and is available (or it's predecessor, vi) by default on nearly all UNIX-like operating systems.
-</li>
+<li><a href="https://atom.io/">Atom</a> is a recently open-sourced GUI editor which some have compared to the very popular non-free editor, <a href="https://sublimetext.com/">Sublime Text</a>.</li>
+<li><a href="https://www.gnu.org/software/emacs/">Emacs</a> is another powerful editor, which allows for highly optimized workflows.</li>
+<li><a href="https://wiki.gnome.org/Apps/Gedit">Gedit</a> is a nice and simple GUI editor, which is the default in GNOME desktop environment.</li>
+<li><a href="https://kate-editor.org/">Kate</a> is a another simple GUI editor, which is the default in the KDE desktop environment.</li>
+<li><a href="http://www.vim.org/">Vim</a> is a modal editor with a steep learning curve. It offers highly efficient means to edit text, and is available (or it's predecessor, vi) by default on nearly all UNIX-like operating systems.</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-sec-2-2" class="outline-3">
-<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Compilers</h3>
+<div id="outline-container-orgheadline5" class="outline-3">
+<h3 id="orgheadline5"><span class="section-number-3">2.2</span> Compilers</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 Second, you'll need a program called a <b>compiler</b>. A compiler translates 
@@ -367,8 +340,8 @@ binary executable file.
 </div>
 </div>
 
-<div id="outline-container-sec-2-3" class="outline-3">
-<h3 id="sec-2-3"><span class="section-number-3">2.3</span> Writing a program</h3>
+<div id="outline-container-orgheadline6" class="outline-3">
+<h3 id="orgheadline6"><span class="section-number-3">2.3</span> Writing a program</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 Let's create our first C++ program, the obligatory "Hello, world!". First, 
@@ -400,70 +373,62 @@ Now, to compile the program, execute:
 <p>
 Followed by:
 </p>
-<pre class="example">
-./a.out
+<div class="org-src-container">
+
+<pre class="src src-sh">./a.out
 </pre>
+</div>
 
 <p>
 By default, <code>g++</code> calls the resulting binary executable, <code>a.out</code>, but
 you can specify a different output file name by using the <code>-o</code> flag:
 </p>
 
-<pre class="example">
-g++ hello.cpp -o my_executable_file.bin
+<div class="org-src-container">
+
+<pre class="src src-sh">g++ hello.cpp -o my_executable_file.bin
 </pre>
+</div>
 
 <p>
 Note that in Windows, executable files typically end in <code>.exe</code>. In Unix-like
 systems, there is no particular file-extension type for executables.
 </p>
-</div>
 
-<div id="outline-container-sec-2-3-1" class="outline-4">
-<h4 id="sec-2-3-1"><span class="section-number-4">2.3.1</span> Deconstruction of the "Hello, world!" program</h4>
-<div class="outline-text-4" id="text-2-3-1">
 <p>
-Let's look at this program line-by-line:
+;; <b>*</b> Deconstruction of the "Hello, world!" program
+;; Let's look at this program line-by-line:
+;; 
+;; 1. In line 1, we are including a library called <code>iostream</code>. A standard library (one that is included with C++) is usually included inside angular brackets. The <code>iostream</code> library is used for printing to the screen or prompting for user input.
+;; 
+;; 2. Line 2 is blank. Whitespace is ignored in C++.
+;; 
+;; 3. In line 3, we are declaring a function called <code>main</code> which has a return type of <code>int</code> (short for integer). Functions are followed by parentheses, listing their arguments (our <code>main</code> funcion has no arguments in this case), followed by the function body. The function body is enclosed by brackets. The function <code>main</code> is special - it is the main function (surprise) that is executed when you actually run your program.
+;; 
+;; 4. In line 4, we are giving the <code>Hello, world!</code> string to an object called <code>cout</code>, which prints the string. Note that <code>cout</code> is prefixed by <code>std</code>. The syntax, <code>std::cout</code>, means that <code>cout</code> belongs to the <b>namespace</b> called <code>std</code>. Namespaces are mechanisms for preventing name conflicts.
+;; 
+;; 5. In line 5, we return the value 0. This signifies to the program that called the executable <code>hello.cpp</code> program (the parent program, you could say) that our program exited successfully (i.e., without error).
+;; 
+;; 6. Line 6 closes the the the body of the function, <code>main</code>.
 </p>
-
-<ol class="org-ol">
-<li>In line 1, we are including a library called <code>iostream</code>. A standard library (one that is included with C++) is usually included inside angular brackets. The <code>iostream</code> library is used for printing to the screen or prompting for user input.
-</li>
-
-<li>Line 2 is blank. Whitespace is ignored in C++.
-</li>
-
-<li>In line 3, we are declaring a function called <code>main</code> which has a return type of <code>int</code> (short for integer). Functions are followed by parentheses, listing their arguments (our <code>main</code> funcion has no arguments in this case), followed by the function body. The function body is enclosed by brackets. The function <code>main</code> is special - it is the main function (surprise) that is executed when you actually run your program.
-</li>
-
-<li>In line 4, we are giving the <code>Hello, world!</code> string to an object called <code>cout</code>, which prints the string. Note that <code>cout</code> is prefixed by <code>std</code>. The syntax, <code>std::cout</code>, means that <code>cout</code> belongs to the <b>namespace</b> called <code>std</code>. Namespaces are mechanisms for preventing name conflicts.
-</li>
-
-<li>In line 5, we return the value 0. This signifies to the program that called the executable <code>hello.cpp</code> program (the parent program, you could say) that our program exited successfully (i.e., without error).
-</li>
-
-<li>Line 6 closes the the the body of the function, <code>main</code>.
-</li>
-</ol>
-</div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3"><span class="section-number-2">3</span> Data types</h2>
+<div id="outline-container-orgheadline19" class="outline-2">
+<h2 id="orgheadline19"><span class="section-number-2">3</span> Data types</h2>
 <div class="outline-text-2" id="text-3">
 <p>
-As we <a href="#sec-1-1">discussed previously</a>, you must explicitly declare the type of a 
+As we <a href="#orgheadline1">discussed previously</a>, you must explicitly declare the type of a 
 variable. So, in this section, we'll talk about the main variable 
 types you'll use, namely boolean, integer, floating point types. In 
-the section on <a href="#sec-6">6</a>, we'll discuss how to build 
+the section on <a href="#orgheadline8">6</a>, we'll discuss how to build 
 our own custom data types.
 </p>
 </div>
 
-<div id="outline-container-sec-3-1" class="outline-3">
-<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Boolean</h3>
+<div id="outline-container-orgheadline9" class="outline-3">
+<h3 id="orgheadline9"><span class="section-number-3">3.1</span> Boolean</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 A boolean data type is either <code>true</code> or <code>false</code>. There are a number of 
@@ -497,8 +462,8 @@ than another integer).
 </div>
 </div>
 
-<div id="outline-container-sec-3-2" class="outline-3">
-<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Integer types</h3>
+<div id="outline-container-orgheadline10" class="outline-3">
+<h3 id="orgheadline10"><span class="section-number-3">3.2</span> Integer types</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 There are <a href="http://en.cppreference.com/w/cpp/language/types">a variety of integer types</a> in C++. Below, we illustrate a 
@@ -542,8 +507,8 @@ may not match your expectations, as shown above.
 </div>
 </div>
 
-<div id="outline-container-sec-3-3" class="outline-3">
-<h3 id="sec-3-3"><span class="section-number-3">3.3</span> Floating point types</h3>
+<div id="outline-container-orgheadline11" class="outline-3">
+<h3 id="orgheadline11"><span class="section-number-3">3.3</span> Floating point types</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 There are two main floating point data types in C++, <code>float</code> and <code>double</code>,
@@ -586,8 +551,8 @@ which correspond to <a href="https://en.wikipedia.org/wiki/IEEE_floating_point">
 </div>
 
 
-<div id="outline-container-sec-3-4" class="outline-3">
-<h3 id="sec-3-4"><span class="section-number-3">3.4</span> Casting</h3>
+<div id="outline-container-orgheadline12" class="outline-3">
+<h3 id="orgheadline12"><span class="section-number-3">3.4</span> Casting</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 Sometimes it is useful to explicitly cast one variable type as another. 
@@ -610,8 +575,8 @@ This can be done like the following:
 </div>
 </div>
 
-<div id="outline-container-sec-3-5" class="outline-3">
-<h3 id="sec-3-5"><span class="section-number-3">3.5</span> The const modifier</h3>
+<div id="outline-container-orgheadline13" class="outline-3">
+<h3 id="orgheadline13"><span class="section-number-3">3.5</span> The const modifier</h3>
 <div class="outline-text-3" id="text-3-5">
 <p>
 If the value of some variable should not change, you can use the <code>const</code>
@@ -633,8 +598,8 @@ You will see an error like, <code>error: assignment of read-only variable â€˜PIâ
 </div>
 </div>
 
-<div id="outline-container-sec-3-6" class="outline-3">
-<h3 id="sec-3-6"><span class="section-number-3">3.6</span> The typedef keyword</h3>
+<div id="outline-container-orgheadline14" class="outline-3">
+<h3 id="orgheadline14"><span class="section-number-3">3.6</span> The typedef keyword</h3>
 <div class="outline-text-3" id="text-3-6">
 <p>
 Suppose you have a large numerical experiment, where all your code used 
@@ -667,8 +632,8 @@ Instead, we can use the <code>typedef</code> statement to define types:
 </div>
 </div>
 
-<div id="outline-container-sec-3-7" class="outline-3">
-<h3 id="sec-3-7"><span class="section-number-3">3.7</span> Pointers</h3>
+<div id="outline-container-orgheadline15" class="outline-3">
+<h3 id="orgheadline15"><span class="section-number-3">3.7</span> Pointers</h3>
 <div class="outline-text-3" id="text-3-7">
 <p>
 Pointers are variables that hold the <b>memory address</b> for a variable 
@@ -694,7 +659,7 @@ The memory address for a variable can be obtained by the <code>&amp;</code> oper
 </div>
 
 <pre class="example">
-0x7ffe91607d38
+0x7ffeb2306aa8
 </pre>
 
 <p>
@@ -729,8 +694,8 @@ understood with a short example:
 </div>
 </div>
 
-<div id="outline-container-sec-3-8" class="outline-3">
-<h3 id="sec-3-8"><span class="section-number-3">3.8</span> Arrays</h3>
+<div id="outline-container-orgheadline18" class="outline-3">
+<h3 id="orgheadline18"><span class="section-number-3">3.8</span> Arrays</h3>
 <div class="outline-text-3" id="text-3-8">
 <p>
 The length of an array can be fixed or dynamic, and how you
@@ -738,8 +703,8 @@ declare the array depends on this.
 </p>
 </div>
 
-<div id="outline-container-sec-3-8-1" class="outline-4">
-<h4 id="sec-3-8-1"><span class="section-number-4">3.8.1</span> Fixed length arrays</h4>
+<div id="outline-container-orgheadline16" class="outline-4">
+<h4 id="orgheadline16"><span class="section-number-4">3.8.1</span> Fixed length arrays</h4>
 <div class="outline-text-4" id="text-3-8-1">
 <div class="org-src-container">
 
@@ -752,8 +717,8 @@ declare the array depends on this.
 </div>
 </div>
 
-<div id="outline-container-sec-3-8-2" class="outline-4">
-<h4 id="sec-3-8-2"><span class="section-number-4">3.8.2</span> Dynamic length arrays</h4>
+<div id="outline-container-orgheadline17" class="outline-4">
+<h4 id="orgheadline17"><span class="section-number-4">3.8.2</span> Dynamic length arrays</h4>
 <div class="outline-text-4" id="text-3-8-2">
 <p>
 Dynamic length arrays are made possible through pointers:
@@ -795,11 +760,11 @@ memory problems is called <a href="http://valgrind.org/">valgrind</a>.
 </div>
 </div>
 
-<div id="outline-container-sec-4" class="outline-2">
-<h2 id="sec-4"><span class="section-number-2">4</span> Control structures</h2>
+<div id="outline-container-orgheadline26" class="outline-2">
+<h2 id="orgheadline26"><span class="section-number-2">4</span> Control structures</h2>
 <div class="outline-text-2" id="text-4">
-</div><div id="outline-container-sec-4-1" class="outline-3">
-<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Conditionals</h3>
+</div><div id="outline-container-orgheadline20" class="outline-3">
+<h3 id="orgheadline20"><span class="section-number-3">4.1</span> Conditionals</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 Often a code block should only be executed if some condition is true. 
@@ -835,8 +800,8 @@ print whether or not the number was greater than 0.5.
 </div>
 
 <pre class="example">
-num: 0.441215
-num was less than 0.5.
+num: 0.912195
+num was greater than 0.5.
 </pre>
 
 <p>
@@ -878,7 +843,7 @@ exclusive blocks:
 </div>
 
 <pre class="example">
-num: 0.441215
+num: 0.272404
 num was between 0.25 and 0.5.
 </pre>
 
@@ -891,16 +856,16 @@ was false.
 </div>
 </div>
 
-<div id="outline-container-sec-4-2" class="outline-3">
-<h3 id="sec-4-2"><span class="section-number-3">4.2</span> Loops</h3>
+<div id="outline-container-orgheadline24" class="outline-3">
+<h3 id="orgheadline24"><span class="section-number-3">4.2</span> Loops</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 We discuss two main structures for iterating &#x2013; the <code>for</code> and <code>while</code> loops.
 </p>
 </div>
 
-<div id="outline-container-sec-4-2-1" class="outline-4">
-<h4 id="sec-4-2-1"><span class="section-number-4">4.2.1</span> The for loop</h4>
+<div id="outline-container-orgheadline21" class="outline-4">
+<h4 id="orgheadline21"><span class="section-number-4">4.2.1</span> The for loop</h4>
 <div class="outline-text-4" id="text-4-2-1">
 <p>
 The <code>for</code> loop requires three specifications &#x2013; the iteration variable 
@@ -1009,8 +974,8 @@ the second <code>n_cols</code> elements of <code>matrix</code> will contain the 
 </div>
 </div>
 
-<div id="outline-container-sec-4-2-2" class="outline-4">
-<h4 id="sec-4-2-2"><span class="section-number-4">4.2.2</span> The while loop</h4>
+<div id="outline-container-orgheadline22" class="outline-4">
+<h4 id="orgheadline22"><span class="section-number-4">4.2.2</span> The while loop</h4>
 <div class="outline-text-4" id="text-4-2-2">
 <p>
 A <code>while</code> loop iterates while a condition is met. Essentially, it is a <code>for</code>
@@ -1019,9 +984,9 @@ the geometric series:
 </p>
 
 <p>
-$$
+\[
 1 = \sum_{n=1}^{\infty} \left(\frac{1}{2}\right)^n
-$$
+\]
 </p>
 
 <p>
@@ -1029,9 +994,9 @@ The loop exits when the absolute error,
 </p>
 
 <p>
-$$
+\[
     \text{absolute error} := 1-\sum_{n=1}^N  \left(\frac{1}{2}\right)^n
-$$
+\]
 </p>
 
 <p>
@@ -1078,8 +1043,8 @@ Iteration: 14, Sum: 0.999939
 </div>
 </div>
 
-<div id="outline-container-sec-4-2-3" class="outline-4">
-<h4 id="sec-4-2-3"><span class="section-number-4">4.2.3</span> The break keyword</h4>
+<div id="outline-container-orgheadline23" class="outline-4">
+<h4 id="orgheadline23"><span class="section-number-4">4.2.3</span> The break keyword</h4>
 <div class="outline-text-4" id="text-4-2-3">
 <p>
 The <code>break</code> keyword provides a mechanism for exiting the direct parent loop
@@ -1118,31 +1083,27 @@ approach.
 </div>
 
 
-<div id="outline-container-sec-4-3" class="outline-3">
-<h3 id="sec-4-3"><span class="section-number-3">4.3</span> Exercises</h3>
+<div id="outline-container-orgheadline25" class="outline-3">
+<h3 id="orgheadline25"><span class="section-number-3">4.3</span> Exercises</h3>
 <div class="outline-text-3" id="text-4-3">
 <ol class="org-ol">
-<li>Given integers, \(n\) and \(k\), write a program to compute the binomial coefficient, \(\displaystyle {n \choose k}\).
-</li>
-<li>The series, \(\displaystyle \sum_{n=1}^{\infty} \frac{1}{n^2}\), converges to \(\displaystyle\frac{\pi^2}{6}\). Create a program that approximates this series up to some specified tolerance, printing the absolute error at each iteration.
-</li>
-<li>Fix numbers, \(a\) and \(b\). Let \(x_0 = a\) and \(x_N=b\). Let \(\Delta x = \frac{b-a}{N}\) and \(x_i = a + i \cdot \Delta x\), for \(i = 0, 1, \ldots, N\). The left endpoint Riemann sum approximation to the integral, \(\displaystyle\int_a^b x^2 dx\), is given by \(\displaystyle\sum_{n=1}^N (x_i)^2 \Delta x\). Write a program with \(a=0\) and \(b=1\), which successively halves \(\Delta x\) (starting from the initial value of \(\Delta x = 0.5\)) until the absolute error between the approximation and the true integral value is less than some specified tolerance. Record the absolute error at each iteration.
-</li>
-<li>Maybe do something with a matrix.
-</li>
+<li>Given integers, \(n\) and \(k\), write a program to compute the binomial coefficient, \(\displaystyle {n \choose k}\).</li>
+<li>The series, \(\displaystyle \sum_{n=1}^{\infty} \frac{1}{n^2}\), converges to \(\displaystyle\frac{\pi^2}{6}\). Create a program that approximates this series up to some specified tolerance, printing the absolute error at each iteration.</li>
+<li>Fix numbers, \(a\) and \(b\). Let \(x_0 = a\) and \(x_N=b\). Let \(\Delta x = \frac{b-a}{N}\) and \(x_i = a + i \cdot \Delta x\), for \(i = 0, 1, \ldots, N\). The left endpoint Riemann sum approximation to the integral, \(\displaystyle\int_a^b x^2 dx\), is given by \(\displaystyle\sum_{n=1}^N (x_i)^2 \Delta x\). Write a program with \(a=0\) and \(b=1\), which successively halves \(\Delta x\) (starting from the initial value of \(\Delta x = 0.5\)) until the absolute error between the approximation and the true integral value is less than some specified tolerance. Record the absolute error at each iteration.</li>
+<li>Maybe do something with a matrix.</li>
 </ol>
 </div>
 </div>
 </div>
 
-<div id="outline-container-sec-5" class="outline-2">
-<h2 id="sec-5"><span class="section-number-2">5</span> Functions</h2>
+<div id="outline-container-orgheadline27" class="outline-2">
+<h2 id="orgheadline27"><span class="section-number-2">5</span> Functions</h2>
 </div>
-<div id="outline-container-sec-6" class="outline-2">
-<h2 id="sec-6"><span class="section-number-2">6</span> Object-oriented programming</h2>
+<div id="outline-container-orgheadline8" class="outline-2">
+<h2 id="orgheadline8"><span class="section-number-2">6</span> Object-oriented programming</h2>
 </div>
-<div id="outline-container-sec-7" class="outline-2">
-<h2 id="sec-7"><span class="section-number-2">7</span> </h2>
+<div id="outline-container-orgheadline28" class="outline-2">
+<h2 id="orgheadline28"><span class="section-number-2">7</span> </h2>
 <div class="outline-text-2" id="text-7">
 </div>
 </div>
