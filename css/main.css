@@ -22,11 +22,17 @@ a:hover {
 
 /* Make long code blocks scrollable. */
 pre, pre.src {
+    color: #eee;
     margin: 10px 0 10px 0;
     padding: 20px;
     overflow-x: auto;
-    background-color: #ddd;
+    background-color: #252525;
     font-size: 100%;
+    box-shadow: 0;
+}
+
+pre.example {
+    margin-top: 20px;
 }
 
 code {
@@ -42,6 +48,7 @@ span.linenr {
     -webkit-user-select: none;
     -moz-user-select: none;
     user-select: none;
+    color: #aaa;
 }
 
 h1.title {
@@ -54,7 +61,7 @@ h1.title {
     top: 0;
     width: 100%;
     margin: 0;
-    z-index: 2
+    z-index: 2;
 }
 
 /* Without this, the browser doesn't account
@@ -69,19 +76,23 @@ h2:before, h3:before, h4:before, h5:before {
 
 div#table-of-contents {
     width: 25%;
-    height: 100%;
+    height: 75%; /* fallback */
+    height: calc(100% - 53px);
     position: fixed;
     overflow: auto;
     background-color: #f1f1f1;
     padding: 0;
-    top: 54px;
-    margin-bottom: 50px;
+    top: 53px;
     border-right: 1px solid #303030;
     z-index: 2;
 }
 
 div#table-of-contents > h2 {
     margin-left: 10px;
+}
+
+div#table-of-contents ul:first-child {
+    margin-bottom: 20px;
 }
 
 div#table-of-contents ul {
@@ -105,22 +116,30 @@ div#table-of-contents ul li a:hover {
 
 /* TOC level 2 links */
 div#table-of-contents ul li > ul li a {
-    font-size: 100%;
+    font-size: 80%;
     padding-left: 20px;
+    color: #606060;
 }
 
 /* TOC level 3 links */
 div#table-of-contents ul li > ul li > ul li a {
-    font-size: 80%;
+    font-size: 70%;
     padding-left: 30px;
 }
 
 div#main {
     margin-top: 56px;
     margin-left: 25%;
-    padding: 20px 20px 20px 40px;
+    padding: 20px 100px 20px 100px;
 }
 
+#main h2, #main h3, #main h4, #main h5 {
+    padding-bottom: 5px;
+    margin: 50px 0 25px 0;
+    border-bottom: 1px dashed #cdcdcd;
+}
+
+ol.org-ol li { padding: 10px 0 10px 0; }
 
 footer {
     position: fixed;
@@ -133,4 +152,17 @@ footer {
 
 footer a {
     color: #a1a1a1;
+}
+
+
+/*
+ *
+ * CSS for printing / pdf export from html.
+ *
+ */
+
+@media print {
+    h1.title { display: none; }
+    div#table-of-contents { display: none; }
+    div#main { width: 100%; margin: 0; }
 }

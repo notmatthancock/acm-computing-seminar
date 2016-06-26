@@ -1,0 +1,691 @@
+% Created 2016-06-26 Sun 10:39
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\author{Matt Hancock}
+\date{}
+\title{ACM C++ Guide}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs 24.5.1 (Org mode 8.2.10)}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+
+\section{Introduction}
+\label{sec-1}
+Welcome to the ACM C++ guide, a manual for quickly learning C++
+for mathematical and scientific computing applications. The goal of 
+this guide is not to make you a C++ expert, but to quickly teach 
+you enough of the C++ fundamentals and design patterns to help you 
+off the ground. If you should like to go beyond this guide, a 
+few references are listed below.
+
+This guide is split into sections. The sections are ordered in such a way
+that topics in later sections often depend on topics from previous ones. 
+You'll find code snippets peppered throughout the sections. At the end of 
+each major section, you'll find exercises for practice.
+
+\subsection{A little about the language}
+\label{sec-1-1}
+Before you dive in, here is a little about the C++ programming language:
+
+C++ is an extension of the C programming language. Both C and C++ are 
+\textbf{statically-typed} and \textbf{compiled} languages, which means that the \textbf{type} 
+of variables used in your source code must declared explicitly and is 
+checked at when the program is compiled (i.e., translated into a machine 
+executable file).
+
+One (among many) difference between C++ and C, however, is that C++ provides 
+many data structures for the object-oriented programming paradigm. This 
+essentially allows the software writer (that's you) to create custom, complex, 
+reusable data structures. The object-oriented paradigm is extremely useful, 
+but we will only touch the surface of it in this guide.
+
+\subsection{Additional references}
+\label{sec-1-2}
+\begin{itemize}
+\item \href{http://cppreference.com}{C++ reference}
+\item \href{http://www.cplusplus.com/doc/tutorial}{C++ tutorials}
+\item \href{https://en.wikipedia.org/wiki/C\%2B\%2B}{C++ wiki}
+\item \href{http://stackoverflow.com/questions/388242/the-definitive-c-book-guide-and-list}{A compiled list of C++ textbooks from stackoverflow}
+\end{itemize}
+
+\section{Getting started}
+\label{sec-2}
+The particular programming tools that you choose to use will
+likely be largely influenced by the operating system that you use.
+We will use free tools (often developed for GNU / Linux systems) in
+this guide. These tools are mostly available in other (non UNIX-like)
+operating systems as well. For example, on Windows, you could use
+\href{https://www.cygwin.com/}{Cygwin}, or install a dual boot with some Linux distribution 
+(e.g., \href{http://www.ubuntu.com/}{Ubuntu}). On the other hand, MAC OSX, being a BSD-derived system, 
+has many of the required tools already available (although, a command 
+line utility, \href{http://brew.sh}{Brew}, makes building and installing other tools quite simple).
+
+In the following two sections, we'll talk about the two basic types of 
+software that you'll need to begin writing C++ programs.
+
+\subsection{Text editors}
+\label{sec-2-1}
+
+The text editor that you choose to use should be be any program 
+capable of editing plain text files. However, you may find that it's 
+more productive to write in an editor who offers features such as 
+syntax highlighting, code-completion, bracket-matching, or other features. 
+Here are some popular free text editors:
+
+\begin{itemize}
+\item \href{https://atom.io/}{Atom} is a recently open-sourced GUI editor which some have compared to the very popular non-free editor, \href{https://sublimetext.com}{Sublime Text}.
+\item \href{https://www.gnu.org/software/emacs/}{Emacs} is another powerful editor, which allows for highly optimized workflows.
+\item \href{https://wiki.gnome.org/Apps/Gedit}{Gedit} is a nice and simple GUI editor, which is the default in GNOME desktop environment.
+\item \href{https://kate-editor.org}{Kate} is a another simple GUI editor, which is the default in the KDE desktop environment.
+\item \href{http://www.vim.org}{Vim} is a modal editor with a steep learning curve. It offers highly efficient means to edit text, and is available (or it's predecessor, vi) by default on nearly all UNIX-like operating systems.
+\end{itemize}
+
+\subsection{Compilers}
+\label{sec-2-2}
+
+Second, you'll need a program called a \textbf{compiler}. A compiler translates 
+the high-level C++ language into an executable program. In this guide, we 
+will use the \texttt{g++} compiler which is freely available through the 
+\href{https://gcc.gnu.org/}{gnu compiler collection (gcc)}.
+
+\texttt{g++} is a program which you typically call from the command line, which 
+takes as input, your C++ source code file, and produces as output, a 
+binary executable file.
+
+\subsection{Writing a program}
+\label{sec-2-3}
+
+Let's create our first C++ program, the obligatory "Hello, world!". First, 
+fire-up your text editor and create a file called, \texttt{hello.cpp}, with the 
+following contents:
+
+\begin{verbatim}
+1  #include <iostream>
+2  
+3  int main() {
+4    std::cout << "Hello, world!";
+5    return 0;
+6  }
+\end{verbatim}
+
+Now, to compile the program, execute:
+
+\begin{verbatim}
+g++ hello.cpp
+\end{verbatim}
+
+Followed by:
+\begin{verbatim}
+./a.out
+\end{verbatim}
+
+By default, \texttt{g++} calls the resulting binary executable, \texttt{a.out}, but
+you can specify a different output file name by using the \texttt{-o} flag:
+
+\begin{verbatim}
+g++ hello.cpp -o my_executable_file.bin
+\end{verbatim}
+
+Note that in Windows, executable files typically end in \texttt{.exe}. In Unix-like
+systems, there is no particular file-extension type for executables.
+
+\subsubsection{Deconstruction of the "Hello, world!" program}
+\label{sec-2-3-1}
+Let's look at this program line-by-line:
+
+\begin{enumerate}
+\item In line 1, we are including a library called \texttt{iostream}. A standard library (one that is included with C++) is usually included inside angular brackets. The \texttt{iostream} library is used for printing to the screen or prompting for user input.
+
+\item Line 2 is blank. Whitespace is ignored in C++.
+
+\item In line 3, we are declaring a function called \texttt{main} which has a return type of \texttt{int} (short for integer). Functions are followed by parentheses, listing their arguments (our \texttt{main} funcion has no arguments in this case), followed by the function body. The function body is enclosed by brackets. The function \texttt{main} is special - it is the main function (surprise) that is executed when you actually run your program.
+
+\item In line 4, we are giving the \texttt{Hello, world!} string to an object called \texttt{cout}, which prints the string. Note that \texttt{cout} is prefixed by \texttt{std}. The syntax, \texttt{std::cout}, means that \texttt{cout} belongs to the \textbf{namespace} called \texttt{std}. Namespaces are mechanisms for preventing name conflicts.
+
+\item In line 5, we return the value 0. This signifies to the program that called the executable \texttt{hello.cpp} program (the parent program, you could say) that our program exited successfully (i.e., without error).
+
+\item Line 6 closes the the the body of the function, \texttt{main}.
+\end{enumerate}
+
+\section{Data types}
+\label{sec-3}
+As we \hyperref[sec-1-1]{discussed previously}, you must explicitly declare the type of a 
+variable. So, in this section, we'll talk about the main variable 
+types you'll use, namely boolean, integer, floating point types. In 
+the section on \ref{sec-6}, we'll discuss how to build 
+our own custom data types.
+
+\subsection{Boolean}
+\label{sec-3-1}
+A boolean data type is either \texttt{true} or \texttt{false}. There are a number of 
+operators between these types, illustrated in the code snippet below 
+(note that lines starting with \texttt{//} are comments are ignored by the 
+compiler):
+
+\begin{verbatim}
+ 1  bool a,b,c; // Declare the type of variables a, b, and c.
+ 2  a = true;
+ 3  b = false;
+ 4  
+ 5  // !  is logical negation when applied to a single variable.
+ 6  c = !a; // c is false.
+ 7  
+ 8  // && is logical and.
+ 9  c = (a && b); // c is false.
+10  
+11  // || is logical or.
+12  c = (a || b); // c is true.
+\end{verbatim}
+
+We don't often use boolean variables by themselves, but rather as a result 
+of comparing two other data types (such as comparing if one integer is less 
+than another integer).
+
+\subsection{Integer types}
+\label{sec-3-2}
+
+There are \href{http://en.cppreference.com/w/cpp/language/types}{a variety of integer types} in C++. Below, we illustrate a 
+couple. These can be modified further using the \texttt{short} and \texttt{long} 
+keywords, changing the number of bytes occupied by the variable (and 
+hence the maximum and minimum size the variable can take on).
+
+\begin{verbatim}
+ 1  int a = 6; // initialize a to 6.
+ 2  unsigned int b = 7; // initialize b to 7.
+ 3  int c; // declare c to be an integer variable.
+ 4  
+ 5  a = 6;
+ 6  b = 7;
+ 7  
+ 8  c = a / b; // c is 0
+ 9  c = b / a; // c is 1
+10  c = b % a; // c is 1 (% is the integer remainder or modulo operator)
+11  c = a - b; // c is -1
+12  c = a > b; // c is 0 (boolean gets cast to integer)
+13  c = a < b; // c is 1 (boolean gets cast to integer)
+14  c++;       // c is 2 (++ is shorthand for c = c + 1)
+15  
+16  b = a - b; // b is 4294967295 (-1 gets cast to unsigned)
+17  b = b + 1; // b is 0 (b was previously the largest unsigned, so adding one circles it back to zero.)
+18  b += 7;    // b is 7 (+= is shorthand for b = b + 7;
+\end{verbatim}
+
+In the above, we've illustrated the use of signed and unsigned 
+integer types and the operators between them. It is important to 
+take care when you assign a result to a variable that doesn't match 
+the type of the result. In many cases, the result gets implicitly 
+cast to the type of variable being assigned to. The result may or 
+may not match your expectations, as shown above.
+
+\subsection{Floating point types}
+\label{sec-3-3}
+There are two main floating point data types in C++, \texttt{float} and \texttt{double},
+which correspond to \href{https://en.wikipedia.org/wiki/IEEE_floating_point}{IEEE 32- and 64-bit floating point types}. 
+
+\begin{verbatim}
+ 1  #include <iostream>
+ 2  #include <limits>
+ 3  
+ 4  int main() {
+ 5    float a; //  Declare a single precision float.
+ 6    double b; // Declare a double precision float.
+ 7  
+ 8    // Print the max value of a float type.
+ 9    std::cout << std::numeric_limits<float>::max() << std::endl;
+10    // prints 3.40282e+38
+11  
+12  
+13    // Print the max value of a double type.
+14    std::cout << std::numeric_limits<double>::max() << std::endl;
+15    // prints 1.799769e+308
+16  
+17  
+18    // Print machine epsilon of a float type.
+19    std::cout << std::numeric_limits<float>::epsilon() << std::endl;
+20    // prints 1.19209e-07
+21  
+22  
+23    // Print machine epsilon of a double type.
+24    std::cout << std::numeric_limits<double>::epsilon() << std::endl;
+25    // prints 2.22045e-16
+26  
+27    return 0;
+28  }
+\end{verbatim}
+
+\subsection{Casting}
+\label{sec-3-4}
+
+Sometimes it is useful to explicitly cast one variable type as another. 
+This can be done like the following:
+
+\begin{verbatim}
+1  int a; double b = 3.14159;
+2  
+3  a = (int) b;
+4  
+5  std::cout << a << std::endl;
+6  // prints 3
+\end{verbatim}
+
+\subsection{The const modifier}
+\label{sec-3-5}
+
+If the value of some variable should not change, you can use the \texttt{const}
+keyword to protect its status. It is typical to denote \texttt{const} variables 
+with all caps. Try to compile the following program:
+
+\begin{verbatim}
+1  const double PI = 3.14159;
+2  
+3  PI = 3.0;
+\end{verbatim}
+
+You will see an error like, \texttt{error: assignment of read-only variable ‘PI’}. 
+
+\subsection{The typedef keyword}
+\label{sec-3-6}
+Suppose you have a large numerical experiment, where all your code used 
+floating point of type \texttt{double}. Your curious about how the results will 
+be affected by changing the floating point type to single precision \texttt{float}
+type. One solution would be to run a "find and replace" in your editor, but 
+something about that doesn't feel right.
+
+Instead, we can use the \texttt{typedef} statement to define types:
+
+\begin{verbatim}
+ 1  // Define "int_type" to be a short int.
+ 2  typedef short int int_type;
+ 3  
+ 4  // Define "float_type" to be single precision float.
+ 5  typedef float float_type;
+ 6  
+ 7  // Define "array_index_type" to be unsigned long int.
+ 8  typedef unsigned long int array_index_type;
+ 9  
+10  int_type a = -17; 
+11  float_type b = 1.14; 
+12  array_index_type c = 9;
+\end{verbatim}
+
+\subsection{Pointers}
+\label{sec-3-7}
+Pointers are variables that hold the \textbf{memory address} for a variable 
+of a specific type. Pointers are declared by specifying the variable 
+type, followed by the \texttt{*} symbol, followed by the name of the pointer 
+variable, e.g., \texttt{double * x} defines a "pointer to double" variable. 
+The variable, \texttt{x}, therefore, does not hold the value of a \texttt{double} 
+type, but rather, the memory address for a variable of type, \texttt{double}.
+The memory address for a variable can be obtained by the \texttt{\&} operator.
+
+\begin{verbatim}
+1  double * a;
+2  double b = 7;
+3  
+4  // This obtains the memory address of `b`.
+5  a = &b;
+6  
+7  // Prints some memory address (starts with 0x)
+8  std::cout << a << std::endl;
+\end{verbatim}
+
+Similar to obtaining the memory address from a regular variable, using the
+\texttt{\&} operator, you can use the \texttt{*} symbol before a pointer to access the 
+variable value held at the memory location of the pointer. In this context,
+the \texttt{*} symbol is called the \textbf{dereference operator}. This is probably better 
+understood with a short example:
+
+\begin{verbatim}
+ 1  double * a;
+ 2  double b = 7.3;
+ 3  double c;
+ 4  
+ 5  // Now `a` holds the memory address of `b`.
+ 6  a = &b;
+ 7  
+ 8  // `*a` obtains the value of the variable
+ 9  // at the memory address held by `a`.
+10  // So, `c` is 7.3.
+11  c = *a;
+\end{verbatim}
+
+\subsection{Arrays}
+\label{sec-3-8}
+The length of an array can be fixed or dynamic, and how you
+declare the array depends on this.
+
+\subsubsection{Fixed length arrays}
+\label{sec-3-8-1}
+\begin{verbatim}
+1  double a[5];
+2  
+3  a[0] = 1.0;
+4  // etc.
+\end{verbatim}
+
+\subsubsection{Dynamic length arrays}
+\label{sec-3-8-2}
+Dynamic length arrays are made possible through pointers:
+
+\begin{verbatim}
+ 1  // This allocates memory for 5 double types.
+ 2  double * a = new double[5];
+ 3  
+ 4  // Afterwards, you can treat `a` like a normal array.
+ 5  a[0] = 1.0;
+ 6  // etc...
+ 7  
+ 8  // Whenever you use the `new` keyword, you must
+ 9  // delete the memory allocated when you're done by hand.
+10  delete [] a;
+11  
+12  // We can change the size of `a`.
+13  a = new double [10];
+14  
+15  a[0] = 2.0;
+16  // etc...
+17  
+18  delete [] a;
+\end{verbatim}
+
+Note that omitting the first \texttt{delete} statement will cause no error. 
+However, the memory allocated by the first \texttt{new} statement will not 
+be freed, and thus inaccessible. This is bad because the memory cannot 
+be allocated to other resources. You should generally try to avoid 
+manually memory management when possible, but a good tool for debugging 
+memory problems is called \href{http://valgrind.org/}{valgrind}. 
+
+\section{Control structures}
+\label{sec-4}
+\subsection{Conditionals}
+\label{sec-4-1}
+Often a code block should only be executed if some condition is true. 
+Below, we generate a random number between 0 and 1; print the number; and,
+print whether or not the number was greater than 0.5.
+
+\begin{verbatim}
+ 1  #include <iostream>
+ 2  #include <stdlib.h>
+ 3  #include <time.h>
+ 4  
+ 5  int main() {
+ 6    // Seed the random number generator based on the current time.
+ 7    srand(time(NULL));
+ 8  
+ 9    // rand() produces a random integer between 0 and RAND_MAX.
+10    double num = rand() / ((double) RAND_MAX);
+11  
+12    std::cout << "num: " << num << "\n";
+13  
+14    if (num < 0.5) {
+15      std::cout << "num was less than 0.5.\n";
+16    }
+17    else {
+18      std::cout << " was greater than 0.5.\n";
+19    }
+20  
+21    return 0;
+22  }
+\end{verbatim}
+
+You can follow \texttt{else} immediate by another \texttt{if} to have mutiple mutually-
+exclusive blocks:
+
+\begin{verbatim}
+ 1  #include <iostream>
+ 2  #include <stdlib.h>
+ 3  #include <time.h>
+ 4  
+ 5  int main() {
+ 6    // Seed the random number generator based on the current time.
+ 7    srand(time(NULL));
+ 8  
+ 9    // rand() produces a random integer between 0 and RAND_MAX.
+10    double num = rand() / ((double) RAND_MAX);
+11  
+12    std::cout << "num: " << num << "\n";
+13  
+14    if (num >= 0.75) {
+15      std::cout << "num was between 0.75 and 1.\n";
+16    }
+17    else if (num >= 0.5) {
+18      std::cout << "num was between 0.5 and 0.75.";
+19    }
+20    else if (num >= 0.25) {
+21      std::cout << "num was between 0.25 and 0.5.";
+22    }
+23    else {
+24      std::cout << "num was between 0 and 0.25";
+25    }
+26  
+27    return 0;
+28  }
+\end{verbatim}
+
+The conditions are checked in the order that they're written. So, for example,
+in the second condition, we don't need to specify \verb~num >= 0.5 && num < 0.75~ 
+because we know that this condition will only be checked if the previous 
+was false.
+
+\subsection{Loops}
+\label{sec-4-2}
+We discuss two main structures for iterating -- the \texttt{for} and \texttt{while} loops.
+
+\subsubsection{The for loop}
+\label{sec-4-2-1}
+The \texttt{for} loop requires three specifications -- the iteration variable 
+initialization, the termination condition, and the update rule. The body
+of the loop follows these three specifications. Shown below, we declare 
+an array; assign to its components; and, print the current component to 
+the screen.
+
+\begin{verbatim}
+ 1  int length = 11;
+ 2  double x[length];
+ 3  
+ 4  for(int i=0; i < length; i++) {
+ 5    // Assign to each array component.
+ 6    x[i] = (double) i / (length - 1);
+ 7  
+ 8    // Print the current component.
+ 9    std::cout << "x[" << i << "] = " << x[i] << std::endl;
+10  }
+\end{verbatim}
+
+\begin{verbatim}
+x[0] = 0
+x[1] = 0.1
+x[2] = 0.2
+x[3] = 0.3
+x[4] = 0.4
+x[5] = 0.5
+x[6] = 0.6
+x[7] = 0.7
+x[8] = 0.8
+x[9] = 0.9
+x[10] = 1
+\end{verbatim}
+
+You can nest loops, i.e., loops inside of loops inside of \ldots{}
+
+Below, is an example of a double loop for creating and accessing 
+matrix data stored in a flat array. The matrix data is stored in 
+\href{https://en.wikipedia.org/wiki/Row-major-order}{row-major order}. This means the first \texttt{n\_cols} elements of the 
+array named, \texttt{matrix}, will contain the first row of the matrix, 
+the second \texttt{n\_cols} elements of \texttt{matrix} will contain the second row, etc\ldots{}
+
+\begin{verbatim}
+ 1  int n_rows = 4;
+ 2  int n_cols = 3;
+ 3  
+ 4  // Row-major matrix array.
+ 5  double matrix [n_rows*n_cols];
+ 6  
+ 7  // temporary index.
+ 8  int k;
+ 9  
+10  for(int i=0; i < n_rows; i++) {
+11    for(int j=0; j < n_cols; j++) {
+12      // Convert the (i,j) matrix index to the "flat" row-major index.
+13      k = i*n_cols + j;
+14  
+15      // Assign a value of 1.0 to the diagonal,
+16      // 2 to the off-diagonal, and 0 otherwise.
+17      if (i == j) {
+18        matrix[k] = 1.0;
+19      }
+20      else if ((i == (j+1)) || (i == (j-1))){
+21        matrix[k] = 2.0;
+22      }
+23      else {
+24        matrix[k] = 0.0;
+25      }
+26    }
+27  }
+28  
+29  
+30  // Print the matrix elements.
+31  for(int i=0; i < n_rows; i++) {
+32    for(int j=0; j < n_cols; j++) {
+33      k = i*n_cols + j;
+34  
+35      std::cout << matrix[k];
+36      if (j != (n_cols-1)) {
+37        std::cout << ", ";
+38      }
+39    }
+40  
+41    if (i != (n_rows-1)) {
+42      std::cout << "\n";
+43    }
+44  }
+\end{verbatim}
+
+\begin{verbatim}
+1, 2, 0
+2, 1, 2
+0, 2, 1
+0, 0, 2
+\end{verbatim}
+
+\subsubsection{The while loop}
+\label{sec-4-2-2}
+A \texttt{while} loop iterates while a condition is met. Essentially, it is a \texttt{for}
+loop without an update variable. In the following example, we approximate 
+the geometric series:
+
+$$
+1 = \sum_{n=1}^{\infty} \left(\frac{1}{2}\right)^n
+$$
+
+The loop exits when the absolute error, 
+
+$$
+    \text{absolute error} := 1-\sum_{n=1}^N  \left(\frac{1}{2}\right)^n
+$$
+
+is less than some specified value, which we call `tol` (for tolerance).
+
+\begin{verbatim}
+ 1  double sum = 0.0;
+ 2  double base = 0.5;
+ 3  double pow = base; // initialize to base^1
+ 4  double tol = 1e-4;
+ 5  int iter = 1;
+ 6  
+ 7  while((1-sum) >= tol) {
+ 8    // Add `pow` to `sum`.
+ 9    sum += pow;
+10    // Update `pow` by one power of `base`.
+11    pow *= base;
+12  
+13    std::cout << "Iteration: " << iter << ", Sum: " << sum << "\n";
+14    // Update the `iter` val by 1.
+15    iter += 1;
+16  }
+\end{verbatim}
+
+\begin{verbatim}
+Iteration: 1, Sum: 0.5
+Iteration: 2, Sum: 0.75
+Iteration: 3, Sum: 0.875
+Iteration: 4, Sum: 0.9375
+Iteration: 5, Sum: 0.96875
+Iteration: 6, Sum: 0.984375
+Iteration: 7, Sum: 0.992188
+Iteration: 8, Sum: 0.996094
+Iteration: 9, Sum: 0.998047
+Iteration: 10, Sum: 0.999023
+Iteration: 11, Sum: 0.999512
+Iteration: 12, Sum: 0.999756
+Iteration: 13, Sum: 0.999878
+Iteration: 14, Sum: 0.999939
+\end{verbatim}
+
+\subsubsection{The break keyword}
+\label{sec-4-2-3}
+The \texttt{break} keyword provides a mechanism for exiting the direct parent loop
+for which the \texttt{break} statement is placed. For example:
+
+\begin{verbatim}
+1  for(int i=0; i < 3; i++) {
+2    while(true) {
+3      std::cout << "Entering infinite loop number " << (i+1) << "\n";
+4      break;
+5    }
+6    std::cout << "We escaped the infinite loop!\n";
+7  }
+\end{verbatim}
+
+\begin{verbatim}
+Entering infinite loop number 1
+We escaped the infinite loop!
+Entering infinite loop number 2
+We escaped the infinite loop!
+Entering infinite loop number 3
+We escaped the infinite loop!
+\end{verbatim}
+
+The previous example is contrived, but there are situations, where you
+might find the break statement within an infinite loop useful. Of course,
+you should avoid this sort of thing if there is a more straight-forward 
+approach.
+
+
+\subsection{Exercises}
+\label{sec-4-3}
+\begin{enumerate}
+\item Given integers, $n$ and $k$, write a program to compute the binomial coefficient, $\displaystyle {n \choose k}$.
+\item The series, $\displaystyle \sum_{n=1}^{\infty} \frac{1}{n^2}$, converges to $\displaystyle\frac{\pi^2}{6}$. Create a program that approximates this series up to some specified tolerance, printing the absolute error at each iteration.
+\item Fix numbers, $a$ and $b$. Let $x_0 = a$ and $x_N=b$. Let $\Delta x = \frac{b-a}{N}$ and $x_i = a + i \cdot \Delta x$, for $i = 0, 1, \ldots, N$. The left endpoint Riemann sum approximation to the integral, $\displaystyle\int_a^b x^2 dx$, is given by $\displaystyle\sum_{n=1}^N (x_i)^2 \Delta x$. Write a program with $a=0$ and $b=1$, which successively halves $\Delta x$ (starting from the initial value of $\Delta x = 0.5$) until the absolute error between the approximation and the true integral value is less than some specified tolerance. Record the absolute error at each iteration.
+\item Maybe do something with a matrix.
+\end{enumerate}
+
+\section{Functions}
+\label{sec-5}
+\section{Object-oriented programming}
+\label{sec-6}
+\section{}
+\label{sec-7}
+% Emacs 24.5.1 (Org mode 8.2.10)
+\end{document}

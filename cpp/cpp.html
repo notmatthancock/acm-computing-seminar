@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>ACM C++ Guide</title>
-<!-- 2016-06-11 Sat 09:48 -->
+<!-- 2016-06-26 Sun 10:49 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Matt Hancock" />
@@ -135,6 +135,48 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
+<script type="text/javascript" src="http://orgmode.org/mathjax/MathJax.js"></script>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+    MathJax.Hub.Config({
+        // Only one of the two following lines, depending on user settings
+        // First allows browser-native MathML display, second forces HTML/CSS
+        //  config: ["MMLorHTML.js"], jax: ["input/TeX"],
+            jax: ["input/TeX", "output/HTML-CSS"],
+        extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js",
+                     "TeX/noUndefined.js"],
+        tex2jax: {
+            inlineMath: [ ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"], ["\\begin{displaymath}","\\end{displaymath}"] ],
+            skipTags: ["script","noscript","style","textarea","pre","code"],
+            ignoreClass: "tex2jax_ignore",
+            processEscapes: false,
+            processEnvironments: true,
+            preview: "TeX"
+        },
+        showProcessingMessages: true,
+        displayAlign: "center",
+        displayIndent: "2em",
+
+        "HTML-CSS": {
+             scale: 100,
+             availableFonts: ["STIX","TeX"],
+             preferredFont: "TeX",
+             webFont: "TeX",
+             imageFont: "TeX",
+             showMathMenu: true,
+        },
+        MMLorHTML: {
+             prefer: {
+                 MSIE:    "MML",
+                 Firefox: "MML",
+                 Opera:   "HTML",
+                 other:   "HTML"
+             }
+        }
+    });
+/*]]>*///-->
+</script>
 </head>
 <body>
 <div id="content">
@@ -160,6 +202,39 @@ for the JavaScript code in this tag.
 </li>
 </ul>
 </li>
+<li><a href="#sec-3">3. Data types</a>
+<ul>
+<li><a href="#sec-3-1">3.1. Boolean</a></li>
+<li><a href="#sec-3-2">3.2. Integer types</a></li>
+<li><a href="#sec-3-3">3.3. Floating point types</a></li>
+<li><a href="#sec-3-4">3.4. Casting</a></li>
+<li><a href="#sec-3-5">3.5. The const modifier</a></li>
+<li><a href="#sec-3-6">3.6. The typedef keyword</a></li>
+<li><a href="#sec-3-7">3.7. Pointers</a></li>
+<li><a href="#sec-3-8">3.8. Arrays</a>
+<ul>
+<li><a href="#sec-3-8-1">3.8.1. Fixed length arrays</a></li>
+<li><a href="#sec-3-8-2">3.8.2. Dynamic length arrays</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-4">4. Control structures</a>
+<ul>
+<li><a href="#sec-4-1">4.1. Conditionals</a></li>
+<li><a href="#sec-4-2">4.2. Loops</a>
+<ul>
+<li><a href="#sec-4-2-1">4.2.1. The for loop</a></li>
+<li><a href="#sec-4-2-2">4.2.2. The while loop</a></li>
+<li><a href="#sec-4-2-3">4.2.3. The break keyword</a></li>
+</ul>
+</li>
+<li><a href="#sec-4-3">4.3. Exercises</a></li>
+</ul>
+</li>
+<li><a href="#sec-5">5. Functions</a></li>
+<li><a href="#sec-6">6. Object-oriented programming</a></li>
+<li><a href="#sec-7">7. </a></li>
 </ul>
 </div>
 </div>
@@ -169,18 +244,19 @@ for the JavaScript code in this tag.
 <h2 id="sec-1"><span class="section-number-2">1</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-Welcome to the ACM C++ guide, a guide to quickly learning C++
-for mathematical and scientific computing applications. The goal of this
-guide is not to make you a C++ expert, but to quickly teach you enough
-of the C++ fundamentals and design patterns to help you off the ground.
-If you should like to go beyond this guide, a few references are listed
-below.
+Welcome to the ACM C++ guide, a manual for quickly learning C++
+for mathematical and scientific computing applications. The goal of 
+this guide is not to make you a C++ expert, but to quickly teach 
+you enough of the C++ fundamentals and design patterns to help you 
+off the ground. If you should like to go beyond this guide, a 
+few references are listed below.
 </p>
 
 <p>
 This guide is split into sections. The sections are ordered in such a way
 that topics in later sections often depend on topics from previous ones. 
-You'll find code snippets peppered throughout the sections.
+You'll find code snippets peppered throughout the sections. At the end of 
+each major section, you'll find exercises for practice.
 </p>
 </div>
 
@@ -213,6 +289,8 @@ but we will only touch the surface of it in this guide.
 <h3 id="sec-1-2"><span class="section-number-3">1.2</span> Additional references</h3>
 <div class="outline-text-3" id="text-1-2">
 <ul class="org-ul">
+<li><a href="http://cppreference.com">C++ reference</a>
+</li>
 <li><a href="http://www.cplusplus.com/doc/tutorial">C++ tutorials</a>
 </li>
 <li><a href="https://en.wikipedia.org/wiki/C++">C++ wiki</a>
@@ -234,7 +312,7 @@ We will use free tools (often developed for GNU / Linux systems) in
 this guide. These tools are mostly available in other (non UNIX-like)
 operating systems as well. For example, on Windows, you could use
 <a href="https://www.cygwin.com/">Cygwin</a>, or install a dual boot with some Linux distribution 
-(e.g., <a href="http://www.ubuntu.com/">Ubuntu</a>a). On the other hand, MAC OSX, being a BSD-derived system, 
+(e.g., <a href="http://www.ubuntu.com/">Ubuntu</a>). On the other hand, MAC OSX, being a BSD-derived system, 
 has many of the required tools already available (although, a command 
 line utility, <a href="http://brew.sh">Brew</a>, makes building and installing other tools quite simple).
 </p>
@@ -300,11 +378,11 @@ following contents:
 
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;iostream&gt;</span>
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #6495ed;">#include</span> <span style="color: #ffa07a;">&lt;iostream&gt;</span>
 <span class="linenr">2: </span>
-<span class="linenr">3: </span><span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>() {
-<span class="linenr">4: </span>  <span style="color: #008b8b;">std</span>::cout &lt;&lt; <span style="color: #8b2252;">"Hello, world!"</span>;
-<span class="linenr">5: </span>  <span style="color: #a020f0;">return</span> 0;
+<span class="linenr">3: </span><span style="color: #9370db;">int</span> <span style="color: #00ff7f;">main</span>() {
+<span class="linenr">4: </span>  <span style="color: #1e90ff;">std</span>::cout &lt;&lt; <span style="color: #ffa07a;">"Hello, world!"</span>;
+<span class="linenr">5: </span>  <span style="color: #20b2aa; font-weight: bold;">return</span> 0;
 <span class="linenr">6: </span>}
 </pre>
 </div>
@@ -367,9 +445,705 @@ Let's look at this program line-by-line:
 <li>Line 6 closes the the the body of the function, <code>main</code>.
 </li>
 </ol>
+</div>
+</div>
+</div>
+</div>
 
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Data types</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+As we <a href="#sec-1-1">discussed previously</a>, you must explicitly declare the type of a 
+variable. So, in this section, we'll talk about the main variable 
+types you'll use, namely boolean, integer, floating point types. In 
+the section on <a href="#sec-6">6</a>, we'll discuss how to build 
+our own custom data types.
+</p>
+</div>
+
+<div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Boolean</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+A boolean data type is either <code>true</code> or <code>false</code>. There are a number of 
+operators between these types, illustrated in the code snippet below 
+(note that lines starting with <code>//</code> are comments are ignored by the 
+compiler):
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #9370db;">bool</span> <span style="color: #9acd32;">a</span>,<span style="color: #9acd32;">b</span>,<span style="color: #9acd32;">c</span>; <span style="color: #cd853f;">// </span><span style="color: #cd853f;">Declare the type of variables a, b, and c.</span>
+<span class="linenr"> 2: </span>a = <span style="color: #1e90ff;">true</span>;
+<span class="linenr"> 3: </span>b = <span style="color: #1e90ff;">false</span>;
+<span class="linenr"> 4: </span>
+<span class="linenr"> 5: </span><span style="color: #cd853f;">// </span><span style="color: #cd853f;">!  is logical negation when applied to a single variable.</span>
+<span class="linenr"> 6: </span>c = !a; <span style="color: #cd853f;">// </span><span style="color: #cd853f;">c is false.</span>
+<span class="linenr"> 7: </span>
+<span class="linenr"> 8: </span><span style="color: #cd853f;">// </span><span style="color: #cd853f;">&amp;&amp; is logical and.</span>
+<span class="linenr"> 9: </span>c = (a &amp;&amp; b); <span style="color: #cd853f;">// </span><span style="color: #cd853f;">c is false.</span>
+<span class="linenr">10: </span>
+<span class="linenr">11: </span><span style="color: #cd853f;">// </span><span style="color: #cd853f;">|| is logical or.</span>
+<span class="linenr">12: </span>c = (a || b); <span style="color: #cd853f;">// </span><span style="color: #cd853f;">c is true.</span>
+</pre>
+</div>
+
+<p>
+We don't often use boolean variables by themselves, but rather as a result 
+of comparing two other data types (such as comparing if one integer is less 
+than another integer).
+</p>
 </div>
 </div>
+
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Integer types</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+There are <a href="http://en.cppreference.com/w/cpp/language/types">a variety of integer types</a> in C++. Below, we illustrate a 
+couple. These can be modified further using the <code>short</code> and <code>long</code> 
+keywords, changing the number of bytes occupied by the variable (and 
+hence the maximum and minimum size the variable can take on).
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #9370db;">int</span> <span style="color: #9acd32;">a</span> = 6; <span style="color: #cd853f;">// </span><span style="color: #cd853f;">initialize a to 6.</span>
+<span class="linenr"> 2: </span><span style="color: #9370db;">unsigned</span> <span style="color: #9370db;">int</span> <span style="color: #9acd32;">b</span> = 7; <span style="color: #cd853f;">// </span><span style="color: #cd853f;">initialize b to 7.</span>
+<span class="linenr"> 3: </span><span style="color: #9370db;">int</span> <span style="color: #9acd32;">c</span>; <span style="color: #cd853f;">// </span><span style="color: #cd853f;">declare c to be an integer variable.</span>
+<span class="linenr"> 4: </span>
+<span class="linenr"> 5: </span>a = 6;
+<span class="linenr"> 6: </span>b = 7;
+<span class="linenr"> 7: </span>
+<span class="linenr"> 8: </span>c = a / b; <span style="color: #cd853f;">// </span><span style="color: #cd853f;">c is 0</span>
+<span class="linenr"> 9: </span>c = b / a; <span style="color: #cd853f;">// </span><span style="color: #cd853f;">c is 1</span>
+<span class="linenr">10: </span>c = b % a; <span style="color: #cd853f;">// </span><span style="color: #cd853f;">c is 1 (% is the integer remainder or modulo operator)</span>
+<span class="linenr">11: </span>c = a - b; <span style="color: #cd853f;">// </span><span style="color: #cd853f;">c is -1</span>
+<span class="linenr">12: </span>c = a &gt; b; <span style="color: #cd853f;">// </span><span style="color: #cd853f;">c is 0 (boolean gets cast to integer)</span>
+<span class="linenr">13: </span>c = a &lt; b; <span style="color: #cd853f;">// </span><span style="color: #cd853f;">c is 1 (boolean gets cast to integer)</span>
+<span class="linenr">14: </span>c++;       <span style="color: #cd853f;">// </span><span style="color: #cd853f;">c is 2 (++ is shorthand for c = c + 1)</span>
+<span class="linenr">15: </span>
+<span class="linenr">16: </span>b = a - b; <span style="color: #cd853f;">// </span><span style="color: #cd853f;">b is 4294967295 (-1 gets cast to unsigned)</span>
+<span class="linenr">17: </span>b = b + 1; <span style="color: #cd853f;">// </span><span style="color: #cd853f;">b is 0 (b was previously the largest unsigned,</span>
+<span class="linenr">18: </span>           <span style="color: #cd853f;">// </span><span style="color: #cd853f;">so adding one circles it back to zero.)</span>
+<span class="linenr">19: </span>b += 7;    <span style="color: #cd853f;">// </span><span style="color: #cd853f;">b is 7 (+= is shorthand for b = b + 7;</span>
+</pre>
+</div>
+
+<p>
+In the above, we've illustrated the use of signed and unsigned 
+integer types and the operators between them. It is important to 
+take care when you assign a result to a variable that doesn't match 
+the type of the result. In many cases, the result gets implicitly 
+cast to the type of variable being assigned to. The result may or 
+may not match your expectations, as shown above.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> Floating point types</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+There are two main floating point data types in C++, <code>float</code> and <code>double</code>,
+which correspond to <a href="https://en.wikipedia.org/wiki/IEEE_floating_point">IEEE 32- and 64-bit floating point types</a>. 
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #6495ed;">#include</span> <span style="color: #ffa07a;">&lt;iostream&gt;</span>
+<span class="linenr"> 2: </span><span style="color: #6495ed;">#include</span> <span style="color: #ffa07a;">&lt;limits&gt;</span>
+<span class="linenr"> 3: </span>
+<span class="linenr"> 4: </span><span style="color: #9370db;">int</span> <span style="color: #00ff7f;">main</span>() {
+<span class="linenr"> 5: </span>  <span style="color: #9370db;">float</span> <span style="color: #9acd32;">a</span>; <span style="color: #cd853f;">//  </span><span style="color: #cd853f;">Declare a single precision float.</span>
+<span class="linenr"> 6: </span>  <span style="color: #9370db;">double</span> <span style="color: #9acd32;">b</span>; <span style="color: #cd853f;">// </span><span style="color: #cd853f;">Declare a double precision float.</span>
+<span class="linenr"> 7: </span>
+<span class="linenr"> 8: </span>  <span style="color: #cd853f;">// </span><span style="color: #cd853f;">Print the max value of a float type.</span>
+<span class="linenr"> 9: </span>  <span style="color: #1e90ff;">std</span>::cout &lt;&lt; <span style="color: #1e90ff;">std</span>::<span style="color: #1e90ff;">numeric_limits</span>&lt;<span style="color: #9370db;">float</span>&gt;::max() &lt;&lt; <span style="color: #1e90ff;">std</span>::endl;
+<span class="linenr">10: </span>
+<span class="linenr">11: </span>  <span style="color: #cd853f;">// </span><span style="color: #cd853f;">Print the max value of a double type.</span>
+<span class="linenr">12: </span>  <span style="color: #1e90ff;">std</span>::cout &lt;&lt; <span style="color: #1e90ff;">std</span>::<span style="color: #1e90ff;">numeric_limits</span>&lt;<span style="color: #9370db;">double</span>&gt;::max() &lt;&lt; <span style="color: #1e90ff;">std</span>::endl;
+<span class="linenr">13: </span>
+<span class="linenr">14: </span>  <span style="color: #cd853f;">// </span><span style="color: #cd853f;">Print machine epsilon of a float type.</span>
+<span class="linenr">15: </span>  <span style="color: #1e90ff;">std</span>::cout &lt;&lt; <span style="color: #1e90ff;">std</span>::<span style="color: #1e90ff;">numeric_limits</span>&lt;<span style="color: #9370db;">float</span>&gt;::epsilon() &lt;&lt; <span style="color: #1e90ff;">std</span>::endl;
+<span class="linenr">16: </span>
+<span class="linenr">17: </span>  <span style="color: #cd853f;">// </span><span style="color: #cd853f;">Print machine epsilon of a double type.</span>
+<span class="linenr">18: </span>  <span style="color: #1e90ff;">std</span>::cout &lt;&lt; <span style="color: #1e90ff;">std</span>::<span style="color: #1e90ff;">numeric_limits</span>&lt;<span style="color: #9370db;">double</span>&gt;::epsilon() &lt;&lt; <span style="color: #1e90ff;">std</span>::endl;
+<span class="linenr">19: </span>
+<span class="linenr">20: </span>  <span style="color: #20b2aa; font-weight: bold;">return</span> 0;
+<span class="linenr">21: </span>}
+</pre>
+</div>
+
+<pre class="example">
+3.40282e+38
+1.79769e+308
+1.19209e-07
+2.22045e-16
+</pre>
+</div>
+</div>
+
+
+<div id="outline-container-sec-3-4" class="outline-3">
+<h3 id="sec-3-4"><span class="section-number-3">3.4</span> Casting</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+Sometimes it is useful to explicitly cast one variable type as another. 
+This can be done like the following:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #9370db;">int</span> <span style="color: #9acd32;">a</span>; <span style="color: #9370db;">double</span> <span style="color: #9acd32;">b</span> = 3.14159;
+<span class="linenr">2: </span>
+<span class="linenr">3: </span>a = (<span style="color: #9370db;">int</span>) b;
+<span class="linenr">4: </span>
+<span class="linenr">5: </span><span style="color: #1e90ff;">std</span>::cout &lt;&lt; a &lt;&lt; <span style="color: #1e90ff;">std</span>::endl;
+</pre>
+</div>
+
+<pre class="example">
+3
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-3-5" class="outline-3">
+<h3 id="sec-3-5"><span class="section-number-3">3.5</span> The const modifier</h3>
+<div class="outline-text-3" id="text-3-5">
+<p>
+If the value of some variable should not change, you can use the <code>const</code>
+keyword to protect its status. It is typical to denote <code>const</code> variables 
+with all caps. Try to compile the following program:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #20b2aa; font-weight: bold;">const</span> <span style="color: #9370db;">double</span> <span style="color: #9acd32;">PI</span> = 3.14159;
+<span class="linenr">2: </span>
+<span class="linenr">3: </span>PI = 3.0;
+</pre>
+</div>
+
+<p>
+You will see an error like, <code>error: assignment of read-only variable ‘PI’</code>. 
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3-6" class="outline-3">
+<h3 id="sec-3-6"><span class="section-number-3">3.6</span> The typedef keyword</h3>
+<div class="outline-text-3" id="text-3-6">
+<p>
+Suppose you have a large numerical experiment, where all your code used 
+floating point of type <code>double</code>. Your curious about how the results will 
+be affected by changing the floating point type to single precision <code>float</code>
+type. One solution would be to run a "find and replace" in your editor, but 
+something about that doesn't feel right.
+</p>
+
+<p>
+Instead, we can use the <code>typedef</code> statement to define types:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #cd853f;">// </span><span style="color: #cd853f;">Define "int_type" to be a short int.</span>
+<span class="linenr"> 2: </span><span style="color: #20b2aa; font-weight: bold;">typedef</span> <span style="color: #9370db;">short</span> <span style="color: #9370db;">int</span> <span style="color: #9370db;">int_type</span>;
+<span class="linenr"> 3: </span>
+<span class="linenr"> 4: </span><span style="color: #cd853f;">// </span><span style="color: #cd853f;">Define "float_type" to be single precision float.</span>
+<span class="linenr"> 5: </span><span style="color: #20b2aa; font-weight: bold;">typedef</span> <span style="color: #9370db;">float</span> <span style="color: #9370db;">float_type</span>;
+<span class="linenr"> 6: </span>
+<span class="linenr"> 7: </span><span style="color: #cd853f;">// </span><span style="color: #cd853f;">Define "array_index_type" to be unsigned long int.</span>
+<span class="linenr"> 8: </span><span style="color: #20b2aa; font-weight: bold;">typedef</span> <span style="color: #9370db;">unsigned</span> <span style="color: #9370db;">long</span> <span style="color: #9370db;">int</span> <span style="color: #9370db;">array_index_type</span>;
+<span class="linenr"> 9: </span>
+<span class="linenr">10: </span><span style="color: #9370db;">int_type</span> <span style="color: #9acd32;">a</span> = -17; 
+<span class="linenr">11: </span><span style="color: #9370db;">float_type</span> <span style="color: #9acd32;">b</span> = 1.14; 
+<span class="linenr">12: </span><span style="color: #9370db;">array_index_type</span> <span style="color: #9acd32;">c</span> = 9;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3-7" class="outline-3">
+<h3 id="sec-3-7"><span class="section-number-3">3.7</span> Pointers</h3>
+<div class="outline-text-3" id="text-3-7">
+<p>
+Pointers are variables that hold the <b>memory address</b> for a variable 
+of a specific type. Pointers are declared by specifying the variable 
+type, followed by the <code>*</code> symbol, followed by the name of the pointer 
+variable, e.g., <code>double * x</code> defines a "pointer to double" variable. 
+The variable, <code>x</code>, therefore, does not hold the value of a <code>double</code> 
+type, but rather, the memory address for a variable of type, <code>double</code>.
+The memory address for a variable can be obtained by the <code>&amp;</code> operator.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #9370db;">double</span> * <span style="color: #9acd32;">a</span>;
+<span class="linenr">2: </span><span style="color: #9370db;">double</span> <span style="color: #9acd32;">b</span> = 7;
+<span class="linenr">3: </span>
+<span class="linenr">4: </span><span style="color: #cd853f;">// </span><span style="color: #cd853f;">This obtains the memory address of `b`.</span>
+<span class="linenr">5: </span>a = &amp;b;
+<span class="linenr">6: </span>
+<span class="linenr">7: </span><span style="color: #cd853f;">// </span><span style="color: #cd853f;">Prints some memory address (starts with 0x)</span>
+<span class="linenr">8: </span><span style="color: #1e90ff;">std</span>::cout &lt;&lt; a &lt;&lt; <span style="color: #1e90ff;">std</span>::endl;
+</pre>
+</div>
+
+<pre class="example">
+0x7ffe91607d38
+</pre>
+
+<p>
+Similar to obtaining the memory address from a regular variable, using the
+<code>&amp;</code> operator, you can use the <code>*</code> symbol before a pointer to access the 
+variable value held at the memory location of the pointer. In this context,
+the <code>*</code> symbol is called the <b>dereference operator</b>. This is probably better 
+understood with a short example:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #9370db;">double</span> * <span style="color: #9acd32;">a</span>;
+<span class="linenr"> 2: </span><span style="color: #9370db;">double</span> <span style="color: #9acd32;">b</span> = 7.3;
+<span class="linenr"> 3: </span><span style="color: #9370db;">double</span> <span style="color: #9acd32;">c</span>;
+<span class="linenr"> 4: </span>
+<span class="linenr"> 5: </span><span style="color: #cd853f;">// </span><span style="color: #cd853f;">Now `a` holds the memory address of `b`.</span>
+<span class="linenr"> 6: </span>a = &amp;b;
+<span class="linenr"> 7: </span>
+<span class="linenr"> 8: </span><span style="color: #cd853f;">// </span><span style="color: #cd853f;">`*a` obtains the value of the variable</span>
+<span class="linenr"> 9: </span><span style="color: #cd853f;">// </span><span style="color: #cd853f;">at the memory address held by `a`.</span>
+<span class="linenr">10: </span><span style="color: #cd853f;">// </span><span style="color: #cd853f;">So, `c` is 7.3.</span>
+<span class="linenr">11: </span>c = *a;
+<span class="linenr">12: </span>
+<span class="linenr">13: </span><span style="color: #1e90ff;">std</span>::cout &lt;&lt; c &lt;&lt; <span style="color: #ffa07a;">"\n"</span>;
+</pre>
+</div>
+
+<pre class="example">
+7.3
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-3-8" class="outline-3">
+<h3 id="sec-3-8"><span class="section-number-3">3.8</span> Arrays</h3>
+<div class="outline-text-3" id="text-3-8">
+<p>
+The length of an array can be fixed or dynamic, and how you
+declare the array depends on this.
+</p>
+</div>
+
+<div id="outline-container-sec-3-8-1" class="outline-4">
+<h4 id="sec-3-8-1"><span class="section-number-4">3.8.1</span> Fixed length arrays</h4>
+<div class="outline-text-4" id="text-3-8-1">
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #9370db;">double</span> <span style="color: #9acd32;">a</span>[5];
+<span class="linenr">2: </span>
+<span class="linenr">3: </span>a[0] = 1.0;
+<span class="linenr">4: </span><span style="color: #cd853f;">// </span><span style="color: #cd853f;">etc.</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3-8-2" class="outline-4">
+<h4 id="sec-3-8-2"><span class="section-number-4">3.8.2</span> Dynamic length arrays</h4>
+<div class="outline-text-4" id="text-3-8-2">
+<p>
+Dynamic length arrays are made possible through pointers:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #cd853f;">// </span><span style="color: #cd853f;">This allocates memory for 5 double types.</span>
+<span class="linenr"> 2: </span><span style="color: #9370db;">double</span> * <span style="color: #9acd32;">a</span> = <span style="color: #20b2aa; font-weight: bold;">new</span> <span style="color: #9370db;">double</span>[5];
+<span class="linenr"> 3: </span>
+<span class="linenr"> 4: </span><span style="color: #cd853f;">// </span><span style="color: #cd853f;">Afterwards, you can treat `a` like a normal array.</span>
+<span class="linenr"> 5: </span>a[0] = 1.0;
+<span class="linenr"> 6: </span><span style="color: #cd853f;">// </span><span style="color: #cd853f;">etc...</span>
+<span class="linenr"> 7: </span>
+<span class="linenr"> 8: </span><span style="color: #cd853f;">// </span><span style="color: #cd853f;">Whenever you use the `new` keyword, you must</span>
+<span class="linenr"> 9: </span><span style="color: #cd853f;">// </span><span style="color: #cd853f;">delete the memory allocated when you're done by hand.</span>
+<span class="linenr">10: </span><span style="color: #20b2aa; font-weight: bold;">delete</span> [] a;
+<span class="linenr">11: </span>
+<span class="linenr">12: </span><span style="color: #cd853f;">// </span><span style="color: #cd853f;">We can change the size of `a`.</span>
+<span class="linenr">13: </span>a = <span style="color: #20b2aa; font-weight: bold;">new</span> <span style="color: #9370db;">double</span> [10];
+<span class="linenr">14: </span>
+<span class="linenr">15: </span>a[0] = 2.0;
+<span class="linenr">16: </span><span style="color: #cd853f;">// </span><span style="color: #cd853f;">etc...</span>
+<span class="linenr">17: </span>
+<span class="linenr">18: </span><span style="color: #20b2aa; font-weight: bold;">delete</span> [] a;
+</pre>
+</div>
+
+<p>
+Note that omitting the first <code>delete</code> statement will cause no error. 
+However, the memory allocated by the first <code>new</code> statement will not 
+be freed, and thus inaccessible. This is bad because the memory cannot 
+be allocated to other resources. You should generally try to avoid 
+manually memory management when possible, but a good tool for debugging 
+memory problems is called <a href="http://valgrind.org/">valgrind</a>. 
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Control structures</h2>
+<div class="outline-text-2" id="text-4">
+</div><div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Conditionals</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+Often a code block should only be executed if some condition is true. 
+Below, we generate a random number between 0 and 1; print the number; and,
+print whether or not the number was greater than 0.5.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #6495ed;">#include</span> <span style="color: #ffa07a;">&lt;iostream&gt;</span>
+<span class="linenr"> 2: </span><span style="color: #6495ed;">#include</span> <span style="color: #ffa07a;">&lt;stdlib.h&gt;</span>
+<span class="linenr"> 3: </span><span style="color: #6495ed;">#include</span> <span style="color: #ffa07a;">&lt;time.h&gt;</span>
+<span class="linenr"> 4: </span>
+<span class="linenr"> 5: </span><span style="color: #9370db;">int</span> <span style="color: #00ff7f;">main</span>() {
+<span class="linenr"> 6: </span>  <span style="color: #cd853f;">// </span><span style="color: #cd853f;">Seed the random number generator based on the current time.</span>
+<span class="linenr"> 7: </span>  srand(time(<span style="color: #1e90ff;">NULL</span>));
+<span class="linenr"> 8: </span>
+<span class="linenr"> 9: </span>  <span style="color: #cd853f;">// </span><span style="color: #cd853f;">rand() produces a random integer between 0 and RAND_MAX.</span>
+<span class="linenr">10: </span>  <span style="color: #9370db;">double</span> <span style="color: #9acd32;">num</span> = rand() / ((<span style="color: #9370db;">double</span>) RAND_MAX);
+<span class="linenr">11: </span>
+<span class="linenr">12: </span>  <span style="color: #1e90ff;">std</span>::cout &lt;&lt; <span style="color: #ffa07a;">"num: "</span> &lt;&lt; num &lt;&lt; <span style="color: #ffa07a;">"\n"</span>;
+<span class="linenr">13: </span>
+<span class="linenr">14: </span>  <span style="color: #20b2aa; font-weight: bold;">if</span> (num &lt; 0.5) {
+<span class="linenr">15: </span>    <span style="color: #1e90ff;">std</span>::cout &lt;&lt; <span style="color: #ffa07a;">"num was less than 0.5.\n"</span>;
+<span class="linenr">16: </span>  }
+<span class="linenr">17: </span>  <span style="color: #20b2aa; font-weight: bold;">else</span> {
+<span class="linenr">18: </span>    <span style="color: #1e90ff;">std</span>::cout &lt;&lt; <span style="color: #ffa07a;">"num was greater than 0.5.\n"</span>;
+<span class="linenr">19: </span>  }
+<span class="linenr">20: </span>
+<span class="linenr">21: </span>  <span style="color: #20b2aa; font-weight: bold;">return</span> 0;
+<span class="linenr">22: </span>}
+</pre>
+</div>
+
+<pre class="example">
+num: 0.441215
+num was less than 0.5.
+</pre>
+
+<p>
+You can follow <code>else</code> immediate by another <code>if</code> to have mutiple mutually-
+exclusive blocks:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #6495ed;">#include</span> <span style="color: #ffa07a;">&lt;iostream&gt;</span>
+<span class="linenr"> 2: </span><span style="color: #6495ed;">#include</span> <span style="color: #ffa07a;">&lt;stdlib.h&gt;</span>
+<span class="linenr"> 3: </span><span style="color: #6495ed;">#include</span> <span style="color: #ffa07a;">&lt;time.h&gt;</span>
+<span class="linenr"> 4: </span>
+<span class="linenr"> 5: </span><span style="color: #9370db;">int</span> <span style="color: #00ff7f;">main</span>() {
+<span class="linenr"> 6: </span>  <span style="color: #cd853f;">// </span><span style="color: #cd853f;">Seed the random number generator based on the current time.</span>
+<span class="linenr"> 7: </span>  srand(time(<span style="color: #1e90ff;">NULL</span>));
+<span class="linenr"> 8: </span>
+<span class="linenr"> 9: </span>  <span style="color: #cd853f;">// </span><span style="color: #cd853f;">rand() produces a random integer between 0 and RAND_MAX.</span>
+<span class="linenr">10: </span>  <span style="color: #9370db;">double</span> <span style="color: #9acd32;">num</span> = rand() / ((<span style="color: #9370db;">double</span>) RAND_MAX);
+<span class="linenr">11: </span>
+<span class="linenr">12: </span>  <span style="color: #1e90ff;">std</span>::cout &lt;&lt; <span style="color: #ffa07a;">"num: "</span> &lt;&lt; num &lt;&lt; <span style="color: #ffa07a;">"\n"</span>;
+<span class="linenr">13: </span>
+<span class="linenr">14: </span>  <span style="color: #20b2aa; font-weight: bold;">if</span> (num &gt;= 0.75) {
+<span class="linenr">15: </span>    <span style="color: #1e90ff;">std</span>::cout &lt;&lt; <span style="color: #ffa07a;">"num was between 0.75 and 1.\n"</span>;
+<span class="linenr">16: </span>  }
+<span class="linenr">17: </span>  <span style="color: #20b2aa; font-weight: bold;">else</span> <span style="color: #20b2aa; font-weight: bold;">if</span> (num &gt;= 0.5) {
+<span class="linenr">18: </span>    <span style="color: #1e90ff;">std</span>::cout &lt;&lt; <span style="color: #ffa07a;">"num was between 0.5 and 0.75."</span>;
+<span class="linenr">19: </span>  }
+<span class="linenr">20: </span>  <span style="color: #20b2aa; font-weight: bold;">else</span> <span style="color: #20b2aa; font-weight: bold;">if</span> (num &gt;= 0.25) {
+<span class="linenr">21: </span>    <span style="color: #1e90ff;">std</span>::cout &lt;&lt; <span style="color: #ffa07a;">"num was between 0.25 and 0.5."</span>;
+<span class="linenr">22: </span>  }
+<span class="linenr">23: </span>  <span style="color: #20b2aa; font-weight: bold;">else</span> {
+<span class="linenr">24: </span>    <span style="color: #1e90ff;">std</span>::cout &lt;&lt; <span style="color: #ffa07a;">"num was between 0 and 0.25"</span>;
+<span class="linenr">25: </span>  }
+<span class="linenr">26: </span>
+<span class="linenr">27: </span>  <span style="color: #20b2aa; font-weight: bold;">return</span> 0;
+<span class="linenr">28: </span>}
+</pre>
+</div>
+
+<pre class="example">
+num: 0.441215
+num was between 0.25 and 0.5.
+</pre>
+
+<p>
+The conditions are checked in the order that they're written. So, for example,
+in the second condition, we don't need to specify <code>num &gt;= 0.5 &amp;&amp; num &lt; 0.75</code> 
+because we know that this condition will only be checked if the previous 
+was false.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> Loops</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+We discuss two main structures for iterating &#x2013; the <code>for</code> and <code>while</code> loops.
+</p>
+</div>
+
+<div id="outline-container-sec-4-2-1" class="outline-4">
+<h4 id="sec-4-2-1"><span class="section-number-4">4.2.1</span> The for loop</h4>
+<div class="outline-text-4" id="text-4-2-1">
+<p>
+The <code>for</code> loop requires three specifications &#x2013; the iteration variable 
+initialization, the termination condition, and the update rule. The body
+of the loop follows these three specifications. Shown below, we declare 
+an array; assign to its components; and, print the current component to 
+the screen.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #9370db;">int</span> <span style="color: #9acd32;">length</span> = 11;
+<span class="linenr"> 2: </span><span style="color: #9370db;">double</span> <span style="color: #9acd32;">x</span>[length];
+<span class="linenr"> 3: </span>
+<span class="linenr"> 4: </span><span style="color: #20b2aa; font-weight: bold;">for</span>(<span style="color: #9370db;">int</span> <span style="color: #9acd32;">i</span>=0; i &lt; length; i++) {
+<span class="linenr"> 5: </span>  <span style="color: #cd853f;">// </span><span style="color: #cd853f;">Assign to each array component.</span>
+<span class="linenr"> 6: </span>  x[i] = (<span style="color: #9370db;">double</span>) i / (length - 1);
+<span class="linenr"> 7: </span>
+<span class="linenr"> 8: </span>  <span style="color: #cd853f;">// </span><span style="color: #cd853f;">Print the current component.</span>
+<span class="linenr"> 9: </span>  <span style="color: #1e90ff;">std</span>::cout &lt;&lt; <span style="color: #ffa07a;">"x["</span> &lt;&lt; i &lt;&lt; <span style="color: #ffa07a;">"] = "</span> &lt;&lt; x[i] &lt;&lt; <span style="color: #1e90ff;">std</span>::endl;
+<span class="linenr">10: </span>}
+</pre>
+</div>
+
+<pre class="example">
+x[0] = 0
+x[1] = 0.1
+x[2] = 0.2
+x[3] = 0.3
+x[4] = 0.4
+x[5] = 0.5
+x[6] = 0.6
+x[7] = 0.7
+x[8] = 0.8
+x[9] = 0.9
+x[10] = 1
+</pre>
+
+<p>
+You can nest loops, i.e., loops inside of loops inside of &#x2026;
+</p>
+
+<p>
+Below, is an example of a double loop for creating and accessing 
+matrix data stored in a flat array. The matrix data is stored in 
+<a href="https://en.wikipedia.org/wiki/Row-major-order">row-major order</a>. This means the first <code>n_cols</code> elements of the 
+array named, <code>matrix</code>, will contain the first row of the matrix, 
+the second <code>n_cols</code> elements of <code>matrix</code> will contain the second row, etc&#x2026;
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #9370db;">int</span> <span style="color: #9acd32;">n_rows</span> = 4;
+<span class="linenr"> 2: </span><span style="color: #9370db;">int</span> <span style="color: #9acd32;">n_cols</span> = 3;
+<span class="linenr"> 3: </span>
+<span class="linenr"> 4: </span><span style="color: #cd853f;">// </span><span style="color: #cd853f;">Row-major matrix array.</span>
+<span class="linenr"> 5: </span><span style="color: #9370db;">double</span> <span style="color: #9acd32;">matrix</span> [n_rows*n_cols];
+<span class="linenr"> 6: </span>
+<span class="linenr"> 7: </span><span style="color: #cd853f;">// </span><span style="color: #cd853f;">temporary index.</span>
+<span class="linenr"> 8: </span><span style="color: #9370db;">int</span> <span style="color: #9acd32;">k</span>;
+<span class="linenr"> 9: </span>
+<span class="linenr">10: </span><span style="color: #20b2aa; font-weight: bold;">for</span>(<span style="color: #9370db;">int</span> <span style="color: #9acd32;">i</span>=0; i &lt; n_rows; i++) {
+<span class="linenr">11: </span>  <span style="color: #20b2aa; font-weight: bold;">for</span>(<span style="color: #9370db;">int</span> <span style="color: #9acd32;">j</span>=0; j &lt; n_cols; j++) {
+<span class="linenr">12: </span>    <span style="color: #cd853f;">// </span><span style="color: #cd853f;">Convert the (i,j) matrix index to the "flat" row-major index.</span>
+<span class="linenr">13: </span>    k = i*n_cols + j;
+<span class="linenr">14: </span>
+<span class="linenr">15: </span>    <span style="color: #cd853f;">// </span><span style="color: #cd853f;">Assign a value of 1.0 to the diagonal,</span>
+<span class="linenr">16: </span>    <span style="color: #cd853f;">// </span><span style="color: #cd853f;">2 to the off-diagonal, and 0 otherwise.</span>
+<span class="linenr">17: </span>    <span style="color: #20b2aa; font-weight: bold;">if</span> (i == j) {
+<span class="linenr">18: </span>      matrix[k] = 1.0;
+<span class="linenr">19: </span>    }
+<span class="linenr">20: </span>    <span style="color: #20b2aa; font-weight: bold;">else</span> <span style="color: #20b2aa; font-weight: bold;">if</span> ((i == (j+1)) || (i == (j-1))){
+<span class="linenr">21: </span>      matrix[k] = 2.0;
+<span class="linenr">22: </span>    }
+<span class="linenr">23: </span>    <span style="color: #20b2aa; font-weight: bold;">else</span> {
+<span class="linenr">24: </span>      matrix[k] = 0.0;
+<span class="linenr">25: </span>    }
+<span class="linenr">26: </span>  }
+<span class="linenr">27: </span>}
+<span class="linenr">28: </span>
+<span class="linenr">29: </span>
+<span class="linenr">30: </span><span style="color: #cd853f;">// </span><span style="color: #cd853f;">Print the matrix elements.</span>
+<span class="linenr">31: </span><span style="color: #20b2aa; font-weight: bold;">for</span>(<span style="color: #9370db;">int</span> <span style="color: #9acd32;">i</span>=0; i &lt; n_rows; i++) {
+<span class="linenr">32: </span>  <span style="color: #20b2aa; font-weight: bold;">for</span>(<span style="color: #9370db;">int</span> <span style="color: #9acd32;">j</span>=0; j &lt; n_cols; j++) {
+<span class="linenr">33: </span>    k = i*n_cols + j;
+<span class="linenr">34: </span>
+<span class="linenr">35: </span>    <span style="color: #1e90ff;">std</span>::cout &lt;&lt; matrix[k];
+<span class="linenr">36: </span>    <span style="color: #20b2aa; font-weight: bold;">if</span> (j != (n_cols-1)) {
+<span class="linenr">37: </span>      <span style="color: #1e90ff;">std</span>::cout &lt;&lt; <span style="color: #ffa07a;">", "</span>;
+<span class="linenr">38: </span>    }
+<span class="linenr">39: </span>  }
+<span class="linenr">40: </span>
+<span class="linenr">41: </span>  <span style="color: #20b2aa; font-weight: bold;">if</span> (i != (n_rows-1)) {
+<span class="linenr">42: </span>    <span style="color: #1e90ff;">std</span>::cout &lt;&lt; <span style="color: #ffa07a;">"\n"</span>;
+<span class="linenr">43: </span>  }
+<span class="linenr">44: </span>}
+</pre>
+</div>
+
+<pre class="example">
+1, 2, 0
+2, 1, 2
+0, 2, 1
+0, 0, 2
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-4-2-2" class="outline-4">
+<h4 id="sec-4-2-2"><span class="section-number-4">4.2.2</span> The while loop</h4>
+<div class="outline-text-4" id="text-4-2-2">
+<p>
+A <code>while</code> loop iterates while a condition is met. Essentially, it is a <code>for</code>
+loop without an update variable. In the following example, we approximate 
+the geometric series:
+</p>
+
+<p>
+$$
+1 = \sum_{n=1}^{\infty} \left(\frac{1}{2}\right)^n
+$$
+</p>
+
+<p>
+The loop exits when the absolute error, 
+</p>
+
+<p>
+$$
+    \text{absolute error} := 1-\sum_{n=1}^N  \left(\frac{1}{2}\right)^n
+$$
+</p>
+
+<p>
+is less than some specified value, which we call `tol` (for tolerance).
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #9370db;">double</span> <span style="color: #9acd32;">sum</span> = 0.0;
+<span class="linenr"> 2: </span><span style="color: #9370db;">double</span> <span style="color: #9acd32;">base</span> = 0.5;
+<span class="linenr"> 3: </span><span style="color: #9370db;">double</span> <span style="color: #9acd32;">pow</span> = base; <span style="color: #cd853f;">// </span><span style="color: #cd853f;">initialize to base^1</span>
+<span class="linenr"> 4: </span><span style="color: #9370db;">double</span> <span style="color: #9acd32;">tol</span> = 1e-4;
+<span class="linenr"> 5: </span><span style="color: #9370db;">int</span> <span style="color: #9acd32;">iter</span> = 1;
+<span class="linenr"> 6: </span>
+<span class="linenr"> 7: </span><span style="color: #20b2aa; font-weight: bold;">while</span>((1-sum) &gt;= tol) {
+<span class="linenr"> 8: </span>  <span style="color: #cd853f;">// </span><span style="color: #cd853f;">Add `pow` to `sum`.</span>
+<span class="linenr"> 9: </span>  sum += pow;
+<span class="linenr">10: </span>  <span style="color: #cd853f;">// </span><span style="color: #cd853f;">Update `pow` by one power of `base`.</span>
+<span class="linenr">11: </span>  pow *= base;
+<span class="linenr">12: </span>
+<span class="linenr">13: </span>  <span style="color: #1e90ff;">std</span>::cout &lt;&lt; <span style="color: #ffa07a;">"Iteration: "</span> &lt;&lt; iter &lt;&lt; <span style="color: #ffa07a;">", Sum: "</span> &lt;&lt; sum &lt;&lt; <span style="color: #ffa07a;">"\n"</span>;
+<span class="linenr">14: </span>  <span style="color: #cd853f;">// </span><span style="color: #cd853f;">Update the `iter` val by 1.</span>
+<span class="linenr">15: </span>  iter += 1;
+<span class="linenr">16: </span>}
+</pre>
+</div>
+
+<pre class="example">
+Iteration: 1, Sum: 0.5
+Iteration: 2, Sum: 0.75
+Iteration: 3, Sum: 0.875
+Iteration: 4, Sum: 0.9375
+Iteration: 5, Sum: 0.96875
+Iteration: 6, Sum: 0.984375
+Iteration: 7, Sum: 0.992188
+Iteration: 8, Sum: 0.996094
+Iteration: 9, Sum: 0.998047
+Iteration: 10, Sum: 0.999023
+Iteration: 11, Sum: 0.999512
+Iteration: 12, Sum: 0.999756
+Iteration: 13, Sum: 0.999878
+Iteration: 14, Sum: 0.999939
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-4-2-3" class="outline-4">
+<h4 id="sec-4-2-3"><span class="section-number-4">4.2.3</span> The break keyword</h4>
+<div class="outline-text-4" id="text-4-2-3">
+<p>
+The <code>break</code> keyword provides a mechanism for exiting the direct parent loop
+for which the <code>break</code> statement is placed. For example:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #20b2aa; font-weight: bold;">for</span>(<span style="color: #9370db;">int</span> <span style="color: #9acd32;">i</span>=0; i &lt; 3; i++) {
+<span class="linenr">2: </span>  <span style="color: #20b2aa; font-weight: bold;">while</span>(<span style="color: #1e90ff;">true</span>) {
+<span class="linenr">3: </span>    <span style="color: #1e90ff;">std</span>::cout &lt;&lt; <span style="color: #ffa07a;">"Entering infinite loop number "</span> &lt;&lt; (i+1) &lt;&lt; <span style="color: #ffa07a;">"\n"</span>;
+<span class="linenr">4: </span>    <span style="color: #20b2aa; font-weight: bold;">break</span>;
+<span class="linenr">5: </span>  }
+<span class="linenr">6: </span>  <span style="color: #1e90ff;">std</span>::cout &lt;&lt; <span style="color: #ffa07a;">"We escaped the infinite loop!\n"</span>;
+<span class="linenr">7: </span>}
+</pre>
+</div>
+
+<pre class="example">
+Entering infinite loop number 1
+We escaped the infinite loop!
+Entering infinite loop number 2
+We escaped the infinite loop!
+Entering infinite loop number 3
+We escaped the infinite loop!
+</pre>
+
+<p>
+The previous example is contrived, but there are situations, where you
+might find the break statement within an infinite loop useful. Of course,
+you should avoid this sort of thing if there is a more straight-forward 
+approach.
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-4-3" class="outline-3">
+<h3 id="sec-4-3"><span class="section-number-3">4.3</span> Exercises</h3>
+<div class="outline-text-3" id="text-4-3">
+<ol class="org-ol">
+<li>Given integers, \(n\) and \(k\), write a program to compute the binomial coefficient, \(\displaystyle {n \choose k}\).
+</li>
+<li>The series, \(\displaystyle \sum_{n=1}^{\infty} \frac{1}{n^2}\), converges to \(\displaystyle\frac{\pi^2}{6}\). Create a program that approximates this series up to some specified tolerance, printing the absolute error at each iteration.
+</li>
+<li>Fix numbers, \(a\) and \(b\). Let \(x_0 = a\) and \(x_N=b\). Let \(\Delta x = \frac{b-a}{N}\) and \(x_i = a + i \cdot \Delta x\), for \(i = 0, 1, \ldots, N\). The left endpoint Riemann sum approximation to the integral, \(\displaystyle\int_a^b x^2 dx\), is given by \(\displaystyle\sum_{n=1}^N (x_i)^2 \Delta x\). Write a program with \(a=0\) and \(b=1\), which successively halves \(\Delta x\) (starting from the initial value of \(\Delta x = 0.5\)) until the absolute error between the approximation and the true integral value is less than some specified tolerance. Record the absolute error at each iteration.
+</li>
+<li>Maybe do something with a matrix.
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Functions</h2>
+</div>
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> Object-oriented programming</h2>
+</div>
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> </h2>
+<div class="outline-text-2" id="text-7">
 </div>
 </div>
 </div>
