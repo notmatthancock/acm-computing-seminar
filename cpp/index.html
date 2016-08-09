@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2016-06-26 Sun 18:37 -->
+<!-- 2016-08-05 Fri 15:49 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
-<title>ACM C++ Guide</title>
+<title>ACM Computing Seminar C++ Guide</title>
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Matt Hancock" />
 <style type="text/css">
@@ -94,7 +94,8 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="../css/main.css">
+<link rel="stylesheet" type="text/css" href="../css/guides.css">
+<script src="../js/guides.js"></script>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -166,7 +167,7 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<h1 class="title">ACM C++ Guide</h1>
+<h1 class="title">ACM Computing Seminar C++ Guide</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
@@ -216,11 +217,12 @@ for the JavaScript code in this tag.
 </li>
 <li><a href="#orgheadline27">5. Functions</a></li>
 <li><a href="#orgheadline8">6. Object-oriented programming</a></li>
-<li><a href="#orgheadline28">7. </a></li>
 </ul>
 </div>
 </div>
 <div id="main">
+
+<a href="../" id="home-link">ACM Computing Seminar Home</a>
 
 <div id="outline-container-orgheadline3" class="outline-2">
 <h2 id="orgheadline3"><span class="section-number-2">1</span> Introduction</h2>
@@ -252,7 +254,7 @@ Before you dive in, here is a little about the C++ programming language:
 <p>
 C++ is an extension of the C programming language. Both C and C++ are 
 <b>statically-typed</b> and <b>compiled</b> languages, which means that the <b>type</b> 
-of variables used in your source code must declared explicitly and is 
+of variables used in your source code must be declared explicitly and is 
 checked at when the program is compiled (i.e., translated into a machine 
 executable file).
 </p>
@@ -287,12 +289,12 @@ but we will only touch the surface of it in this guide.
 The particular programming tools that you choose to use will
 likely be largely influenced by the operating system that you use.
 We will use free tools (often developed for GNU / Linux systems) in
-this guide. These tools are mostly available in other (non UNIX-like)
-operating systems as well. For example, on Windows, you could use
-<a href="https://www.cygwin.com/">Cygwin</a>, or install a dual boot with some Linux distribution 
-(e.g., <a href="http://www.ubuntu.com/">Ubuntu</a>). On the other hand, MAC OSX, being a BSD-derived system, 
-has many of the required tools already available (although, a command 
-line utility, <a href="http://brew.sh/">Brew</a>, makes building and installing other tools quite simple).
+this guide. These tools are mostly available in other operating 
+systems as well. For example, on Windows, you could use <a href="https://www.cygwin.com/">Cygwin</a>, or 
+install a dual boot with some Linux distribution (e.g., <a href="http://www.ubuntu.com/">Ubuntu</a>). On the 
+other hand, MAC OSX, being a BSD-derived system, has many of the 
+required tools already available (although, a command line utility, 
+<a href="http://brew.sh/">Brew</a>, makes building and installing other tools very simple).
 </p>
 
 <p>
@@ -307,7 +309,7 @@ software that you'll need to begin writing C++ programs.
 <p>
 The text editor that you choose to use should be be any program 
 capable of editing plain text files. However, you may find that it's 
-more productive to write in an editor who offers features such as 
+more productive to write in an editor that offers features such as 
 syntax highlighting, code-completion, bracket-matching, or other features. 
 Here are some popular free text editors:
 </p>
@@ -393,23 +395,6 @@ you can specify a different output file name by using the <code>-o</code> flag:
 <p>
 Note that in Windows, executable files typically end in <code>.exe</code>. In Unix-like
 systems, there is no particular file-extension type for executables.
-</p>
-
-<p>
-;; <b>*</b> Deconstruction of the "Hello, world!" program
-;; Let's look at this program line-by-line:
-;; 
-;; 1. In line 1, we are including a library called <code>iostream</code>. A standard library (one that is included with C++) is usually included inside angular brackets. The <code>iostream</code> library is used for printing to the screen or prompting for user input.
-;; 
-;; 2. Line 2 is blank. Whitespace is ignored in C++.
-;; 
-;; 3. In line 3, we are declaring a function called <code>main</code> which has a return type of <code>int</code> (short for integer). Functions are followed by parentheses, listing their arguments (our <code>main</code> funcion has no arguments in this case), followed by the function body. The function body is enclosed by brackets. The function <code>main</code> is special - it is the main function (surprise) that is executed when you actually run your program.
-;; 
-;; 4. In line 4, we are giving the <code>Hello, world!</code> string to an object called <code>cout</code>, which prints the string. Note that <code>cout</code> is prefixed by <code>std</code>. The syntax, <code>std::cout</code>, means that <code>cout</code> belongs to the <b>namespace</b> called <code>std</code>. Namespaces are mechanisms for preventing name conflicts.
-;; 
-;; 5. In line 5, we return the value 0. This signifies to the program that called the executable <code>hello.cpp</code> program (the parent program, you could say) that our program exited successfully (i.e., without error).
-;; 
-;; 6. Line 6 closes the the the body of the function, <code>main</code>.
 </p>
 </div>
 </div>
@@ -659,7 +644,7 @@ The memory address for a variable can be obtained by the <code>&amp;</code> oper
 </div>
 
 <pre class="example">
-0x7ffeb2306aa8
+0x7ffd416bc908
 </pre>
 
 <p>
@@ -800,7 +785,7 @@ print whether or not the number was greater than 0.5.
 </div>
 
 <pre class="example">
-num: 0.912195
+num: 0.686166
 num was greater than 0.5.
 </pre>
 
@@ -843,8 +828,8 @@ exclusive blocks:
 </div>
 
 <pre class="example">
-num: 0.272404
-num was between 0.25 and 0.5.
+num: 0.545278
+num was between 0.5 and 0.75.
 </pre>
 
 <p>
@@ -1000,7 +985,7 @@ The loop exits when the absolute error,
 </p>
 
 <p>
-is less than some specified value, which we call `tol` (for tolerance).
+is less than some specified tolerance, <code>tol</code>.
 </p>
 
 <div class="org-src-container">
@@ -1017,28 +1002,29 @@ is less than some specified value, which we call `tol` (for tolerance).
 <span class="linenr">10: </span>  <span style="color: #cd853f;">// </span><span style="color: #cd853f;">Update `pow` by one power of `base`.</span>
 <span class="linenr">11: </span>  pow *= base;
 <span class="linenr">12: </span>
-<span class="linenr">13: </span>  <span style="color: #1e90ff;">std</span>::cout &lt;&lt; <span style="color: #ffa07a;">"Iteration: "</span> &lt;&lt; iter &lt;&lt; <span style="color: #ffa07a;">", Sum: "</span> &lt;&lt; sum &lt;&lt; <span style="color: #ffa07a;">"\n"</span>;
-<span class="linenr">14: </span>  <span style="color: #cd853f;">// </span><span style="color: #cd853f;">Update the `iter` val by 1.</span>
-<span class="linenr">15: </span>  iter += 1;
-<span class="linenr">16: </span>}
+<span class="linenr">13: </span>  printf(<span style="color: #ffa07a;">"Iter: %03d, Sum: %.5f, Abs Err: %.5f\n"</span>, iter, sum, 1-sum); 
+<span class="linenr">14: </span>
+<span class="linenr">15: </span>  <span style="color: #cd853f;">// </span><span style="color: #cd853f;">Update the `iter` val by 1.</span>
+<span class="linenr">16: </span>  iter += 1;
+<span class="linenr">17: </span>}
 </pre>
 </div>
 
 <pre class="example">
-Iteration: 1, Sum: 0.5
-Iteration: 2, Sum: 0.75
-Iteration: 3, Sum: 0.875
-Iteration: 4, Sum: 0.9375
-Iteration: 5, Sum: 0.96875
-Iteration: 6, Sum: 0.984375
-Iteration: 7, Sum: 0.992188
-Iteration: 8, Sum: 0.996094
-Iteration: 9, Sum: 0.998047
-Iteration: 10, Sum: 0.999023
-Iteration: 11, Sum: 0.999512
-Iteration: 12, Sum: 0.999756
-Iteration: 13, Sum: 0.999878
-Iteration: 14, Sum: 0.999939
+Iter: 001, Sum: 0.50000, Abs Err: 0.50000
+Iter: 002, Sum: 0.75000, Abs Err: 0.25000
+Iter: 003, Sum: 0.87500, Abs Err: 0.12500
+Iter: 004, Sum: 0.93750, Abs Err: 0.06250
+Iter: 005, Sum: 0.96875, Abs Err: 0.03125
+Iter: 006, Sum: 0.98438, Abs Err: 0.01562
+Iter: 007, Sum: 0.99219, Abs Err: 0.00781
+Iter: 008, Sum: 0.99609, Abs Err: 0.00391
+Iter: 009, Sum: 0.99805, Abs Err: 0.00195
+Iter: 010, Sum: 0.99902, Abs Err: 0.00098
+Iter: 011, Sum: 0.99951, Abs Err: 0.00049
+Iter: 012, Sum: 0.99976, Abs Err: 0.00024
+Iter: 013, Sum: 0.99988, Abs Err: 0.00012
+Iter: 014, Sum: 0.99994, Abs Err: 0.00006
 </pre>
 </div>
 </div>
@@ -1101,10 +1087,7 @@ approach.
 </div>
 <div id="outline-container-orgheadline8" class="outline-2">
 <h2 id="orgheadline8"><span class="section-number-2">6</span> Object-oriented programming</h2>
-</div>
-<div id="outline-container-orgheadline28" class="outline-2">
-<h2 id="orgheadline28"><span class="section-number-2">7</span> </h2>
-<div class="outline-text-2" id="text-7">
+<div class="outline-text-2" id="text-6">
 </div>
 </div>
 </div>

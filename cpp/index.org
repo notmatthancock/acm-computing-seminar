@@ -1,9 +1,12 @@
-#+title: ACM C++ Guide
+#+title: ACM Computing Seminar C++ Guide
 #+author: Matt Hancock
 #+date: 
 #+options: html-postamble:nil
-#+html_head: <link rel="stylesheet" type="text/css" href="../css/main.css">
+#+html_head: <link rel="stylesheet" type="text/css" href="../css/guides.css">
+#+html_head: <script src="../js/guides.js"></script>
 #+html: <div id="main">
+
+#+html: <a href="../" id="home-link">ACM Computing Seminar Home</a>
 
 * Introduction
 Welcome to the ACM C++ guide, a manual for quickly learning C++
@@ -23,7 +26,7 @@ Before you dive in, here is a little about the C++ programming language:
 
 C++ is an extension of the C programming language. Both C and C++ are 
 *statically-typed* and *compiled* languages, which means that the *type* 
-of variables used in your source code must declared explicitly and is 
+of variables used in your source code must be declared explicitly and is 
 checked at when the program is compiled (i.e., translated into a machine 
 executable file).
 
@@ -43,12 +46,12 @@ but we will only touch the surface of it in this guide.
 The particular programming tools that you choose to use will
 likely be largely influenced by the operating system that you use.
 We will use free tools (often developed for GNU / Linux systems) in
-this guide. These tools are mostly available in other (non UNIX-like)
-operating systems as well. For example, on Windows, you could use
-[[https://www.cygwin.com/][Cygwin]], or install a dual boot with some Linux distribution 
-(e.g., [[http://www.ubuntu.com/][Ubuntu]]). On the other hand, MAC OSX, being a BSD-derived system, 
-has many of the required tools already available (although, a command 
-line utility, [[http://brew.sh][Brew]], makes building and installing other tools quite simple).
+this guide. These tools are mostly available in other operating 
+systems as well. For example, on Windows, you could use [[https://www.cygwin.com/][Cygwin]], or 
+install a dual boot with some Linux distribution (e.g., [[http://www.ubuntu.com/][Ubuntu]]). On the 
+other hand, MAC OSX, being a BSD-derived system, has many of the 
+required tools already available (although, a command line utility, 
+[[http://brew.sh][Brew]], makes building and installing other tools very simple).
 
 In the following two sections, we'll talk about the two basic types of 
 software that you'll need to begin writing C++ programs.
@@ -57,7 +60,7 @@ software that you'll need to begin writing C++ programs.
 
 The text editor that you choose to use should be be any program 
 capable of editing plain text files. However, you may find that it's 
-more productive to write in an editor who offers features such as 
+more productive to write in an editor that offers features such as 
 syntax highlighting, code-completion, bracket-matching, or other features. 
 Here are some popular free text editors:
 
@@ -114,21 +117,6 @@ you can specify a different output file name by using the =-o= flag:
 Note that in Windows, executable files typically end in =.exe=. In Unix-like
 systems, there is no particular file-extension type for executables.
 
-;; *** Deconstruction of the "Hello, world!" program
-;; Let's look at this program line-by-line:
-;; 
-;; 1. In line 1, we are including a library called =iostream=. A standard library (one that is included with C++) is usually included inside angular brackets. The =iostream= library is used for printing to the screen or prompting for user input.
-;; 
-;; 2. Line 2 is blank. Whitespace is ignored in C++.
-;; 
-;; 3. In line 3, we are declaring a function called =main= which has a return type of =int= (short for integer). Functions are followed by parentheses, listing their arguments (our =main= funcion has no arguments in this case), followed by the function body. The function body is enclosed by brackets. The function =main= is special - it is the main function (surprise) that is executed when you actually run your program.
-;; 
-;; 4. In line 4, we are giving the =Hello, world!= string to an object called =cout=, which prints the string. Note that =cout= is prefixed by =std=. The syntax, =std::cout=, means that =cout= belongs to the *namespace* called =std=. Namespaces are mechanisms for preventing name conflicts.
-;; 
-;; 5. In line 5, we return the value 0. This signifies to the program that called the executable =hello.cpp= program (the parent program, you could say) that our program exited successfully (i.e., without error).
-;; 
-;; 6. Line 6 closes the the the body of the function, =main=.
-   
 * Data types
 As we [[A little about the language][discussed previously]], you must explicitly declare the type of a 
 variable. So, in this section, we'll talk about the main variable 
@@ -575,9 +563,9 @@ $$
     \text{absolute error} := 1-\sum_{n=1}^N  \left(\frac{1}{2}\right)^n
 $$
 
-is less than some specified value, which we call `tol` (for tolerance).
+is less than some specified tolerance, =tol=.
 
-#+begin_src cpp -n :includes <iostream> :exports both :results output
+#+begin_src cpp -n :includes <iostream> <cstdio> :exports both :results output
   double sum = 0.0;
   double base = 0.5;
   double pow = base; // initialize to base^1
@@ -590,7 +578,8 @@ is less than some specified value, which we call `tol` (for tolerance).
     // Update `pow` by one power of `base`.
     pow *= base;
 
-    std::cout << "Iteration: " << iter << ", Sum: " << sum << "\n";
+    printf("Iter: %03d, Sum: %.5f, Abs Err: %.5f\n", iter, sum, 1-sum); 
+
     // Update the `iter` val by 1.
     iter += 1;
   }
@@ -598,20 +587,20 @@ is less than some specified value, which we call `tol` (for tolerance).
 
 #+RESULTS:
 #+begin_example
-Iteration: 1, Sum: 0.5
-Iteration: 2, Sum: 0.75
-Iteration: 3, Sum: 0.875
-Iteration: 4, Sum: 0.9375
-Iteration: 5, Sum: 0.96875
-Iteration: 6, Sum: 0.984375
-Iteration: 7, Sum: 0.992188
-Iteration: 8, Sum: 0.996094
-Iteration: 9, Sum: 0.998047
-Iteration: 10, Sum: 0.999023
-Iteration: 11, Sum: 0.999512
-Iteration: 12, Sum: 0.999756
-Iteration: 13, Sum: 0.999878
-Iteration: 14, Sum: 0.999939
+Iter: 001, Sum: 0.50000, Abs Err: 0.50000
+Iter: 002, Sum: 0.75000, Abs Err: 0.25000
+Iter: 003, Sum: 0.87500, Abs Err: 0.12500
+Iter: 004, Sum: 0.93750, Abs Err: 0.06250
+Iter: 005, Sum: 0.96875, Abs Err: 0.03125
+Iter: 006, Sum: 0.98438, Abs Err: 0.01562
+Iter: 007, Sum: 0.99219, Abs Err: 0.00781
+Iter: 008, Sum: 0.99609, Abs Err: 0.00391
+Iter: 009, Sum: 0.99805, Abs Err: 0.00195
+Iter: 010, Sum: 0.99902, Abs Err: 0.00098
+Iter: 011, Sum: 0.99951, Abs Err: 0.00049
+Iter: 012, Sum: 0.99976, Abs Err: 0.00024
+Iter: 013, Sum: 0.99988, Abs Err: 0.00012
+Iter: 014, Sum: 0.99994, Abs Err: 0.00006
 #+end_example
 
 *** The break keyword
@@ -650,5 +639,4 @@ approach.
 
 * Functions
 * Object-oriented programming
-*   
 #+html: </div>

@@ -20,6 +20,19 @@ a:hover {
     color: tomato;
 }
 
+a#home-link {
+    text-align: center;
+    font-size: 12px;
+    position: fixed;
+    width: 100%; left: 0; bottom: 0;
+    z-index: 3;
+    padding: 5px 0 5px 0;
+    background-color: #aaa;
+    color: #303030;
+}
+
+a#home-link:hover { color: #707070; }
+
 /* Make long code blocks scrollable. */
 pre, pre.src {
     color: #eee;
@@ -52,7 +65,7 @@ span.linenr {
 }
 
 h1.title {
-    font-size: 200%;
+    font-size: 175%;
     text-align: center;
     background-color: #353535;
     color: #fff;
@@ -77,12 +90,12 @@ h2:before, h3:before, h4:before, h5:before {
 div#table-of-contents {
     width: 25%;
     height: 75%; /* fallback */
-    height: calc(100% - 53px);
+    height: calc(100% - 48px);
     position: fixed;
     overflow: auto;
     background-color: #f1f1f1;
     padding: 0;
-    top: 53px;
+    top: 48px;
     border-right: 1px solid #303030;
     z-index: 2;
 }
@@ -101,7 +114,7 @@ div#table-of-contents ul {
     padding: 0;
 }
 
-/* TOC level 1 (and base props for all) links */
+/* TOC links all levels */
 div#table-of-contents ul li a {
     display: block;
     padding: 10px;
@@ -110,14 +123,40 @@ div#table-of-contents ul li a {
     text-decoration: none;
 }
 
-div#table-of-contents ul li a:hover {
-    background-color: #fff;
+/* TOC level 1 links */
+div#text-table-of-contents > ul:first-child > li > a {
+    background-color: #e4e4e4;
 }
 
+div#text-table-of-contents > ul:first-child > li > a:hover {
+    background-color: #ccc;
+}
+
+/*div#text-table-of-contents > ul:first-child > li > a:after {
+    content: '+';
+    float: right;
+}*/
+
 /* TOC level 2 links */
-div#table-of-contents ul li > ul li a {
+div#text-table-of-contents > ul:first-child > li > ul {
+    overflow: hidden;
+    transition: max-height 0.25s ease-out;
+    max-height: 0;
+}
+
+div#text-table-of-contents > ul:first-child > li > ul.show {
+    max-height: 500px;
+    transition: 0.25s ease-out;
+}
+
+div#text-table-of-contents ul li > ul li a {
     font-size: 80%;
     padding-left: 20px;
+    color: #606060;
+}
+
+div#table-of-contents ul li > ul li a:hover {
+    background-color: #d0d0d0;
     color: #606060;
 }
 

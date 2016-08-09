@@ -1,0 +1,49 @@
+\documentclass[12pt]{article}
+\usepackage{geometry}
+\usepackage{amsmath,amssymb,amstext,amsfonts}
+\usepackage{graphicx}
+
+\begin{document}
+
+\section*{Example Assignment} 
+\section*{Foundations of Computational Math}
+\subsubsection*{Due date: 11:59PM on September 23rd 2048}
+
+\vspace{0.5in}
+
+\subsection*{Problem}
+
+Consider the forward, backward, and central difference approximations to the derivative of $f$ at $x$, respectively:
+
+\begin{enumerate}
+    \item $\displaystyle F_h[f](x) = \frac{f(x+h) - f(x)}{h}$
+    \item $\displaystyle B_h[f](x) = \frac{f(x) - f(x-h)}{h}$
+    \item $\displaystyle C_h[f](x) = \frac{f(x+h) - f(x-h)}{2h}$
+\end{enumerate}
+
+\noindent Analyze the absolute error in the above numerical approximations as $h \to 0$, for the following:
+\begin{enumerate}
+    \item $f_1(x) = \sin(x)$ at $x=1.0$ and $x=2.0$.
+    \item $f_2(x) = \exp\left(-\frac{x^2}{2}\right)$ at $x=1.1$ and $x=2.2$.
+\end{enumerate}
+Confirm numerically the order (with respect to $h$) of the respective numerical approximations.
+
+\vspace{0.1in}
+
+% \subsection*{Problem 2}
+% 
+% Consider the interval, $[a,b]$, with $N$ equally-spaced subintervals, of spacing $h = \frac{b-a}{N}$. A function, $f(x)$, is sampled at the grid points, $x_i = a+i \cdot h$, for $i=0, 1, \ldots, N$.
+% 
+% \vspace{0.2in}
+% 
+% \noindent Devise a numerical approximation to $f'(x)$ using finite difference operations that is $O(h^2)$ both in the interior ($i=1,\ldots,N-1$), and at the boundaries ($i=0$, $i=N$).
+% 
+% \vspace{0.2in}
+% 
+% \noindent Confirm the order of your method numerically, for $f(x) = \sin(x)$ on $[0,\frac{\pi}{2}]$, for increasing values of $N$, using the norm $\displaystyle ||f'(x) - D_h[f](x)||_\infty = \max_i |f'(x_i) - D_h[f](x_i)|$, where $D_h$ is your difference operator.
+
+
+\pagenumbering{gobble}
+
+
+\end{document}

@@ -1,7 +1,0 @@
-#+title: ACM Computing Seminar Resources
-#+author:  
-#+date: 
-#+options: html-postamble:nil
-
-#+html: <style> table { margin: 0 auto; font-size: 130%; border: 0; } table td { padding: 40px; } </style>
-| [[./cpp/cpp.html][C++]] | [[./fortran/fortran.html][Fortran]] |

@@ -1,0 +1,52 @@
+body {
+    font-size: 18px;
+    font-family: sans-serif;
+    padding: 0 50px 50px 50px;
+    color: #222;
+}
+table { font-size: 18px; }
+table#contact td:first-child { font-weight: bold; padding-right: 15px; }
+
+div#main {
+    margin: 0 auto;
+    width: 70%;
+    max-width: 900px;
+}
+
+a,a:visited { color: #dc143c; } /* crimson */
+a:hover { background-color: #ffe566; } /* gold */
+
+
+table#class-info { border-collapse: collapse; width: 100%; }
+table#class-info tr td:first-child { font-weight: bold; width: 25%; }
+
+hr { margin: 20px 0 20px 0; border: 1px solid #ddd; }
+
+table#calendar {
+    border-collapse: collapse;
+    background: #ddd;
+}
+
+table#calendar thead {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    background: #ededed;
+}
+
+table#calendar tbody {
+    display: block;
+    height: 150px;
+    overflow-y: auto;
+    font-size: 90%;
+}
+
+table#calendar tr td:first-child { width: 15%; }
+table#calendar tr td:nth-child(2) { width: 25%; text-align: center; }
+table#calendar tbody tr:nth-child(even) { background: #808080; }
+table#calendar td { padding: 8px 24px 8px 24px; }
+table#calendar tbody tr td { font-size: 85%; }
+table#calendar thead, tbody, tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
