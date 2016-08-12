@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.5.8)  9 AUG 2016 14:05
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.4.28)  12 AUG 2016 13:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -269,33 +269,29 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2]
-<../figures/f1.pdf, id=21, 975.46936pt x 534.19576pt>
+<../figures/f1.pdf, id=24, 975.46936pt x 534.19576pt>
 File: ../figures/f1.pdf Graphic file (type pdf)
  <use ../figures/f1.pdf>
-Package pdftex.def Info: ../figures/f1.pdf used on input line 117.
+Package pdftex.def Info: ../figures/f1.pdf used on input line 118.
 (pdftex.def)             Requested size: 469.75502pt x 257.25877pt.
 
-[3] <../figures/f2.pdf, id=26, 975.46936pt x 534.19576pt>
+[3] <../figures/f2.pdf, id=29, 975.46936pt x 534.19576pt>
 File: ../figures/f2.pdf Graphic file (type pdf)
 
 <use ../figures/f2.pdf>
-Package pdftex.def Info: ../figures/f2.pdf used on input line 124.
+Package pdftex.def Info: ../figures/f2.pdf used on input line 125.
 (pdftex.def)             Requested size: 469.75502pt x 257.25877pt.
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-[4 <../figures/f1.pdf> <../figures/f2.pdf
+ [4 <../figures/f1.pdf> <../figures/f2.pdf
 
 pdfTeX warning: pdflatex (file ../figures/f2.pdf): PDF inclusion: multiple pdfs
  with page group included in a single page
 >] [5] (./report.aux) ) 
 Here is how much of TeX's memory you used:
- 2879 strings out of 494953
- 38621 string characters out of 6180978
- 104564 words of memory out of 5000000
- 6126 multiletter control sequences out of 15000+600000
- 11520 words of font info for 44 fonts, out of 8000000 for 9000
+ 2894 strings out of 494953
+ 38763 string characters out of 6180977
+ 105564 words of memory out of 5000000
+ 6135 multiletter control sequences out of 15000+600000
+ 13710 words of font info for 53 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  37i,9n,32p,1337b,223s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
@@ -304,17 +300,19 @@ cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10
 .pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><
 /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/sh
 are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/tex
-live/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/te
-xmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
-ublic/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmtt10.pfb>
-Output written on report.pdf (5 pages, 201643 bytes).
+live/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texlive/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy1
+0.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><
+/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on report.pdf (5 pages, 229230 bytes).
 PDF statistics:
- 200 PDF objects out of 1000 (max. 8388607)
- 78 compressed objects within 1 object stream
+ 212 PDF objects out of 1000 (max. 8388607)
+ 87 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  11 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -61,7 +61,8 @@ $$
 $$
 Thus, $C_h[f](x)$ is $O(h^2)$.
 
-\subsubsection{Method for Empirical Estimation of Accuracy Order}
+\subsubsection{Method for Empirical Estimation of Accuracy Order\protect\footnote{The method described in this section is equivalent to the ``normal equation" approach. Ideally, a more numerically stable method should be used to solve this linear least-squares problem, e.g., the $QR$ decomposition.}}
+
 \label{subsection:accuracy-estimate}
 
 In this section, we describe a method for estimating the order of the accuracy of a numerical approximation by finding the slope of the best-fit line in log-space. Suppose we use some difference method, $D_h[f](x)$, for approximating the derivative, $f'(x)$.
@@ -112,21 +113,21 @@ Our results illustrate the big-$O$ accuracy of the forward, backward, and centra
 
 \section{Tables and Figures}
 
-\begin{figure}[!h]
+\begin{figure}[!ht]
     \centering
     \includegraphics[width=\textwidth]{../figures/f1.pdf}
     \caption{Error results for $f_1(x) = \sin(x)$ for the three difference methods, shown in log scale.}
     \label{fig:func1-results}
 \end{figure}
 
-\begin{figure}[!h]
+\begin{figure}[!hb]
     \centering
     \includegraphics[width=\textwidth]{../figures/f2.pdf}
     \caption{Error results for $f_2(x) = \exp(-0.5x^2)$ for the three difference methods, shown in log scale.}
     \label{fig:func2-results}
 \end{figure}
 
-\begin{table}[!h]
+\begin{table}[!ht]
     \centering
     \begin{tabular}{|c|c|c|c|c|}
         \hline
