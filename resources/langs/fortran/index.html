@@ -1,0 +1,728 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2016-08-14 Sun 12:19 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="viewport" content="width=device-width, initial-scale=1" />
+<title>Fortran code snippets</title>
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="Joseph P. McKenna" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="../css/guides.css">
+<script src="../js/guides.js"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Fortran code snippets</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgheadline1">1. Hello world</a></li>
+<li><a href="#orgheadline2">2. Project template</a></li>
+<li><a href="#orgheadline3">3. \({n \choose k}\)</a></li>
+<li><a href="#orgheadline4">4. Setting precision of variables</a></li>
+<li><a href="#orgheadline5">5. Machine Epsilon</a></li>
+<li><a href="#orgheadline6">6. Rootfinding</a></li>
+<li><a href="#orgheadline7">7. Quadrature</a></li>
+<li><a href="#orgheadline8">8. Matrix multiplication</a></li>
+<li><a href="#orgheadline9">9. \(\sum_{n=0}^{\infty}\frac1{n!}\)</a></li>
+</ul>
+</div>
+</div>
+<div id="main">
+
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1"><span class="section-number-2">1</span> Hello world</h2>
+<div class="outline-text-2" id="text-1">
+<div class="org-src-container">
+
+<pre class="src src-fortran"><span style="color: #20b2aa; font-weight: bold;">program</span> <span style="color: #00ff7f;">main</span>
+  <span style="color: #20b2aa; font-weight: bold;">print</span>*, <span style="color: #ffa07a;">'hello world'</span>
+<span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">program</span> <span style="color: #00ff7f;">main</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">gfortran main.f90
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">./a.out
+</pre>
+</div>
+
+<pre class="example">
+hello world
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline2" class="outline-2">
+<h2 id="orgheadline2"><span class="section-number-2">2</span> Project template</h2>
+<div class="outline-text-2" id="text-2">
+<div class="org-src-container">
+
+<pre class="src src-fortran">module header
+  <span style="color: #9370db;">implicit none</span>
+  <span style="color: #cd853f;">! </span><span style="color: #cd853f;">variable declarations and assignments</span>
+<span style="color: #cd853f;">c</span><span style="color: #cd853f;">ontains</span>
+  <span style="color: #cd853f;">! </span><span style="color: #cd853f;">function and subroutine definitions</span>
+<span style="color: #20b2aa; font-weight: bold;">end</span> module header
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">gfortran -c header.f90
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-fortran"><span style="color: #20b2aa; font-weight: bold;">program</span> <span style="color: #00ff7f;">main</span>
+  use header
+  <span style="color: #9370db;">implicit none</span>
+  <span style="color: #cd853f;">! </span><span style="color: #cd853f;">variable declarations and assignments</span>
+  <span style="color: #cd853f;">! </span><span style="color: #cd853f;">function and subroutine calls</span>
+<span style="color: #cd853f;">c</span><span style="color: #cd853f;">ontains</span>
+  <span style="color: #cd853f;">! </span><span style="color: #cd853f;">function and subroutine definitions</span>
+<span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">program</span> <span style="color: #00ff7f;">main</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">gfortran main.f90 header.o -o main
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">./main
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-make">FC = gfortran
+SRC = main.f90
+EXE = main
+OBJ = header.o
+
+all: $(EXE)
+$(EXE): $(OBJ)
+  $(FC) $(OBJ) $(SRC) -o $(EXE)
+%.o: %.f90
+  $(FC) -c $&lt; -o $@
+clean:
+  $(RM) *.o $(EXE)
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">make
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline3" class="outline-2">
+<h2 id="orgheadline3"><span class="section-number-2">3</span> \({n \choose k}\)</h2>
+<div class="outline-text-2" id="text-3">
+<div class="org-src-container">
+
+<pre class="src src-fortran"><span style="color: #20b2aa; font-weight: bold;">program</span> <span style="color: #00ff7f;">main</span>
+  <span style="color: #9370db;">implicit none</span>
+  <span style="color: #20b2aa; font-weight: bold;">print</span>*, choose(4,0), choose(4,1), &amp;
+       choose(4,2), choose(4,3), choose(4,4)
+<span style="color: #cd853f;">c</span><span style="color: #cd853f;">ontains</span>
+  <span style="color: #20b2aa; font-weight: bold;">function</span> <span style="color: #00ff7f;">choose</span>(n,k) result(c)
+    <span style="color: #9370db;">integer</span>, intent(in) :: n, k
+    <span style="color: #9370db;">integer</span> :: c, i
+    c = 1
+    <span style="color: #20b2aa; font-weight: bold;">do</span> i = 1, <span style="color: #76ee00;">min</span>(k,n-k)
+       c = c * (n-i+1) / i
+    <span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">do</span>
+  <span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">function</span> <span style="color: #00ff7f;">choose</span>
+<span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">program</span> <span style="color: #00ff7f;">main</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">gfortran main.f90 -o main
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">./main
+</pre>
+</div>
+
+<pre class="example">
+1           4           6           4           1
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline4" class="outline-2">
+<h2 id="orgheadline4"><span class="section-number-2">4</span> Setting precision of variables</h2>
+<div class="outline-text-2" id="text-4">
+<div class="org-src-container">
+
+<pre class="src src-fortran">module constants
+  <span style="color: #9370db;">implicit none</span>
+  <span style="color: #9370db;">integer</span>, <span style="color: #9370db;">parameter</span> :: sp = kind(0.), dp = kind(0.d0)
+  <span style="color: #9370db;">integer</span>, <span style="color: #9370db;">parameter</span> :: rp = dp
+<span style="color: #20b2aa; font-weight: bold;">end</span> module constants
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">gfortran -c constants.f90
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-fortran"><span style="color: #20b2aa; font-weight: bold;">program</span> <span style="color: #00ff7f;">main</span>
+  use constants
+  <span style="color: #9370db;">implicit none</span>
+  <span style="color: #9370db;">real</span>(<span style="color: #9acd32;">rp</span>) :: x, y
+  x = 1._rp
+  y = <span style="color: #9370db;">real</span>(<span style="color: #9acd32;">1</span>,<span style="color: #9acd32;">rp</span>)
+<span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">program</span> <span style="color: #00ff7f;">main</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">gfortran main.f90 constants.o -o main
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">./main
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline5" class="outline-2">
+<h2 id="orgheadline5"><span class="section-number-2">5</span> Machine Epsilon</h2>
+<div class="outline-text-2" id="text-5">
+<div class="org-src-container">
+
+<pre class="src src-fortran">module constants
+  <span style="color: #9370db;">implicit none</span>
+
+  <span style="color: #9370db;">integer</span>, <span style="color: #9370db;">parameter</span> :: sp = kind(0.), dp = kind(0.d0)
+  <span style="color: #9370db;">integer</span>, <span style="color: #9370db;">parameter</span> :: rp = dp
+
+  interface machine_epsilon
+     <span style="color: #ffa07a;">m</span>odule procedure machine_epsilon_sp, machine_epsilon_dp
+  <span style="color: #20b2aa; font-weight: bold;">end</span> interface machine_epsilon
+
+<span style="color: #cd853f;">c</span><span style="color: #cd853f;">ontains</span>
+
+  <span style="color: #20b2aa; font-weight: bold;">function</span> <span style="color: #00ff7f;">machine_epsilon_sp</span>(x) result(e)
+    <span style="color: #9370db;">implicit none</span>
+    <span style="color: #9370db;">real</span>(<span style="color: #9acd32;">sp</span>), intent(in) :: x
+    <span style="color: #9370db;">real</span> :: e
+    e = .5
+    <span style="color: #20b2aa; font-weight: bold;">do</span> <span style="color: #20b2aa; font-weight: bold;">while</span> (1._sp + e &gt; 1._sp)
+       e = .5 * e
+    <span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">do</span>
+  <span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">function</span> <span style="color: #00ff7f;">machine_epsilon_sp</span>
+
+  <span style="color: #20b2aa; font-weight: bold;">function</span> <span style="color: #00ff7f;">machine_epsilon_dp</span>(x) result(e)
+    <span style="color: #9370db;">implicit none</span>
+    <span style="color: #9370db;">real</span>(<span style="color: #9acd32;">dp</span>), intent(in) :: x
+    <span style="color: #9370db;">real</span> :: e
+    e = .5
+    <span style="color: #20b2aa; font-weight: bold;">do</span> <span style="color: #20b2aa; font-weight: bold;">while</span> (1._dp + e &gt; 1._dp)
+       e = .5 * e
+    <span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">do</span>
+  <span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">function</span> <span style="color: #00ff7f;">machine_epsilon_dp</span>
+
+<span style="color: #20b2aa; font-weight: bold;">end</span> module constants
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">gfortran -c constants.f90
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-fortran"><span style="color: #20b2aa; font-weight: bold;">program</span> <span style="color: #00ff7f;">main</span>
+  use constants
+  <span style="color: #9370db;">implicit none</span>
+  <span style="color: #20b2aa; font-weight: bold;">print</span>*, machine_epsilon(0._sp), machine_epsilon(0._dp)
+<span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">program</span> <span style="color: #00ff7f;">main</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">gfortran main.f90 constants.o -o main
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">./main
+</pre>
+</div>
+
+<pre class="example">
+5.96046448E-08   1.11022302E-16
+</pre>
+
+<div class="org-src-container">
+
+<pre class="src src-fortran"><span style="color: #20b2aa; font-weight: bold;">print</span>*, epsilon(0.), epsilon(0.d0)
+</pre>
+</div>
+
+<pre class="example">
+1.19209290E-07   2.2204460492503131E-016
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline6" class="outline-2">
+<h2 id="orgheadline6"><span class="section-number-2">6</span> Rootfinding</h2>
+<div class="outline-text-2" id="text-6">
+<div class="org-src-container">
+
+<pre class="src src-fortran">module functions
+  <span style="color: #9370db;">implicit none</span>
+
+<span style="color: #cd853f;">c</span><span style="color: #cd853f;">ontains</span>
+
+  <span style="color: #20b2aa; font-weight: bold;">function</span> <span style="color: #00ff7f;">f1</span>(x)
+    <span style="color: #9370db;">real</span>, intent(in) :: x
+    <span style="color: #9370db;">real</span> :: f1
+    f1 = <span style="color: #76ee00;">sin</span>(x)
+  <span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">function</span> <span style="color: #00ff7f;">f1</span>
+
+  <span style="color: #20b2aa; font-weight: bold;">function</span> <span style="color: #00ff7f;">df1dx</span>(x)
+    <span style="color: #9370db;">real</span>, intent(in) :: x
+    <span style="color: #9370db;">real</span> :: df1dx
+    df1dx = <span style="color: #76ee00;">cos</span>(x)
+  <span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">function</span> <span style="color: #00ff7f;">df1dx</span>
+
+<span style="color: #20b2aa; font-weight: bold;">end</span> module functions
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">gfortran -c functions.f90
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-fortran">module rootfind
+  <span style="color: #9370db;">implicit none</span>
+
+  interface
+     <span style="color: #20b2aa; font-weight: bold;">function</span> <span style="color: #00ff7f;">fun</span>(x)
+       <span style="color: #9370db;">real</span>, intent(in) :: x
+       <span style="color: #9370db;">real</span> :: fun
+     <span style="color: #ffa07a;">e</span>nd <span style="color: #20b2aa; font-weight: bold;">function</span> <span style="color: #00ff7f;">fun</span>
+  <span style="color: #20b2aa; font-weight: bold;">end</span> interface
+
+<span style="color: #cd853f;">c</span><span style="color: #cd853f;">ontains</span>
+
+  <span style="color: #20b2aa; font-weight: bold;">function</span> <span style="color: #00ff7f;">newton</span>(f,dfdx,x0,tol,maxstep) result(xn)
+    procedure(fun), pointer :: f, dfdx
+    <span style="color: #9370db;">real</span>, intent(in) :: x0, tol
+    <span style="color: #9370db;">integer</span>, intent(in) :: maxstep
+    <span style="color: #9370db;">real</span> :: xn
+    <span style="color: #9370db;">integer</span> :: n = 0
+
+    xn = x0
+    <span style="color: #20b2aa; font-weight: bold;">do</span> <span style="color: #20b2aa; font-weight: bold;">while</span> (<span style="color: #76ee00;">abs</span>(f(xn))&gt;tol <span style="color: #20b2aa; font-weight: bold;">.and.</span> n&lt;maxstep)
+       xn = xn - f(xn)/dfdx(xn)
+       n = n + 1
+    <span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">do</span>
+  <span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">function</span> <span style="color: #00ff7f;">newton</span>
+
+<span style="color: #20b2aa; font-weight: bold;">end</span> module rootfind
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">gfortran -c rootfind.f90
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-fortran"><span style="color: #20b2aa; font-weight: bold;">program</span> <span style="color: #00ff7f;">main</span>
+      use functions
+  use rootfind
+  <span style="color: #9370db;">implicit none</span>
+
+  procedure(fun), pointer :: f, dfdx
+  <span style="color: #9370db;">real</span> :: x = 1., tol = 1e-5
+  <span style="color: #9370db;">integer</span> :: maxstep = 100
+  f =&gt; f1
+  dfdx =&gt; df1dx
+  <span style="color: #20b2aa; font-weight: bold;">print</span>*, newton(f,dfdx,x,tol,maxstep)
+
+<span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">program</span> <span style="color: #00ff7f;">main</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">gfortran main.f90 functions.o rootfind.o -o main
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">./main
+</pre>
+</div>
+
+<pre class="example">
+0.0
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline7" class="outline-2">
+<h2 id="orgheadline7"><span class="section-number-2">7</span> Quadrature</h2>
+<div class="outline-text-2" id="text-7">
+<div class="org-src-container">
+
+<pre class="src src-fortran">module functions
+  <span style="color: #9370db;">implicit none</span>
+
+<span style="color: #cd853f;">c</span><span style="color: #cd853f;">ontains</span>
+
+  <span style="color: #20b2aa; font-weight: bold;">function</span> <span style="color: #00ff7f;">f1</span>(x)
+    <span style="color: #9370db;">real</span>, intent(in) :: x
+    <span style="color: #9370db;">real</span> :: f1
+    f1 = x
+  <span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">function</span> <span style="color: #00ff7f;">f1</span>
+
+<span style="color: #20b2aa; font-weight: bold;">end</span> module functions
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">gfortran -c functions.f90
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-fortran">module quadrature
+  <span style="color: #9370db;">implicit none</span>
+
+<span style="color: #cd853f;">c</span><span style="color: #cd853f;">ontains</span>
+
+  <span style="color: #20b2aa; font-weight: bold;">function</span> <span style="color: #00ff7f;">midpoint_rule</span>(f,a,b,n) result(I)
+    interface
+       <span style="color: #20b2aa; font-weight: bold;">function</span> <span style="color: #00ff7f;">f</span>(x)
+         <span style="color: #9370db;">real</span>, intent(in) :: x
+         <span style="color: #9370db;">real</span> :: f
+       <span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">function</span> <span style="color: #00ff7f;">f</span>
+    <span style="color: #20b2aa; font-weight: bold;">end</span> interface
+    <span style="color: #9370db;">real</span> :: a, b
+    <span style="color: #9370db;">integer</span> :: n, j
+    <span style="color: #9370db;">real</span> :: I, dx
+
+    dx = (b-a)/<span style="color: #9370db;">real</span>(<span style="color: #9acd32;">n</span>)
+    I = 0
+    <span style="color: #20b2aa; font-weight: bold;">do</span> j = 0,n-1
+       I = I + f(a + (j+.5)*dx)
+    <span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">do</span>
+    I = dx*I
+  <span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">function</span> <span style="color: #00ff7f;">midpoint_rule</span>
+
+<span style="color: #20b2aa; font-weight: bold;">end</span> module quadrature
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">gfortran -c quadrature.f90
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-fortran"><span style="color: #20b2aa; font-weight: bold;">program</span> <span style="color: #00ff7f;">main</span>
+  use functions
+  use quadrature
+  <span style="color: #9370db;">implicit none</span>
+
+  <span style="color: #9370db;">real</span> :: a = 0, b = 1
+  <span style="color: #9370db;">integer</span> :: n = 5
+  <span style="color: #20b2aa; font-weight: bold;">print</span>*, midpoint_rule(f1,a,b,n)
+
+<span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">program</span> <span style="color: #00ff7f;">main</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">gfortran main.f90 functions.o quadrature.o -o main
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">./main
+</pre>
+</div>
+
+<pre class="example">
+0.5
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline8" class="outline-2">
+<h2 id="orgheadline8"><span class="section-number-2">8</span> Matrix multiplication</h2>
+<div class="outline-text-2" id="text-8">
+<div class="org-src-container">
+
+<pre class="src src-fortran"><span style="color: #20b2aa; font-weight: bold;">program</span> <span style="color: #00ff7f;">main</span>
+  <span style="color: #9370db;">implicit none</span>
+
+  <span style="color: #9370db;">real</span> :: A(4,4), B(4,4)
+  A=1; B=2
+
+  <span style="color: #20b2aa; font-weight: bold;">print</span>*, matrix_multiply(A,B)
+
+<span style="color: #cd853f;">c</span><span style="color: #cd853f;">ontains</span>
+
+  <span style="color: #20b2aa; font-weight: bold;">function</span> <span style="color: #00ff7f;">matrix_multiply</span>(A,B) result(C)
+    <span style="color: #9370db;">implicit none</span>
+    <span style="color: #9370db;">real</span> :: A(4,4), B(4,4), C(4,4)
+    <span style="color: #9370db;">integer</span> :: i,j,k
+
+    C = 0
+    <span style="color: #20b2aa; font-weight: bold;">do</span> i=1,4
+       <span style="color: #20b2aa; font-weight: bold;">do</span> j=1,4
+          <span style="color: #20b2aa; font-weight: bold;">do</span> k=1,4
+             C(i,j) = C(i,j) + A(i,k)*B(k,j)
+          <span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">do</span>
+       <span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">do</span>
+    <span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">do</span>
+
+    <span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">function</span> <span style="color: #00ff7f;">matrix_multiply</span>
+
+<span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">program</span> <span style="color: #00ff7f;">main</span>
+</pre>
+</div>
+
+<pre class="example">
+8.00000000       8.00000000       8.00000000       8.00000000       8.00000000       8.00000000       8.00000000       8.00000000       8.00000000       8.00000000       8.00000000       8.00000000       8.00000000       8.00000000       8.00000000       8.00000000
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline9" class="outline-2">
+<h2 id="orgheadline9"><span class="section-number-2">9</span> \(\sum_{n=0}^{\infty}\frac1{n!}\)</h2>
+<div class="outline-text-2" id="text-9">
+<div class="org-src-container">
+
+<pre class="src src-fortran"><span style="color: #20b2aa; font-weight: bold;">program</span> <span style="color: #00ff7f;">main</span>
+  <span style="color: #9370db;">implicit none</span>
+  <span style="color: #9370db;">integer</span> :: n = 0, nf = 1
+  <span style="color: #9370db;">real</span> :: s = 0
+  <span style="color: #20b2aa; font-weight: bold;">do</span> <span style="color: #20b2aa; font-weight: bold;">while</span> (1./<span style="color: #9370db;">real</span>(<span style="color: #9acd32;">nf</span>) &gt; 0)
+     <span style="color: #ffa07a;">s</span> = s + 1./<span style="color: #9370db;">real</span>(<span style="color: #9acd32;">nf</span>)
+     <span style="color: #ffa07a;">n</span> = n + 1
+     <span style="color: #ffa07a;">n</span>f = nf * n
+  <span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">do</span>
+  <span style="color: #20b2aa; font-weight: bold;">print</span>*, s, <span style="color: #76ee00;">exp</span>(1.)-s
+<span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">program</span> <span style="color: #00ff7f;">main</span>
+</pre>
+</div>
+
+<pre class="example">
+2.71828198      -2.38418579E-07
+</pre>
+
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

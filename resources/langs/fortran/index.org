@@ -6,7 +6,8 @@
 #+property: header-args:sh :exports both
 #+startup: latexpreview
 #+options: html-postamble:nil
-#+html_head: <link rel="stylesheet" type="text/css" href="../css/main.css">
+#+html_head: <link rel="stylesheet" type="text/css" href="../css/guides.css">
+#+html_head: <script src="../js/guides.js"></script>
 #+html: <div id="main">
  
 * Hello world
