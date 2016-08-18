@@ -24,5 +24,5 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Show the submenu for the first header.
-    headers[0].click()
+    headers[0].parentElement.querySelector('ul').classList.toggle('show')
 });

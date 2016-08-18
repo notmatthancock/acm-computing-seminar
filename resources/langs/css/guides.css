@@ -66,13 +66,14 @@ span.linenr {
 
 h1.title {
     font-size: 175%;
-    text-align: center;
+    /*text-align: center;*/
     background-color: #353535;
     color: #fff;
     padding: 8px 0 8px 0;
-    position: fixed;
-    top: 0;
-    width: 100%;
+    /*position: fixed;
+    top: 0;*/
+    width: 75%;
+    float: right;
     margin: 0;
     z-index: 2;
 }
@@ -82,20 +83,21 @@ h1.title {
 h2:before, h3:before, h4:before, h5:before { 
   display: block; 
   content: " "; 
-  margin-top: -60px; 
-  height: 60px; 
-  visibility: hidden; 
+  margin-top: -20px; 
+  height: 20px; 
+  visibility: hidden;
 }
 
 div#table-of-contents {
     width: 25%;
     height: 75%; /* fallback */
     height: calc(100% - 48px);
+    height: 100%;
     position: fixed;
     overflow: auto;
     background-color: #f1f1f1;
     padding: 0;
-    top: 48px;
+    top: 0px;
     border-right: 1px solid #303030;
     z-index: 2;
 }
@@ -167,7 +169,7 @@ div#table-of-contents ul li > ul li > ul li a {
 }
 
 div#main {
-    margin-top: 56px;
+    /*margin-top: 56px;*/
     margin-left: 25%;
     padding: 20px 100px 20px 100px;
 }

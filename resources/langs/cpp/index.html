@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2016-08-05 Fri 15:49 -->
+<!-- 2016-08-17 Wed 19:28 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title>ACM Computing Seminar C++ Guide</title>
@@ -185,26 +185,26 @@ for the JavaScript code in this tag.
 <li><a href="#orgheadline6">2.3. Writing a program</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline19">3. Data types</a>
+<li><a href="#orgheadline20">3. Data types</a>
 <ul>
-<li><a href="#orgheadline9">3.1. Boolean</a></li>
-<li><a href="#orgheadline10">3.2. Integer types</a></li>
-<li><a href="#orgheadline11">3.3. Floating point types</a></li>
-<li><a href="#orgheadline12">3.4. Casting</a></li>
-<li><a href="#orgheadline13">3.5. The const modifier</a></li>
-<li><a href="#orgheadline14">3.6. The typedef keyword</a></li>
-<li><a href="#orgheadline15">3.7. Pointers</a></li>
-<li><a href="#orgheadline18">3.8. Arrays</a>
+<li><a href="#orgheadline10">3.1. Boolean</a></li>
+<li><a href="#orgheadline11">3.2. Integer types</a></li>
+<li><a href="#orgheadline12">3.3. Floating point types</a></li>
+<li><a href="#orgheadline13">3.4. Casting</a></li>
+<li><a href="#orgheadline14">3.5. The const modifier</a></li>
+<li><a href="#orgheadline15">3.6. The typedef keyword</a></li>
+<li><a href="#orgheadline16">3.7. Pointers</a></li>
+<li><a href="#orgheadline19">3.8. Arrays</a>
 <ul>
-<li><a href="#orgheadline16">3.8.1. Fixed length arrays</a></li>
-<li><a href="#orgheadline17">3.8.2. Dynamic length arrays</a></li>
+<li><a href="#orgheadline17">3.8.1. Fixed length arrays</a></li>
+<li><a href="#orgheadline18">3.8.2. Dynamic length arrays</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li><a href="#orgheadline26">4. Control structures</a>
 <ul>
-<li><a href="#orgheadline20">4.1. Conditionals</a></li>
+<li><a href="#orgheadline9">4.1. Conditionals</a></li>
 <li><a href="#orgheadline24">4.2. Loops</a>
 <ul>
 <li><a href="#orgheadline21">4.2.1. The for loop</a></li>
@@ -222,7 +222,7 @@ for the JavaScript code in this tag.
 </div>
 <div id="main">
 
-<a href="../" id="home-link">ACM Computing Seminar Home</a>
+<a href="../../../" id="home-link">ACM Computing Seminar Home</a>
 
 <div id="outline-container-orgheadline3" class="outline-2">
 <h2 id="orgheadline3"><span class="section-number-2">1</span> Introduction</h2>
@@ -400,8 +400,8 @@ systems, there is no particular file-extension type for executables.
 </div>
 </div>
 
-<div id="outline-container-orgheadline19" class="outline-2">
-<h2 id="orgheadline19"><span class="section-number-2">3</span> Data types</h2>
+<div id="outline-container-orgheadline20" class="outline-2">
+<h2 id="orgheadline20"><span class="section-number-2">3</span> Data types</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 As we <a href="#orgheadline1">discussed previously</a>, you must explicitly declare the type of a 
@@ -412,13 +412,13 @@ our own custom data types.
 </p>
 </div>
 
-<div id="outline-container-orgheadline9" class="outline-3">
-<h3 id="orgheadline9"><span class="section-number-3">3.1</span> Boolean</h3>
+<div id="outline-container-orgheadline10" class="outline-3">
+<h3 id="orgheadline10"><span class="section-number-3">3.1</span> Boolean</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 A boolean data type is either <code>true</code> or <code>false</code>. There are a number of 
 operators between these types, illustrated in the code snippet below 
-(note that lines starting with <code>//</code> are comments are ignored by the 
+(note that lines starting with <code>//</code> are comments and are ignored by the 
 compiler):
 </p>
 
@@ -442,13 +442,14 @@ compiler):
 <p>
 We don't often use boolean variables by themselves, but rather as a result 
 of comparing two other data types (such as comparing if one integer is less 
-than another integer).
+than another integer). Expressions that result in boolean values are mostly 
+used in <a href="#orgheadline9">conditional control structures</a>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgheadline10" class="outline-3">
-<h3 id="orgheadline10"><span class="section-number-3">3.2</span> Integer types</h3>
+<div id="outline-container-orgheadline11" class="outline-3">
+<h3 id="orgheadline11"><span class="section-number-3">3.2</span> Integer types</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 There are <a href="http://en.cppreference.com/w/cpp/language/types">a variety of integer types</a> in C++. Below, we illustrate a 
@@ -492,8 +493,8 @@ may not match your expectations, as shown above.
 </div>
 </div>
 
-<div id="outline-container-orgheadline11" class="outline-3">
-<h3 id="orgheadline11"><span class="section-number-3">3.3</span> Floating point types</h3>
+<div id="outline-container-orgheadline12" class="outline-3">
+<h3 id="orgheadline12"><span class="section-number-3">3.3</span> Floating point types</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 There are two main floating point data types in C++, <code>float</code> and <code>double</code>,
@@ -536,8 +537,8 @@ which correspond to <a href="https://en.wikipedia.org/wiki/IEEE_floating_point">
 </div>
 
 
-<div id="outline-container-orgheadline12" class="outline-3">
-<h3 id="orgheadline12"><span class="section-number-3">3.4</span> Casting</h3>
+<div id="outline-container-orgheadline13" class="outline-3">
+<h3 id="orgheadline13"><span class="section-number-3">3.4</span> Casting</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 Sometimes it is useful to explicitly cast one variable type as another. 
@@ -560,8 +561,8 @@ This can be done like the following:
 </div>
 </div>
 
-<div id="outline-container-orgheadline13" class="outline-3">
-<h3 id="orgheadline13"><span class="section-number-3">3.5</span> The const modifier</h3>
+<div id="outline-container-orgheadline14" class="outline-3">
+<h3 id="orgheadline14"><span class="section-number-3">3.5</span> The const modifier</h3>
 <div class="outline-text-3" id="text-3-5">
 <p>
 If the value of some variable should not change, you can use the <code>const</code>
@@ -583,8 +584,8 @@ You will see an error like, <code>error: assignment of read-only variable â€˜PIâ
 </div>
 </div>
 
-<div id="outline-container-orgheadline14" class="outline-3">
-<h3 id="orgheadline14"><span class="section-number-3">3.6</span> The typedef keyword</h3>
+<div id="outline-container-orgheadline15" class="outline-3">
+<h3 id="orgheadline15"><span class="section-number-3">3.6</span> The typedef keyword</h3>
 <div class="outline-text-3" id="text-3-6">
 <p>
 Suppose you have a large numerical experiment, where all your code used 
@@ -617,8 +618,8 @@ Instead, we can use the <code>typedef</code> statement to define types:
 </div>
 </div>
 
-<div id="outline-container-orgheadline15" class="outline-3">
-<h3 id="orgheadline15"><span class="section-number-3">3.7</span> Pointers</h3>
+<div id="outline-container-orgheadline16" class="outline-3">
+<h3 id="orgheadline16"><span class="section-number-3">3.7</span> Pointers</h3>
 <div class="outline-text-3" id="text-3-7">
 <p>
 Pointers are variables that hold the <b>memory address</b> for a variable 
@@ -644,7 +645,7 @@ The memory address for a variable can be obtained by the <code>&amp;</code> oper
 </div>
 
 <pre class="example">
-0x7ffd416bc908
+0x7ffe45fe2238
 </pre>
 
 <p>
@@ -679,8 +680,8 @@ understood with a short example:
 </div>
 </div>
 
-<div id="outline-container-orgheadline18" class="outline-3">
-<h3 id="orgheadline18"><span class="section-number-3">3.8</span> Arrays</h3>
+<div id="outline-container-orgheadline19" class="outline-3">
+<h3 id="orgheadline19"><span class="section-number-3">3.8</span> Arrays</h3>
 <div class="outline-text-3" id="text-3-8">
 <p>
 The length of an array can be fixed or dynamic, and how you
@@ -688,8 +689,8 @@ declare the array depends on this.
 </p>
 </div>
 
-<div id="outline-container-orgheadline16" class="outline-4">
-<h4 id="orgheadline16"><span class="section-number-4">3.8.1</span> Fixed length arrays</h4>
+<div id="outline-container-orgheadline17" class="outline-4">
+<h4 id="orgheadline17"><span class="section-number-4">3.8.1</span> Fixed length arrays</h4>
 <div class="outline-text-4" id="text-3-8-1">
 <div class="org-src-container">
 
@@ -702,8 +703,8 @@ declare the array depends on this.
 </div>
 </div>
 
-<div id="outline-container-orgheadline17" class="outline-4">
-<h4 id="orgheadline17"><span class="section-number-4">3.8.2</span> Dynamic length arrays</h4>
+<div id="outline-container-orgheadline18" class="outline-4">
+<h4 id="orgheadline18"><span class="section-number-4">3.8.2</span> Dynamic length arrays</h4>
 <div class="outline-text-4" id="text-3-8-2">
 <p>
 Dynamic length arrays are made possible through pointers:
@@ -748,8 +749,8 @@ memory problems is called <a href="http://valgrind.org/">valgrind</a>.
 <div id="outline-container-orgheadline26" class="outline-2">
 <h2 id="orgheadline26"><span class="section-number-2">4</span> Control structures</h2>
 <div class="outline-text-2" id="text-4">
-</div><div id="outline-container-orgheadline20" class="outline-3">
-<h3 id="orgheadline20"><span class="section-number-3">4.1</span> Conditionals</h3>
+</div><div id="outline-container-orgheadline9" class="outline-3">
+<h3 id="orgheadline9"><span class="section-number-3">4.1</span> Conditionals</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 Often a code block should only be executed if some condition is true. 
@@ -764,8 +765,8 @@ print whether or not the number was greater than 0.5.
 <span class="linenr"> 3: </span><span style="color: #6495ed;">#include</span> <span style="color: #ffa07a;">&lt;time.h&gt;</span>
 <span class="linenr"> 4: </span>
 <span class="linenr"> 5: </span><span style="color: #9370db;">int</span> <span style="color: #00ff7f;">main</span>() {
-<span class="linenr"> 6: </span>  <span style="color: #cd853f;">// </span><span style="color: #cd853f;">Seed the random number generator based on the current time.</span>
-<span class="linenr"> 7: </span>  srand(time(<span style="color: #1e90ff;">NULL</span>));
+<span class="linenr"> 6: </span>  <span style="color: #cd853f;">// </span><span style="color: #cd853f;">Seed a random number generator.</span>
+<span class="linenr"> 7: </span>  srand(123);
 <span class="linenr"> 8: </span>
 <span class="linenr"> 9: </span>  <span style="color: #cd853f;">// </span><span style="color: #cd853f;">rand() produces a random integer between 0 and RAND_MAX.</span>
 <span class="linenr">10: </span>  <span style="color: #9370db;">double</span> <span style="color: #9acd32;">num</span> = rand() / ((<span style="color: #9370db;">double</span>) RAND_MAX);
@@ -779,13 +780,27 @@ print whether or not the number was greater than 0.5.
 <span class="linenr">18: </span>    <span style="color: #1e90ff;">std</span>::cout &lt;&lt; <span style="color: #ffa07a;">"num was greater than 0.5.\n"</span>;
 <span class="linenr">19: </span>  }
 <span class="linenr">20: </span>
-<span class="linenr">21: </span>  <span style="color: #20b2aa; font-weight: bold;">return</span> 0;
-<span class="linenr">22: </span>}
+<span class="linenr">21: </span>  <span style="color: #cd853f;">// </span><span style="color: #cd853f;">Do it again.</span>
+<span class="linenr">22: </span>  num = rand() / ((<span style="color: #9370db;">double</span>) RAND_MAX);
+<span class="linenr">23: </span>
+<span class="linenr">24: </span>  <span style="color: #1e90ff;">std</span>::cout &lt;&lt; <span style="color: #ffa07a;">"num: "</span> &lt;&lt; num &lt;&lt; <span style="color: #ffa07a;">"\n"</span>;
+<span class="linenr">25: </span>
+<span class="linenr">26: </span>  <span style="color: #20b2aa; font-weight: bold;">if</span> (num &lt; 0.5) {
+<span class="linenr">27: </span>    <span style="color: #1e90ff;">std</span>::cout &lt;&lt; <span style="color: #ffa07a;">"num was less than 0.5.\n"</span>;
+<span class="linenr">28: </span>  }
+<span class="linenr">29: </span>  <span style="color: #20b2aa; font-weight: bold;">else</span> {
+<span class="linenr">30: </span>    <span style="color: #1e90ff;">std</span>::cout &lt;&lt; <span style="color: #ffa07a;">"num was greater than 0.5.\n"</span>;
+<span class="linenr">31: </span>  }
+<span class="linenr">32: </span>
+<span class="linenr">33: </span>  <span style="color: #20b2aa; font-weight: bold;">return</span> 0;
+<span class="linenr">34: </span>}
 </pre>
 </div>
 
 <pre class="example">
-num: 0.686166
+num: 0.0600514
+num was less than 0.5.
+num: 0.788318
 num was greater than 0.5.
 </pre>
 
@@ -828,8 +843,8 @@ exclusive blocks:
 </div>
 
 <pre class="example">
-num: 0.545278
-num was between 0.5 and 0.75.
+num: 0.0228257
+num was between 0 and 0.25
 </pre>
 
 <p>

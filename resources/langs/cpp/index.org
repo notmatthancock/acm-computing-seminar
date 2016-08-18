@@ -6,7 +6,9 @@
 #+html_head: <script src="../js/guides.js"></script>
 #+html: <div id="main">
 
-#+html: <a href="../" id="home-link">ACM Computing Seminar Home</a>
+#+beamer_frame_level: 5
+
+#+html: <a href="../../../" id="home-link">ACM Computing Seminar Home</a>
 
 * Introduction
 Welcome to the ACM C++ guide, a manual for quickly learning C++
@@ -127,7 +129,7 @@ our own custom data types.
 ** Boolean
 A boolean data type is either =true= or =false=. There are a number of 
 operators between these types, illustrated in the code snippet below 
-(note that lines starting with =//= are comments are ignored by the 
+(note that lines starting with =//= are comments and are ignored by the 
 compiler):
 
 #+begin_src cpp -n
@@ -147,7 +149,8 @@ compiler):
 
 We don't often use boolean variables by themselves, but rather as a result 
 of comparing two other data types (such as comparing if one integer is less 
-than another integer).
+than another integer). Expressions that result in boolean values are mostly 
+used in [[Conditionals][conditional control structures]].
 
 ** Integer types
 
@@ -383,11 +386,23 @@ print whether or not the number was greater than 0.5.
   #include <time.h>
 
   int main() {
-    // Seed the random number generator based on the current time.
-    srand(time(NULL));
+    // Seed a random number generator.
+    srand(123);
 
     // rand() produces a random integer between 0 and RAND_MAX.
     double num = rand() / ((double) RAND_MAX);
+
+    std::cout << "num: " << num << "\n";
+
+    if (num < 0.5) {
+      std::cout << "num was less than 0.5.\n";
+    }
+    else {
+      std::cout << "num was greater than 0.5.\n";
+    }
+
+    // Do it again.
+    num = rand() / ((double) RAND_MAX);
 
     std::cout << "num: " << num << "\n";
 
@@ -403,8 +418,10 @@ print whether or not the number was greater than 0.5.
 #+end_src
 
 #+RESULTS:
-: num: 0.11461
+: num: 0.0600514
 : num was less than 0.5.
+: num: 0.788318
+: num was greater than 0.5.
 
 You can follow =else= immediate by another =if= to have mutiple mutually-
 exclusive blocks:
