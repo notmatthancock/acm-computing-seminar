@@ -23,6 +23,36 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // Show the submenu for the first header.
-    headers[0].parentElement.querySelector('ul').classList.toggle('show')
+
+    // Initialize the menu by showing the appropriate
+    // subsections based on the hash in the url.
+
+    var hash = location.hash;
+    // Remove the "#".
+    var title = hash.substr(1)
+
+    if (title != "") {
+        var elem = document.getElementById(title)
+    }
+
+    if (title == "" || elem == null) {
+        section_num = 0;
+    }
+    else {
+        section_num = parseInt(elem.firstChild.textContent[0]) - 1;
+    }
+
+    var par = headers[section_num].parentElement
+    par.querySelector('ul').classList.toggle('show');
+
+    // Dumb
+    src = document.querySelector('.src');
+    cs = window.getComputedStyle(src);
+    bg = cs.getPropertyValue('background-color');
+    fc = cs.getPropertyValue('color');
+    codes = document.querySelectorAll('code')
+    for(var i=0; i < codes.length; i += 1) {
+        codes[i].style.backgroundColor = bg;
+        codes[i].style.color = fc;
+    }
 });

@@ -11,6 +11,8 @@ noscript {
     font-size: 200%;
 }
 
+p { line-height: 150%; }
+
 a {
     color: blue;
     text-decoration: none;
@@ -52,6 +54,7 @@ code {
     background-color: #ddd;
     color: #000;
     font-family: monospace;
+    padding: 2px;
 }
 
 /* Make it so that line numbers in code blocks
@@ -168,6 +171,12 @@ div#table-of-contents ul li > ul li > ul li a {
     padding-left: 30px;
 }
 
+/* TOC level 4 links */
+div#table-of-contents ul li > ul li > ul li > ul li a {
+    font-size: 50%;
+    padding-left: 50px;
+}
+
 div#main {
     /*margin-top: 56px;*/
     margin-left: 25%;
@@ -203,7 +212,18 @@ footer a {
  */
 
 @media print {
-    h1.title { display: none; }
+    h1.title { background-color: white; color: #333; width: 100%; }
+    #main h2, #main h3, #main h4, #main h5 { border: 0; margin: 20px 0 20px 0; }
+    body { font-size: 12px; }
     div#table-of-contents { display: none; }
-    div#main { width: 100%; margin: 0; }
+    div#main { width: 100%; margin: 0; padding: 0; }
+    a#home-link { display: none; }
+}
+
+@media only screen and (max-device-width: 480px) {
+    body { font-size: 12px; }
+    h1.title { width: 100%; font-size: 100%; }
+    div#table-of-contents { display: none; }
+    div#main { width: 100%; margin: 0; padding: 10px; }
+    a#home-link { display: none; }
 }
