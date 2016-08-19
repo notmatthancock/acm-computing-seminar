@@ -731,7 +731,7 @@ data from a file, pass option flags to the program from the command
 line, or save the results of some computation to a file for further 
 analysis.
 
-** Argc and argv
+** Inputs to =main=: =argc= and =argv=
 The =main= function has two optional arguments which we have thus far omitted, 
 =argc= and =argv=. These arguments allow arguments to passed to the =main= 
 function when the program is run. This is how flags and other arguments are 
