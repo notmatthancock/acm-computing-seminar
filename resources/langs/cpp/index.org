@@ -7,14 +7,14 @@
 #+html_head: <script src="../js/guides.js"></script>
 #+html: <div id="main">
 #+html: <a href="../../../" id="home-link">ACM Computing Seminar Home</a>
+#+html: <a href="javascript:;" id="mobile-menu">&#9776;</a>
 
 * Introduction
-Welcome to the ACM C++ guide, a manual for quickly learning C++
-for mathematical and scientific computing applications. The goal of 
-this guide is not to make you a C++ expert, but to quickly teach 
-you enough of the C++ fundamentals and design patterns to help you 
-off the ground. If you should like to go beyond this guide, a 
-few references are listed below.
+This manual is a guide for quickly learning C++ for mathematical and 
+scientific computing applications. The goal of this guide is not to 
+make you a C++ expert, but to quickly teach you enough of the C++ 
+fundamentals and design patterns to help you off the ground. If you 
+should like to go beyond this guide, a few references are listed below.
 
 This guide is split into sections. The sections are ordered in such a way
 that topics in later sections often depend on topics from previous ones. 

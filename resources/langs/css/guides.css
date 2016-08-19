@@ -35,7 +35,8 @@ a#home-link {
 
 a#home-link:hover { color: #707070; }
 
-/* Make long code blocks scrollable. */
+a#mobile-menu { display: none; }
+
 pre, pre.src {
     color: #eee;
     margin: 10px 0 10px 0;
@@ -222,8 +223,9 @@ footer a {
 
 @media only screen and (max-device-width: 480px) {
     body { font-size: 12px; }
-    h1.title { width: 100%; font-size: 100%; }
-    div#table-of-contents { display: none; }
+    h1.title { width: 100%; font-size: 100%; position: fixed; top: 0; }
+    div#table-of-contents { width: 75%; display: none; }
     div#main { width: 100%; margin: 0; padding: 10px; }
     a#home-link { display: none; }
+    a#mobile-menu { position: fixed; top: 7px; right: 7px; display: block; z-index: 24; }
 }

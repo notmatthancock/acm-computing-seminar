@@ -45,14 +45,20 @@ document.addEventListener("DOMContentLoaded", function() {
     var par = headers[section_num].parentElement
     par.querySelector('ul').classList.toggle('show');
 
-    // Dumb
-    src = document.querySelector('.src');
-    cs = window.getComputedStyle(src);
-    bg = cs.getPropertyValue('background-color');
-    fc = cs.getPropertyValue('color');
-    codes = document.querySelectorAll('code')
+    // Recolor inline code blocks.
+    var src = document.querySelector('.src');
+    var cs = window.getComputedStyle(src);
+    var bg = cs.getPropertyValue('background-color');
+    var fc = cs.getPropertyValue('color');
+    var codes = document.querySelectorAll('code')
     for(var i=0; i < codes.length; i += 1) {
         codes[i].style.backgroundColor = bg;
         codes[i].style.color = fc;
     }
+
+    var menu = document.getElementById('mobile-menu');
+    var toc  = document.getElementById('table-of-contents');
+    menu.addEventListener('click', function() {
+        toc.style.display = (toc.style.display == 'block') ? 'none' : 'block';
+    });
 });
