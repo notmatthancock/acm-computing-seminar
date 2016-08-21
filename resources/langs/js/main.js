@@ -26,7 +26,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Initialize the menu by showing the appropriate
     // subsections based on the hash in the url.
-
     var hash = location.hash;
     // Remove the "#".
     var title = hash.substr(1)
@@ -43,7 +42,9 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     var par = headers[section_num].parentElement
-    par.querySelector('ul').classList.toggle('show');
+    if (par.querySelector('ul') != null) {
+        par.querySelector('ul').classList.toggle('show');
+    }
 
     // Recolor inline code blocks.
     var src = document.querySelector('.src');
@@ -56,9 +57,23 @@ document.addEventListener("DOMContentLoaded", function() {
         codes[i].style.color = fc;
     }
 
-    var menu = document.getElementById('mobile-menu');
+
+    // Menu open / close for mobile view.
+    var open = document.getElementById('toc-open');
+    var close= document.getElementById('toc-close');
     var toc  = document.getElementById('table-of-contents');
-    menu.addEventListener('click', function() {
-        toc.style.display = (toc.style.display == 'block') ? 'none' : 'block';
+    var main = document.getElementById('main');
+    open.addEventListener('click', function() {
+        // Show the table of contents.
+        toc.style.display = 'block';
+        open.style.display = 'none';
+        var w = window.getComputedStyle(toc).getPropertyValue('width');
+        close.style.left = String(parseFloat(w) - 15)+"px";
+        close.style.display = 'block';
+    });
+    close.addEventListener('click', function() {
+        toc.style.display = 'none';
+        close.style.display = 'none';
+        open.style.display = 'block';
     });
 });

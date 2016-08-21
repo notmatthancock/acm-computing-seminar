@@ -35,7 +35,7 @@ a#home-link {
 
 a#home-link:hover { color: #707070; }
 
-a#mobile-menu { display: none; }
+a#toc-open, a#toc-close {display: none; }
 
 pre, pre.src {
     color: #eee;
@@ -207,11 +207,8 @@ footer a {
 
 
 /*
- *
- * CSS for printing / pdf export from html.
- *
+ * CSS for printing / pdf export from browser.
  */
-
 @media print {
     h1.title { background-color: white; color: #333; width: 100%; }
     #main h2, #main h3, #main h4, #main h5 { border: 0; margin: 20px 0 20px 0; }
@@ -221,11 +218,18 @@ footer a {
     a#home-link { display: none; }
 }
 
+
+/*
+ * CSS for mobile.
+ */
 @media only screen and (max-device-width: 480px) {
     body { font-size: 12px; }
     h1.title { width: 100%; font-size: 100%; position: fixed; top: 0; }
     div#table-of-contents { width: 75%; display: none; }
     div#main { width: 100%; margin: 0; padding: 10px; }
     a#home-link { display: none; }
-    a#mobile-menu { position: fixed; top: 7px; right: 7px; display: block; z-index: 24; }
+    a#toc-open { display: block; position: fixed; top: 7px;
+                 left: 7px; z-index: 10; color: white; }
+    a#toc-close { color: #333; position: fixed;
+                  top: 7px; z-index: 100; color: #000; }
 }

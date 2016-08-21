@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2016-08-19 Fri 16:25 -->
+<!-- 2016-08-21 Sun 12:23 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title>ACM Computing Seminar C++ Guide</title>
@@ -94,8 +94,8 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="../css/guides.css">
-<script src="../js/guides.js"></script>
+<link rel="stylesheet" type="text/css" href="../css/main.css">
+<script src="../js/main.js"></script>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -208,73 +208,82 @@ for the JavaScript code in this tag.
 </li>
 </ul>
 </li>
-<li><a href="#orgheadline32">4. Control structures</a>
+<li><a href="#orgheadline34">4. Control structures</a>
 <ul>
-<li><a href="#orgheadline10">4.1. Conditionals</a></li>
-<li><a href="#orgheadline31">4.2. Loops</a>
+<li><a href="#orgheadline10">4.1. Conditionals</a>
 <ul>
-<li><a href="#orgheadline26">4.2.1. The <code>for</code> loop</a>
-<ul>
-<li><a href="#orgheadline25">4.2.1.1. Example: row-major matrix</a></li>
+<li><a href="#orgheadline25">4.1.1. Example: <code>if</code> / <code>else</code> and random number generation</a></li>
+<li><a href="#orgheadline26">4.1.2. Example: <code>if</code> / <code>else if</code> / <code>else</code></a></li>
 </ul>
 </li>
-<li><a href="#orgheadline29">4.2.2. The <code>while</code> loop</a>
+<li><a href="#orgheadline33">4.2. Loops</a>
 <ul>
-<li><a href="#orgheadline27">4.2.2.1. Example: truncated sum</a></li>
-<li><a href="#orgheadline28">4.2.2.2. Example: estimating machine epsilon</a></li>
+<li><a href="#orgheadline28">4.2.1. The <code>for</code> loop</a>
+<ul>
+<li><a href="#orgheadline27">4.2.1.1. Example: row-major matrix</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline30">4.2.3. The <code>break</code> keyword</a></li>
+<li><a href="#orgheadline31">4.2.2. The <code>while</code> loop</a>
+<ul>
+<li><a href="#orgheadline29">4.2.2.1. Example: truncated sum</a></li>
+<li><a href="#orgheadline30">4.2.2.2. Example: estimating machine epsilon</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline32">4.2.3. The <code>break</code> keyword</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orgheadline37">5. Input / Output</a>
+<li><a href="#orgheadline39">5. Input / Output</a>
 <ul>
-<li><a href="#orgheadline33">5.1. Inputs to <code>main</code>: <code>argc</code> and <code>argv</code></a></li>
-<li><a href="#orgheadline36">5.2. Filestreams</a>
+<li><a href="#orgheadline35">5.1. Inputs to <code>main</code>: <code>argc</code> and <code>argv</code></a></li>
+<li><a href="#orgheadline38">5.2. Filestreams</a>
 <ul>
-<li><a href="#orgheadline34">5.2.1. Reading data from a file</a></li>
-<li><a href="#orgheadline35">5.2.2. Writing data to a file</a></li>
+<li><a href="#orgheadline36">5.2.1. Reading data from a file</a></li>
+<li><a href="#orgheadline37">5.2.2. Writing data to a file</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li><a href="#orgheadline18">6. Functions</a>
 <ul>
-<li><a href="#orgheadline38">6.1. Writing a function</a></li>
-<li><a href="#orgheadline42">6.2. Header and implementation files</a>
+<li><a href="#orgheadline41">6.1. Writing a function</a>
 <ul>
-<li><a href="#orgheadline39">6.2.1. The header file</a></li>
-<li><a href="#orgheadline40">6.2.2. The implementation file</a></li>
-<li><a href="#orgheadline41">6.2.3. The file containing main</a></li>
+<li><a href="#orgheadline40">6.1.1. Example: <code>linspace</code>: generating a set of equally-spaced points</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline45">6.3. Function pointers</a>
+<li><a href="#orgheadline45">6.2. Header and implementation files</a>
 <ul>
-<li><a href="#orgheadline43">6.3.1. Example: Newton's method for rootfinding</a></li>
-<li><a href="#orgheadline44">6.3.2. Example: The midpoint rule for definite integrals</a></li>
+<li><a href="#orgheadline42">6.2.1. The header file</a></li>
+<li><a href="#orgheadline43">6.2.2. The implementation file</a></li>
+<li><a href="#orgheadline44">6.2.3. The file containing main</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline48">6.3. Function pointers</a>
+<ul>
+<li><a href="#orgheadline46">6.3.1. Example: Newton's method for rootfinding</a></li>
+<li><a href="#orgheadline47">6.3.2. Example: The midpoint rule for definite integrals</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li><a href="#orgheadline9">7. Object-oriented programming</a>
 <ul>
-<li><a href="#orgheadline49">7.1. Example: a vector class</a>
+<li><a href="#orgheadline52">7.1. Example: a vector <code>class</code></a>
 <ul>
-<li><a href="#orgheadline46">7.1.1. The header file</a></li>
-<li><a href="#orgheadline47">7.1.2. The implementation file</a></li>
-<li><a href="#orgheadline48">7.1.3. Example usage</a></li>
+<li><a href="#orgheadline49">7.1.1. The header file</a></li>
+<li><a href="#orgheadline50">7.1.2. The implementation file</a></li>
+<li><a href="#orgheadline51">7.1.3. Example usage</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline52">7.2. Example continued: operator overloading</a>
+<li><a href="#orgheadline55">7.2. Example continued: operator overloading</a>
 <ul>
-<li><a href="#orgheadline50">7.2.1. Overloading <code>operator[]</code></a></li>
-<li><a href="#orgheadline51">7.2.2. Overloading <code>operator=</code></a></li>
+<li><a href="#orgheadline53">7.2.1. Overloading <code>operator[]</code></a></li>
+<li><a href="#orgheadline54">7.2.2. Overloading <code>operator=</code></a></li>
 </ul>
 </li>
-<li><a href="#orgheadline53">7.3. Example continued: the copy constructor</a></li>
-<li><a href="#orgheadline54">7.4. Exampled continued: overloading the arithmetic operators</a></li>
+<li><a href="#orgheadline56">7.3. Example continued: the copy constructor</a></li>
+<li><a href="#orgheadline57">7.4. Exampled continued: overloading the arithmetic operators</a></li>
 </ul>
 </li>
 </ul>
@@ -282,7 +291,8 @@ for the JavaScript code in this tag.
 </div>
 <div id="main">
 <a href="../../../" id="home-link">ACM Computing Seminar Home</a>
-<a href="javascript:;" id="mobile-menu">&#9776;</a>
+<a href="javascript:;" id="toc-open">&#9776;</a>
+<a href="javascript:;" id="toc-close">&times;</a>
 
 <div id="outline-container-orgheadline4" class="outline-2">
 <h2 id="orgheadline4"><span class="section-number-2">1</span> Introduction</h2>
@@ -313,7 +323,7 @@ Before you dive in, here is a little about the C++ programming language:
 C++ is an extension of the C programming language. Both C and C++ are 
 <b>statically-typed</b> and <b>compiled</b> languages, which means that the <b>type</b> 
 of variables used in your source code must be declared explicitly and is 
-checked at when the program is compiled (i.e., translated into a machine 
+checked when the program is compiled (i.e., translated into a machine 
 executable file).
 </p>
 
@@ -455,7 +465,7 @@ Followed by:
 </div>
 
 <p>
-By default, <code>g++</code> calls the resulting binary executable, <code>a.out</code>, but
+By default, <code>g++</code> names the resulting binary executable, <code>a.out</code>, but
 you can specify a different output file name by using the <code>-o</code> flag:
 </p>
 
@@ -477,10 +487,9 @@ systems, there is no particular file-extension type for executables.
 <h2 id="orgheadline24"><span class="section-number-2">3</span> Data types</h2>
 <div class="outline-text-2" id="text-3">
 <p>
-As we <a href="#orgheadline1">discussed previously</a>, you must explicitly declare the type of a 
+As we <a href="#orgheadline1">mentioned previously</a>, you must explicitly declare the type of a 
 variable. So, in this section, we'll talk about the main variable 
-types you'll use, namely boolean, integer, floating point types. In 
-the section on <a href="#orgheadline9">object-oriented programming</a>, 
+types you'll use. In the section on <a href="#orgheadline9">object-oriented programming</a>, 
 we'll discuss how to build more complex data types.
 </p>
 </div>
@@ -720,7 +729,7 @@ The memory address for a variable can be obtained by the <code>&amp;</code> oper
 </div>
 
 <pre class="example">
-0x7fffb35b9838
+0x7ffcc6537508
 </pre>
 
 <p>
@@ -792,8 +801,8 @@ a: 2.1, b: 2.1
 a: 3.1, b: 3.1
 
 
-&amp;a: 0x7fffb8a63208
-&amp;b: 0x7fffb8a63208
+&amp;a: 0x7ffda5c61308
+&amp;b: 0x7ffda5c61308
 </pre>
 
 <p>
@@ -812,7 +821,8 @@ a reference to the element of an array.
 <div class="outline-text-3" id="text-3-8">
 <p>
 The length of an array can be fixed or dynamic, and how you
-declare the array depends on this.
+declare the array depends on this. Array indexing starts at 0 in C++ 
+(compared to start at 1, for example, in Fortran or Matlab).
 </p>
 </div>
 
@@ -873,12 +883,15 @@ memory problems is called <a href="http://valgrind.org/">valgrind</a>.
 </div>
 </div>
 
-<div id="outline-container-orgheadline32" class="outline-2">
-<h2 id="orgheadline32"><span class="section-number-2">4</span> Control structures</h2>
+<div id="outline-container-orgheadline34" class="outline-2">
+<h2 id="orgheadline34"><span class="section-number-2">4</span> Control structures</h2>
 <div class="outline-text-2" id="text-4">
 </div><div id="outline-container-orgheadline10" class="outline-3">
 <h3 id="orgheadline10"><span class="section-number-3">4.1</span> Conditionals</h3>
 <div class="outline-text-3" id="text-4-1">
+</div><div id="outline-container-orgheadline25" class="outline-4">
+<h4 id="orgheadline25"><span class="section-number-4">4.1.1</span> Example: <code>if</code> / <code>else</code> and random number generation</h4>
+<div class="outline-text-4" id="text-4-1-1">
 <p>
 Often a code block should only be executed if some condition is true. 
 Below, we generate a random number between 0 and 1; print the number; and,
@@ -930,7 +943,12 @@ num was less than 0.5.
 num: 0.788318
 num was greater than 0.5.
 </pre>
+</div>
+</div>
 
+<div id="outline-container-orgheadline26" class="outline-4">
+<h4 id="orgheadline26"><span class="section-number-4">4.1.2</span> Example: <code>if</code> / <code>else if</code> / <code>else</code></h4>
+<div class="outline-text-4" id="text-4-1-2">
 <p>
 You can follow <code>else</code> immediate by another <code>if</code> to have mutiple mutually-
 exclusive blocks:
@@ -970,7 +988,7 @@ exclusive blocks:
 </div>
 
 <pre class="example">
-num: 0.822488
+num: 0.806211
 num was between 0.75 and 1.
 </pre>
 
@@ -982,17 +1000,18 @@ was false.
 </p>
 </div>
 </div>
+</div>
 
-<div id="outline-container-orgheadline31" class="outline-3">
-<h3 id="orgheadline31"><span class="section-number-3">4.2</span> Loops</h3>
+<div id="outline-container-orgheadline33" class="outline-3">
+<h3 id="orgheadline33"><span class="section-number-3">4.2</span> Loops</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 We discuss two main structures for iterating &#x2013; the <code>for</code> and <code>while</code> loops.
 </p>
 </div>
 
-<div id="outline-container-orgheadline26" class="outline-4">
-<h4 id="orgheadline26"><span class="section-number-4">4.2.1</span> The <code>for</code> loop</h4>
+<div id="outline-container-orgheadline28" class="outline-4">
+<h4 id="orgheadline28"><span class="section-number-4">4.2.1</span> The <code>for</code> loop</h4>
 <div class="outline-text-4" id="text-4-2-1">
 <p>
 The <code>for</code> loop requires three specifications &#x2013; the iteration variable 
@@ -1033,8 +1052,8 @@ x[10] = 1
 </div>
 
 
-<div id="outline-container-orgheadline25" class="outline-5">
-<h5 id="orgheadline25"><span class="section-number-5">4.2.1.1</span> Example: row-major matrix</h5>
+<div id="outline-container-orgheadline27" class="outline-5">
+<h5 id="orgheadline27"><span class="section-number-5">4.2.1.1</span> Example: row-major matrix</h5>
 <div class="outline-text-5" id="text-4-2-1-1">
 <p>
 You can nest loops, i.e., loops inside of loops, etc.
@@ -1107,17 +1126,17 @@ the second <code>n_cols</code> elements of <code>matrix</code> will contain the 
 </div>
 </div>
 
-<div id="outline-container-orgheadline29" class="outline-4">
-<h4 id="orgheadline29"><span class="section-number-4">4.2.2</span> The <code>while</code> loop</h4>
+<div id="outline-container-orgheadline31" class="outline-4">
+<h4 id="orgheadline31"><span class="section-number-4">4.2.2</span> The <code>while</code> loop</h4>
 <div class="outline-text-4" id="text-4-2-2">
 <p>
-A <code>while</code> loop iterates while a condition is met. Essentially, it is a <code>for</code>
+A <code>while</code> loop iterates while a condition is <code>true</code>. Essentially, it is a <code>for</code>
 loop without an update variable.
 </p>
 </div>
 
-<div id="outline-container-orgheadline27" class="outline-5">
-<h5 id="orgheadline27"><span class="section-number-5">4.2.2.1</span> Example: truncated sum</h5>
+<div id="outline-container-orgheadline29" class="outline-5">
+<h5 id="orgheadline29"><span class="section-number-5">4.2.2.1</span> Example: truncated sum</h5>
 <div class="outline-text-5" id="text-4-2-2-1">
 <p>
 In the following example, we approximate the geometric series:
@@ -1184,8 +1203,8 @@ Iter: 014, Sum: 0.99994, Abs Err: 0.00006
 </div>
 </div>
 
-<div id="outline-container-orgheadline28" class="outline-5">
-<h5 id="orgheadline28"><span class="section-number-5">4.2.2.2</span> Example: estimating machine epsilon</h5>
+<div id="outline-container-orgheadline30" class="outline-5">
+<h5 id="orgheadline30"><span class="section-number-5">4.2.2.2</span> Example: estimating machine epsilon</h5>
 <div class="outline-text-5" id="text-4-2-2-2">
 <div class="org-src-container">
 
@@ -1210,8 +1229,8 @@ Iter: 014, Sum: 0.99994, Abs Err: 0.00006
 </div>
 </div>
 
-<div id="outline-container-orgheadline30" class="outline-4">
-<h4 id="orgheadline30"><span class="section-number-4">4.2.3</span> The <code>break</code> keyword</h4>
+<div id="outline-container-orgheadline32" class="outline-4">
+<h4 id="orgheadline32"><span class="section-number-4">4.2.3</span> The <code>break</code> keyword</h4>
 <div class="outline-text-4" id="text-4-2-3">
 <p>
 The <code>break</code> keyword provides a mechanism for exiting the direct parent loop
@@ -1251,8 +1270,8 @@ approach.
 </div>
 
 
-<div id="outline-container-orgheadline37" class="outline-2">
-<h2 id="orgheadline37"><span class="section-number-2">5</span> Input / Output</h2>
+<div id="outline-container-orgheadline39" class="outline-2">
+<h2 id="orgheadline39"><span class="section-number-2">5</span> Input / Output</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 We have already used the <code>&lt;iostream&gt;</code> library to print results to 
@@ -1263,8 +1282,8 @@ analysis.
 </p>
 </div>
 
-<div id="outline-container-orgheadline33" class="outline-3">
-<h3 id="orgheadline33"><span class="section-number-3">5.1</span> Inputs to <code>main</code>: <code>argc</code> and <code>argv</code></h3>
+<div id="outline-container-orgheadline35" class="outline-3">
+<h3 id="orgheadline35"><span class="section-number-3">5.1</span> Inputs to <code>main</code>: <code>argc</code> and <code>argv</code></h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
 The <code>main</code> function has two optional arguments which we have thus far omitted, 
@@ -1325,18 +1344,17 @@ function.
 </div>
 </div>
 
-<div id="outline-container-orgheadline36" class="outline-3">
-<h3 id="orgheadline36"><span class="section-number-3">5.2</span> Filestreams</h3>
+<div id="outline-container-orgheadline38" class="outline-3">
+<h3 id="orgheadline38"><span class="section-number-3">5.2</span> Filestreams</h3>
 <div class="outline-text-3" id="text-5-2">
 <p>
 File input and output is crucial for numerical experiments with lots of data. 
-It is also useful for getting user input. In this section, we see how to 
-read data from the command line arguments, and how to read and write to files.
+In this section, we see how to read and write data to files.
 </p>
 </div>
 
-<div id="outline-container-orgheadline34" class="outline-4">
-<h4 id="orgheadline34"><span class="section-number-4">5.2.1</span> Reading data from a file</h4>
+<div id="outline-container-orgheadline36" class="outline-4">
+<h4 id="orgheadline36"><span class="section-number-4">5.2.1</span> Reading data from a file</h4>
 <div class="outline-text-4" id="text-5-2-1">
 <p>
 In general, how data is read in depends heavily on how the data is stored. 
@@ -1382,8 +1400,8 @@ depending on the intended format of the data.
 </div>
 </div>
 
-<div id="outline-container-orgheadline35" class="outline-4">
-<h4 id="orgheadline35"><span class="section-number-4">5.2.2</span> Writing data to a file</h4>
+<div id="outline-container-orgheadline37" class="outline-4">
+<h4 id="orgheadline37"><span class="section-number-4">5.2.2</span> Writing data to a file</h4>
 <div class="outline-text-4" id="text-5-2-2">
 <p>
 Writing to a file is similar, using the <code>&lt;fstream&gt;</code> library.
@@ -1442,13 +1460,13 @@ x       sin(x)
 <p>
 So far, we've piled everything into the <code>main</code> function. When we have a block of 
 code used for a specific subtask, we can offload it to a function. This promotes 
-code which is separated based on the tasks each block is intended to perform. 
+code which is separated based on the subtasks each block is intended to perform. 
 This, in turn, makes your code easier to debug and easier to understand.  
 </p>
 </div>
 
-<div id="outline-container-orgheadline38" class="outline-3">
-<h3 id="orgheadline38"><span class="section-number-3">6.1</span> Writing a function</h3>
+<div id="outline-container-orgheadline41" class="outline-3">
+<h3 id="orgheadline41"><span class="section-number-3">6.1</span> Writing a function</h3>
 <div class="outline-text-3" id="text-6-1">
 <p>
 A function must be declared before use. Thus, a function usual consists of two
@@ -1457,7 +1475,11 @@ of a function as well as the types of all the function's arguments. If the
 function is defined in the same file as the <code>main</code> function, you should write
 the declaration before <code>main</code> and the implementation after <code>main</code>.
 </p>
+</div>
 
+<div id="outline-container-orgheadline40" class="outline-4">
+<h4 id="orgheadline40"><span class="section-number-4">6.1.1</span> Example: <code>linspace</code>: generating a set of equally-spaced points</h4>
+<div class="outline-text-4" id="text-6-1-1">
 <div class="org-src-container">
 
 <pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #6495ed;">#include</span> <span style="color: #ffa07a;">&lt;iostream&gt;</span>
@@ -1479,28 +1501,29 @@ the declaration before <code>main</code> and the implementation after <code>main
 <span class="linenr">17: </span><span style="color: #9370db;">int</span> <span style="color: #00ff7f;">main</span>() {
 <span class="linenr">18: </span>  <span style="color: #9370db;">double</span> * <span style="color: #9acd32;">xs</span> = linspace(-1, 1, 5);
 <span class="linenr">19: </span>  print_array(xs, 5);
-<span class="linenr">20: </span>
-<span class="linenr">21: </span>  <span style="color: #20b2aa; font-weight: bold;">return</span> 0;
-<span class="linenr">22: </span>}
-<span class="linenr">23: </span>
-<span class="linenr">24: </span><span style="color: #cd853f;">// </span><span style="color: #cd853f;">Implementation of `linspace`.</span>
-<span class="linenr">25: </span><span style="color: #9370db;">double</span> * <span style="color: #00ff7f;">linspace</span>(<span style="color: #9370db;">double</span> <span style="color: #9acd32;">start</span>, <span style="color: #9370db;">double</span> <span style="color: #9acd32;">stop</span>, <span style="color: #9370db;">int</span> <span style="color: #9acd32;">n_points</span>) {
-<span class="linenr">26: </span>  <span style="color: #9370db;">double</span> * <span style="color: #9acd32;">arr</span> = <span style="color: #20b2aa; font-weight: bold;">new</span> <span style="color: #9370db;">double</span> [n_points];
-<span class="linenr">27: </span>  <span style="color: #9370db;">double</span> <span style="color: #9acd32;">dx</span> = (stop-start) / (n_points-1.0);
-<span class="linenr">28: </span>
-<span class="linenr">29: </span>  <span style="color: #20b2aa; font-weight: bold;">for</span>(<span style="color: #9370db;">int</span> <span style="color: #9acd32;">i</span>=0; i &lt; n_points; i++) {
-<span class="linenr">30: </span>    arr[i] = start + i*dx;
-<span class="linenr">31: </span>  }
-<span class="linenr">32: </span>
-<span class="linenr">33: </span>  <span style="color: #20b2aa; font-weight: bold;">return</span> arr;
-<span class="linenr">34: </span>}
-<span class="linenr">35: </span>
-<span class="linenr">36: </span><span style="color: #cd853f;">// </span><span style="color: #cd853f;">Implementation of `print_array`.</span>
-<span class="linenr">37: </span><span style="color: #9370db;">void</span> <span style="color: #00ff7f;">print_array</span>(<span style="color: #9370db;">double</span> * <span style="color: #9acd32;">arr</span>, <span style="color: #9370db;">int</span> <span style="color: #9acd32;">arr_len</span>) {
-<span class="linenr">38: </span>  <span style="color: #20b2aa; font-weight: bold;">for</span>(<span style="color: #9370db;">int</span> <span style="color: #9acd32;">i</span>=0; i &lt; arr_len; i++) {
-<span class="linenr">39: </span>    <span style="color: #1e90ff;">std</span>::cout &lt;&lt; arr[i] &lt;&lt; <span style="color: #ffa07a;">"\n"</span>;
-<span class="linenr">40: </span>  }
-<span class="linenr">41: </span>}
+<span class="linenr">20: </span>  <span style="color: #20b2aa; font-weight: bold;">delete</span> [] xs;
+<span class="linenr">21: </span>
+<span class="linenr">22: </span>  <span style="color: #20b2aa; font-weight: bold;">return</span> 0;
+<span class="linenr">23: </span>}
+<span class="linenr">24: </span>
+<span class="linenr">25: </span><span style="color: #cd853f;">// </span><span style="color: #cd853f;">Implementation of `linspace`.</span>
+<span class="linenr">26: </span><span style="color: #9370db;">double</span> * <span style="color: #00ff7f;">linspace</span>(<span style="color: #9370db;">double</span> <span style="color: #9acd32;">start</span>, <span style="color: #9370db;">double</span> <span style="color: #9acd32;">stop</span>, <span style="color: #9370db;">int</span> <span style="color: #9acd32;">n_points</span>) {
+<span class="linenr">27: </span>  <span style="color: #9370db;">double</span> * <span style="color: #9acd32;">arr</span> = <span style="color: #20b2aa; font-weight: bold;">new</span> <span style="color: #9370db;">double</span> [n_points];
+<span class="linenr">28: </span>  <span style="color: #9370db;">double</span> <span style="color: #9acd32;">dx</span> = (stop-start) / (n_points-1.0);
+<span class="linenr">29: </span>
+<span class="linenr">30: </span>  <span style="color: #20b2aa; font-weight: bold;">for</span>(<span style="color: #9370db;">int</span> <span style="color: #9acd32;">i</span>=0; i &lt; n_points; i++) {
+<span class="linenr">31: </span>    arr[i] = start + i*dx;
+<span class="linenr">32: </span>  }
+<span class="linenr">33: </span>
+<span class="linenr">34: </span>  <span style="color: #20b2aa; font-weight: bold;">return</span> arr;
+<span class="linenr">35: </span>}
+<span class="linenr">36: </span>
+<span class="linenr">37: </span><span style="color: #cd853f;">// </span><span style="color: #cd853f;">Implementation of `print_array`.</span>
+<span class="linenr">38: </span><span style="color: #9370db;">void</span> <span style="color: #00ff7f;">print_array</span>(<span style="color: #9370db;">double</span> * <span style="color: #9acd32;">arr</span>, <span style="color: #9370db;">int</span> <span style="color: #9acd32;">arr_len</span>) {
+<span class="linenr">39: </span>  <span style="color: #20b2aa; font-weight: bold;">for</span>(<span style="color: #9370db;">int</span> <span style="color: #9acd32;">i</span>=0; i &lt; arr_len; i++) {
+<span class="linenr">40: </span>    <span style="color: #1e90ff;">std</span>::cout &lt;&lt; arr[i] &lt;&lt; <span style="color: #ffa07a;">"\n"</span>;
+<span class="linenr">41: </span>  }
+<span class="linenr">42: </span>}
 </pre>
 </div>
 
@@ -1513,9 +1536,10 @@ the declaration before <code>main</code> and the implementation after <code>main
 </pre>
 </div>
 </div>
+</div>
 
-<div id="outline-container-orgheadline42" class="outline-3">
-<h3 id="orgheadline42"><span class="section-number-3">6.2</span> Header and implementation files</h3>
+<div id="outline-container-orgheadline45" class="outline-3">
+<h3 id="orgheadline45"><span class="section-number-3">6.2</span> Header and implementation files</h3>
 <div class="outline-text-3" id="text-6-2">
 <p>
 The example in the previous section certainly made the <code>main</code> function
@@ -1525,8 +1549,8 @@ further, by creating header and implementation files. Here is how we do it:
 </p>
 </div>
 
-<div id="outline-container-orgheadline39" class="outline-4">
-<h4 id="orgheadline39"><span class="section-number-4">6.2.1</span> The header file</h4>
+<div id="outline-container-orgheadline42" class="outline-4">
+<h4 id="orgheadline42"><span class="section-number-4">6.2.1</span> The header file</h4>
 <div class="outline-text-4" id="text-6-2-1">
 <p>
 Put the declarations from the into a header file, called <code>my_library.h</code>:
@@ -1570,8 +1594,8 @@ library functions like <code>&lt;iostream&gt;</code> begin with <code>std::</cod
 </div>
 </div>
 
-<div id="outline-container-orgheadline40" class="outline-4">
-<h4 id="orgheadline40"><span class="section-number-4">6.2.2</span> The implementation file</h4>
+<div id="outline-container-orgheadline43" class="outline-4">
+<h4 id="orgheadline43"><span class="section-number-4">6.2.2</span> The implementation file</h4>
 <div class="outline-text-4" id="text-6-2-2">
 <p>
 Create a file called <code>my_library.cpp</code> containing the implementations as follows:
@@ -1610,8 +1634,8 @@ given in the header file.
 </div>
 </div>
 
-<div id="outline-container-orgheadline41" class="outline-4">
-<h4 id="orgheadline41"><span class="section-number-4">6.2.3</span> The file containing main</h4>
+<div id="outline-container-orgheadline44" class="outline-4">
+<h4 id="orgheadline44"><span class="section-number-4">6.2.3</span> The file containing main</h4>
 <div class="outline-text-4" id="text-6-2-3">
 <p>
 Create a file with the main function, say <code>main.cpp</code>:
@@ -1619,15 +1643,16 @@ Create a file with the main function, say <code>main.cpp</code>:
 
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #6495ed;">#include</span> <span style="color: #ffa07a;">&lt;iostream&gt;</span>
-<span class="linenr">2: </span><span style="color: #6495ed;">#include</span> <span style="color: #ffa07a;">"my_library.h"</span>
-<span class="linenr">3: </span>
-<span class="linenr">4: </span><span style="color: #9370db;">int</span> <span style="color: #00ff7f;">main</span>() {
-<span class="linenr">5: </span>    <span style="color: #9370db;">double</span> * <span style="color: #9acd32;">xs</span> = <span style="color: #1e90ff;">my_namespace</span>::linspace(-1,1,5);
-<span class="linenr">6: </span>    <span style="color: #1e90ff;">my_namespace</span>::print_array(xs, 5);
-<span class="linenr">7: </span>
-<span class="linenr">8: </span>    <span style="color: #20b2aa; font-weight: bold;">return</span> 0;
-<span class="linenr">9: </span>}
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #6495ed;">#include</span> <span style="color: #ffa07a;">&lt;iostream&gt;</span>
+<span class="linenr"> 2: </span><span style="color: #6495ed;">#include</span> <span style="color: #ffa07a;">"my_library.h"</span>
+<span class="linenr"> 3: </span>
+<span class="linenr"> 4: </span><span style="color: #9370db;">int</span> <span style="color: #00ff7f;">main</span>() {
+<span class="linenr"> 5: </span>    <span style="color: #9370db;">double</span> * <span style="color: #9acd32;">xs</span> = <span style="color: #1e90ff;">my_namespace</span>::linspace(-1,1,5);
+<span class="linenr"> 6: </span>    <span style="color: #1e90ff;">my_namespace</span>::print_array(xs, 5);
+<span class="linenr"> 7: </span>    <span style="color: #20b2aa; font-weight: bold;">delete</span> [] xs;
+<span class="linenr"> 8: </span>
+<span class="linenr"> 9: </span>    <span style="color: #20b2aa; font-weight: bold;">return</span> 0;
+<span class="linenr">10: </span>}
 </pre>
 </div>
 
@@ -1648,14 +1673,14 @@ g++ my_library.o main.cpp -o main.exe
 </div>
 
 <p>
-If successful, you will see the same output <a href="#orgheadline38">as previously</a>.
+If successful, you will see the same output <a href="#orgheadline41">as previously</a>.
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgheadline45" class="outline-3">
-<h3 id="orgheadline45"><span class="section-number-3">6.3</span> Function pointers</h3>
+<div id="outline-container-orgheadline48" class="outline-3">
+<h3 id="orgheadline48"><span class="section-number-3">6.3</span> Function pointers</h3>
 <div class="outline-text-3" id="text-6-3">
 <p>
 Pointers can be made to functions, and these function pointers can be used 
@@ -1664,8 +1689,8 @@ function pointer as one of their arguments.
 </p>
 </div>
 
-<div id="outline-container-orgheadline43" class="outline-4">
-<h4 id="orgheadline43"><span class="section-number-4">6.3.1</span> Example: Newton's method for rootfinding</h4>
+<div id="outline-container-orgheadline46" class="outline-4">
+<h4 id="orgheadline46"><span class="section-number-4">6.3.1</span> Example: Newton's method for rootfinding</h4>
 <div class="outline-text-4" id="text-6-3-1">
 <p>
 Suppose \(f: \mathbb{R} \to \mathbb{R}\), and we'd like to find a root of \(f\). 
@@ -1752,8 +1777,8 @@ f(1.41421) = 4.51061e-12
 </div>
 
 
-<div id="outline-container-orgheadline44" class="outline-4">
-<h4 id="orgheadline44"><span class="section-number-4">6.3.2</span> Example: The midpoint rule for definite integrals</h4>
+<div id="outline-container-orgheadline47" class="outline-4">
+<h4 id="orgheadline47"><span class="section-number-4">6.3.2</span> Example: The midpoint rule for definite integrals</h4>
 <div class="outline-text-4" id="text-6-3-2">
 <p>
 The midpoint rule is a numerical integration method which approximates 
@@ -1856,11 +1881,11 @@ improves upon the default <code>double</code> array.
 </p>
 </div>
 
-<div id="outline-container-orgheadline49" class="outline-3">
-<h3 id="orgheadline49"><span class="section-number-3">7.1</span> Example: a vector class</h3>
+<div id="outline-container-orgheadline52" class="outline-3">
+<h3 id="orgheadline52"><span class="section-number-3">7.1</span> Example: a vector <code>class</code></h3>
 <div class="outline-text-3" id="text-7-1">
-</div><div id="outline-container-orgheadline46" class="outline-4">
-<h4 id="orgheadline46"><span class="section-number-4">7.1.1</span> The header file</h4>
+</div><div id="outline-container-orgheadline49" class="outline-4">
+<h4 id="orgheadline49"><span class="section-number-4">7.1.1</span> The header file</h4>
 <div class="outline-text-4" id="text-7-1-1">
 <p>
 Create the header file, <code>vector.h</code>:
@@ -1900,14 +1925,22 @@ Create the header file, <code>vector.h</code>:
 </div>
 
 <p>
-First observe the macro guards, <code>#ifndef</code>, etc. Next, observe that we've 
-wrapped the class in a namespace, <code>vec</code>. Within the namespace, we've declared 
-a class, <code>vector</code>, which contains <code>public</code> and <code>private</code> elements. Private 
+First note the macro guards, <code>#ifndef</code>, <code>#define</code>, and <code>#endif</code>, as well as the 
+namespace, <code>vec</code>, wrapping the <code>class</code> declaration. Macro guards and namespaces 
+were previously discussed when we initially introduced 
+<a href="#orgheadline45">how to write header and implementation files</a>. 
+</p>
+
+<p>
+Now, within the namespace, we've declared a <code>class</code>, <code>vector</code>, which 
+contains <code>public</code> and <code>private</code> variables and funcion declartations. Private 
 functions and variables may only be accessed through the public methods. This 
 means if you created an instance of the class, <code>vector</code>, you would not be able 
 to access the private variable directly. You could only call the <b>public 
 member-functions</b>, which, in turn, may manipulate the 
-<b>private member-variables</b>, or call the <b>private member-functions</b>.
+<b>private member-variables</b>, or call the <b>private member-functions</b>. 
+Splitting variables and functions into public and private helps to ensure 
+that other libraries and programs use your class as intended.
 </p>
 
 <p>
@@ -1915,20 +1948,22 @@ Thus far, this class has 5 public member-functions, 2 private member-variables,
 and 1 private member-function. The first two member functions are special, 
 the <b>constructor</b> and <b>destructor</b>, respectively. The constructor is called 
 explicitly when you declare a new instance of this class, while the destructor 
-is usually called implicitly when the object is deleted when it goes out of 
+is usually called implicitly when the object is deleted or when it goes out of 
 scope.
 </p>
 
 <p>
 Notice that the method for accessing elements of <code>vector</code> is called <code>element</code> 
-and its return type is a <b>reference</b>. This allows us to use this function on 
-the left side of assignment operators as well as to use it as the element value.
+and its return type is a <b>reference</b> (<a href="#orgheadline19">discussed previously</a>). This allows us 
+to use this function on both the left side of assignment operators, i.e., to 
+assign values to <code>vector</code> components, and on the right side of assignments, 
+i.e., to treat it as the value of the component.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgheadline47" class="outline-4">
-<h4 id="orgheadline47"><span class="section-number-4">7.1.2</span> The implementation file</h4>
+<div id="outline-container-orgheadline50" class="outline-4">
+<h4 id="orgheadline50"><span class="section-number-4">7.1.2</span> The implementation file</h4>
 <div class="outline-text-4" id="text-7-1-2">
 <p>
 Create the implementation file, <code>vector.cpp</code>:
@@ -2013,8 +2048,8 @@ of headaches in the future.
 </div>
 </div>
 
-<div id="outline-container-orgheadline48" class="outline-4">
-<h4 id="orgheadline48"><span class="section-number-4">7.1.3</span> Example usage</h4>
+<div id="outline-container-orgheadline51" class="outline-4">
+<h4 id="orgheadline51"><span class="section-number-4">7.1.3</span> Example usage</h4>
 <div class="outline-text-4" id="text-7-1-3">
 <p>
 Ok. Let's see some example usage, by creating a <code>main.cpp</code>, containing:
@@ -2092,8 +2127,8 @@ that your code is working, you can simply compile with <code>-DNEDUBG</code>.
 </div>
 </div>
 
-<div id="outline-container-orgheadline52" class="outline-3">
-<h3 id="orgheadline52"><span class="section-number-3">7.2</span> Example continued: operator overloading</h3>
+<div id="outline-container-orgheadline55" class="outline-3">
+<h3 id="orgheadline55"><span class="section-number-3">7.2</span> Example continued: operator overloading</h3>
 <div class="outline-text-3" id="text-7-2">
 <p>
 The <code>v.element(i)</code> accessor is a bit clunky. We can replace this with the 
@@ -2103,8 +2138,8 @@ more natural, <code>v[i]</code>, by <b>overloading</b> the <code>[]</code> opera
 </div>
 
 
-<div id="outline-container-orgheadline50" class="outline-4">
-<h4 id="orgheadline50"><span class="section-number-4">7.2.1</span> Overloading <code>operator[]</code></h4>
+<div id="outline-container-orgheadline53" class="outline-4">
+<h4 id="orgheadline53"><span class="section-number-4">7.2.1</span> Overloading <code>operator[]</code></h4>
 <div class="outline-text-4" id="text-7-2-1">
 <p>
 In the header file, simply replace the <code>element</code> function declaration with:
@@ -2168,8 +2203,8 @@ and you should see:
 </div>
 </div>
 
-<div id="outline-container-orgheadline51" class="outline-4">
-<h4 id="orgheadline51"><span class="section-number-4">7.2.2</span> Overloading <code>operator=</code></h4>
+<div id="outline-container-orgheadline54" class="outline-4">
+<h4 id="orgheadline54"><span class="section-number-4">7.2.2</span> Overloading <code>operator=</code></h4>
 <div class="outline-text-4" id="text-7-2-2">
 <p>
 Let's overload the <code>=</code> operator so we can assign one vector to another. 
@@ -2270,14 +2305,15 @@ code is essentially equivalent to
 
 <p>
 In other words, the constructor is called with the existing vector, <code>v</code>, as
-the argument.
+the argument, but we have not written a constructor yet with such a call 
+signature.
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgheadline53" class="outline-3">
-<h3 id="orgheadline53"><span class="section-number-3">7.3</span> Example continued: the copy constructor</h3>
+<div id="outline-container-orgheadline56" class="outline-3">
+<h3 id="orgheadline56"><span class="section-number-3">7.3</span> Example continued: the copy constructor</h3>
 <div class="outline-text-3" id="text-7-3">
 <p>
 The constructor can be overloaded, i.e., we can write multiple versions of the 
@@ -2340,8 +2376,8 @@ we will see:
 </div>
 </div>
 
-<div id="outline-container-orgheadline54" class="outline-3">
-<h3 id="orgheadline54"><span class="section-number-3">7.4</span> Exampled continued: overloading the arithmetic operators</h3>
+<div id="outline-container-orgheadline57" class="outline-3">
+<h3 id="orgheadline57"><span class="section-number-3">7.4</span> Exampled continued: overloading the arithmetic operators</h3>
 <div class="outline-text-3" id="text-7-4">
 <p>
 Let's overload the <code>+</code> operator so we can add two vectors. First add to 

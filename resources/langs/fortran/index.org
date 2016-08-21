@@ -6,10 +6,12 @@
 #+property: header-args:sh :exports both
 #+startup: latexpreview
 #+options: html-postamble:nil
-#+html_head: <link rel="stylesheet" type="text/css" href="../css/guides.css">
-#+html_head: <script src="../js/guides.js"></script>
+#+html_head: <link rel="stylesheet" type="text/css" href="../css/main.css">
+#+html_head: <script src="../js/main.js"></script>
 #+html: <div id="main">
 #+html: <a href="../../../" id="home-link">ACM Computing Seminar Home</a>
+#+html: <a href="javascript:;" id="toc-open">&#9776;</a>
+#+html: <a href="javascript:;" id="toc-close">&times;</a>
  
 * Hello world
 #+begin_src fortran :tangle hello/main.f90

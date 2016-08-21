@@ -3,11 +3,12 @@
 #+date: 
 #+options: html-postamble:nil
 #+options: H:4
-#+html_head: <link rel="stylesheet" type="text/css" href="../css/guides.css">
-#+html_head: <script src="../js/guides.js"></script>
+#+html_head: <link rel="stylesheet" type="text/css" href="../css/main.css">
+#+html_head: <script src="../js/main.js"></script>
 #+html: <div id="main">
 #+html: <a href="../../../" id="home-link">ACM Computing Seminar Home</a>
-#+html: <a href="javascript:;" id="mobile-menu">&#9776;</a>
+#+html: <a href="javascript:;" id="toc-open">&#9776;</a>
+#+html: <a href="javascript:;" id="toc-close">&times;</a>
 
 * Introduction
 This manual is a guide for quickly learning C++ for mathematical and 
@@ -26,7 +27,7 @@ Before you dive in, here is a little about the C++ programming language:
 C++ is an extension of the C programming language. Both C and C++ are 
 *statically-typed* and *compiled* languages, which means that the *type* 
 of variables used in your source code must be declared explicitly and is 
-checked at when the program is compiled (i.e., translated into a machine 
+checked when the program is compiled (i.e., translated into a machine 
 executable file).
 
 One (among many) difference between C++ and C, however, is that C++ provides 
@@ -113,7 +114,7 @@ Followed by:
   ./a.out
 #+end_src
 
-By default, =g++= calls the resulting binary executable, =a.out=, but
+By default, =g++= names the resulting binary executable, =a.out=, but
 you can specify a different output file name by using the =-o= flag:
 
 #+begin_src sh
@@ -124,10 +125,9 @@ Note that in Windows, executable files typically end in =.exe=. In Unix-like
 systems, there is no particular file-extension type for executables.
 
 * Data types
-As we [[A little about the language][discussed previously]], you must explicitly declare the type of a 
+As we [[A little about the language][mentioned previously]], you must explicitly declare the type of a 
 variable. So, in this section, we'll talk about the main variable 
-types you'll use, namely boolean, integer, floating point types. In 
-the section on [[Object-oriented programming][object-oriented programming]], 
+types you'll use. In the section on [[Object-oriented programming][object-oriented programming]], 
 we'll discuss how to build more complex data types.
 
 ** The =bool= type
@@ -375,7 +375,8 @@ a reference to the element of an array.
 
 ** Arrays
 The length of an array can be fixed or dynamic, and how you
-declare the array depends on this.
+declare the array depends on this. Array indexing starts at 0 in C++ 
+(compared to start at 1, for example, in Fortran or Matlab).
 
 *** Fixed length arrays
 #+begin_src cpp -n
@@ -422,6 +423,8 @@ memory problems is called [[http://valgrind.org/][valgrind]].
 
 * Control structures
 ** Conditionals
+   
+*** Example: =if= / =else= and random number generation
 Often a code block should only be executed if some condition is true. 
 Below, we generate a random number between 0 and 1; print the number; and,
 print whether or not the number was greater than 0.5.
@@ -468,6 +471,8 @@ print whether or not the number was greater than 0.5.
 : num was less than 0.5.
 : num: 0.788318
 : num was greater than 0.5.
+
+*** Example: =if= / =else if= / =else=
 
 You can follow =else= immediate by another =if= to have mutiple mutually-
 exclusive blocks:
@@ -615,7 +620,7 @@ the second =n_cols= elements of =matrix= will contain the second row, etc.
 : 0, 0, 2
 
 *** The =while= loop
-A =while= loop iterates while a condition is met. Essentially, it is a =for=
+A =while= loop iterates while a condition is =true=. Essentially, it is a =for=
 loop without an update variable.
 
 **** Example: truncated sum
@@ -778,8 +783,7 @@ function.
 
 ** Filestreams
 File input and output is crucial for numerical experiments with lots of data. 
-It is also useful for getting user input. In this section, we see how to 
-read data from the command line arguments, and how to read and write to files.
+In this section, we see how to read and write data to files.
 
 *** Reading data from a file
     
@@ -861,7 +865,7 @@ containing:
 
 So far, we've piled everything into the =main= function. When we have a block of 
 code used for a specific subtask, we can offload it to a function. This promotes 
-code which is separated based on the tasks each block is intended to perform. 
+code which is separated based on the subtasks each block is intended to perform. 
 This, in turn, makes your code easier to debug and easier to understand.  
 
 ** Writing a function
@@ -871,6 +875,8 @@ parts, a declaration and an implementation. You must declare the return type
 of a function as well as the types of all the function's arguments. If the 
 function is defined in the same file as the =main= function, you should write
 the declaration before =main= and the implementation after =main=.
+
+*** Example: =linspace=: generating a set of equally-spaced points
 
 #+begin_src cpp -n:exports both :results output
   #include <iostream>
@@ -892,6 +898,7 @@ the declaration before =main= and the implementation after =main=.
   int main() {
     double * xs = linspace(-1, 1, 5);
     print_array(xs, 5);
+    delete [] xs;
 
     return 0;
   }
@@ -1006,6 +1013,7 @@ Create a file with the main function, say =main.cpp=:
 int main() {
     double * xs = my_namespace::linspace(-1,1,5);
     my_namespace::print_array(xs, 5);
+    delete [] xs;
 
     return 0;
 }
@@ -1190,7 +1198,7 @@ state variables and functions that act on the state variables. An instance
 of a =class= is called an *object*. Let's write a =vector= class that 
 improves upon the default =double= array.
 
-** Example: a vector class
+** Example: a vector =class=
    
 *** The header file
 
@@ -1227,25 +1235,33 @@ Create the header file, =vector.h=:
   #endif
 #+end_src
 
-First observe the macro guards, =#ifndef=, etc. Next, observe that we've 
-wrapped the class in a namespace, =vec=. Within the namespace, we've declared 
-a class, =vector=, which contains =public= and =private= elements. Private 
+First note the macro guards, =#ifndef=, =#define=, and =#endif=, as well as the 
+namespace, =vec=, wrapping the =class= declaration. Macro guards and namespaces 
+were previously discussed when we initially introduced 
+[[Header and implementation files][how to write header and implementation files]]. 
+
+Now, within the namespace, we've declared a =class=, =vector=, which 
+contains =public= and =private= variables and funcion declartations. Private 
 functions and variables may only be accessed through the public methods. This 
 means if you created an instance of the class, =vector=, you would not be able 
 to access the private variable directly. You could only call the *public 
 member-functions*, which, in turn, may manipulate the 
-*private member-variables*, or call the *private member-functions*.
+*private member-variables*, or call the *private member-functions*. 
+Splitting variables and functions into public and private helps to ensure 
+that other libraries and programs use your class as intended.
 
 Thus far, this class has 5 public member-functions, 2 private member-variables, 
 and 1 private member-function. The first two member functions are special, 
 the *constructor* and *destructor*, respectively. The constructor is called 
 explicitly when you declare a new instance of this class, while the destructor 
-is usually called implicitly when the object is deleted when it goes out of 
+is usually called implicitly when the object is deleted or when it goes out of 
 scope.
 
 Notice that the method for accessing elements of =vector= is called =element= 
-and its return type is a *reference*. This allows us to use this function on 
-the left side of assignment operators as well as to use it as the element value.
+and its return type is a *reference* ([[References][discussed previously]]). This allows us 
+to use this function on both the left side of assignment operators, i.e., to 
+assign values to =vector= components, and on the right side of assignments, 
+i.e., to treat it as the value of the component.
 
 *** The implementation file
 
@@ -1498,7 +1514,8 @@ code is essentially equivalent to
 #+end_src
 
 In other words, the constructor is called with the existing vector, =v=, as
-the argument.
+the argument, but we have not written a constructor yet with such a call 
+signature.
 
 ** Example continued: the copy constructor
     
