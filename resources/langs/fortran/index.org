@@ -1,4 +1,4 @@
-#+title: Fortran code snippets
+#+title: ACM Computing Seminar Fortran Guide
 #+author: Joseph P. McKenna
 #+email: joepatmckenna@gmail.com
 #+property: header-args :mkdirp yes :cache yes
@@ -10,43 +10,70 @@
 #+html_head: <script src="../js/main.js"></script>
 #+html: <div id="main">
 #+html: <a href="../../../" id="home-link">ACM Computing Seminar Home</a>
-#+html: <a href="javascript:;" id="toc-open">&#9776;</a>
-#+html: <a href="javascript:;" id="toc-close">&times;</a>
- 
-* Hello world
-#+begin_src fortran :tangle hello/main.f90
+
+* Introduction
+This is guide is intended to quickly get you up-and-running in scientific computing with Fortran. There is a companion [[../cpp/index.html][C++ guide]] that parallels the content of this guide. 
+** About the language
+Fortran was created in the 1950s for mathematical *FOR*-mula *TRAN*-slation, and has since gone through a number of revisions (FORTRAN 66, 77, and Fortran 90, 95, 2003, 2008, 2015). The language standards are put forth by the Fortran standard committee [[http://www.j3-fortran.org][J3]] in a document (ISO 1539-1:2010) available for purchase. The syntax and intrinsic capabilities of the language make it especially suited for scientific computing. Like C/C++, Fortran is a *statically-typed* and *compiled* language. You must declare the *type*, i.e. integer, real number, character, of variables in programs you write. Your programs will be translated from human-readable /source code/ into a machine-executable file by software called a *compiler*. 
+
+* Getting started
+The software that you need to get started comes prepackaged and ready to download on most Linux distributions. There are a few options for emulating a Linux environment in Windows or Mac OS, such as a virtual machine (VirtualBox) or package manager (MinGW or Cygwin on Windows and Brew on Mac OS).
+** Text editor
+You will write the source code of your programs using a text editor. There are many options that have features designed for programming such as syntax highlighting and auto-completion. If you are an impossible-to-please perfectionist, you might want to check out [[https://www.gnu.org/s/emacs/][Emacs]]. If you are easier to please, you might want to check out [[https://www.sublimetext.com/][Sublime Text]].
+** Compiler
+To translate your source code into an executable, you will need a Fortran compiler. A free option is *gfortran*, part of the GNU compiler collection (gcc). The features of the Fortran language that are supported by the compiler are specified in the compiler documentation. This is your most complete reference for the intrinsic capabilities of Fortran that your programs can use. At the time of this writing, =gfortran= completely supports Fortran 95 and partially supports more recent standards.
+** Writing a program
+*** Hello world
+Let's write a tiny program that prints "hello world" to the terminal screen in =hello.f90=
+
+#+begin_src fortran -n :tangle hello/hello.f90
   program main
     print*, 'hello world'
   end program main
 #+end_src
 
+To compile the program, execute the following command in the same directory as =hello.f90=
+
 #+begin_src sh :dir hello
-  gfortran main.f90
+  gfortran hello.f90
 #+end_src
+
+This produces an executable file named =a.out= by default. To run, execute the following command in the same directory 
 
 #+begin_src sh :dir hello
   ./a.out
 #+end_src
 
-* Project template
+We could have specified a different name for the executable file during compilation with the =-o= option of =gfortran=
 
-#+begin_src fortran :tangle template/header.f90
+#+begin_src sh :dir hello
+  gfortran hello.f90 -o my_executable_file
+#+end_src
+
+*** Template
+Now let's write an empty template for future projects. This section may seem overly complex at first read, but it is best to adopt some form of organization when you are just getting started. Our source code template will consist of two files in the same directory ([[./template/]]). In the following files, the contents of a line after a =!= symbol is a comment that is ignored by the compiler. One file =header.f90= is a *module* that defines variables and procedures to be used later.
+
+#+begin_src fortran -n -r :tangle template/header.f90
   module header
-    implicit none
+    implicit none (ref:in1)
     ! variable declarations and assignments
   contains
     ! function and subroutine definitions
   end module header
 #+end_src
 
+This file is compiled into an *object file* with the =-c= option of =gfortran=
+
 #+begin_src sh :dir template
 gfortran -c header.f90
 #+end_src
 
-#+begin_src fortran :tangle template/main.f90
+This outputs the object file named =header.o= by default that can be /linked/ to the main program. A separate file =main.f90= contains the main program
+
+#+begin_src fortran -n -r :tangle template/main.f90
   program main
-    use header
-    implicit none
+    use header (ref:use)
+    implicit none (ref:in2)
     ! variable declarations and assignments
     ! function and subroutine calls
   contains
@@ -54,413 +81,568 @@ gfortran -c header.f90
   end program main
 #+end_src
 
+On line [[(use)]], we imported the content of =header.f90= into the main program, so we must link the object file =header.o= when compiling =main.f90=
+
 #+begin_src sh :dir template
 gfortran main.f90 header.o -o main
 #+end_src
+
+To run the program, execute the output file =main= in the same directory
 
 #+begin_src sh :dir template
 ./main
 #+end_src
 
-#+begin_src make :exports code :tangle template/makefile
+.
+
+As you get more experience, you will find it very cumbersome to repeatedly execute =gfortran= commands with every modification to your code. Using the =make= command-line utility is a way around this. You can specify all the compilation commands for your project in a =makefile=. For example, the template above could use the following =makefile=
+
+#+begin_src make -n -r :exports code :tangle template/makefile
   FC = gfortran
   SRC = main.f90
   EXE = main
-  OBJ = header.o
+  OBJ = header.o (ref:obj)
 
   all: $(EXE)
   $(EXE): $(OBJ)
     $(FC) $(OBJ) $(SRC) -o $(EXE)
   %.o: %.f90
     $(FC) -c $< -o $@
-  clean:
-    $(RM) *.o $(EXE)
 #+end_src
+
+Then, to recompile both =header.f90= and =main.f90= after modifying either file, you would execute
 
 #+begin_src sh :dir template
 make
 #+end_src
 
-* ${n \choose k}$
-#+begin_src fortran :tangle choose/main.f90
-  program main
-    implicit none
-    print*, choose(4,0), choose(4,1), &
-         choose(4,2), choose(4,3), choose(4,4)
-  contains
-    function choose(n,k) result(c)
-      integer, intent(in) :: n, k
-      integer :: c, i
-      c = 1
-      do i = 1, min(k,n-k)
-         c = c * (n-i+1) / i
-      end do
-    end function choose
-  end program main
+The first four lines of =makefile= assign variables for the compiler command, file name of the main program, file name of the executable to be created, and file name(s) of linked object files, respectively. If you wrote a second module in a separate file =my_second_header.f90= that you wanted to =use= in =main.f90=, you would modify line [[(obj)]] to =OBJ = header.o my_second_header.o=.
+
+* Data types
+We will use the convention of putting an =implicit none= keyword at the beginning of each code block as in line [[(in1)]] of =header.f90= and line [[(in2)]] of =main.f90= in Section [[Template]]. The role of this keyword is to suppress some implicit rules that Fortran has for undeclared variables. Without this keyword, an undeclared variable with a name such as =i= is assumed to be of the integer data type whereas an undeclared variable with a name such as =x= is assumed to be a real data type. By using the =implicit none= keyword, we force ourselves to declare every variable that we use. This may ultimately lead to more code but it is recommended to facilitate debugging when your program fails to compile. In addition to the most common data types presented below, Fortran has =complex= and =character= data types and support for user-defined data types.
+** The =logical= type
+A variable of the =logical= type can have values =.true.= or =.false.=. Logical operations can be computed with a few operators 
+
+#+begin_src fortran -n 
+  logical :: a,b,c
+  a = .true.
+  b = .false.
+
+  ! '.not.' is the logical negation operator
+  c = .not.a ! c is false
+
+  ! '.and,' is the logical and operator
+  c = a.and.b ! c is false
+
+  ! '.or.' is the logical or operator
+  c = a.or.b ! c is true
+
+  ! '==' is the test for equality
+  c = (1 == 2) ! c is false
+
+  ! '/=' is test for inequality
+  c = (1 /= 2) ! c is true
 #+end_src
 
-#+begin_src sh :dir choose
-gfortran main.f90 -o main
+Other logical operators include
+- =<= or =.lt.=: less than
+- =<== or =.le.=: less than or equal
+- =>= or =.gt.=: greater than
+- =>== or =.ge.=: greater than or equal
+
+Logical expressions are often used in [[Control structures][control structures]].
+
+** The =integer= type
+
+#+begin_src fortran -n
+    integer :: a = 6, b = 7 ! initialize a and b to 6 and 7, resp
+    integer :: c
+
+    c = a / b ! c is 0
+    c = b / a ! c is 1
+    c = mod(b,a) ! c is 1, 'mod' is the modulo operator
+    c = b - a ! c is -1
+    c = a > b ! c is 0 (logical gets cast to integer)
+    c = a < b ! c is 1 (logical gets cast to integer)
 #+end_src
 
-#+begin_src sh :dir choose
-./main
+** Floating point types
+There are two floating point data types in Fortran, =real= and =double precision= corresponding to [[https://en.wikipedia.org/wiki/IEEE_floating_poin][IEEE 32- and 64-bit floating point data types]].
+
+#+begin_src fortran :exports both -n
+  real :: a ! declare a single precision float
+  double precision :: b ! declare a double precision float
+
+  ! Print the max value of a real type
+  print*, huge(a)
+
+  ! Print the max value of a double precision type
+  print*, huge(b)
+
+  ! Print machine epsilon for the single precision floating point system
+  print*, epsilon(a)
+
+  ! Print machine epsilon for the double precision floating point system
+  print*, epsilon(b)
 #+end_src
 
-* Setting precision of variables
-#+begin_src fortran :tangle precision/constants.f90
-  module constants
-    implicit none
-    integer, parameter :: sp = kind(0.), dp = kind(0.d0)
-    integer, parameter :: rp = dp
-  end module constants
+** Casting
+An integer can be cast to a real number or vice versa.
+
+#+begin_src fortran :exports both -n
+    integer :: a = 1, b
+    real :: PI = 3.14159
+
+    b = int(PI) ! b is 3
+    print*, a/b
+    print*, a/real(b)
 #+end_src
 
-#+begin_src sh :dir precision
-gfortran -c constants.f90
+** The =parameter= modifier
+To protect a variable of any data type from reassignment, you can use the =parameter= modifier. If this modifier is used, the corresponding variable must be assigned a value at declaration, and that value cannot be reassigned. The following code is not valid.
+
+#+begin_src fortran -n
+  real, parameter :: PI = asin(0.)
+  PI = 3
 #+end_src
 
-#+begin_src fortran :tangle precision/main.f90
-  program main
-    use constants
-    implicit none
-    real(rp) :: x, y
-    x = 1._rp
-    y = real(1,rp)
-  end program main
+The compiler produces an error like =Error: Named constant ‘pi’ in variable definition context (assignment)=.
+
+** Setting the precision
+
+Each data type is assigned an integer by the =kind= function. You can write a program in a chosen precision with the =kind= of the precision stored in a variable =rp=. Then, if you want to change the precision, you could change the value of =rp= and recompile. The precision of a variable can be set at declaration and a variable or constant can be cast to a specified precision, each by supplying an extra argument.
+
+#+begin_src fortran -n
+  real :: r ! declare a real, single precision by default
+  double precision :: d ! declare a double precision
+  integer, parameter :: sp = kind(r), dp = kind(d) ! store kinds of 'r' and 'd'
+  integer, parameter :: rp = sp ! set current kind
+
+  ! declare 'b' in double precision
+  real(dp) :: b
+
+  ! declare 'a' real with precision kind 'rp'
+  real(rp) :: a
+
+  ! cast '1' to real with precision kind 'rp' and assign to a
+  a = 1.0_rp
+
+  ! cast 'b' to real with precision kind 'rp' and assign to a
+  a = real(b,rp)
 #+end_src
 
-#+begin_src sh :dir precision
-gfortran main.f90 constants.o -o main
+** Pointers
+
+Pointers have the same meaning in Fortran as in C++: a pointer is a variable that holds the *memory address* for a variable of a specific type. The implementation of pointers is qualitatively different in Fortran than in C++: in Fortran, there is no Fortran function to print the memory address that a pointer stores. A pointer variable is declared with the =pointer= modifier, and a variable that it points to is declared with the =target= modifier. The types of a =pointer= and its =target= must match.
+
+#+begin_src fortran :exports both -n
+  ! declare targets and assign values
+  integer, target :: a = 1, b = 2
+  ! declare pointer
+  integer, pointer :: p
+
+  p => a ! Now 'p' has same memory address as 'a'
+  p = 2 ! Modify value at address
+  print*, a==2 ! 'a' is 2
+
+  p => b ! Now 'p' has same memory address as 'b'
+  p = 1 ! Modify value at address
+  print*, b==1 ! 'b' is 1
+
+  ! Is 'p' associated with a target?
+  print*, associated(p)
+
+  ! Is 'p' associated with the target 'a'?
+  print*, associated(p, a)
+
+  ! Point to nowhere
+  nullify(p)
 #+end_src
 
-#+begin_src sh :dir precision
-./main
-#+end_src
+** Arrays
 
-#+begin_src make :exports none :tangle precision/makefile
-  FC = gfortran
-  SRC = main.f90
-  EXE = main
-  OBJ = constants.o
+* Control structures
 
-  all: $(EXE)
-  $(EXE): $(OBJ)
-    $(FC) $(OBJ) $(SRC) -o $(EXE) 
-  %.o: %.f90
-    $(FC) -c $< -o $@
-  clean:
-    $(RM) *.o $(EXE)
-#+end_src
+# * ${n \choose k}$
+# #+begin_src fortran :tangle choose/main.f90
+#   program main
+#     implicit none
+#     print*, choose(4,0), choose(4,1), &
+#          choose(4,2), choose(4,3), choose(4,4)
+#   contains
+#     function choose(n,k) result(c)
+#       integer, intent(in) :: n, k
+#       integer :: c, i
+#       c = 1
+#       do i = 1, min(k,n-k)
+#          c = c * (n-i+1) / i
+#       end do
+#     end function choose
+#   end program main
+# #+end_src
 
-* Machine Epsilon
-#+begin_src fortran :tangle epsilon/constants.f90
-  module constants
-    implicit none
+# #+begin_src sh :dir choose
+# gfortran main.f90 -o main
+# #+end_src
 
-    integer, parameter :: sp = kind(0.), dp = kind(0.d0)
-    integer, parameter :: rp = dp
+# #+begin_src sh :dir choose
+# ./main
+# #+end_src
 
-    interface machine_epsilon
-       module procedure machine_epsilon_sp, machine_epsilon_dp
-    end interface machine_epsilon
+# * Setting precision of variables
+# #+begin_src fortran :tangle precision/constants.f90
+#   module constants
+#     implicit none
+#     integer, parameter :: sp = kind(0.), dp = kind(0.d0)
+#     integer, parameter :: rp = dp
+#   end module constants
+# #+end_src
 
-  contains
+# #+begin_src sh :dir precision
+# gfortran -c constants.f90
+# #+end_src
 
-    function machine_epsilon_sp(x) result(e)
-      implicit none
-      real(sp), intent(in) :: x
-      real :: e
-      e = .5
-      do while (1._sp + e > 1._sp)
-         e = .5 * e
-      end do
-    end function machine_epsilon_sp
+# #+begin_src fortran :tangle precision/main.f90
+#   program main
+#     use constants
+#     implicit none
+#     real(rp) :: x, y
+#     x = 1._rp
+#     y = real(1,rp)
+#   end program main
+# #+end_src
 
-    function machine_epsilon_dp(x) result(e)
-      implicit none
-      real(dp), intent(in) :: x
-      real :: e
-      e = .5
-      do while (1._dp + e > 1._dp)
-         e = .5 * e
-      end do
-    end function machine_epsilon_dp
+# #+begin_src sh :dir precision
+# gfortran main.f90 constants.o -o main
+# #+end_src
 
-  end module constants
-#+end_src
+# #+begin_src sh :dir precision
+# ./main
+# #+end_src
 
-#+begin_src sh :dir epsilon
-gfortran -c constants.f90
-#+end_src
+# #+begin_src make :exports none :tangle precision/makefile
+#   FC = gfortran
+#   SRC = main.f90
+#   EXE = main
+#   OBJ = constants.o
 
-#+begin_src fortran :tangle epsilon/main.f90
-  program main
-    use constants
-    implicit none
-    print*, machine_epsilon(0._sp), machine_epsilon(0._dp)
-  end program main
-#+end_src
+#   all: $(EXE)
+#   $(EXE): $(OBJ)
+#     $(FC) $(OBJ) $(SRC) -o $(EXE) 
+#   %.o: %.f90
+#     $(FC) -c $< -o $@
+#   clean:
+#     $(RM) *.o $(EXE)
+# #+end_src
 
-#+begin_src sh :dir epsilon
-gfortran main.f90 constants.o -o main
-#+end_src
+# * Machine Epsilon
+# #+begin_src fortran :tangle epsilon/constants.f90
+#   module constants
+#     implicit none
+
+#     integer, parameter :: sp = kind(0.), dp = kind(0.d0)
+#     integer, parameter :: rp = dp
+
+#     interface machine_epsilon
+#        module procedure machine_epsilon_sp, machine_epsilon_dp
+#     end interface machine_epsilon
+
+#   contains
+
+#     function machine_epsilon_sp(x) result(e)
+#       implicit none
+#       real(sp), intent(in) :: x
+#       real :: e
+#       e = .5
+#       do while (1._sp + e > 1._sp)
+#          e = .5 * e
+#       end do
+#     end function machine_epsilon_sp
+
+#     function machine_epsilon_dp(x) result(e)
+#       implicit none
+#       real(dp), intent(in) :: x
+#       real :: e
+#       e = .5
+#       do while (1._dp + e > 1._dp)
+#          e = .5 * e
+#       end do
+#     end function machine_epsilon_dp
+
+#   end module constants
+# #+end_src
+
+# #+begin_src sh :dir epsilon
+# gfortran -c constants.f90
+# #+end_src
+
+# #+begin_src fortran :tangle epsilon/main.f90
+#   program main
+#     use constants
+#     implicit none
+#     print*, machine_epsilon(0._sp), machine_epsilon(0._dp)
+#   end program main
+# #+end_src
+
+# #+begin_src sh :dir epsilon
+# gfortran main.f90 constants.o -o main
+# #+end_src
  
-#+begin_src sh :dir epsilon
-./main
-#+end_src
+# #+begin_src sh :dir epsilon
+# ./main
+# #+end_src
 
-#+begin_src make :exports none :tangle epsilon/makefile
-  FC = gfortran
-  SRC = main.f90
-  EXE = main
-  OBJ = constants.o
+# #+begin_src make :exports none :tangle epsilon/makefile
+#   FC = gfortran
+#   SRC = main.f90
+#   EXE = main
+#   OBJ = constants.o
 
-  all: $(EXE)
-  $(EXE): $(OBJ)
-    $(FC) $(OBJ) $(SRC) -o $(EXE) 
-  %.o: %.f90
-    $(FC) -c $< -o $@
-  clean:
-    $(RM) *.o $(EXE)
-#+end_src
+#   all: $(EXE)
+#   $(EXE): $(OBJ)
+#     $(FC) $(OBJ) $(SRC) -o $(EXE) 
+#   %.o: %.f90
+#     $(FC) -c $< -o $@
+#   clean:
+#     $(RM) *.o $(EXE)
+# #+end_src
 
-#+begin_src fortran :exports both
-  print*, epsilon(0.), epsilon(0.d0)
-#+end_src
+# #+begin_src fortran :exports both
+#   print*, epsilon(0.), epsilon(0.d0)
+# #+end_src
 
-* Rootfinding
+# * Rootfinding
 
-#+begin_src fortran :tangle rootfind/functions.f90
-  module functions
-    implicit none
+# #+begin_src fortran :tangle rootfind/functions.f90
+#   module functions
+#     implicit none
 
-  contains
+#   contains
 
-    function f1(x)
-      real, intent(in) :: x
-      real :: f1
-      f1 = sin(x)
-    end function f1
+#     function f1(x)
+#       real, intent(in) :: x
+#       real :: f1
+#       f1 = sin(x)
+#     end function f1
 
-    function df1dx(x)
-      real, intent(in) :: x
-      real :: df1dx
-      df1dx = cos(x)
-    end function df1dx
+#     function df1dx(x)
+#       real, intent(in) :: x
+#       real :: df1dx
+#       df1dx = cos(x)
+#     end function df1dx
 
-  end module functions
-#+end_src
+#   end module functions
+# #+end_src
 
-#+begin_src sh :dir rootfind
-gfortran -c functions.f90
-#+end_src
+# #+begin_src sh :dir rootfind
+# gfortran -c functions.f90
+# #+end_src
 
-#+begin_src fortran :tangle rootfind/rootfind.f90
-  module rootfind
-    implicit none
+# #+begin_src fortran :tangle rootfind/rootfind.f90
+#   module rootfind
+#     implicit none
 
-    interface
-       function fun(x)
-         real, intent(in) :: x
-         real :: fun
-       end function fun
-    end interface
+#     interface
+#        function fun(x)
+#          real, intent(in) :: x
+#          real :: fun
+#        end function fun
+#     end interface
 
-  contains
+#   contains
 
-    function newton(f,dfdx,x0,tol,maxstep) result(xn)
-      procedure(fun), pointer :: f, dfdx
-      real, intent(in) :: x0, tol
-      integer, intent(in) :: maxstep
-      real :: xn
-      integer :: n = 0
+#     function newton(f,dfdx,x0,tol,maxstep) result(xn)
+#       procedure(fun), pointer :: f, dfdx
+#       real, intent(in) :: x0, tol
+#       integer, intent(in) :: maxstep
+#       real :: xn
+#       integer :: n = 0
 
-      xn = x0
-      do while (abs(f(xn))>tol .and. n<maxstep)
-         xn = xn - f(xn)/dfdx(xn)
-         n = n + 1
-      end do
-    end function newton
+#       xn = x0
+#       do while (abs(f(xn))>tol .and. n<maxstep)
+#          xn = xn - f(xn)/dfdx(xn)
+#          n = n + 1
+#       end do
+#     end function newton
 
-  end module rootfind
-#+end_src
+#   end module rootfind
+# #+end_src
 
-#+begin_src sh :dir rootfind
-gfortran -c rootfind.f90
-#+end_src
+# #+begin_src sh :dir rootfind
+# gfortran -c rootfind.f90
+# #+end_src
 
-#+begin_src fortran :tangle rootfind/main.f90
-  program main
-  	use functions
-    use rootfind
-    implicit none
+# #+begin_src fortran :tangle rootfind/main.f90
+#   program main
+#   	use functions
+#     use rootfind
+#     implicit none
 
-    procedure(fun), pointer :: f, dfdx
-    real :: x = 1., tol = 1e-5
-    integer :: maxstep = 100
-    f => f1
-    dfdx => df1dx
-    print*, newton(f,dfdx,x,tol,maxstep)
+#     procedure(fun), pointer :: f, dfdx
+#     real :: x = 1., tol = 1e-5
+#     integer :: maxstep = 100
+#     f => f1
+#     dfdx => df1dx
+#     print*, newton(f,dfdx,x,tol,maxstep)
 
-  end program main
-#+end_src
+#   end program main
+# #+end_src
 
-#+begin_src sh :dir rootfind
-gfortran main.f90 functions.o rootfind.o -o main
-#+end_src
+# #+begin_src sh :dir rootfind
+# gfortran main.f90 functions.o rootfind.o -o main
+# #+end_src
 
-#+begin_src make :exports none :tangle rootfind/makefile
-  FC = gfortran
-  SRC = main.f90
-  EXE = main
-  OBJ = functions.o rootfind.o
+# #+begin_src make :exports none :tangle rootfind/makefile
+#   FC = gfortran
+#   SRC = main.f90
+#   EXE = main
+#   OBJ = functions.o rootfind.o
 
-  all: $(EXE)
-  $(EXE): $(OBJ)
-    $(FC) $(OBJ) $(SRC) -o $(EXE) 
-  %.o: %.f90
-    $(FC) -c $< -o $@
-  clean:
-    $(RM) *.o $(EXE)
-#+end_src
+#   all: $(EXE)
+#   $(EXE): $(OBJ)
+#     $(FC) $(OBJ) $(SRC) -o $(EXE) 
+#   %.o: %.f90
+#     $(FC) -c $< -o $@
+#   clean:
+#     $(RM) *.o $(EXE)
+# #+end_src
 
-#+begin_src sh :dir rootfind
-./main
-#+end_src
+# #+begin_src sh :dir rootfind
+# ./main
+# #+end_src
 
-* Quadrature
+# * Quadrature
 
-#+begin_src fortran :tangle quadrature/functions.f90
-  module functions
-    implicit none
+# #+begin_src fortran :tangle quadrature/functions.f90
+#   module functions
+#     implicit none
 
-  contains
+#   contains
 
-    function f1(x)
-      real, intent(in) :: x
-      real :: f1
-      f1 = x
-    end function f1
+#     function f1(x)
+#       real, intent(in) :: x
+#       real :: f1
+#       f1 = x
+#     end function f1
 
-  end module functions
-#+end_src
+#   end module functions
+# #+end_src
 
-#+begin_src sh :dir quadrature
-  gfortran -c functions.f90
-#+end_src
+# #+begin_src sh :dir quadrature
+#   gfortran -c functions.f90
+# #+end_src
 
-#+begin_src fortran :tangle quadrature/quadrature.f90
-  module quadrature
-    implicit none
+# #+begin_src fortran :tangle quadrature/quadrature.f90
+#   module quadrature
+#     implicit none
 
-  contains
+#   contains
 
-    function midpoint_rule(f,a,b,n) result(I)
-      interface
-         function f(x)
-           real, intent(in) :: x
-           real :: f
-         end function f
-      end interface
-      real :: a, b
-      integer :: n, j
-      real :: I, dx
+#     function midpoint_rule(f,a,b,n) result(I)
+#       interface
+#          function f(x)
+#            real, intent(in) :: x
+#            real :: f
+#          end function f
+#       end interface
+#       real :: a, b
+#       integer :: n, j
+#       real :: I, dx
 
-      dx = (b-a)/real(n)
-      I = 0
-      do j = 0,n-1
-         I = I + f(a + (j+.5)*dx)
-      end do
-      I = dx*I
-    end function midpoint_rule
+#       dx = (b-a)/real(n)
+#       I = 0
+#       do j = 0,n-1
+#          I = I + f(a + (j+.5)*dx)
+#       end do
+#       I = dx*I
+#     end function midpoint_rule
 
-  end module quadrature
-#+end_src
+#   end module quadrature
+# #+end_src
 
-#+begin_src sh :dir quadrature
-  gfortran -c quadrature.f90
-#+end_src
+# #+begin_src sh :dir quadrature
+#   gfortran -c quadrature.f90
+# #+end_src
 
-#+begin_src fortran :tangle quadrature/main.f90
-  program main
-    use functions
-    use quadrature
-    implicit none
+# #+begin_src fortran :tangle quadrature/main.f90
+#   program main
+#     use functions
+#     use quadrature
+#     implicit none
 
-    real :: a = 0, b = 1
-    integer :: n = 5
-    print*, midpoint_rule(f1,a,b,n)
+#     real :: a = 0, b = 1
+#     integer :: n = 5
+#     print*, midpoint_rule(f1,a,b,n)
 
-  end program main
-#+end_src
+#   end program main
+# #+end_src
 
-#+begin_src sh :dir quadrature
-  gfortran main.f90 functions.o quadrature.o -o main
-#+end_src
+# #+begin_src sh :dir quadrature
+#   gfortran main.f90 functions.o quadrature.o -o main
+# #+end_src
 
-#+begin_src make :exports none :tangle quadrature/makefile
-  FC = gfortran
-  SRC = main.f90
-  EXE = main
-  OBJ = functions.o quadrature.o
+# #+begin_src make :exports none :tangle quadrature/makefile
+#   FC = gfortran
+#   SRC = main.f90
+#   EXE = main
+#   OBJ = functions.o quadrature.o
 
-  all: $(EXE)
-  $(EXE): $(OBJ)
-    $(FC) $(OBJ) $(SRC) -o $(EXE) 
-  %.o: %.f90
-    $(FC) -c $< -o $@
-  clean:
-    $(RM) *.o $(EXE)
-#+end_src
+#   all: $(EXE)
+#   $(EXE): $(OBJ)
+#     $(FC) $(OBJ) $(SRC) -o $(EXE) 
+#   %.o: %.f90
+#     $(FC) -c $< -o $@
+#   clean:
+#     $(RM) *.o $(EXE)
+# #+end_src
 
-#+begin_src sh :dir quadrature
-  ./main
-#+end_src
+# #+begin_src sh :dir quadrature
+#   ./main
+# #+end_src
 
-* Matrix multiplication
-#+begin_src fortran :exports both :tangle matmul/main.f90
-  program main
-    implicit none
+# * Matrix multiplication
+# #+begin_src fortran :exports both :tangle matmul/main.f90
+#   program main
+#     implicit none
 
-    real :: A(4,4), B(4,4)
-    A=1; B=2
+#     real :: A(4,4), B(4,4)
+#     A=1; B=2
 
-    print*, matrix_multiply(A,B)
+#     print*, matrix_multiply(A,B)
 
-  contains
+#   contains
 
-    function matrix_multiply(A,B) result(C)
-      implicit none
-      real :: A(4,4), B(4,4), C(4,4)
-      integer :: i,j,k
+#     function matrix_multiply(A,B) result(C)
+#       implicit none
+#       real :: A(4,4), B(4,4), C(4,4)
+#       integer :: i,j,k
 
-      C = 0
-      do i=1,4
-         do j=1,4
-            do k=1,4
-               C(i,j) = C(i,j) + A(i,k)*B(k,j)
-            end do
-         end do
-      end do
+#       C = 0
+#       do i=1,4
+#          do j=1,4
+#             do k=1,4
+#                C(i,j) = C(i,j) + A(i,k)*B(k,j)
+#             end do
+#          end do
+#       end do
 
-      end function matrix_multiply
+#       end function matrix_multiply
 
-  end program main
-#+end_src
-* $\sum_{n=0}^{\infty}\frac1{n!}$
-#+begin_src fortran :exports both :tangle series/main.f90
-  program main
-    implicit none
-    integer :: n = 0, nf = 1
-    real :: s = 0
-    do while (1./real(nf) > 0)
-       s = s + 1./real(nf)
-       n = n + 1
-       nf = nf * n
-    end do
-    print*, s, exp(1.)-s
-  end program main
-#+end_src
+#   end program main
+# #+end_src
+# * $\sum_{n=0}^{\infty}\frac1{n!}$
+# #+begin_src fortran :exports both :tangle series/main.f90
+#   program main
+#     implicit none
+#     integer :: n = 0, nf = 1
+#     real :: s = 0
+#     do while (1./real(nf) > 0)
+#        s = s + 1./real(nf)
+#        n = n + 1
+#        nf = nf * n
+#     end do
+#     print*, s, exp(1.)-s
+#   end program main
+# #+end_src
 
 #+html: </div>

@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2016-08-21 Sun 11:19 -->
+<!-- 2016-08-21 Sun 23:05 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
-<title>Fortran code snippets</title>
+<title>ACM Computing Seminar Fortran Guide</title>
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Joseph P. McKenna" />
 <style type="text/css">
@@ -142,69 +142,121 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        displayAlign: "center",
-        displayIndent: "0em",
-
-        "HTML-CSS": { scale: 100,
-                        linebreaks: { automatic: "false" },
-                        webFont: "TeX"
-                       },
-        SVG: {scale: 100,
-              linebreaks: { automatic: "false" },
-              font: "TeX"},
-        NativeMML: {scale: 100},
-        TeX: { equationNumbers: {autoNumber: "AMS"},
-               MultLineWidth: "85%",
-               TagSide: "right",
-               TagIndent: ".8em"
-             }
-});
-</script>
-<script type="text/javascript"
-        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
-<h1 class="title">Fortran code snippets</h1>
+<h1 class="title">ACM Computing Seminar Fortran Guide</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgheadline1">1. Hello world</a></li>
-<li><a href="#orgheadline2">2. Project template</a></li>
-<li><a href="#orgheadline3">3. \({n \choose k}\)</a></li>
-<li><a href="#orgheadline4">4. Setting precision of variables</a></li>
-<li><a href="#orgheadline5">5. Machine Epsilon</a></li>
-<li><a href="#orgheadline6">6. Rootfinding</a></li>
-<li><a href="#orgheadline7">7. Quadrature</a></li>
-<li><a href="#orgheadline8">8. Matrix multiplication</a></li>
-<li><a href="#orgheadline9">9. \(\sum_{n=0}^{\infty}\frac1{n!}\)</a></li>
+<li><a href="#orgheadline2">1. Introduction</a>
+<ul>
+<li><a href="#orgheadline1">1.1. About the language</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline8">2. Getting started</a>
+<ul>
+<li><a href="#orgheadline3">2.1. Text editor</a></li>
+<li><a href="#orgheadline4">2.2. Compiler</a></li>
+<li><a href="#orgheadline7">2.3. Writing a program</a>
+<ul>
+<li><a href="#orgheadline5">2.3.1. Hello world</a></li>
+<li><a href="#orgheadline6">2.3.2. Template</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgheadline18">3. Data types</a>
+<ul>
+<li><a href="#orgheadline10">3.1. The <code>logical</code> type</a></li>
+<li><a href="#orgheadline11">3.2. The <code>integer</code> type</a></li>
+<li><a href="#orgheadline12">3.3. Floating point types</a></li>
+<li><a href="#orgheadline13">3.4. Casting</a></li>
+<li><a href="#orgheadline14">3.5. The <code>parameter</code> modifier</a></li>
+<li><a href="#orgheadline15">3.6. Setting the precision</a></li>
+<li><a href="#orgheadline16">3.7. Pointers</a></li>
+<li><a href="#orgheadline17">3.8. Arrays</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline9">4. Control structures</a></li>
 </ul>
 </div>
 </div>
 <div id="main">
 <a href="../../../" id="home-link">ACM Computing Seminar Home</a>
-<a href="javascript:;" id="toc-open">&#9776;</a>
-<a href="javascript:;" id="toc-close">&times;</a>
 
-<div id="outline-container-orgheadline1" class="outline-2">
-<h2 id="orgheadline1"><span class="section-number-2">1</span> Hello world</h2>
+<div id="outline-container-orgheadline2" class="outline-2">
+<h2 id="orgheadline2"><span class="section-number-2">1</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
+<p>
+This is guide is intended to quickly get you up-and-running in scientific computing with Fortran. There is a companion <a href="../cpp/index.html">C++ guide</a> that parallels the content of this guide. 
+</p>
+</div>
+<div id="outline-container-orgheadline1" class="outline-3">
+<h3 id="orgheadline1"><span class="section-number-3">1.1</span> About the language</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Fortran was created in the 1950s for mathematical <b>FOR</b>-mula <b>TRAN</b>-slation, and has since gone through a number of revisions (FORTRAN 66, 77, and Fortran 90, 95, 2003, 2008, 2015). The language standards are put forth by the Fortran standard committee <a href="http://www.j3-fortran.org/">J3</a> in a document (ISO 1539-1:2010) available for purchase. The syntax and intrinsic capabilities of the language make it especially suited for scientific computing. Like C/C++, Fortran is a <b>statically-typed</b> and <b>compiled</b> language. You must declare the <b>type</b>, i.e. integer, real number, character, of variables in programs you write. Your programs will be translated from human-readable <i>source code</i> into a machine-executable file by software called a <b>compiler</b>. 
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline8" class="outline-2">
+<h2 id="orgheadline8"><span class="section-number-2">2</span> Getting started</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+The software that you need to get started comes prepackaged and ready to download on most Linux distributions. There are a few options for emulating a Linux environment in Windows or Mac OS, such as a virtual machine (VirtualBox) or package manager (MinGW or Cygwin on Windows and Brew on Mac OS).
+</p>
+</div>
+<div id="outline-container-orgheadline3" class="outline-3">
+<h3 id="orgheadline3"><span class="section-number-3">2.1</span> Text editor</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+You will write the source code of your programs using a text editor. There are many options that have features designed for programming such as syntax highlighting and auto-completion. If you are an impossible-to-please perfectionist, you might want to check out <a href="https://www.gnu.org/s/emacs/">Emacs</a>. If you are easier to please, you might want to check out <a href="https://www.sublimetext.com/">Sublime Text</a>.
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline4" class="outline-3">
+<h3 id="orgheadline4"><span class="section-number-3">2.2</span> Compiler</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+To translate your source code into an executable, you will need a Fortran compiler. A free option is <b>gfortran</b>, part of the GNU compiler collection (gcc). The features of the Fortran language that are supported by the compiler are specified in the compiler documentation. This is your most complete reference for the intrinsic capabilities of Fortran that your programs can use. At the time of this writing, <code>gfortran</code> completely supports Fortran 95 and partially supports more recent standards.
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline7" class="outline-3">
+<h3 id="orgheadline7"><span class="section-number-3">2.3</span> Writing a program</h3>
+<div class="outline-text-3" id="text-2-3">
+</div><div id="outline-container-orgheadline5" class="outline-4">
+<h4 id="orgheadline5"><span class="section-number-4">2.3.1</span> Hello world</h4>
+<div class="outline-text-4" id="text-2-3-1">
+<p>
+Let's write a tiny program that prints "hello world" to the terminal screen in <code>hello.f90</code>
+</p>
+
 <div class="org-src-container">
 
-<pre class="src src-fortran"><span style="color: #20b2aa; font-weight: bold;">program</span> <span style="color: #00ff7f;">main</span>
-  <span style="color: #20b2aa; font-weight: bold;">print</span>*, <span style="color: #ffa07a;">'hello world'</span>
-<span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">program</span> <span style="color: #00ff7f;">main</span>
+<pre class="src src-fortran"><span class="linenr">1: </span><span style="color: #0000FF;">program</span> <span style="color: #006699;">main</span>
+<span class="linenr">2: </span>  <span style="color: #0000FF;">print</span>*, <span style="color: #008000;">'hello world'</span>
+<span class="linenr">3: </span><span style="color: #0000FF;">end program</span> <span style="color: #006699;">main</span>
 </pre>
 </div>
 
+<p>
+To compile the program, execute the following command in the same directory as <code>hello.f90</code>
+</p>
+
 <div class="org-src-container">
 
-<pre class="src src-sh">gfortran main.f90
+<pre class="src src-sh">gfortran hello.f90
 </pre>
 </div>
+
+<p>
+This produces an executable file named <code>a.out</code> by default. To run, execute the following command in the same directory 
+</p>
 
 <div class="org-src-container">
 
@@ -215,22 +267,40 @@ for the JavaScript code in this tag.
 <pre class="example">
 hello world
 </pre>
-</div>
-</div>
 
-<div id="outline-container-orgheadline2" class="outline-2">
-<h2 id="orgheadline2"><span class="section-number-2">2</span> Project template</h2>
-<div class="outline-text-2" id="text-2">
+<p>
+We could have specified a different name for the executable file during compilation with the <code>-o</code> option of <code>gfortran</code>
+</p>
+
 <div class="org-src-container">
 
-<pre class="src src-fortran">module header
-  <span style="color: #9370db;">implicit none</span>
-  <span style="color: #cd853f;">! </span><span style="color: #cd853f;">variable declarations and assignments</span>
-<span style="color: #cd853f;">c</span><span style="color: #cd853f;">ontains</span>
-  <span style="color: #cd853f;">! </span><span style="color: #cd853f;">function and subroutine definitions</span>
-<span style="color: #20b2aa; font-weight: bold;">end</span> module header
+<pre class="src src-sh">gfortran hello.f90 -o my_executable_file
 </pre>
 </div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline6" class="outline-4">
+<h4 id="orgheadline6"><span class="section-number-4">2.3.2</span> Template</h4>
+<div class="outline-text-4" id="text-2-3-2">
+<p>
+Now let's write an empty template for future projects. This section may seem overly complex at first read, but it is best to adopt some form of organization when you are just getting started. Our source code template will consist of two files in the same directory (<a href="./template/">./template/</a>). In the following files, the contents of a line after a <code>!</code> symbol is a comment that is ignored by the compiler. One file <code>header.f90</code> is a <b>module</b> that defines variables and procedures to be used later.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-fortran"><span class="linenr">1: </span><span style="color: #0000FF;">module</span> <span style="color: #006699;">header</span>
+<span id="coderef-in1" class="coderef-off"><span class="linenr">2: </span>  <span style="color: #0000FF;">implicit</span> <span style="color: #6434A3;">none</span></span>
+<span class="linenr">3: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">variable declarations and assignments</span>
+<span class="linenr">4: </span><span style="color: #0000FF;">contains</span>
+<span class="linenr">5: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">function and subroutine definitions</span>
+<span class="linenr">6: </span><span style="color: #0000FF;">end module</span> <span style="color: #006699;">header</span>
+</pre>
+</div>
+
+<p>
+This file is compiled into an <b>object file</b> with the <code>-c</code> option of <code>gfortran</code>
+</p>
 
 <div class="org-src-container">
 
@@ -238,18 +308,26 @@ hello world
 </pre>
 </div>
 
+<p>
+This outputs the object file named <code>header.o</code> by default that can be <i>linked</i> to the main program. A separate file <code>main.f90</code> contains the main program
+</p>
+
 <div class="org-src-container">
 
-<pre class="src src-fortran"><span style="color: #20b2aa; font-weight: bold;">program</span> <span style="color: #00ff7f;">main</span>
-  use header
-  <span style="color: #9370db;">implicit none</span>
-  <span style="color: #cd853f;">! </span><span style="color: #cd853f;">variable declarations and assignments</span>
-  <span style="color: #cd853f;">! </span><span style="color: #cd853f;">function and subroutine calls</span>
-<span style="color: #cd853f;">c</span><span style="color: #cd853f;">ontains</span>
-  <span style="color: #cd853f;">! </span><span style="color: #cd853f;">function and subroutine definitions</span>
-<span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">program</span> <span style="color: #00ff7f;">main</span>
+<pre class="src src-fortran"><span class="linenr">1: </span><span style="color: #0000FF;">program</span> <span style="color: #006699;">main</span>
+<span id="coderef-use" class="coderef-off"><span class="linenr">2: </span>  <span style="color: #0000FF;">use</span> <span style="color: #006699;">header</span></span>
+<span id="coderef-in2" class="coderef-off"><span class="linenr">3: </span>  <span style="color: #0000FF;">implicit</span> <span style="color: #6434A3;">none</span></span>
+<span class="linenr">4: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">variable declarations and assignments</span>
+<span class="linenr">5: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">function and subroutine calls</span>
+<span class="linenr">6: </span><span style="color: #0000FF;">contains</span>
+<span class="linenr">7: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">function and subroutine definitions</span>
+<span class="linenr">8: </span><span style="color: #0000FF;">end program</span> <span style="color: #006699;">main</span>
 </pre>
 </div>
+
+<p>
+On line <a href="#coderef-use"class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-use');" onmouseout="CodeHighlightOff(this, 'coderef-use');">2</a>, we imported the content of <code>header.f90</code> into the main program, so we must link the object file <code>header.o</code> when compiling <code>main.f90</code>
+</p>
 
 <div class="org-src-container">
 
@@ -257,472 +335,270 @@ hello world
 </pre>
 </div>
 
+<p>
+To run the program, execute the output file <code>main</code> in the same directory
+</p>
+
 <div class="org-src-container">
 
 <pre class="src src-sh">./main
 </pre>
 </div>
 
+<p>
+.
+</p>
+
+<p>
+As you get more experience, you will find it very cumbersome to repeatedly execute <code>gfortran</code> commands with every modification to your code. Using the <code>make</code> command-line utility is a way around this. You can specify all the compilation commands for your project in a <code>makefile</code>. For example, the template above could use the following <code>makefile</code>
+</p>
+
 <div class="org-src-container">
 
-<pre class="src src-make">FC = gfortran
-SRC = main.f90
-EXE = main
-OBJ = header.o
-
-all: $(EXE)
-$(EXE): $(OBJ)
-  $(FC) $(OBJ) $(SRC) -o $(EXE)
-%.o: %.f90
-  $(FC) -c $&lt; -o $@
-clean:
-  $(RM) *.o $(EXE)
+<pre class="src src-make"><span class="linenr"> 1: </span><span style="color: #BA36A5;">FC</span> = gfortran
+<span class="linenr"> 2: </span><span style="color: #BA36A5;">SRC</span> = main.f90
+<span class="linenr"> 3: </span><span style="color: #BA36A5;">EXE</span> = main
+<span id="coderef-obj" class="coderef-off"><span class="linenr"> 4: </span><span style="color: #BA36A5;">OBJ</span> = header.o</span>
+<span class="linenr"> 5: </span>
+<span class="linenr"> 6: </span><span style="color: #0000ff; font-weight: bold;">all</span>: $<span style="color: #707183;">(</span><span style="color: #BA36A5;">EXE</span><span style="color: #707183;">)</span>
+<span class="linenr"> 7: </span><span style="color: #0000ff; font-weight: bold;">$</span><span style="color: #707183; font-weight: bold;">(</span><span style="color: #0000ff; font-weight: bold;">EXE</span><span style="color: #707183; font-weight: bold;">)</span>: $<span style="color: #707183;">(</span><span style="color: #BA36A5;">OBJ</span><span style="color: #707183;">)</span>
+<span class="linenr"> 8: </span>  $<span style="color: #707183;">(</span><span style="color: #BA36A5;">FC</span><span style="color: #707183;">)</span> $<span style="color: #707183;">(</span><span style="color: #BA36A5;">OBJ</span><span style="color: #707183;">)</span> $<span style="color: #707183;">(</span><span style="color: #BA36A5;">SRC</span><span style="color: #707183;">)</span> -o $<span style="color: #707183;">(</span><span style="color: #BA36A5;">EXE</span><span style="color: #707183;">)</span>
+<span class="linenr"> 9: </span><span style="color: #0000ff; font-weight: bold;">%.o</span>: %.f90
+<span class="linenr">10: </span>  $<span style="color: #707183;">(</span><span style="color: #BA36A5;">FC</span><span style="color: #707183;">)</span> -c $<span style="color: #D0372D;">&lt;</span> -o <span style="color: #0000ff; font-weight: bold;">$</span><span style="color: #D0372D; font-weight: bold;">@</span>
 </pre>
 </div>
+
+<p>
+Then, to recompile both <code>header.f90</code> and <code>main.f90</code> after modifying either file, you would execute
+</p>
 
 <div class="org-src-container">
 
 <pre class="src src-sh">make
 </pre>
 </div>
+
+<p>
+The first four lines of <code>makefile</code> assign variables for the compiler command, file name of the main program, file name of the executable to be created, and file name(s) of linked object files, respectively. If you wrote a second module in a separate file <code>my_second_header.f90</code> that you wanted to <code>use</code> in <code>main.f90</code>, you would modify line <a href="#coderef-obj"class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-obj');" onmouseout="CodeHighlightOff(this, 'coderef-obj');">4</a> to <code>OBJ = header.o my_second_header.o</code>.
+</p>
+</div>
+</div>
 </div>
 </div>
 
-<div id="outline-container-orgheadline3" class="outline-2">
-<h2 id="orgheadline3"><span class="section-number-2">3</span> \({n \choose k}\)</h2>
+<div id="outline-container-orgheadline18" class="outline-2">
+<h2 id="orgheadline18"><span class="section-number-2">3</span> Data types</h2>
 <div class="outline-text-2" id="text-3">
-<div class="org-src-container">
-
-<pre class="src src-fortran"><span style="color: #20b2aa; font-weight: bold;">program</span> <span style="color: #00ff7f;">main</span>
-  <span style="color: #9370db;">implicit none</span>
-  <span style="color: #20b2aa; font-weight: bold;">print</span>*, choose(4,0), choose(4,1), &amp;
-       choose(4,2), choose(4,3), choose(4,4)
-<span style="color: #cd853f;">c</span><span style="color: #cd853f;">ontains</span>
-  <span style="color: #20b2aa; font-weight: bold;">function</span> <span style="color: #00ff7f;">choose</span>(n,k) result(c)
-    <span style="color: #9370db;">integer</span>, intent(in) :: n, k
-    <span style="color: #9370db;">integer</span> :: c, i
-    c = 1
-    <span style="color: #20b2aa; font-weight: bold;">do</span> i = 1, <span style="color: #76ee00;">min</span>(k,n-k)
-       c = c * (n-i+1) / i
-    <span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">do</span>
-  <span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">function</span> <span style="color: #00ff7f;">choose</span>
-<span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">program</span> <span style="color: #00ff7f;">main</span>
-</pre>
+<p>
+We will use the convention of putting an <code>implicit none</code> keyword at the beginning of each code block as in line <a href="#coderef-in1"class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-in1');" onmouseout="CodeHighlightOff(this, 'coderef-in1');">2</a> of <code>header.f90</code> and line <a href="#coderef-in2"class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-in2');" onmouseout="CodeHighlightOff(this, 'coderef-in2');">3</a> of <code>main.f90</code> in Section <a href="#orgheadline6">2.3.2</a>. The role of this keyword is to suppress some implicit rules that Fortran has for undeclared variables. Without this keyword, an undeclared variable with a name such as <code>i</code> is assumed to be of the integer data type whereas an undeclared variable with a name such as <code>x</code> is assumed to be a real data type. By using the <code>implicit none</code> keyword, we force ourselves to declare every variable that we use. This may ultimately lead to more code but it is recommended to facilitate debugging when your program fails to compile. In addition to the most common data types presented below, Fortran has <code>complex</code> and <code>character</code> data types and support for user-defined data types.
+</p>
 </div>
+<div id="outline-container-orgheadline10" class="outline-3">
+<h3 id="orgheadline10"><span class="section-number-3">3.1</span> The <code>logical</code> type</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+A variable of the <code>logical</code> type can have values <code>.true.</code> or <code>.false.</code>. Logical operations can be computed with a few operators 
+</p>
 
 <div class="org-src-container">
 
-<pre class="src src-sh">gfortran main.f90 -o main
+<pre class="src src-fortran"><span class="linenr"> 1: </span><span style="color: #6434A3;">logical</span> ::<span style="color: #BA36A5;"> a,b,c</span>
+<span class="linenr"> 2: </span>a = <span style="color: #0000FF;">.true.</span>
+<span class="linenr"> 3: </span>b = <span style="color: #0000FF;">.false.</span>
+<span class="linenr"> 4: </span>
+<span class="linenr"> 5: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">'.not.' is the logical negation operator</span>
+<span class="linenr"> 6: </span>c = <span style="color: #0000FF;">.not.</span>a <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">c is false</span>
+<span class="linenr"> 7: </span>
+<span class="linenr"> 8: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">'.and,' is the logical and operator</span>
+<span class="linenr"> 9: </span>c = a<span style="color: #0000FF;">.and.</span>b <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">c is false</span>
+<span class="linenr">10: </span>
+<span class="linenr">11: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">'.or.' is the logical or operator</span>
+<span class="linenr">12: </span>c = a<span style="color: #0000FF;">.or.</span>b <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">c is true</span>
+<span class="linenr">13: </span>
+<span class="linenr">14: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">'==' is the test for equality</span>
+<span class="linenr">15: </span>c = <span style="color: #707183;">(</span><span style="color: #D0372D;">1</span> == <span style="color: #D0372D;">2</span><span style="color: #707183;">)</span> <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">c is false</span>
+<span class="linenr">16: </span>
+<span class="linenr">17: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">'/=' is test for inequality</span>
+<span class="linenr">18: </span>c = <span style="color: #707183;">(</span><span style="color: #D0372D;">1</span> /= <span style="color: #D0372D;">2</span><span style="color: #707183;">)</span> <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">c is true</span>
 </pre>
 </div>
+
+<p>
+Other logical operators include
+</p>
+<ul class="org-ul">
+<li><code>&lt;</code> or <code>.lt.</code>: less than</li>
+<li><code>&lt;=</code> or <code>.le.</code>: less than or equal</li>
+<li><code>&gt;</code> or <code>.gt.</code>: greater than</li>
+<li><code>&gt;=</code> or <code>.ge.</code>: greater than or equal</li>
+</ul>
+
+<p>
+Logical expressions are often used in <a href="#orgheadline9">control structures</a>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline11" class="outline-3">
+<h3 id="orgheadline11"><span class="section-number-3">3.2</span> The <code>integer</code> type</h3>
+<div class="outline-text-3" id="text-3-2">
+<div class="org-src-container">
+
+<pre class="src src-fortran"><span class="linenr">1: </span><span style="color: #6434A3;">integer</span> ::<span style="color: #BA36A5;"> a = 6, b = 7 </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">initialize a and b to 6 and 7, resp</span>
+<span class="linenr">2: </span><span style="color: #6434A3;">integer</span> ::<span style="color: #BA36A5;"> c</span>
+<span class="linenr">3: </span>
+<span class="linenr">4: </span>c = a / b <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">c is 0</span>
+<span class="linenr">5: </span>c = b / a <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">c is 1</span>
+<span class="linenr">6: </span>c = <span style="color: #0000FF;">mod</span><span style="color: #707183;">(</span>b,a<span style="color: #707183;">)</span> <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">c is 1, 'mod' is the modulo operator</span>
+<span class="linenr">7: </span>c = b - a <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">c is -1</span>
+<span class="linenr">8: </span>c = a &gt; b <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">c is 0 (logical gets cast to integer)</span>
+<span class="linenr">9: </span>c = a &lt; b <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">c is 1 (logical gets cast to integer)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline12" class="outline-3">
+<h3 id="orgheadline12"><span class="section-number-3">3.3</span> Floating point types</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+There are two floating point data types in Fortran, <code>real</code> and <code>double precision</code> corresponding to <a href="https://en.wikipedia.org/wiki/IEEE_floating_poin">IEEE 32- and 64-bit floating point data types</a>.
+</p>
 
 <div class="org-src-container">
 
-<pre class="src src-sh">./main
+<pre class="src src-fortran"><span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> a </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">declare a single precision float</span>
+<span style="color: #6434A3;">double precision</span> ::<span style="color: #BA36A5;"> b </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">declare a double precision float</span>
+
+<span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">Print the max value of a real type</span>
+<span style="color: #0000FF;">print</span>*, <span style="color: #0000FF;">huge</span><span style="color: #707183;">(</span>a<span style="color: #707183;">)</span>
+
+<span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">Print the max value of a double precision type</span>
+<span style="color: #0000FF;">print</span>*, <span style="color: #0000FF;">huge</span><span style="color: #707183;">(</span>b<span style="color: #707183;">)</span>
+
+<span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">Print machine epsilon for the single precision floating point system</span>
+<span style="color: #0000FF;">print</span>*, <span style="color: #0000FF;">epsilon</span><span style="color: #707183;">(</span>a<span style="color: #707183;">)</span>
+
+<span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">Print machine epsilon for the double precision floating point system</span>
+<span style="color: #0000FF;">print</span>*, <span style="color: #0000FF;">epsilon</span><span style="color: #707183;">(</span>b<span style="color: #707183;">)</span>
 </pre>
 </div>
-
-<pre class="example">
-1           4           6           4           1
-</pre>
 </div>
 </div>
 
-<div id="outline-container-orgheadline4" class="outline-2">
-<h2 id="orgheadline4"><span class="section-number-2">4</span> Setting precision of variables</h2>
-<div class="outline-text-2" id="text-4">
-<div class="org-src-container">
-
-<pre class="src src-fortran">module constants
-  <span style="color: #9370db;">implicit none</span>
-  <span style="color: #9370db;">integer</span>, <span style="color: #9370db;">parameter</span> :: sp = kind(0.), dp = kind(0.d0)
-  <span style="color: #9370db;">integer</span>, <span style="color: #9370db;">parameter</span> :: rp = dp
-<span style="color: #20b2aa; font-weight: bold;">end</span> module constants
-</pre>
-</div>
-
-<div class="org-src-container">
-
-<pre class="src src-sh">gfortran -c constants.f90
-</pre>
-</div>
+<div id="outline-container-orgheadline13" class="outline-3">
+<h3 id="orgheadline13"><span class="section-number-3">3.4</span> Casting</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+An integer can be cast to a real number or vice versa.
+</p>
 
 <div class="org-src-container">
 
-<pre class="src src-fortran"><span style="color: #20b2aa; font-weight: bold;">program</span> <span style="color: #00ff7f;">main</span>
-  use constants
-  <span style="color: #9370db;">implicit none</span>
-  <span style="color: #9370db;">real</span>(<span style="color: #9acd32;">rp</span>) :: x, y
-  x = 1._rp
-  y = <span style="color: #9370db;">real</span>(<span style="color: #9acd32;">1</span>,<span style="color: #9acd32;">rp</span>)
-<span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">program</span> <span style="color: #00ff7f;">main</span>
+<pre class="src src-fortran"><span style="color: #6434A3;">integer</span> ::<span style="color: #BA36A5;"> a = 1, b</span>
+<span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> PI = 3.14159</span>
+
+b = <span style="color: #0000FF;">int</span><span style="color: #707183;">(</span>PI<span style="color: #707183;">)</span> <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">b is 3</span>
+<span style="color: #0000FF;">print</span>*, a/b
+<span style="color: #0000FF;">print</span>*, a/<span style="color: #0000FF;">real</span><span style="color: #707183;">(</span>b<span style="color: #707183;">)</span>
 </pre>
 </div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline14" class="outline-3">
+<h3 id="orgheadline14"><span class="section-number-3">3.5</span> The <code>parameter</code> modifier</h3>
+<div class="outline-text-3" id="text-3-5">
+<p>
+To protect a variable of any data type from reassignment, you can use the <code>parameter</code> modifier. If this modifier is used, the corresponding variable must be assigned a value at declaration, and that value cannot be reassigned. The following code is not valid.
+</p>
 
 <div class="org-src-container">
 
-<pre class="src src-sh">gfortran main.f90 constants.o -o main
+<pre class="src src-fortran"><span class="linenr">1: </span><span style="color: #6434A3;">real</span>, <span style="color: #0000FF;">parameter</span> ::<span style="color: #BA36A5;"> PI = asin</span><span style="color: #707183;">(</span><span style="color: #BA36A5;">0.</span><span style="color: #707183;">)</span>
+<span class="linenr">2: </span>PI = <span style="color: #D0372D;">3</span>
 </pre>
 </div>
+
+<p>
+The compiler produces an error like <code>Error: Named constant ‘pi’ in variable definition context (assignment)</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline15" class="outline-3">
+<h3 id="orgheadline15"><span class="section-number-3">3.6</span> Setting the precision</h3>
+<div class="outline-text-3" id="text-3-6">
+<p>
+Each data type is assigned an integer by the <code>kind</code> function. You can write a program in a chosen precision with the <code>kind</code> of the precision stored in a variable <code>rp</code>. Then, if you want to change the precision, you could change the value of <code>rp</code> and recompile. The precision of a variable can be set at declaration and a variable or constant can be cast to a specified precision, each by supplying an extra argument.
+</p>
 
 <div class="org-src-container">
 
-<pre class="src src-sh">./main
+<pre class="src src-fortran"><span class="linenr"> 1: </span><span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> r </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">declare a real, single precision by default</span>
+<span class="linenr"> 2: </span><span style="color: #6434A3;">double precision</span> ::<span style="color: #BA36A5;"> d </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">declare a double precision</span>
+<span class="linenr"> 3: </span><span style="color: #6434A3;">integer</span>, <span style="color: #0000FF;">parameter</span> ::<span style="color: #BA36A5;"> sp = kind</span><span style="color: #707183;">(</span><span style="color: #BA36A5;">r</span><span style="color: #707183;">)</span><span style="color: #BA36A5;">, dp = kind</span><span style="color: #707183;">(</span><span style="color: #BA36A5;">d</span><span style="color: #707183;">)</span><span style="color: #BA36A5;"> </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">store kinds of 'r' and 'd'</span>
+<span class="linenr"> 4: </span><span style="color: #6434A3;">integer</span>, <span style="color: #0000FF;">parameter</span> ::<span style="color: #BA36A5;"> rp = sp </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">set current kind</span>
+<span class="linenr"> 5: </span>
+<span class="linenr"> 6: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">declare 'b' in double precision</span>
+<span class="linenr"> 7: </span><span style="color: #6434A3;">real</span><span style="color: #707183;">(</span>dp<span style="color: #707183;">)</span> ::<span style="color: #BA36A5;"> b</span>
+<span class="linenr"> 8: </span>
+<span class="linenr"> 9: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">declare 'a' real with precision kind 'rp'</span>
+<span class="linenr">10: </span><span style="color: #6434A3;">real</span><span style="color: #707183;">(</span>rp<span style="color: #707183;">)</span> ::<span style="color: #BA36A5;"> a</span>
+<span class="linenr">11: </span>
+<span class="linenr">12: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">cast '1' to real with precision kind 'rp' and assign to a</span>
+<span class="linenr">13: </span>a = <span style="color: #D0372D;">1</span>.<span style="color: #D0372D;">0_rp</span>
+<span class="linenr">14: </span>
+<span class="linenr">15: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">cast 'b' to real with precision kind 'rp' and assign to a</span>
+<span class="linenr">16: </span>a = <span style="color: #0000FF;">real</span><span style="color: #707183;">(</span>b,rp<span style="color: #707183;">)</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgheadline5" class="outline-2">
-<h2 id="orgheadline5"><span class="section-number-2">5</span> Machine Epsilon</h2>
-<div class="outline-text-2" id="text-5">
-<div class="org-src-container">
-
-<pre class="src src-fortran">module constants
-  <span style="color: #9370db;">implicit none</span>
-
-  <span style="color: #9370db;">integer</span>, <span style="color: #9370db;">parameter</span> :: sp = kind(0.), dp = kind(0.d0)
-  <span style="color: #9370db;">integer</span>, <span style="color: #9370db;">parameter</span> :: rp = dp
-
-  interface machine_epsilon
-     <span style="color: #ffa07a;">m</span>odule procedure machine_epsilon_sp, machine_epsilon_dp
-  <span style="color: #20b2aa; font-weight: bold;">end</span> interface machine_epsilon
-
-<span style="color: #cd853f;">c</span><span style="color: #cd853f;">ontains</span>
-
-  <span style="color: #20b2aa; font-weight: bold;">function</span> <span style="color: #00ff7f;">machine_epsilon_sp</span>(x) result(e)
-    <span style="color: #9370db;">implicit none</span>
-    <span style="color: #9370db;">real</span>(<span style="color: #9acd32;">sp</span>), intent(in) :: x
-    <span style="color: #9370db;">real</span> :: e
-    e = .5
-    <span style="color: #20b2aa; font-weight: bold;">do</span> <span style="color: #20b2aa; font-weight: bold;">while</span> (1._sp + e &gt; 1._sp)
-       e = .5 * e
-    <span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">do</span>
-  <span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">function</span> <span style="color: #00ff7f;">machine_epsilon_sp</span>
-
-  <span style="color: #20b2aa; font-weight: bold;">function</span> <span style="color: #00ff7f;">machine_epsilon_dp</span>(x) result(e)
-    <span style="color: #9370db;">implicit none</span>
-    <span style="color: #9370db;">real</span>(<span style="color: #9acd32;">dp</span>), intent(in) :: x
-    <span style="color: #9370db;">real</span> :: e
-    e = .5
-    <span style="color: #20b2aa; font-weight: bold;">do</span> <span style="color: #20b2aa; font-weight: bold;">while</span> (1._dp + e &gt; 1._dp)
-       e = .5 * e
-    <span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">do</span>
-  <span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">function</span> <span style="color: #00ff7f;">machine_epsilon_dp</span>
-
-<span style="color: #20b2aa; font-weight: bold;">end</span> module constants
-</pre>
-</div>
+<div id="outline-container-orgheadline16" class="outline-3">
+<h3 id="orgheadline16"><span class="section-number-3">3.7</span> Pointers</h3>
+<div class="outline-text-3" id="text-3-7">
+<p>
+Pointers have the same meaning in Fortran as in C++: a pointer is a variable that holds the <b>memory address</b> for a variable of a specific type. The implementation of pointers is qualitatively different in Fortran than in C++: in Fortran, there is no Fortran function to print the memory address that a pointer stores. A pointer variable is declared with the <code>pointer</code> modifier, and a variable that it points to is declared with the <code>target</code> modifier. The types of a <code>pointer</code> and its <code>target</code> must match.
+</p>
 
 <div class="org-src-container">
 
-<pre class="src src-sh">gfortran -c constants.f90
-</pre>
-</div>
+<pre class="src src-fortran"><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">declare targets and assign values</span>
+<span style="color: #6434A3;">integer</span>, <span style="color: #0000FF;">target</span> ::<span style="color: #BA36A5;"> a = 1, b = 2</span>
+<span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">declare pointer</span>
+<span style="color: #6434A3;">integer</span>, <span style="color: #0000FF;">pointer</span> ::<span style="color: #BA36A5;"> p</span>
 
-<div class="org-src-container">
+p =&gt; a <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">Now 'p' has same memory address as 'a'</span>
+p = <span style="color: #D0372D;">2</span> <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">Modify value at address</span>
+<span style="color: #0000FF;">print</span>*, a==<span style="color: #D0372D;">2</span> <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">'a' is 2</span>
 
-<pre class="src src-fortran"><span style="color: #20b2aa; font-weight: bold;">program</span> <span style="color: #00ff7f;">main</span>
-  use constants
-  <span style="color: #9370db;">implicit none</span>
-  <span style="color: #20b2aa; font-weight: bold;">print</span>*, machine_epsilon(0._sp), machine_epsilon(0._dp)
-<span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">program</span> <span style="color: #00ff7f;">main</span>
-</pre>
-</div>
+p =&gt; b <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">Now 'p' has same memory address as 'b'</span>
+p = <span style="color: #D0372D;">1</span> <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">Modify value at address</span>
+<span style="color: #0000FF;">print</span>*, b==<span style="color: #D0372D;">1</span> <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">'b' is 1</span>
 
-<div class="org-src-container">
+<span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">Is 'p' associated with a target?</span>
+<span style="color: #0000FF;">print</span>*, <span style="color: #0000FF;">associated</span><span style="color: #707183;">(</span>p<span style="color: #707183;">)</span>
 
-<pre class="src src-sh">gfortran main.f90 constants.o -o main
-</pre>
-</div>
+<span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">Is 'p' associated with the target 'a'?</span>
+<span style="color: #0000FF;">print</span>*, <span style="color: #0000FF;">associated</span><span style="color: #707183;">(</span>p, a<span style="color: #707183;">)</span>
 
-<div class="org-src-container">
-
-<pre class="src src-sh">./main
-</pre>
-</div>
-
-<pre class="example">
-5.96046448E-08   1.11022302E-16
-</pre>
-
-<div class="org-src-container">
-
-<pre class="src src-fortran"><span style="color: #20b2aa; font-weight: bold;">print</span>*, epsilon(0.), epsilon(0.d0)
-</pre>
-</div>
-
-<pre class="example">
-1.19209290E-07   2.2204460492503131E-016
+<span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">Point to nowhere</span>
+<span style="color: #0000FF;">nullify</span><span style="color: #707183;">(</span>p<span style="color: #707183;">)</span>
 </pre>
 </div>
 </div>
-
-<div id="outline-container-orgheadline6" class="outline-2">
-<h2 id="orgheadline6"><span class="section-number-2">6</span> Rootfinding</h2>
-<div class="outline-text-2" id="text-6">
-<div class="org-src-container">
-
-<pre class="src src-fortran">module functions
-  <span style="color: #9370db;">implicit none</span>
-
-<span style="color: #cd853f;">c</span><span style="color: #cd853f;">ontains</span>
-
-  <span style="color: #20b2aa; font-weight: bold;">function</span> <span style="color: #00ff7f;">f1</span>(x)
-    <span style="color: #9370db;">real</span>, intent(in) :: x
-    <span style="color: #9370db;">real</span> :: f1
-    f1 = <span style="color: #76ee00;">sin</span>(x)
-  <span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">function</span> <span style="color: #00ff7f;">f1</span>
-
-  <span style="color: #20b2aa; font-weight: bold;">function</span> <span style="color: #00ff7f;">df1dx</span>(x)
-    <span style="color: #9370db;">real</span>, intent(in) :: x
-    <span style="color: #9370db;">real</span> :: df1dx
-    df1dx = <span style="color: #76ee00;">cos</span>(x)
-  <span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">function</span> <span style="color: #00ff7f;">df1dx</span>
-
-<span style="color: #20b2aa; font-weight: bold;">end</span> module functions
-</pre>
 </div>
 
-<div class="org-src-container">
-
-<pre class="src src-sh">gfortran -c functions.f90
-</pre>
-</div>
-
-<div class="org-src-container">
-
-<pre class="src src-fortran">module rootfind
-  <span style="color: #9370db;">implicit none</span>
-
-  interface
-     <span style="color: #20b2aa; font-weight: bold;">function</span> <span style="color: #00ff7f;">fun</span>(x)
-       <span style="color: #9370db;">real</span>, intent(in) :: x
-       <span style="color: #9370db;">real</span> :: fun
-     <span style="color: #ffa07a;">e</span>nd <span style="color: #20b2aa; font-weight: bold;">function</span> <span style="color: #00ff7f;">fun</span>
-  <span style="color: #20b2aa; font-weight: bold;">end</span> interface
-
-<span style="color: #cd853f;">c</span><span style="color: #cd853f;">ontains</span>
-
-  <span style="color: #20b2aa; font-weight: bold;">function</span> <span style="color: #00ff7f;">newton</span>(f,dfdx,x0,tol,maxstep) result(xn)
-    procedure(fun), pointer :: f, dfdx
-    <span style="color: #9370db;">real</span>, intent(in) :: x0, tol
-    <span style="color: #9370db;">integer</span>, intent(in) :: maxstep
-    <span style="color: #9370db;">real</span> :: xn
-    <span style="color: #9370db;">integer</span> :: n = 0
-
-    xn = x0
-    <span style="color: #20b2aa; font-weight: bold;">do</span> <span style="color: #20b2aa; font-weight: bold;">while</span> (<span style="color: #76ee00;">abs</span>(f(xn))&gt;tol <span style="color: #20b2aa; font-weight: bold;">.and.</span> n&lt;maxstep)
-       xn = xn - f(xn)/dfdx(xn)
-       n = n + 1
-    <span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">do</span>
-  <span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">function</span> <span style="color: #00ff7f;">newton</span>
-
-<span style="color: #20b2aa; font-weight: bold;">end</span> module rootfind
-</pre>
-</div>
-
-<div class="org-src-container">
-
-<pre class="src src-sh">gfortran -c rootfind.f90
-</pre>
-</div>
-
-<div class="org-src-container">
-
-<pre class="src src-fortran"><span style="color: #20b2aa; font-weight: bold;">program</span> <span style="color: #00ff7f;">main</span>
-      use functions
-  use rootfind
-  <span style="color: #9370db;">implicit none</span>
-
-  procedure(fun), pointer :: f, dfdx
-  <span style="color: #9370db;">real</span> :: x = 1., tol = 1e-5
-  <span style="color: #9370db;">integer</span> :: maxstep = 100
-  f =&gt; f1
-  dfdx =&gt; df1dx
-  <span style="color: #20b2aa; font-weight: bold;">print</span>*, newton(f,dfdx,x,tol,maxstep)
-
-<span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">program</span> <span style="color: #00ff7f;">main</span>
-</pre>
-</div>
-
-<div class="org-src-container">
-
-<pre class="src src-sh">gfortran main.f90 functions.o rootfind.o -o main
-</pre>
-</div>
-
-<div class="org-src-container">
-
-<pre class="src src-sh">./main
-</pre>
-</div>
-
-<pre class="example">
-0.0
-</pre>
-</div>
-</div>
-
-<div id="outline-container-orgheadline7" class="outline-2">
-<h2 id="orgheadline7"><span class="section-number-2">7</span> Quadrature</h2>
-<div class="outline-text-2" id="text-7">
-<div class="org-src-container">
-
-<pre class="src src-fortran">module functions
-  <span style="color: #9370db;">implicit none</span>
-
-<span style="color: #cd853f;">c</span><span style="color: #cd853f;">ontains</span>
-
-  <span style="color: #20b2aa; font-weight: bold;">function</span> <span style="color: #00ff7f;">f1</span>(x)
-    <span style="color: #9370db;">real</span>, intent(in) :: x
-    <span style="color: #9370db;">real</span> :: f1
-    f1 = x
-  <span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">function</span> <span style="color: #00ff7f;">f1</span>
-
-<span style="color: #20b2aa; font-weight: bold;">end</span> module functions
-</pre>
-</div>
-
-<div class="org-src-container">
-
-<pre class="src src-sh">gfortran -c functions.f90
-</pre>
-</div>
-
-<div class="org-src-container">
-
-<pre class="src src-fortran">module quadrature
-  <span style="color: #9370db;">implicit none</span>
-
-<span style="color: #cd853f;">c</span><span style="color: #cd853f;">ontains</span>
-
-  <span style="color: #20b2aa; font-weight: bold;">function</span> <span style="color: #00ff7f;">midpoint_rule</span>(f,a,b,n) result(I)
-    interface
-       <span style="color: #20b2aa; font-weight: bold;">function</span> <span style="color: #00ff7f;">f</span>(x)
-         <span style="color: #9370db;">real</span>, intent(in) :: x
-         <span style="color: #9370db;">real</span> :: f
-       <span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">function</span> <span style="color: #00ff7f;">f</span>
-    <span style="color: #20b2aa; font-weight: bold;">end</span> interface
-    <span style="color: #9370db;">real</span> :: a, b
-    <span style="color: #9370db;">integer</span> :: n, j
-    <span style="color: #9370db;">real</span> :: I, dx
-
-    dx = (b-a)/<span style="color: #9370db;">real</span>(<span style="color: #9acd32;">n</span>)
-    I = 0
-    <span style="color: #20b2aa; font-weight: bold;">do</span> j = 0,n-1
-       I = I + f(a + (j+.5)*dx)
-    <span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">do</span>
-    I = dx*I
-  <span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">function</span> <span style="color: #00ff7f;">midpoint_rule</span>
-
-<span style="color: #20b2aa; font-weight: bold;">end</span> module quadrature
-</pre>
-</div>
-
-<div class="org-src-container">
-
-<pre class="src src-sh">gfortran -c quadrature.f90
-</pre>
-</div>
-
-<div class="org-src-container">
-
-<pre class="src src-fortran"><span style="color: #20b2aa; font-weight: bold;">program</span> <span style="color: #00ff7f;">main</span>
-  use functions
-  use quadrature
-  <span style="color: #9370db;">implicit none</span>
-
-  <span style="color: #9370db;">real</span> :: a = 0, b = 1
-  <span style="color: #9370db;">integer</span> :: n = 5
-  <span style="color: #20b2aa; font-weight: bold;">print</span>*, midpoint_rule(f1,a,b,n)
-
-<span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">program</span> <span style="color: #00ff7f;">main</span>
-</pre>
-</div>
-
-<div class="org-src-container">
-
-<pre class="src src-sh">gfortran main.f90 functions.o quadrature.o -o main
-</pre>
-</div>
-
-<div class="org-src-container">
-
-<pre class="src src-sh">./main
-</pre>
-</div>
-
-<pre class="example">
-0.5
-</pre>
-</div>
-</div>
-
-<div id="outline-container-orgheadline8" class="outline-2">
-<h2 id="orgheadline8"><span class="section-number-2">8</span> Matrix multiplication</h2>
-<div class="outline-text-2" id="text-8">
-<div class="org-src-container">
-
-<pre class="src src-fortran"><span style="color: #20b2aa; font-weight: bold;">program</span> <span style="color: #00ff7f;">main</span>
-  <span style="color: #9370db;">implicit none</span>
-
-  <span style="color: #9370db;">real</span> :: A(4,4), B(4,4)
-  A=1; B=2
-
-  <span style="color: #20b2aa; font-weight: bold;">print</span>*, matrix_multiply(A,B)
-
-<span style="color: #cd853f;">c</span><span style="color: #cd853f;">ontains</span>
-
-  <span style="color: #20b2aa; font-weight: bold;">function</span> <span style="color: #00ff7f;">matrix_multiply</span>(A,B) result(C)
-    <span style="color: #9370db;">implicit none</span>
-    <span style="color: #9370db;">real</span> :: A(4,4), B(4,4), C(4,4)
-    <span style="color: #9370db;">integer</span> :: i,j,k
-
-    C = 0
-    <span style="color: #20b2aa; font-weight: bold;">do</span> i=1,4
-       <span style="color: #20b2aa; font-weight: bold;">do</span> j=1,4
-          <span style="color: #20b2aa; font-weight: bold;">do</span> k=1,4
-             C(i,j) = C(i,j) + A(i,k)*B(k,j)
-          <span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">do</span>
-       <span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">do</span>
-    <span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">do</span>
-
-    <span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">function</span> <span style="color: #00ff7f;">matrix_multiply</span>
-
-<span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">program</span> <span style="color: #00ff7f;">main</span>
-</pre>
-</div>
-
-<pre class="example">
-8.00000000       8.00000000       8.00000000       8.00000000       8.00000000       8.00000000       8.00000000       8.00000000       8.00000000       8.00000000       8.00000000       8.00000000       8.00000000       8.00000000       8.00000000       8.00000000
-</pre>
+<div id="outline-container-orgheadline17" class="outline-3">
+<h3 id="orgheadline17"><span class="section-number-3">3.8</span> Arrays</h3>
 </div>
 </div>
 
 <div id="outline-container-orgheadline9" class="outline-2">
-<h2 id="orgheadline9"><span class="section-number-2">9</span> \(\sum_{n=0}^{\infty}\frac1{n!}\)</h2>
-<div class="outline-text-2" id="text-9">
-<div class="org-src-container">
-
-<pre class="src src-fortran"><span style="color: #20b2aa; font-weight: bold;">program</span> <span style="color: #00ff7f;">main</span>
-  <span style="color: #9370db;">implicit none</span>
-  <span style="color: #9370db;">integer</span> :: n = 0, nf = 1
-  <span style="color: #9370db;">real</span> :: s = 0
-  <span style="color: #20b2aa; font-weight: bold;">do</span> <span style="color: #20b2aa; font-weight: bold;">while</span> (1./<span style="color: #9370db;">real</span>(<span style="color: #9acd32;">nf</span>) &gt; 0)
-     <span style="color: #ffa07a;">s</span> = s + 1./<span style="color: #9370db;">real</span>(<span style="color: #9acd32;">nf</span>)
-     <span style="color: #ffa07a;">n</span> = n + 1
-     <span style="color: #ffa07a;">n</span>f = nf * n
-  <span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">do</span>
-  <span style="color: #20b2aa; font-weight: bold;">print</span>*, s, <span style="color: #76ee00;">exp</span>(1.)-s
-<span style="color: #20b2aa; font-weight: bold;">end</span> <span style="color: #20b2aa; font-weight: bold;">program</span> <span style="color: #00ff7f;">main</span>
-</pre>
-</div>
-
-<pre class="example">
-2.71828198      -2.38418579E-07
-</pre>
-
+<h2 id="orgheadline9"><span class="section-number-2">4</span> Control structures</h2>
+<div class="outline-text-2" id="text-4">
 </div>
 </div>
 </div>
