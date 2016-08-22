@@ -7,6 +7,7 @@
 #+startup: latexpreview
 #+options: html-postamble:nil
 #+html_head: <link rel="stylesheet" type="text/css" href="../css/main.css">
+#+html_head: <link rel="stylesheet" type="text/css" href="../css/fortran.css">
 #+html_head: <script src="../js/main.js"></script>
 #+html: <div id="main">
 #+html: <a href="../../../" id="home-link">ACM Computing Seminar Home</a>
