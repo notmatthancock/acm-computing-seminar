@@ -1076,7 +1076,7 @@ end do
 close(10)
 #+end_src
 
-** Writing data to file
+*** Writing data to file
 
 Data can be written to a file with the =write= command.
 
