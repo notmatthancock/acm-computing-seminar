@@ -22,7 +22,7 @@ a:hover {
     color: tomato;
 }
 
-a#home-link {
+div#footer {
     text-align: center;
     font-size: 12px;
     position: fixed;
@@ -30,10 +30,10 @@ a#home-link {
     z-index: 3;
     padding: 5px 0 5px 0;
     background-color: #aaa;
-    color: #303030;
 }
 
-a#home-link:hover { color: #707070; }
+div#footer a { color: #303030; }
+div#footer a:hover { color: #707070; }
 
 a#toc-open, a#toc-close {display: none; }
 
@@ -192,20 +192,6 @@ div#main {
 
 ol.org-ol li { padding: 10px 0 10px 0; }
 
-footer {
-    position: fixed;
-    width: 100%;
-    text-align: center;
-    background-color: #505050;
-    bottom: 0;
-    padding: 4px 0 4px 0;
-}
-
-footer a {
-    color: #a1a1a1;
-}
-
-
 /*
  * CSS for printing / pdf export from browser.
  */
@@ -215,7 +201,7 @@ footer a {
     body { font-size: 12px; }
     div#table-of-contents { display: none; }
     div#main { width: 100%; margin: 0; padding: 0; }
-    a#home-link { display: none; }
+    div#footer { display: none; }
 }
 
 
@@ -227,7 +213,7 @@ footer a {
     h1.title { width: 100%; font-size: 100%; position: fixed; top: 0; }
     div#table-of-contents { width: 75%; display: none; }
     div#main { width: 100%; margin: 0; padding: 10px; }
-    a#home-link { display: none; }
+    div#footer { display: none; }
     a#toc-open { display: block; position: fixed; top: 7px;
                  left: 7px; z-index: 10; color: white; }
     a#toc-close { color: #333; position: fixed;

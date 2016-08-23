@@ -10,7 +10,7 @@
 #+html_head: <link rel="stylesheet" type="text/css" href="../css/fortran.css">
 #+html_head: <script src="../js/main.js"></script>
 #+html: <div id="main">
-#+html: <a href="../../../" id="home-link">ACM Computing Seminar Home</a>
+#+html: <div id="footer"><a href="../../../">ACM Computing Seminar Home</a> &mdash; This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US">Creative Commons Attribution 3.0 Unported License</a>.</div>
 
 :snippets:
 # * ${n \choose k}$

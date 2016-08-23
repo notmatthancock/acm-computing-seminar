@@ -1,12 +1,12 @@
 #+title: ACM Computing Seminar C++ Guide
-#+author: Matthew C. Hancock
+#+author: Matt Hancock
 #+date: 
 #+options: html-postamble:nil
 #+options: H:4
 #+html_head: <link rel="stylesheet" type="text/css" href="../css/main.css">
 #+html_head: <script src="../js/main.js"></script>
 #+html: <div id="main">
-#+html: <a href="../../../" id="home-link">ACM Computing Seminar Home</a>
+#+html: <div id="footer"><a href="../../../">ACM Computing Seminar Home</a> &mdash; This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US">Creative Commons Attribution 3.0 Unported License</a>.</div>
 #+html: <a href="javascript:;" id="toc-open">&#9776;</a>
 #+html: <a href="javascript:;" id="toc-close">&times;</a>
 
@@ -16,10 +16,7 @@ scientific computing applications. The goal of this guide is not to
 make you a C++ expert, but to quickly teach you enough of the C++ 
 fundamentals and design patterns to help you off the ground. If you 
 should like to go beyond this guide, a few references are listed below.
-
-This guide is split into sections. The sections are ordered in such a way
-that topics in later sections often depend on topics from previous ones. 
-You'll find code snippets peppered throughout the sections.
+There is also a [[../fortran/][Fortran guide]] if you want to go beyond C++.
 
 ** A little about the language
 Before you dive in, here is a little about the C++ programming language:
