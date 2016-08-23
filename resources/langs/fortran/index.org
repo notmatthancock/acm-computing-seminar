@@ -2,7 +2,7 @@
 #+author: Joseph P. McKenna
 #+email: joepatmckenna@gmail.com
 #+property: header-args :mkdirp yes :cache yes
-#+property: header-args:fortran :exports code
+#+property: header-args:fortran :exports code :results output
 #+property: header-args:sh :exports both
 #+startup: latexpreview
 #+options: html-postamble:nil
@@ -12,258 +12,7 @@
 #+html: <div id="main">
 #+html: <a href="../../../" id="home-link">ACM Computing Seminar Home</a>
 
-* Introduction
-This is guide is intended to quickly get you up-and-running in scientific computing with Fortran. There is a companion [[../cpp/index.html][C++ guide]] that parallels the content of this guide. 
-** About the language
-Fortran was created in the 1950s for mathematical *FOR*-mula *TRAN*-slation, and has since gone through a number of revisions (FORTRAN 66, 77, and Fortran 90, 95, 2003, 2008, 2015). The language standards are put forth by the Fortran standard committee [[http://www.j3-fortran.org][J3]] in a document (ISO 1539-1:2010) available for purchase. The syntax and intrinsic capabilities of the language make it especially suited for scientific computing. Like C/C++, Fortran is a *statically-typed* and *compiled* language. You must declare the *type*, i.e. integer, real number, character, of variables in programs you write. Your programs will be translated from human-readable /source code/ into a machine-executable file by software called a *compiler*. 
-
-* Getting started
-The software that you need to get started comes prepackaged and ready to download on most Linux distributions. There are a few options for emulating a Linux environment in Windows or Mac OS, such as a virtual machine (VirtualBox) or package manager (MinGW or Cygwin on Windows and Brew on Mac OS).
-** Text editor
-You will write the source code of your programs using a text editor. There are many options that have features designed for programming such as syntax highlighting and auto-completion. If you are an impossible-to-please perfectionist, you might want to check out [[https://www.gnu.org/s/emacs/][Emacs]]. If you are easier to please, you might want to check out [[https://www.sublimetext.com/][Sublime Text]].
-** Compiler
-To translate your source code into an executable, you will need a Fortran compiler. A free option is *gfortran*, part of the GNU compiler collection (gcc). The features of the Fortran language that are supported by the compiler are specified in the compiler documentation. This is your most complete reference for the intrinsic capabilities of Fortran that your programs can use. At the time of this writing, =gfortran= completely supports Fortran 95 and partially supports more recent standards.
-** Writing a program
-*** Hello world
-Let's write a tiny program that prints "hello world" to the terminal screen in =hello.f90=
-
-#+begin_src fortran -n :tangle hello/hello.f90
-  program main
-    print*, 'hello world'
-  end program main
-#+end_src
-
-To compile the program, execute the following command in the same directory as =hello.f90=
-
-#+begin_src sh :dir hello
-  gfortran hello.f90
-#+end_src
-
-This produces an executable file named =a.out= by default. To run, execute the following command in the same directory 
-
-#+begin_src sh :dir hello
-  ./a.out
-#+end_src
-
-We could have specified a different name for the executable file during compilation with the =-o= option of =gfortran=
-
-#+begin_src sh :dir hello
-  gfortran hello.f90 -o my_executable_file
-#+end_src
-
-*** Template
-Now let's write an empty template for future projects. This section may seem overly complex at first read, but it is best to adopt some form of organization when you are just getting started. Our source code template will consist of two files in the same directory ([[./template/]]). In the following files, the contents of a line after a =!= symbol is a comment that is ignored by the compiler. One file =header.f90= is a *module* that defines variables and procedures to be used later.
-
-#+begin_src fortran -n -r :tangle template/header.f90
-  module header
-    implicit none (ref:in1)
-    ! variable declarations and assignments
-  contains
-    ! function and subroutine definitions
-  end module header
-#+end_src
-
-This file is compiled into an *object file* with the =-c= option of =gfortran=
-
-#+begin_src sh :dir template
-gfortran -c header.f90
-#+end_src
-
-This outputs the object file named =header.o= by default that can be /linked/ to the main program. A separate file =main.f90= contains the main program
-
-#+begin_src fortran -n -r :tangle template/main.f90
-  program main
-    use header (ref:use)
-    implicit none (ref:in2)
-    ! variable declarations and assignments
-    ! function and subroutine calls
-  contains
-    ! function and subroutine definitions
-  end program main
-#+end_src
-
-On line [[(use)]], we imported the content of =header.f90= into the main program, so we must link the object file =header.o= when compiling =main.f90=
-
-#+begin_src sh :dir template
-gfortran main.f90 header.o -o main
-#+end_src
-
-To run the program, execute the output file =main= in the same directory
-
-#+begin_src sh :dir template
-./main
-#+end_src
-
-.
-
-As you get more experience, you will find it very cumbersome to repeatedly execute =gfortran= commands with every modification to your code. Using the =make= command-line utility is a way around this. You can specify all the compilation commands for your project in a =makefile=. For example, the template above could use the following =makefile=
-
-#+begin_src make -n -r :exports code :tangle template/makefile
-  FC = gfortran
-  SRC = main.f90
-  EXE = main
-  OBJ = header.o (ref:obj)
-
-  all: $(EXE)
-  $(EXE): $(OBJ)
-    $(FC) $(OBJ) $(SRC) -o $(EXE)
-  %.o: %.f90
-    $(FC) -c $< -o $@
-#+end_src
-
-Then, to recompile both =header.f90= and =main.f90= after modifying either file, you would execute
-
-#+begin_src sh :dir template
-make
-#+end_src
-
-The first four lines of =makefile= assign variables for the compiler command, file name of the main program, file name of the executable to be created, and file name(s) of linked object files, respectively. If you wrote a second module in a separate file =my_second_header.f90= that you wanted to =use= in =main.f90=, you would modify line [[(obj)]] to =OBJ = header.o my_second_header.o=.
-
-* Data types
-We will use the convention of putting an =implicit none= keyword at the beginning of each code block as in line [[(in1)]] of =header.f90= and line [[(in2)]] of =main.f90= in Section [[Template]]. The role of this keyword is to suppress some implicit rules that Fortran has for undeclared variables. Without this keyword, an undeclared variable with a name such as =i= is assumed to be of the integer data type whereas an undeclared variable with a name such as =x= is assumed to be a real data type. By using the =implicit none= keyword, we force ourselves to declare every variable that we use. This may ultimately lead to more code but it is recommended to facilitate debugging when your program fails to compile. In addition to the most common data types presented below, Fortran has =complex= and =character= data types and support for user-defined data types.
-** The =logical= type
-A variable of the =logical= type can have values =.true.= or =.false.=. Logical operations can be computed with a few operators 
-
-#+begin_src fortran -n 
-  logical :: a,b,c
-  a = .true.
-  b = .false.
-
-  ! '.not.' is the logical negation operator
-  c = .not.a ! c is false
-
-  ! '.and,' is the logical and operator
-  c = a.and.b ! c is false
-
-  ! '.or.' is the logical or operator
-  c = a.or.b ! c is true
-
-  ! '==' is the test for equality
-  c = (1 == 2) ! c is false
-
-  ! '/=' is test for inequality
-  c = (1 /= 2) ! c is true
-#+end_src
-
-Other logical operators include
-- =<= or =.lt.=: less than
-- =<== or =.le.=: less than or equal
-- =>= or =.gt.=: greater than
-- =>== or =.ge.=: greater than or equal
-
-Logical expressions are often used in [[Control structures][control structures]].
-
-** The =integer= type
-
-#+begin_src fortran -n
-    integer :: a = 6, b = 7 ! initialize a and b to 6 and 7, resp
-    integer :: c
-
-    c = a / b ! c is 0
-    c = b / a ! c is 1
-    c = mod(b,a) ! c is 1, 'mod' is the modulo operator
-    c = b - a ! c is -1
-    c = a > b ! c is 0 (logical gets cast to integer)
-    c = a < b ! c is 1 (logical gets cast to integer)
-#+end_src
-
-** Floating point types
-There are two floating point data types in Fortran, =real= and =double precision= corresponding to [[https://en.wikipedia.org/wiki/IEEE_floating_poin][IEEE 32- and 64-bit floating point data types]].
-
-#+begin_src fortran :exports both -n
-  real :: a ! declare a single precision float
-  double precision :: b ! declare a double precision float
-
-  ! Print the max value of a real type
-  print*, huge(a)
-
-  ! Print the max value of a double precision type
-  print*, huge(b)
-
-  ! Print machine epsilon for the single precision floating point system
-  print*, epsilon(a)
-
-  ! Print machine epsilon for the double precision floating point system
-  print*, epsilon(b)
-#+end_src
-
-** Casting
-An integer can be cast to a real number or vice versa.
-
-#+begin_src fortran :exports both -n
-    integer :: a = 1, b
-    real :: PI = 3.14159
-
-    b = int(PI) ! b is 3
-    print*, a/b
-    print*, a/real(b)
-#+end_src
-
-** The =parameter= modifier
-To protect a variable of any data type from reassignment, you can use the =parameter= modifier. If this modifier is used, the corresponding variable must be assigned a value at declaration, and that value cannot be reassigned. The following code is not valid.
-
-#+begin_src fortran -n
-  real, parameter :: PI = asin(0.)
-  PI = 3
-#+end_src
-
-The compiler produces an error like =Error: Named constant ‘pi’ in variable definition context (assignment)=.
-
-** Setting the precision
-
-Each data type is assigned an integer by the =kind= function. You can write a program in a chosen precision with the =kind= of the precision stored in a variable =rp=. Then, if you want to change the precision, you could change the value of =rp= and recompile. The precision of a variable can be set at declaration and a variable or constant can be cast to a specified precision, each by supplying an extra argument.
-
-#+begin_src fortran -n
-  real :: r ! declare a real, single precision by default
-  double precision :: d ! declare a double precision
-  integer, parameter :: sp = kind(r), dp = kind(d) ! store kinds of 'r' and 'd'
-  integer, parameter :: rp = sp ! set current kind
-
-  ! declare 'b' in double precision
-  real(dp) :: b
-
-  ! declare 'a' real with precision kind 'rp'
-  real(rp) :: a
-
-  ! cast '1' to real with precision kind 'rp' and assign to a
-  a = 1.0_rp
-
-  ! cast 'b' to real with precision kind 'rp' and assign to a
-  a = real(b,rp)
-#+end_src
-
-** Pointers
-
-Pointers have the same meaning in Fortran as in C++: a pointer is a variable that holds the *memory address* for a variable of a specific type. The implementation of pointers is qualitatively different in Fortran than in C++: in Fortran, there is no Fortran function to print the memory address that a pointer stores. A pointer variable is declared with the =pointer= modifier, and a variable that it points to is declared with the =target= modifier. The types of a =pointer= and its =target= must match.
-
-#+begin_src fortran :exports both -n
-  ! declare targets and assign values
-  integer, target :: a = 1, b = 2
-  ! declare pointer
-  integer, pointer :: p
-
-  p => a ! Now 'p' has same memory address as 'a'
-  p = 2 ! Modify value at address
-  print*, a==2 ! 'a' is 2
-
-  p => b ! Now 'p' has same memory address as 'b'
-  p = 1 ! Modify value at address
-  print*, b==1 ! 'b' is 1
-
-  ! Is 'p' associated with a target?
-  print*, associated(p)
-
-  ! Is 'p' associated with the target 'a'?
-  print*, associated(p, a)
-
-  ! Point to nowhere
-  nullify(p)
-#+end_src
-
-** Arrays
-
-* Control structures
-
+:snippets:
 # * ${n \choose k}$
 # #+begin_src fortran :tangle choose/main.f90
 #   program main
@@ -645,5 +394,556 @@ Pointers have the same meaning in Fortran as in C++: a pointer is a variable tha
 #     print*, s, exp(1.)-s
 #   end program main
 # #+end_src
+:end:
+
+* Introduction
+This guide is intended to quickly get you up-and-running in scientific computing with Fortran. There is a companion [[../cpp/index.html][C++ guide]] that parallels the content of this guide. 
+** About the language
+Fortran was created in the 1950s for mathematical *FOR*-mula *TRAN*-slation, and has since gone through a number of revisions (FORTRAN 66, 77, and Fortran 90, 95, 2003, 2008, 2015). The language standards are put forth by the Fortran standards committee [[http://www.j3-fortran.org][J3]] in a document (ISO 1539-1:2010) available for purchase. The syntax and intrinsic capabilities of the language make it especially suited for scientific computing. Like C/C++, Fortran is a *statically-typed* and *compiled* language. You must declare the *type*, i.e. integer, real number, etc. of variables in programs you write. Your programs will be translated from human-readable /source code/ into a machine-executable file by software called a *compiler*. 
+
+* Getting started
+The software that you need to get started comes prepackaged and ready to download on most Linux distributions. There are a few options for emulating a Linux environment in Windows or Mac OS, such as a virtual machine (VirtualBox) or package manager (MinGW or Cygwin on Windows and Brew on Mac OS).
+** Text editor
+You will write the source code of your programs using a text editor. There are many options that have features designed for programming such as syntax highlighting and auto-completion. If you are an impossible-to-please perfectionist, you might want to check out [[https://www.gnu.org/s/emacs/][Emacs]]. If you are easier to please, you might want to check out [[https://www.sublimetext.com/][Sublime Text]].
+** Compiler
+To translate your source code into an executable, you will need a Fortran compiler. A free option is *gfortran*, part of the GNU compiler collection (gcc). The features of the Fortran language that are supported by the compiler are specified in the compiler documentation. This is your most complete reference for the intrinsic capabilities of Fortran that your programs can use. At the time of this writing, =gfortran= completely supports Fortran 95 and partially supports more recent standards.
+** Writing a program
+*** Hello world
+Let's write a tiny program that prints "hello world" to the terminal screen in =hello.f90=
+
+#+begin_src fortran -n :tangle hello/hello.f90
+program main
+  print*, 'hello world'
+end program main
+#+end_src
+
+To compile the program, execute the following command in the same directory as =hello.f90=
+
+#+begin_src sh :dir hello
+gfortran hello.f90
+#+end_src
+
+This produces an executable file named =a.out= by default (On Windows, this is probably named =a.exe= by default). To run, execute the file.
+
+#+begin_src sh :dir hello
+./a.out
+#+end_src
+
+We could have specified a different name for the executable file during compilation with the =-o= option of =gfortran=.
+
+#+begin_src sh :dir hello
+gfortran hello.f90 -o my_executable_file
+#+end_src
+
+On Windows, you should append the =.exe= extension to =my_executable_file=.
+
+*** Template
+Now let's write an empty template for future projects. This section may seem overly complex at first read, but it is best to adopt some form of organization when you are just getting started. Our source code template will consist of two files in the same directory ([[./template/]]). In the following files, the contents of a line after a =!= symbol is a comment that is ignored by the compiler. One file =header.f90= is a *module* that defines things to be used in the main program.
+
+#+begin_src fortran -n -r :tangle template/header.f90
+module header
+  implicit none (ref:in1)
+  ! variable declarations and assignments
+contains
+  ! function and subroutine definitions
+end module header
+#+end_src
+
+This file is compiled into an *object file* with the =-c= option of =gfortran=
+
+#+begin_src sh :dir template
+gfortran -c header.f90
+#+end_src
+
+This outputs the object file named =header.o= by default that can be /linked/ to the main program. A separate file =main.f90= contains the main program.
+
+#+begin_src fortran -n -r :tangle template/main.f90
+program main
+  use header (ref:u)
+  implicit none (ref:in2)
+  ! variable declarations and assignments
+  ! function and subroutine calls
+contains
+  ! function and subroutine definitions
+end program main
+#+end_src
+
+On line [[(u)]] of =main.f90=, we instruct the main program to use things defined in =header.f90=, so we must link the object file =header.o= when compiling =main.f90=.
+
+#+begin_src sh :dir template
+gfortran main.f90 header.o -o main
+#+end_src
+
+To run the program, execute the output file =main= in the same directory.
+
+#+begin_src sh :dir template
+./main
+#+end_src
+
+As you get more experience, you will find it very cumbersome to repeatedly execute =gfortran= commands with every modification to your code. Using the =make= command-line utility is a way around this. You can specify all the compilation commands for your project in a file named =makefile=. For example, the template above could use the following =makefile=.
+
+#+begin_src make -n -r :tangle template/makefile
+FC = gfortran
+SRC = main.f90
+EXE = main
+OBJ = header.o(ref:obj)
+
+all: $(EXE)
+$(EXE): $(OBJ)
+	$(FC) $(SRC) $(OBJ) -o $(EXE)
+%.o: %.f90
+	$(FC) -c $< -o $@
+#+end_src
+
+Then, to recompile both =header.f90= and =main.f90= after modifying either file, execute
+
+#+begin_src sh :exports code :dir template
+make
+#+end_src
+
+in the same directory. The first four lines of =makefile= assign variables for the compiler command, file name of the main program, file name of the executable to be created, and file name(s) of linked object file(s), respectively. If you wrote a second module in a separate file =my_second_header.f90= that you wanted to =use= in =main.f90=, you would modify line [[(obj)]] of =makefile= to =OBJ = header.o my_second_header.o=. The remaining lines contain instructions for compilation.
+
+** Exercises
+1. Compile and run =hello.f90=.
+2. Execute =man gfortran= in any directory to bring up the manual for =gfortran=. Read the description and skim through the options. Do the same for =make=.
+
+* Data types
+We will use the =implicit none= keyword at the beginning of each code block as in line [[(in1)]] of =header.f90= and line [[(in2)]] of =main.f90= in Section [[Template]]. The role of this keyword is to suppress some implicit rules that Fortran has for undeclared variables, and by including it we force ourselves to declare each variable that we use. This means our code will be slightly longer than necessary but it will facilitate debugging when our program fails to compile. Without the =implicit none= keyword, an undeclared variable with a name such as =i= is assumed to be an integer data type whereas an undeclared variable with a name such as =x= is assumed to be a real data type.
+
+In addition to the most common data types presented below, Fortran has =complex= and =character= data types and support for user-defined data types.
+
+** The =logical= type
+A variable of the =logical= type can have values =.true.= or =.false.=. Logical expressions can be computed with a few operators 
+
+#+begin_src fortran -n 
+logical :: a,b,c
+a = .true.
+b = .false.
+
+! '.not.' is the logical negation operator
+c = .not.a ! c is false
+
+! '.and,' is the logical and operator
+c = a.and.b ! c is false
+
+! '.or.' is the logical or operator
+c = a.or.b ! c is true
+
+! '==' is the test for equality
+c = (1 == 2) ! c is false
+
+! '/=' is test for inequality
+c = (1 /= 2) ! c is true
+#+end_src
+
+Other logical operators include
+- =<= or =.lt.=: less than
+- =<== or =.le.=: less than or equal
+- =>= or =.gt.=: greater than
+- =>== or =.ge.=: greater than or equal
+
+Logical expressions are often used in [[Control structures][control structures]].
+
+** The =integer= type
+An =integer= data type can hold integer values. If a real value is assigned to an =integer= type, the decimal portion is truncated.
+
+#+begin_src fortran -n
+integer :: a = 6, b = 7 ! initialize a and b to 6 and 7, resp
+integer :: c
+
+c = a / b ! c is 0
+c = b / a ! c is 1
+c = mod(b,a) ! c is 1, 'mod' is the modulo operator
+c = b - a ! c is -1
+c = a > b ! c is 0 (logical gets cast to integer)
+c = a < b ! c is 1 (logical gets cast to integer)
+#+end_src
+
+** Floating point types
+The two floating point data types =real= and =double precision= correspond to [[https://en.wikipedia.org/wiki/IEEE_floating_point][IEEE 32- and 64-bit floating point data types]].
+
+#+begin_src fortran -n :exports both :results output
+real :: a ! declare a single precision float
+double precision :: b ! declare a double precision float
+
+! Print the max value of a real type
+print*, huge(a)
+
+! Print the max value of a double precision type
+print*, huge(b)
+
+! Print machine epsilon for the single precision floating point system
+print*, epsilon(a)
+
+! Print machine epsilon for the double precision floating point system
+print*, epsilon(b)
+#+end_src
+
+** Casting
+An integer can be cast to a real number or vice versa.
+
+#+begin_src fortran -n
+integer :: a = 1, b
+real :: c, PI = 3.14159
+
+b = int(PI) ! b is 3
+
+c = a/b ! c is 0
+
+c = a/real(b) ! c is .3333...
+#+end_src
+
+** The =parameter= modifier
+To protect a variable from reassignment, you can use the =parameter= modifier. If this modifier is used, the corresponding variable must be assigned a value at declaration, and that value cannot be reassigned. The following code is not valid because of the reassignment =PI = 3=.
+
+#+begin_src fortran -n
+! declare constant
+real, parameter :: PI = 2.*asin(1.) ! 'asin' is arcine function
+! attempt to reassign value
+PI = 3
+#+end_src
+
+The compiler produces an error like =Error: Named constant ‘pi’ in variable definition context (assignment)=.
+
+** Setting the precision
+Each data type is assigned an integer by the Fortran =kind= function. You can write a program in a chosen precision with the =kind= of the precision stored in a variable =rp=. Then, if you want to change the precision, you could change the value of =rp= and recompile. The precision of a variable can be set at declaration and a variable or constant can be cast to a specified precision, each by supplying an extra argument.
+
+#+begin_src fortran -n
+real :: r ! declare a real, single precision by default
+double precision :: d ! declare a double precision
+integer, parameter :: sp = kind(r), dp = kind(d) ! store kinds of r and d
+integer, parameter :: rp = sp ! set current kind
+
+! declare real b in double precision
+real(dp) :: b
+
+! declare real a with precision kind rp
+real(rp) :: a
+
+! cast 1 to real with precision kind rp and assign to a
+a = 1.0_rp
+
+! cast b to real with precision kind rp and assign to a
+a = real(b,rp)
+#+end_src
+
+** Pointers
+Pointers have the same meaning in Fortran as in C++. A pointer is a variable that holds the *memory address* for a variable of a specific type. The implementation of pointers is qualitatively different in Fortran than in C++. In Fortran, the user cannot view the memory address that a pointer stores. A pointer variable is declared with the =pointer= modifier, and a variable that it points to is declared with the =target= modifier. The types of a =pointer= and its =target= must match.
+
+#+begin_src fortran -n :exports both :results output
+! declare pointer
+integer, pointer :: p
+! declare targets and assign values
+integer, target :: a = 1, b = 2
+
+p => a ! Now p has same memory address as a
+p = 2 ! Modify value at address
+print*, a==2 ! a is 2
+
+p => b ! Now p has same memory address as b
+p = 1 ! Modify value at address
+print*, b==1 ! b is 1
+
+! Is p associated with a target?
+print*, associated(p)
+
+! Is p associated with the target a?
+print*, associated(p, a)
+
+! Point to nowhere
+nullify(p)
+#+end_src
+
+** Arrays
+The length of an array can be fixed or dynamic. The index of an array starts at 1 by default, but any index range can be specified.
+*** Fixed-length arrays
+#+begin_src fortran -n
+real :: a(5)
+
+a(1) = 1.0
+! etc
+#+end_src
+*** Dynamic length arrays
+Dynamic arrays are declared with the =allocatable= modifier. Before storing values in such an array, you must =allocate= memory for the array. After you are finished the array, you ought to =deallocate= the memory that it occupies.
+
+#+begin_src fortran -n -r
+! declare a one-dim. dynamic length array
+real, allocatable :: a(:)
+
+! allocate memory for a
+allocate(a(5))
+
+! now you can treat a like a normal array
+a(1) = 1.0
+! etc...
+
+! deallocate memory occupied by a
+deallocate(a)
+
+! we can change the size and index range of a
+allocate(a(0:9))
+
+a(0) = 1.0
+! etc...
+
+deallocate(a) (ref:d)
+#+end_src
+
+Without the last =dellaocate= statement on line [[(d)]] the code above is valid, but the memory that is allocated for =a= will not be freed. That memory then cannot be allocated to other resources.
+
+* Control structures
+** Conditionals
+*** Example: =if= / =else= and random number generation
+You can control execution of two blocks of code with mutually exclusive logic using the =if=/=else= construct. The following code generates a random number between 0 and 1, then prints the number and whether or not the number is greater than 0.5
+
+#+begin_src fortran -n :exports both :results output
+real :: num
+
+! seed random number generator
+call srand(789)
+
+! rand() returns a random number between 0 and 1
+num = rand()
+
+print*, 'num: ', num
+
+if (num < 0.5) then
+   print*, 'num is less than 0.5'
+else
+   print*, 'num is greater then 0.5'
+end if
+
+! do it again
+num = rand()
+
+print*, 'num: ', num
+
+if (num < 0.5) then
+   print*, 'num is less than 0.5'
+else
+   print*, 'num is greater then 0.5'
+end if
+#+end_src
+
+#+RESULTS[13675e49eb075ab2495d1e40c7af7bafd17418d0]:
+: num:    6.17480278E-03
+: num is less than 0.5
+: num:   0.783314705    
+: num is greater then 0.5
+
+Since the random number generator was seeded with a literal integer, the above code will produce the /same/ output each time it is run.
+
+*** Example: =if= / =else if= / =else=
+
+You can control execution of two blocks of code with mutually exclusive logic using the =if=/=else= construct. The following code generates a random number between 0 and 1, then prints the number and the quarter of the interval $[0,1]$ that the number is in.
+
+#+begin_src fortran -n -r :exports both :results output
+real :: num
+
+! seed random number generator with current time
+call srand(time())
+
+! rand() returns a random number between 0 and 1
+num = rand()
+
+print*, 'num:', num
+
+if (num > 0.75) then
+   print*, 'num is between 0.75 and 1'
+else if (num > 0.5) then
+   print*, 'num is between 0.5 and 0.75'
+else if (num > 0.25) then
+   print*, 'num is between 0.25 and 0.5'
+else
+   print*, 'num is between 0 and 0.25'
+end if
+#+end_src
+
+#+RESULTS[487c234210bd37d6d1b91cbc44cf625615843b7b]:
+: num:  0.693089724    
+: num is between 0.5 and 0.75
+
+Since the random number generator was seeded with the current time, the above code will produce a /different/ output each time it is run.
+
+** Loops
+*** The =do= loop
+The =do= loop requires two =integer= arguments specifying a minimum and maximum (inclusive) range and takes an optional third =integer= argument specifying the stride in the form =do i=min,max,stride=. If omitted, stride is 1.
+
+The following code assigns a value to each component of an array then prints it.
+
+#+begin_src fortran -n :exports both :results output
+integer :: max = 10, i
+real, allocatable :: x(:)
+
+allocate(x(0:max))
+
+do i = 0,max
+   ! assign to each array component
+   x(i) = i / real(max)
+
+   ! print current component
+   print "('x(', i0, ') = ', f3.1)", i, x(i)
+end do
+
+deallocate(x)
+#+end_src
+
+*** Example: row-major matrix
+
+#+begin_src fortran -n :exports both :results output
+integer :: n_rows = 4, n_cols = 3
+real, allocatable :: matrix(:)
+! temporary indices
+integer :: i,j,k
+
+! row-major matrix array fs m,
+allocate(matrix(1:n_rows*n_cols))
+
+! assign 0 to all elements of matrix
+matrix = 0.0
+
+do i = 1,n_rows
+   do j = 1,n_cols
+      ! convert (i,j) matrix index to "flat" row-major index
+      k = (i-1)*n_cols + j
+
+      ! assign 1 to the diagonal
+      ! 2 to the off-diagonal
+      if (i==j) then
+         matrix(k) = 1.0
+      else if ((i==j-1).or.(i==j+1)) then
+         matrix(k) = 2.0
+      end if
+   end do
+end do
+
+! print matrix components
+do i = 1,n_rows
+   print*, matrix(1+(i-1)*n_cols:i*n_cols)
+end do
+
+deallocate(matrix)
+#+end_src
+
+*** The =do while= loop
+A =do while= loop iterates while a logical condition evaluates to =.true.=.
+
+**** Example: truncated sum
+The following code approximates the geometric series
+\begin{equation*}
+\sum_{n=1}^{\infty}\left(\frac12\right)^n=1.
+\end{equation*}
+The =do while= loop exits when the absolute error
+\begin{equation*}
+E=1-\sum_{n=1}^{\infty}\left(\frac12\right)^n
+\end{equation*}
+is less than a specified tolerance =tol=.
+
+#+begin_src fortran -n :exports both :results output
+real :: sum = 0.0, base = 0.5, tol = 1e-4
+real :: pow = 0.5
+integer :: iter = 1
+
+do while(1-sum >= tol)
+   ! add pow to sum
+   sum = sum+pow
+   ! update pow by one power of base
+   pow = pow*base
+
+   print "('Iter: ', i3, ', Sum: ', f0.5, ', Abs Err: ', f0.5)", iter, sum, 1-sum
+   
+   ! update iter by 1
+   iter = iter+1
+end do
+#+end_src
+
+#+RESULTS[4ab00e990de5c40405f40a8d40e41fd49fab7066]:
+#+begin_example
+Iter:  1, Sum: .50000, Abs Err: .50000
+Iter:  2, Sum: .75000, Abs Err: .25000
+Iter:  3, Sum: .87500, Abs Err: .12500
+Iter:  4, Sum: .93750, Abs Err: .06250
+Iter:  5, Sum: .96875, Abs Err: .03125
+Iter:  6, Sum: .98438, Abs Err: .01562
+Iter:  7, Sum: .99219, Abs Err: .00781
+Iter:  8, Sum: .99609, Abs Err: .00391
+Iter:  9, Sum: .99805, Abs Err: .00195
+Iter: 10, Sum: .99902, Abs Err: .00098
+Iter: 11, Sum: .99951, Abs Err: .00049
+Iter: 12, Sum: .99976, Abs Err: .00024
+Iter: 13, Sum: .99988, Abs Err: .00012
+Iter: 14, Sum: .99994, Abs Err: .00006
+#+end_example
+
+
+**** Example: estimating machine epsilon
+
+#+begin_src fortran -n :exports both :results output
+double precision :: eps
+integer, parameter :: dp = kind(eps)
+integer :: count = 1
+
+eps = 1.0_dp
+do while (1.0_dp + eps*0.5 > 1.0_dp)
+   eps = eps*0.5
+   count = count+1
+end do
+
+print*, eps
+print*, epsilon(eps)
+print*, count
+print*, digits(eps)
+#+end_src
+
+#+RESULTS[dcaeab340d8770cf1159ef94ec3cb9a90d7c6173]:
+: 2.2204460492503131E-016   2.2204460492503131E-016
+:        53          53
+
+*** Example: =exit= keyword
+The =exit= keyword is used to stop execution of code within the current scope. The following code finds the /hailstone sequence/ of \(a_1=6\) defined recursively by
+\begin{equation*}
+a_{n+1} =
+\begin{cases}
+a_n/2 & \text{if } a_n \text{ is even}\\
+3a_n+1 & \text{ if } a_n \text{ is odd} 
+\end{cases}
+\end{equation*}
+for \(n\geq1\). It is an open conjecture whether the hailstone sequence of any initial value \(a_1\) converges to the periodic sequence \(1, 4, 2, 1, 4, 2,\ldots\). Luckily, it does for \(a_1=6\) and the following =do while= loop exits.
+
+#+begin_src fortran -n :exports both :results output
+integer :: a = 6, count = 1
+
+! infinite loop
+do while(.true.)
+   ! if a is even, divide by 2
+   if (mod(a,2)==0) then
+      a = a/2
+   ! otherwise multiply by 3 and add 1
+   else
+      a = 3*a+1
+   end if
+
+   ! if a is 1, exit infinite loop
+   if (a==1) then
+      exit
+   end if
+
+   ! print n
+   print "('count: ', i2, ', a: ', i2)", count, a
+
+   ! increment count
+   count = count + 1
+end do
+#+end_src
+
+#+RESULTS[6032635a8b593603d4f586b8684e1925330b3662]:
+: count:  1, a:  3
+: count:  2, a: 10
+: count:  3, a:  5
+: count:  4, a: 16
+: count:  5, a:  8
+: count:  6, a:  4
+: count:  7, a:  2
+
 
 #+html: </div>

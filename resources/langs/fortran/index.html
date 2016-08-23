@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2016-08-22 Mon 15:22 -->
+<!-- 2016-08-22 Mon 21:13 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title>ACM Computing Seminar Fortran Guide</title>
@@ -143,6 +143,28 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
@@ -156,7 +178,7 @@ for the JavaScript code in this tag.
 <li><a href="#orgheadline1">1.1. About the language</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline8">2. Getting started</a>
+<li><a href="#orgheadline9">2. Getting started</a>
 <ul>
 <li><a href="#orgheadline3">2.1. Text editor</a></li>
 <li><a href="#orgheadline4">2.2. Compiler</a></li>
@@ -166,21 +188,44 @@ for the JavaScript code in this tag.
 <li><a href="#orgheadline6">2.3.2. Template</a></li>
 </ul>
 </li>
+<li><a href="#orgheadline8">2.4. Exercises</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline18">3. Data types</a>
+<li><a href="#orgheadline21">3. Data types</a>
 <ul>
-<li><a href="#orgheadline10">3.1. The <code>logical</code> type</a></li>
-<li><a href="#orgheadline11">3.2. The <code>integer</code> type</a></li>
-<li><a href="#orgheadline12">3.3. Floating point types</a></li>
-<li><a href="#orgheadline13">3.4. Casting</a></li>
-<li><a href="#orgheadline14">3.5. The <code>parameter</code> modifier</a></li>
-<li><a href="#orgheadline15">3.6. Setting the precision</a></li>
-<li><a href="#orgheadline16">3.7. Pointers</a></li>
-<li><a href="#orgheadline17">3.8. Arrays</a></li>
+<li><a href="#orgheadline11">3.1. The <code>logical</code> type</a></li>
+<li><a href="#orgheadline12">3.2. The <code>integer</code> type</a></li>
+<li><a href="#orgheadline13">3.3. Floating point types</a></li>
+<li><a href="#orgheadline14">3.4. Casting</a></li>
+<li><a href="#orgheadline15">3.5. The <code>parameter</code> modifier</a></li>
+<li><a href="#orgheadline16">3.6. Setting the precision</a></li>
+<li><a href="#orgheadline17">3.7. Pointers</a></li>
+<li><a href="#orgheadline20">3.8. Arrays</a>
+<ul>
+<li><a href="#orgheadline18">3.8.1. Fixed-length arrays</a></li>
+<li><a href="#orgheadline19">3.8.2. Dynamic length arrays</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline9">4. Control structures</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline10">4. Control structures</a>
+<ul>
+<li><a href="#orgheadline24">4.1. Conditionals</a>
+<ul>
+<li><a href="#orgheadline22">4.1.1. Example: <code>if</code> / <code>else</code> and random number generation</a></li>
+<li><a href="#orgheadline23">4.1.2. Example: <code>if</code> / <code>else if</code> / <code>else</code></a></li>
+</ul>
+</li>
+<li><a href="#orgheadline31">4.2. Loops</a>
+<ul>
+<li><a href="#orgheadline25">4.2.1. The <code>do</code> loop</a></li>
+<li><a href="#orgheadline26">4.2.2. Example: row-major matrix</a></li>
+<li><a href="#orgheadline29">4.2.3. The <code>do while</code> loop</a></li>
+<li><a href="#orgheadline30">4.2.4. Example: <code>exit</code> keyword</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -191,21 +236,21 @@ for the JavaScript code in this tag.
 <h2 id="orgheadline2"><span class="section-number-2">1</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-This is guide is intended to quickly get you up-and-running in scientific computing with Fortran. There is a companion <a href="../cpp/index.html">C++ guide</a> that parallels the content of this guide. 
+This guide is intended to quickly get you up-and-running in scientific computing with Fortran. There is a companion <a href="../cpp/index.html">C++ guide</a> that parallels the content of this guide. 
 </p>
 </div>
 <div id="outline-container-orgheadline1" class="outline-3">
 <h3 id="orgheadline1"><span class="section-number-3">1.1</span> About the language</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
-Fortran was created in the 1950s for mathematical <b>FOR</b>-mula <b>TRAN</b>-slation, and has since gone through a number of revisions (FORTRAN 66, 77, and Fortran 90, 95, 2003, 2008, 2015). The language standards are put forth by the Fortran standard committee <a href="http://www.j3-fortran.org/">J3</a> in a document (ISO 1539-1:2010) available for purchase. The syntax and intrinsic capabilities of the language make it especially suited for scientific computing. Like C/C++, Fortran is a <b>statically-typed</b> and <b>compiled</b> language. You must declare the <b>type</b>, i.e. integer, real number, character, of variables in programs you write. Your programs will be translated from human-readable <i>source code</i> into a machine-executable file by software called a <b>compiler</b>. 
+Fortran was created in the 1950s for mathematical <b>FOR</b>-mula <b>TRAN</b>-slation, and has since gone through a number of revisions (FORTRAN 66, 77, and Fortran 90, 95, 2003, 2008, 2015). The language standards are put forth by the Fortran standards committee <a href="http://www.j3-fortran.org/">J3</a> in a document (ISO 1539-1:2010) available for purchase. The syntax and intrinsic capabilities of the language make it especially suited for scientific computing. Like C/C++, Fortran is a <b>statically-typed</b> and <b>compiled</b> language. You must declare the <b>type</b>, i.e. integer, real number, etc. of variables in programs you write. Your programs will be translated from human-readable <i>source code</i> into a machine-executable file by software called a <b>compiler</b>. 
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgheadline8" class="outline-2">
-<h2 id="orgheadline8"><span class="section-number-2">2</span> Getting started</h2>
+<div id="outline-container-orgheadline9" class="outline-2">
+<h2 id="orgheadline9"><span class="section-number-2">2</span> Getting started</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 The software that you need to get started comes prepackaged and ready to download on most Linux distributions. There are a few options for emulating a Linux environment in Windows or Mac OS, such as a virtual machine (VirtualBox) or package manager (MinGW or Cygwin on Windows and Brew on Mac OS).
@@ -256,7 +301,7 @@ To compile the program, execute the following command in the same directory as <
 </div>
 
 <p>
-This produces an executable file named <code>a.out</code> by default. To run, execute the following command in the same directory 
+This produces an executable file named <code>a.out</code> by default (On Windows, this is probably named <code>a.exe</code> by default). To run, execute the file.
 </p>
 
 <div class="org-src-container">
@@ -270,7 +315,7 @@ hello world
 </pre>
 
 <p>
-We could have specified a different name for the executable file during compilation with the <code>-o</code> option of <code>gfortran</code>
+We could have specified a different name for the executable file during compilation with the <code>-o</code> option of <code>gfortran</code>.
 </p>
 
 <div class="org-src-container">
@@ -278,6 +323,10 @@ We could have specified a different name for the executable file during compilat
 <pre class="src src-sh">gfortran hello.f90 -o my_executable_file
 </pre>
 </div>
+
+<p>
+On Windows, you should append the <code>.exe</code> extension to <code>my_executable_file</code>.
+</p>
 </div>
 </div>
 
@@ -285,7 +334,7 @@ We could have specified a different name for the executable file during compilat
 <h4 id="orgheadline6"><span class="section-number-4">2.3.2</span> Template</h4>
 <div class="outline-text-4" id="text-2-3-2">
 <p>
-Now let's write an empty template for future projects. This section may seem overly complex at first read, but it is best to adopt some form of organization when you are just getting started. Our source code template will consist of two files in the same directory (<a href="./template/">./template/</a>). In the following files, the contents of a line after a <code>!</code> symbol is a comment that is ignored by the compiler. One file <code>header.f90</code> is a <b>module</b> that defines variables and procedures to be used later.
+Now let's write an empty template for future projects. This section may seem overly complex at first read, but it is best to adopt some form of organization when you are just getting started. Our source code template will consist of two files in the same directory (<a href="./template/">./template/</a>). In the following files, the contents of a line after a <code>!</code> symbol is a comment that is ignored by the compiler. One file <code>header.f90</code> is a <b>module</b> that defines things to be used in the main program.
 </p>
 
 <div class="org-src-container">
@@ -310,13 +359,13 @@ This file is compiled into an <b>object file</b> with the <code>-c</code> option
 </div>
 
 <p>
-This outputs the object file named <code>header.o</code> by default that can be <i>linked</i> to the main program. A separate file <code>main.f90</code> contains the main program
+This outputs the object file named <code>header.o</code> by default that can be <i>linked</i> to the main program. A separate file <code>main.f90</code> contains the main program.
 </p>
 
 <div class="org-src-container">
 
 <pre class="src src-fortran"><span class="linenr">1: </span><span style="color: #0000FF;">program</span> <span style="color: #006699;">main</span>
-<span id="coderef-use" class="coderef-off"><span class="linenr">2: </span>  <span style="color: #0000FF;">use</span> <span style="color: #006699;">header</span></span>
+<span id="coderef-u" class="coderef-off"><span class="linenr">2: </span>  <span style="color: #0000FF;">use</span> <span style="color: #006699;">header</span></span>
 <span id="coderef-in2" class="coderef-off"><span class="linenr">3: </span>  <span style="color: #0000FF;">implicit</span> <span style="color: #6434A3;">none</span></span>
 <span class="linenr">4: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">variable declarations and assignments</span>
 <span class="linenr">5: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">function and subroutine calls</span>
@@ -327,7 +376,7 @@ This outputs the object file named <code>header.o</code> by default that can be 
 </div>
 
 <p>
-On line <a href="#coderef-use"class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-use');" onmouseout="CodeHighlightOff(this, 'coderef-use');">2</a>, we imported the content of <code>header.f90</code> into the main program, so we must link the object file <code>header.o</code> when compiling <code>main.f90</code>
+On line <a href="#coderef-u"class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-u');" onmouseout="CodeHighlightOff(this, 'coderef-u');">2</a> of <code>main.f90</code>, we instruct the main program to use things defined in <code>header.f90</code>, so we must link the object file <code>header.o</code> when compiling <code>main.f90</code>.
 </p>
 
 <div class="org-src-container">
@@ -337,7 +386,7 @@ On line <a href="#coderef-use"class="coderef" onmouseover="CodeHighlightOn(this,
 </div>
 
 <p>
-To run the program, execute the output file <code>main</code> in the same directory
+To run the program, execute the output file <code>main</code> in the same directory.
 </p>
 
 <div class="org-src-container">
@@ -347,11 +396,7 @@ To run the program, execute the output file <code>main</code> in the same direct
 </div>
 
 <p>
-.
-</p>
-
-<p>
-As you get more experience, you will find it very cumbersome to repeatedly execute <code>gfortran</code> commands with every modification to your code. Using the <code>make</code> command-line utility is a way around this. You can specify all the compilation commands for your project in a <code>makefile</code>. For example, the template above could use the following <code>makefile</code>
+As you get more experience, you will find it very cumbersome to repeatedly execute <code>gfortran</code> commands with every modification to your code. Using the <code>make</code> command-line utility is a way around this. You can specify all the compilation commands for your project in a file named <code>makefile</code>. For example, the template above could use the following <code>makefile</code>.
 </p>
 
 <div class="org-src-container">
@@ -363,14 +408,14 @@ As you get more experience, you will find it very cumbersome to repeatedly execu
 <span class="linenr"> 5: </span>
 <span class="linenr"> 6: </span><span style="color: #0000ff; font-weight: bold;">all</span>: $<span style="color: #707183;">(</span><span style="color: #BA36A5;">EXE</span><span style="color: #707183;">)</span>
 <span class="linenr"> 7: </span><span style="color: #0000ff; font-weight: bold;">$</span><span style="color: #707183; font-weight: bold;">(</span><span style="color: #0000ff; font-weight: bold;">EXE</span><span style="color: #707183; font-weight: bold;">)</span>: $<span style="color: #707183;">(</span><span style="color: #BA36A5;">OBJ</span><span style="color: #707183;">)</span>
-<span class="linenr"> 8: </span>  $<span style="color: #707183;">(</span><span style="color: #BA36A5;">FC</span><span style="color: #707183;">)</span> $<span style="color: #707183;">(</span><span style="color: #BA36A5;">OBJ</span><span style="color: #707183;">)</span> $<span style="color: #707183;">(</span><span style="color: #BA36A5;">SRC</span><span style="color: #707183;">)</span> -o $<span style="color: #707183;">(</span><span style="color: #BA36A5;">EXE</span><span style="color: #707183;">)</span>
+<span class="linenr"> 8: </span>  $<span style="color: #707183;">(</span><span style="color: #BA36A5;">FC</span><span style="color: #707183;">)</span> $<span style="color: #707183;">(</span><span style="color: #BA36A5;">SRC</span><span style="color: #707183;">)</span> $<span style="color: #707183;">(</span><span style="color: #BA36A5;">OBJ</span><span style="color: #707183;">)</span> -o $<span style="color: #707183;">(</span><span style="color: #BA36A5;">EXE</span><span style="color: #707183;">)</span>
 <span class="linenr"> 9: </span><span style="color: #0000ff; font-weight: bold;">%.o</span>: %.f90
 <span class="linenr">10: </span>  $<span style="color: #707183;">(</span><span style="color: #BA36A5;">FC</span><span style="color: #707183;">)</span> -c $<span style="color: #D0372D;">&lt;</span> -o <span style="color: #0000ff; font-weight: bold;">$</span><span style="color: #D0372D; font-weight: bold;">@</span>
 </pre>
 </div>
 
 <p>
-Then, to recompile both <code>header.f90</code> and <code>main.f90</code> after modifying either file, you would execute
+Then, to recompile both <code>header.f90</code> and <code>main.f90</code> after modifying either file, execute
 </p>
 
 <div class="org-src-container">
@@ -380,25 +425,40 @@ Then, to recompile both <code>header.f90</code> and <code>main.f90</code> after 
 </div>
 
 <p>
-The first four lines of <code>makefile</code> assign variables for the compiler command, file name of the main program, file name of the executable to be created, and file name(s) of linked object files, respectively. If you wrote a second module in a separate file <code>my_second_header.f90</code> that you wanted to <code>use</code> in <code>main.f90</code>, you would modify line <a href="#coderef-obj"class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-obj');" onmouseout="CodeHighlightOff(this, 'coderef-obj');">4</a> to <code>OBJ = header.o my_second_header.o</code>.
+in the same directory. The first four lines of <code>makefile</code> assign variables for the compiler command, file name of the main program, file name of the executable to be created, and file name(s) of linked object file(s), respectively. If you wrote a second module in a separate file <code>my_second_header.f90</code> that you wanted to <code>use</code> in <code>main.f90</code>, you would modify line <a href="#coderef-obj"class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-obj');" onmouseout="CodeHighlightOff(this, 'coderef-obj');">4</a> of <code>makefile</code> to <code>OBJ = header.o my_second_header.o</code>. The remaining lines contain instructions for compilation.
 </p>
-</div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgheadline18" class="outline-2">
-<h2 id="orgheadline18"><span class="section-number-2">3</span> Data types</h2>
+<div id="outline-container-orgheadline8" class="outline-3">
+<h3 id="orgheadline8"><span class="section-number-3">2.4</span> Exercises</h3>
+<div class="outline-text-3" id="text-2-4">
+<ol class="org-ol">
+<li>Compile and run <code>hello.f90</code>.</li>
+<li>Execute <code>man gfortran</code> in any directory to bring up the manual for <code>gfortran</code>. Read the description and skim through the options. Do the same for <code>make</code>.</li>
+</ol>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline21" class="outline-2">
+<h2 id="orgheadline21"><span class="section-number-2">3</span> Data types</h2>
 <div class="outline-text-2" id="text-3">
 <p>
-We will use the convention of putting an <code>implicit none</code> keyword at the beginning of each code block as in line <a href="#coderef-in1"class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-in1');" onmouseout="CodeHighlightOff(this, 'coderef-in1');">2</a> of <code>header.f90</code> and line <a href="#coderef-in2"class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-in2');" onmouseout="CodeHighlightOff(this, 'coderef-in2');">3</a> of <code>main.f90</code> in Section <a href="#orgheadline6">2.3.2</a>. The role of this keyword is to suppress some implicit rules that Fortran has for undeclared variables. Without this keyword, an undeclared variable with a name such as <code>i</code> is assumed to be of the integer data type whereas an undeclared variable with a name such as <code>x</code> is assumed to be a real data type. By using the <code>implicit none</code> keyword, we force ourselves to declare every variable that we use. This may ultimately lead to more code but it is recommended to facilitate debugging when your program fails to compile. In addition to the most common data types presented below, Fortran has <code>complex</code> and <code>character</code> data types and support for user-defined data types.
+We will use the <code>implicit none</code> keyword at the beginning of each code block as in line <a href="#coderef-in1"class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-in1');" onmouseout="CodeHighlightOff(this, 'coderef-in1');">2</a> of <code>header.f90</code> and line <a href="#coderef-in2"class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-in2');" onmouseout="CodeHighlightOff(this, 'coderef-in2');">3</a> of <code>main.f90</code> in Section <a href="#orgheadline6">2.3.2</a>. The role of this keyword is to suppress some implicit rules that Fortran has for undeclared variables, and by including it we force ourselves to declare each variable that we use. This means our code will be slightly longer than necessary but it will facilitate debugging when our program fails to compile. Without the <code>implicit none</code> keyword, an undeclared variable with a name such as <code>i</code> is assumed to be an integer data type whereas an undeclared variable with a name such as <code>x</code> is assumed to be a real data type.
+</p>
+
+<p>
+In addition to the most common data types presented below, Fortran has <code>complex</code> and <code>character</code> data types and support for user-defined data types.
 </p>
 </div>
-<div id="outline-container-orgheadline10" class="outline-3">
-<h3 id="orgheadline10"><span class="section-number-3">3.1</span> The <code>logical</code> type</h3>
+
+<div id="outline-container-orgheadline11" class="outline-3">
+<h3 id="orgheadline11"><span class="section-number-3">3.1</span> The <code>logical</code> type</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
-A variable of the <code>logical</code> type can have values <code>.true.</code> or <code>.false.</code>. Logical operations can be computed with a few operators 
+A variable of the <code>logical</code> type can have values <code>.true.</code> or <code>.false.</code>. Logical expressions can be computed with a few operators 
 </p>
 
 <div class="org-src-container">
@@ -435,14 +495,18 @@ Other logical operators include
 </ul>
 
 <p>
-Logical expressions are often used in <a href="#orgheadline9">control structures</a>.
+Logical expressions are often used in <a href="#orgheadline10">control structures</a>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgheadline11" class="outline-3">
-<h3 id="orgheadline11"><span class="section-number-3">3.2</span> The <code>integer</code> type</h3>
+<div id="outline-container-orgheadline12" class="outline-3">
+<h3 id="orgheadline12"><span class="section-number-3">3.2</span> The <code>integer</code> type</h3>
 <div class="outline-text-3" id="text-3-2">
+<p>
+An <code>integer</code> data type can hold integer values. If a real value is assigned to an <code>integer</code> type, the decimal portion is truncated.
+</p>
+
 <div class="org-src-container">
 
 <pre class="src src-fortran"><span class="linenr">1: </span><span style="color: #6434A3;">integer</span> ::<span style="color: #BA36A5;"> a = 6, b = 7 </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">initialize a and b to 6 and 7, resp</span>
@@ -459,36 +523,43 @@ Logical expressions are often used in <a href="#orgheadline9">control structures
 </div>
 </div>
 
-<div id="outline-container-orgheadline12" class="outline-3">
-<h3 id="orgheadline12"><span class="section-number-3">3.3</span> Floating point types</h3>
+<div id="outline-container-orgheadline13" class="outline-3">
+<h3 id="orgheadline13"><span class="section-number-3">3.3</span> Floating point types</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
-There are two floating point data types in Fortran, <code>real</code> and <code>double precision</code> corresponding to <a href="https://en.wikipedia.org/wiki/IEEE_floating_poin">IEEE 32- and 64-bit floating point data types</a>.
+The two floating point data types <code>real</code> and <code>double precision</code> correspond to <a href="https://en.wikipedia.org/wiki/IEEE_floating_point">IEEE 32- and 64-bit floating point data types</a>.
 </p>
 
 <div class="org-src-container">
 
-<pre class="src src-fortran"><span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> a </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">declare a single precision float</span>
-<span style="color: #6434A3;">double precision</span> ::<span style="color: #BA36A5;"> b </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">declare a double precision float</span>
+<pre class="src src-fortran"><span class="linenr"> 1: </span><span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> a </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">declare a single precision float</span>
+<span class="linenr"> 2: </span><span style="color: #6434A3;">double precision</span> ::<span style="color: #BA36A5;"> b </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">declare a double precision float</span>
+<span class="linenr"> 3: </span>
+<span class="linenr"> 4: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">Print the max value of a real type</span>
+<span class="linenr"> 5: </span><span style="color: #0000FF;">print</span>*, <span style="color: #0000FF;">huge</span><span style="color: #707183;">(</span>a<span style="color: #707183;">)</span>
+<span class="linenr"> 6: </span>
+<span class="linenr"> 7: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">Print the max value of a double precision type</span>
+<span class="linenr"> 8: </span><span style="color: #0000FF;">print</span>*, <span style="color: #0000FF;">huge</span><span style="color: #707183;">(</span>b<span style="color: #707183;">)</span>
+<span class="linenr"> 9: </span>
+<span class="linenr">10: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">Print machine epsilon for the single precision floating point system</span>
+<span class="linenr">11: </span><span style="color: #0000FF;">print</span>*, <span style="color: #0000FF;">epsilon</span><span style="color: #707183;">(</span>a<span style="color: #707183;">)</span>
+<span class="linenr">12: </span>
+<span class="linenr">13: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">Print machine epsilon for the double precision floating point system</span>
+<span class="linenr">14: </span><span style="color: #0000FF;">print</span>*, <span style="color: #0000FF;">epsilon</span><span style="color: #707183;">(</span>b<span style="color: #707183;">)</span>
+</pre>
+</div>
 
-<span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">Print the max value of a real type</span>
-<span style="color: #0000FF;">print</span>*, <span style="color: #0000FF;">huge</span><span style="color: #707183;">(</span>a<span style="color: #707183;">)</span>
-
-<span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">Print the max value of a double precision type</span>
-<span style="color: #0000FF;">print</span>*, <span style="color: #0000FF;">huge</span><span style="color: #707183;">(</span>b<span style="color: #707183;">)</span>
-
-<span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">Print machine epsilon for the single precision floating point system</span>
-<span style="color: #0000FF;">print</span>*, <span style="color: #0000FF;">epsilon</span><span style="color: #707183;">(</span>a<span style="color: #707183;">)</span>
-
-<span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">Print machine epsilon for the double precision floating point system</span>
-<span style="color: #0000FF;">print</span>*, <span style="color: #0000FF;">epsilon</span><span style="color: #707183;">(</span>b<span style="color: #707183;">)</span>
+<pre class="example">
+3.40282347E+38
+1.7976931348623157E+308
+1.19209290E-07
+2.2204460492503131E-016
 </pre>
 </div>
 </div>
-</div>
 
-<div id="outline-container-orgheadline13" class="outline-3">
-<h3 id="orgheadline13"><span class="section-number-3">3.4</span> Casting</h3>
+<div id="outline-container-orgheadline14" class="outline-3">
+<h3 id="orgheadline14"><span class="section-number-3">3.4</span> Casting</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 An integer can be cast to a real number or vice versa.
@@ -496,28 +567,32 @@ An integer can be cast to a real number or vice versa.
 
 <div class="org-src-container">
 
-<pre class="src src-fortran"><span style="color: #6434A3;">integer</span> ::<span style="color: #BA36A5;"> a = 1, b</span>
-<span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> PI = 3.14159</span>
-
-b = <span style="color: #0000FF;">int</span><span style="color: #707183;">(</span>PI<span style="color: #707183;">)</span> <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">b is 3</span>
-<span style="color: #0000FF;">print</span>*, a/b
-<span style="color: #0000FF;">print</span>*, a/<span style="color: #0000FF;">real</span><span style="color: #707183;">(</span>b<span style="color: #707183;">)</span>
+<pre class="src src-fortran"><span class="linenr">1: </span><span style="color: #6434A3;">integer</span> ::<span style="color: #BA36A5;"> a = 1, b</span>
+<span class="linenr">2: </span><span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> c, PI = 3.14159</span>
+<span class="linenr">3: </span>
+<span class="linenr">4: </span>b = <span style="color: #0000FF;">int</span><span style="color: #707183;">(</span>PI<span style="color: #707183;">)</span> <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">b is 3</span>
+<span class="linenr">5: </span>
+<span class="linenr">6: </span>c = a/b <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">c is 0</span>
+<span class="linenr">7: </span>
+<span class="linenr">8: </span>c = a/<span style="color: #0000FF;">real</span><span style="color: #707183;">(</span>b<span style="color: #707183;">)</span> <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">c is .3333...</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgheadline14" class="outline-3">
-<h3 id="orgheadline14"><span class="section-number-3">3.5</span> The <code>parameter</code> modifier</h3>
+<div id="outline-container-orgheadline15" class="outline-3">
+<h3 id="orgheadline15"><span class="section-number-3">3.5</span> The <code>parameter</code> modifier</h3>
 <div class="outline-text-3" id="text-3-5">
 <p>
-To protect a variable of any data type from reassignment, you can use the <code>parameter</code> modifier. If this modifier is used, the corresponding variable must be assigned a value at declaration, and that value cannot be reassigned. The following code is not valid.
+To protect a variable from reassignment, you can use the <code>parameter</code> modifier. If this modifier is used, the corresponding variable must be assigned a value at declaration, and that value cannot be reassigned. The following code is not valid because of the reassignment <code>PI = 3</code>.
 </p>
 
 <div class="org-src-container">
 
-<pre class="src src-fortran"><span class="linenr">1: </span><span style="color: #6434A3;">real</span>, <span style="color: #0000FF;">parameter</span> ::<span style="color: #BA36A5;"> PI = asin</span><span style="color: #707183;">(</span><span style="color: #BA36A5;">0.</span><span style="color: #707183;">)</span>
-<span class="linenr">2: </span>PI = <span style="color: #D0372D;">3</span>
+<pre class="src src-fortran"><span class="linenr">1: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">declare constant</span>
+<span class="linenr">2: </span><span style="color: #6434A3;">real</span>, <span style="color: #0000FF;">parameter</span> ::<span style="color: #BA36A5;"> PI = 2.*asin</span><span style="color: #707183;">(</span><span style="color: #BA36A5;">1.</span><span style="color: #707183;">)</span><span style="color: #BA36A5;"> </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">'asin' is arcine function</span>
+<span class="linenr">3: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">attempt to reassign value</span>
+<span class="linenr">4: </span>PI = <span style="color: #D0372D;">3</span>
 </pre>
 </div>
 
@@ -527,79 +602,487 @@ The compiler produces an error like <code>Error: Named constant ‘pi’ in vari
 </div>
 </div>
 
-<div id="outline-container-orgheadline15" class="outline-3">
-<h3 id="orgheadline15"><span class="section-number-3">3.6</span> Setting the precision</h3>
+<div id="outline-container-orgheadline16" class="outline-3">
+<h3 id="orgheadline16"><span class="section-number-3">3.6</span> Setting the precision</h3>
 <div class="outline-text-3" id="text-3-6">
 <p>
-Each data type is assigned an integer by the <code>kind</code> function. You can write a program in a chosen precision with the <code>kind</code> of the precision stored in a variable <code>rp</code>. Then, if you want to change the precision, you could change the value of <code>rp</code> and recompile. The precision of a variable can be set at declaration and a variable or constant can be cast to a specified precision, each by supplying an extra argument.
+Each data type is assigned an integer by the Fortran <code>kind</code> function. You can write a program in a chosen precision with the <code>kind</code> of the precision stored in a variable <code>rp</code>. Then, if you want to change the precision, you could change the value of <code>rp</code> and recompile. The precision of a variable can be set at declaration and a variable or constant can be cast to a specified precision, each by supplying an extra argument.
 </p>
 
 <div class="org-src-container">
 
 <pre class="src src-fortran"><span class="linenr"> 1: </span><span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> r </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">declare a real, single precision by default</span>
 <span class="linenr"> 2: </span><span style="color: #6434A3;">double precision</span> ::<span style="color: #BA36A5;"> d </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">declare a double precision</span>
-<span class="linenr"> 3: </span><span style="color: #6434A3;">integer</span>, <span style="color: #0000FF;">parameter</span> ::<span style="color: #BA36A5;"> sp = kind</span><span style="color: #707183;">(</span><span style="color: #BA36A5;">r</span><span style="color: #707183;">)</span><span style="color: #BA36A5;">, dp = kind</span><span style="color: #707183;">(</span><span style="color: #BA36A5;">d</span><span style="color: #707183;">)</span><span style="color: #BA36A5;"> </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">store kinds of 'r' and 'd'</span>
+<span class="linenr"> 3: </span><span style="color: #6434A3;">integer</span>, <span style="color: #0000FF;">parameter</span> ::<span style="color: #BA36A5;"> sp = kind</span><span style="color: #707183;">(</span><span style="color: #BA36A5;">r</span><span style="color: #707183;">)</span><span style="color: #BA36A5;">, dp = kind</span><span style="color: #707183;">(</span><span style="color: #BA36A5;">d</span><span style="color: #707183;">)</span><span style="color: #BA36A5;"> </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">store kinds of r and d</span>
 <span class="linenr"> 4: </span><span style="color: #6434A3;">integer</span>, <span style="color: #0000FF;">parameter</span> ::<span style="color: #BA36A5;"> rp = sp </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">set current kind</span>
 <span class="linenr"> 5: </span>
-<span class="linenr"> 6: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">declare 'b' in double precision</span>
+<span class="linenr"> 6: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">declare real b in double precision</span>
 <span class="linenr"> 7: </span><span style="color: #6434A3;">real</span><span style="color: #707183;">(</span>dp<span style="color: #707183;">)</span> ::<span style="color: #BA36A5;"> b</span>
 <span class="linenr"> 8: </span>
-<span class="linenr"> 9: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">declare 'a' real with precision kind 'rp'</span>
+<span class="linenr"> 9: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">declare real a with precision kind rp</span>
 <span class="linenr">10: </span><span style="color: #6434A3;">real</span><span style="color: #707183;">(</span>rp<span style="color: #707183;">)</span> ::<span style="color: #BA36A5;"> a</span>
 <span class="linenr">11: </span>
-<span class="linenr">12: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">cast '1' to real with precision kind 'rp' and assign to a</span>
+<span class="linenr">12: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">cast 1 to real with precision kind rp and assign to a</span>
 <span class="linenr">13: </span>a = <span style="color: #D0372D;">1</span>.<span style="color: #D0372D;">0_rp</span>
 <span class="linenr">14: </span>
-<span class="linenr">15: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">cast 'b' to real with precision kind 'rp' and assign to a</span>
+<span class="linenr">15: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">cast b to real with precision kind rp and assign to a</span>
 <span class="linenr">16: </span>a = <span style="color: #0000FF;">real</span><span style="color: #707183;">(</span>b,rp<span style="color: #707183;">)</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgheadline16" class="outline-3">
-<h3 id="orgheadline16"><span class="section-number-3">3.7</span> Pointers</h3>
+<div id="outline-container-orgheadline17" class="outline-3">
+<h3 id="orgheadline17"><span class="section-number-3">3.7</span> Pointers</h3>
 <div class="outline-text-3" id="text-3-7">
 <p>
-Pointers have the same meaning in Fortran as in C++: a pointer is a variable that holds the <b>memory address</b> for a variable of a specific type. The implementation of pointers is qualitatively different in Fortran than in C++: in Fortran, there is no Fortran function to print the memory address that a pointer stores. A pointer variable is declared with the <code>pointer</code> modifier, and a variable that it points to is declared with the <code>target</code> modifier. The types of a <code>pointer</code> and its <code>target</code> must match.
+Pointers have the same meaning in Fortran as in C++. A pointer is a variable that holds the <b>memory address</b> for a variable of a specific type. The implementation of pointers is qualitatively different in Fortran than in C++. In Fortran, the user cannot view the memory address that a pointer stores. A pointer variable is declared with the <code>pointer</code> modifier, and a variable that it points to is declared with the <code>target</code> modifier. The types of a <code>pointer</code> and its <code>target</code> must match.
 </p>
 
 <div class="org-src-container">
 
-<pre class="src src-fortran"><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">declare targets and assign values</span>
-<span style="color: #6434A3;">integer</span>, <span style="color: #0000FF;">target</span> ::<span style="color: #BA36A5;"> a = 1, b = 2</span>
-<span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">declare pointer</span>
-<span style="color: #6434A3;">integer</span>, <span style="color: #0000FF;">pointer</span> ::<span style="color: #BA36A5;"> p</span>
+<pre class="src src-fortran"><span class="linenr"> 1: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">declare pointer</span>
+<span class="linenr"> 2: </span><span style="color: #6434A3;">integer</span>, <span style="color: #0000FF;">pointer</span> ::<span style="color: #BA36A5;"> p</span>
+<span class="linenr"> 3: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">declare targets and assign values</span>
+<span class="linenr"> 4: </span><span style="color: #6434A3;">integer</span>, <span style="color: #0000FF;">target</span> ::<span style="color: #BA36A5;"> a = 1, b = 2</span>
+<span class="linenr"> 5: </span>
+<span class="linenr"> 6: </span>p =&gt; a <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">Now p has same memory address as a</span>
+<span class="linenr"> 7: </span>p = <span style="color: #D0372D;">2</span> <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">Modify value at address</span>
+<span class="linenr"> 8: </span><span style="color: #0000FF;">print</span>*, a==<span style="color: #D0372D;">2</span> <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">a is 2</span>
+<span class="linenr"> 9: </span>
+<span class="linenr">10: </span>p =&gt; b <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">Now p has same memory address as b</span>
+<span class="linenr">11: </span>p = <span style="color: #D0372D;">1</span> <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">Modify value at address</span>
+<span class="linenr">12: </span><span style="color: #0000FF;">print</span>*, b==<span style="color: #D0372D;">1</span> <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">b is 1</span>
+<span class="linenr">13: </span>
+<span class="linenr">14: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">Is p associated with a target?</span>
+<span class="linenr">15: </span><span style="color: #0000FF;">print</span>*, <span style="color: #0000FF;">associated</span><span style="color: #707183;">(</span>p<span style="color: #707183;">)</span>
+<span class="linenr">16: </span>
+<span class="linenr">17: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">Is p associated with the target a?</span>
+<span class="linenr">18: </span><span style="color: #0000FF;">print</span>*, <span style="color: #0000FF;">associated</span><span style="color: #707183;">(</span>p, a<span style="color: #707183;">)</span>
+<span class="linenr">19: </span>
+<span class="linenr">20: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">Point to nowhere</span>
+<span class="linenr">21: </span><span style="color: #0000FF;">nullify</span><span style="color: #707183;">(</span>p<span style="color: #707183;">)</span>
+</pre>
+</div>
 
-p =&gt; a <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">Now 'p' has same memory address as 'a'</span>
-p = <span style="color: #D0372D;">2</span> <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">Modify value at address</span>
-<span style="color: #0000FF;">print</span>*, a==<span style="color: #D0372D;">2</span> <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">'a' is 2</span>
+<pre class="example">
+T
+T
+T
+F
+</pre>
+</div>
+</div>
 
-p =&gt; b <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">Now 'p' has same memory address as 'b'</span>
-p = <span style="color: #D0372D;">1</span> <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">Modify value at address</span>
-<span style="color: #0000FF;">print</span>*, b==<span style="color: #D0372D;">1</span> <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">'b' is 1</span>
+<div id="outline-container-orgheadline20" class="outline-3">
+<h3 id="orgheadline20"><span class="section-number-3">3.8</span> Arrays</h3>
+<div class="outline-text-3" id="text-3-8">
+<p>
+The length of an array can be fixed or dynamic. The index of an array starts at 1 by default, but any index range can be specified.
+</p>
+</div>
+<div id="outline-container-orgheadline18" class="outline-4">
+<h4 id="orgheadline18"><span class="section-number-4">3.8.1</span> Fixed-length arrays</h4>
+<div class="outline-text-4" id="text-3-8-1">
+<div class="org-src-container">
 
-<span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">Is 'p' associated with a target?</span>
-<span style="color: #0000FF;">print</span>*, <span style="color: #0000FF;">associated</span><span style="color: #707183;">(</span>p<span style="color: #707183;">)</span>
-
-<span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">Is 'p' associated with the target 'a'?</span>
-<span style="color: #0000FF;">print</span>*, <span style="color: #0000FF;">associated</span><span style="color: #707183;">(</span>p, a<span style="color: #707183;">)</span>
-
-<span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">Point to nowhere</span>
-<span style="color: #0000FF;">nullify</span><span style="color: #707183;">(</span>p<span style="color: #707183;">)</span>
+<pre class="src src-fortran"><span class="linenr">1: </span><span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> a</span><span style="color: #707183;">(</span><span style="color: #BA36A5;">5</span><span style="color: #707183;">)</span>
+<span class="linenr">2: </span>
+<span class="linenr">3: </span>a<span style="color: #707183;">(</span><span style="color: #D0372D;">1</span><span style="color: #707183;">)</span> = <span style="color: #D0372D;">1</span>.<span style="color: #D0372D;">0</span>
+<span class="linenr">4: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">etc</span>
 </pre>
 </div>
 </div>
 </div>
+<div id="outline-container-orgheadline19" class="outline-4">
+<h4 id="orgheadline19"><span class="section-number-4">3.8.2</span> Dynamic length arrays</h4>
+<div class="outline-text-4" id="text-3-8-2">
+<p>
+Dynamic arrays are declared with the <code>allocatable</code> modifier. Before storing values in such an array, you must <code>allocate</code> memory for the array. After you are finished the array, you ought to <code>deallocate</code> the memory that it occupies.
+</p>
 
-<div id="outline-container-orgheadline17" class="outline-3">
-<h3 id="orgheadline17"><span class="section-number-3">3.8</span> Arrays</h3>
+<div class="org-src-container">
+
+<pre class="src src-fortran"><span class="linenr"> 1: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">declare a one-dim. dynamic length array</span>
+<span class="linenr"> 2: </span><span style="color: #6434A3;">real</span>, <span style="color: #0000FF;">allocatable</span> ::<span style="color: #BA36A5;"> a</span><span style="color: #707183;">(</span><span style="color: #BA36A5;">:</span><span style="color: #707183;">)</span>
+<span class="linenr"> 3: </span>
+<span class="linenr"> 4: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">allocate memory for a</span>
+<span class="linenr"> 5: </span><span style="color: #0000FF;">allocate</span><span style="color: #707183;">(</span>a<span style="color: #7388D6;">(</span><span style="color: #D0372D;">5</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<span class="linenr"> 6: </span>
+<span class="linenr"> 7: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">now you can treat a like a normal array</span>
+<span class="linenr"> 8: </span>a<span style="color: #707183;">(</span><span style="color: #D0372D;">1</span><span style="color: #707183;">)</span> = <span style="color: #D0372D;">1</span>.<span style="color: #D0372D;">0</span>
+<span class="linenr"> 9: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">etc...</span>
+<span class="linenr">10: </span>
+<span class="linenr">11: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">deallocate memory occupied by a</span>
+<span class="linenr">12: </span><span style="color: #0000FF;">deallocate</span><span style="color: #707183;">(</span>a<span style="color: #707183;">)</span>
+<span class="linenr">13: </span>
+<span class="linenr">14: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">we can change the size and index range of a</span>
+<span class="linenr">15: </span><span style="color: #0000FF;">allocate</span><span style="color: #707183;">(</span>a<span style="color: #7388D6;">(</span><span style="color: #D0372D;">0</span>:<span style="color: #D0372D;">9</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<span class="linenr">16: </span>
+<span class="linenr">17: </span>a<span style="color: #707183;">(</span><span style="color: #D0372D;">0</span><span style="color: #707183;">)</span> = <span style="color: #D0372D;">1</span>.<span style="color: #D0372D;">0</span>
+<span class="linenr">18: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">etc...</span>
+<span class="linenr">19: </span>
+<span id="coderef-d" class="coderef-off"><span class="linenr">20: </span><span style="color: #0000FF;">deallocate</span><span style="color: #707183;">(</span>a<span style="color: #707183;">)</span></span>
+</pre>
+</div>
+
+<p>
+Without the last <code>dellaocate</code> statement on line <a href="#coderef-d"class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-d');" onmouseout="CodeHighlightOff(this, 'coderef-d');">20</a> the code above is valid, but the memory that is allocated for <code>a</code> will not be freed. That memory then cannot be allocated to other resources.
+</p>
+</div>
+</div>
 </div>
 </div>
 
-<div id="outline-container-orgheadline9" class="outline-2">
-<h2 id="orgheadline9"><span class="section-number-2">4</span> Control structures</h2>
+<div id="outline-container-orgheadline10" class="outline-2">
+<h2 id="orgheadline10"><span class="section-number-2">4</span> Control structures</h2>
 <div class="outline-text-2" id="text-4">
+</div><div id="outline-container-orgheadline24" class="outline-3">
+<h3 id="orgheadline24"><span class="section-number-3">4.1</span> Conditionals</h3>
+<div class="outline-text-3" id="text-4-1">
+</div><div id="outline-container-orgheadline22" class="outline-4">
+<h4 id="orgheadline22"><span class="section-number-4">4.1.1</span> Example: <code>if</code> / <code>else</code> and random number generation</h4>
+<div class="outline-text-4" id="text-4-1-1">
+<p>
+You can control execution of two blocks of code with mutually exclusive logic using the <code>if=/=else</code> construct. The following code generates a random number between 0 and 1, then prints the number and whether or not the number is greater than 0.5
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-fortran"><span class="linenr"> 1: </span><span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> num</span>
+<span class="linenr"> 2: </span>
+<span class="linenr"> 3: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">seed random number generator</span>
+<span class="linenr"> 4: </span><span style="color: #0000FF;">call</span> <span style="color: #006699;">srand</span><span style="color: #707183;">(</span><span style="color: #D0372D;">789</span><span style="color: #707183;">)</span>
+<span class="linenr"> 5: </span>
+<span class="linenr"> 6: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">rand() returns a random number between 0 and 1</span>
+<span class="linenr"> 7: </span>num = rand<span style="color: #707183;">()</span>
+<span class="linenr"> 8: </span>
+<span class="linenr"> 9: </span><span style="color: #0000FF;">print</span>*, <span style="color: #008000;">'num: '</span>, num
+<span class="linenr">10: </span>
+<span class="linenr">11: </span><span style="color: #0000FF;">if</span> <span style="color: #707183;">(</span>num &lt; <span style="color: #D0372D;">0</span>.<span style="color: #D0372D;">5</span><span style="color: #707183;">)</span> <span style="color: #0000FF;">then</span>
+<span class="linenr">12: </span>   <span style="color: #0000FF;">print</span>*, <span style="color: #008000;">'num is less than 0.5'</span>
+<span class="linenr">13: </span><span style="color: #0000FF;">else</span>
+<span class="linenr">14: </span>   <span style="color: #0000FF;">print</span>*, <span style="color: #008000;">'num is greater then 0.5'</span>
+<span class="linenr">15: </span><span style="color: #0000FF;">end if</span>
+<span class="linenr">16: </span>
+<span class="linenr">17: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">do it again</span>
+<span class="linenr">18: </span>num = rand<span style="color: #707183;">()</span>
+<span class="linenr">19: </span>
+<span class="linenr">20: </span><span style="color: #0000FF;">print</span>*, <span style="color: #008000;">'num: '</span>, num
+<span class="linenr">21: </span>
+<span class="linenr">22: </span><span style="color: #0000FF;">if</span> <span style="color: #707183;">(</span>num &lt; <span style="color: #D0372D;">0</span>.<span style="color: #D0372D;">5</span><span style="color: #707183;">)</span> <span style="color: #0000FF;">then</span>
+<span class="linenr">23: </span>   <span style="color: #0000FF;">print</span>*, <span style="color: #008000;">'num is less than 0.5'</span>
+<span class="linenr">24: </span><span style="color: #0000FF;">else</span>
+<span class="linenr">25: </span>   <span style="color: #0000FF;">print</span>*, <span style="color: #008000;">'num is greater then 0.5'</span>
+<span class="linenr">26: </span><span style="color: #0000FF;">end if</span>
+</pre>
+</div>
+
+<pre class="example">
+num:    6.17480278E-03
+num is less than 0.5
+num:   0.783314705    
+num is greater then 0.5
+</pre>
+
+<p>
+Since the random number generator was seeded with a literal integer, the above code will produce the <i>same</i> output each time it is run.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline23" class="outline-4">
+<h4 id="orgheadline23"><span class="section-number-4">4.1.2</span> Example: <code>if</code> / <code>else if</code> / <code>else</code></h4>
+<div class="outline-text-4" id="text-4-1-2">
+<p>
+You can control execution of two blocks of code with mutually exclusive logic using the <code>if=/=else</code> construct. The following code generates a random number between 0 and 1, then prints the number and the quarter of the interval \([0,1]\) that the number is in.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-fortran"><span class="linenr"> 1: </span><span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> num</span>
+<span class="linenr"> 2: </span>
+<span class="linenr"> 3: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">seed random number generator with current time</span>
+<span class="linenr"> 4: </span><span style="color: #0000FF;">call</span> <span style="color: #006699;">srand</span><span style="color: #707183;">(</span>time<span style="color: #7388D6;">()</span><span style="color: #707183;">)</span>
+<span class="linenr"> 5: </span>
+<span class="linenr"> 6: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">rand() returns a random number between 0 and 1</span>
+<span class="linenr"> 7: </span>num = rand<span style="color: #707183;">()</span>
+<span class="linenr"> 8: </span>
+<span class="linenr"> 9: </span><span style="color: #0000FF;">print</span>*, <span style="color: #008000;">'num:'</span>, num
+<span class="linenr">10: </span>
+<span class="linenr">11: </span><span style="color: #0000FF;">if</span> <span style="color: #707183;">(</span>num &gt; <span style="color: #D0372D;">0</span>.<span style="color: #D0372D;">75</span><span style="color: #707183;">)</span> <span style="color: #0000FF;">then</span>
+<span class="linenr">12: </span>   <span style="color: #0000FF;">print</span>*, <span style="color: #008000;">'num is between 0.75 and 1'</span>
+<span class="linenr">13: </span><span style="color: #0000FF;">else if</span> <span style="color: #707183;">(</span>num &gt; <span style="color: #D0372D;">0</span>.<span style="color: #D0372D;">5</span><span style="color: #707183;">)</span> <span style="color: #0000FF;">then</span>
+<span class="linenr">14: </span>   <span style="color: #0000FF;">print</span>*, <span style="color: #008000;">'num is between 0.5 and 0.75'</span>
+<span class="linenr">15: </span><span style="color: #0000FF;">else if</span> <span style="color: #707183;">(</span>num &gt; <span style="color: #D0372D;">0</span>.<span style="color: #D0372D;">25</span><span style="color: #707183;">)</span> <span style="color: #0000FF;">then</span>
+<span class="linenr">16: </span>   <span style="color: #0000FF;">print</span>*, <span style="color: #008000;">'num is between 0.25 and 0.5'</span>
+<span class="linenr">17: </span><span style="color: #0000FF;">else</span>
+<span class="linenr">18: </span>   <span style="color: #0000FF;">print</span>*, <span style="color: #008000;">'num is between 0 and 0.25'</span>
+<span class="linenr">19: </span><span style="color: #0000FF;">end if</span>
+</pre>
+</div>
+
+<pre class="example">
+num:  0.693089724    
+num is between 0.5 and 0.75
+</pre>
+
+<p>
+Since the random number generator was seeded with the current time, the above code will produce a <i>different</i> output each time it is run.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline31" class="outline-3">
+<h3 id="orgheadline31"><span class="section-number-3">4.2</span> Loops</h3>
+<div class="outline-text-3" id="text-4-2">
+</div><div id="outline-container-orgheadline25" class="outline-4">
+<h4 id="orgheadline25"><span class="section-number-4">4.2.1</span> The <code>do</code> loop</h4>
+<div class="outline-text-4" id="text-4-2-1">
+<p>
+The <code>do</code> loop requires two <code>integer</code> arguments specifying a minimum and maximum (inclusive) range and takes an optional third <code>integer</code> argument specifying the stride in the form <code>do i=min,max,stride</code>. If omitted, stride is 1.
+</p>
+
+<p>
+The following code assigns a value to each component of an array then prints it.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-fortran"><span class="linenr"> 1: </span><span style="color: #6434A3;">integer</span> ::<span style="color: #BA36A5;"> max = 10, i</span>
+<span class="linenr"> 2: </span><span style="color: #6434A3;">real</span>, <span style="color: #0000FF;">allocatable</span> ::<span style="color: #BA36A5;"> x</span><span style="color: #707183;">(</span><span style="color: #BA36A5;">:</span><span style="color: #707183;">)</span>
+<span class="linenr"> 3: </span>
+<span class="linenr"> 4: </span><span style="color: #0000FF;">allocate</span><span style="color: #707183;">(</span>x<span style="color: #7388D6;">(</span><span style="color: #D0372D;">0</span>:max<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<span class="linenr"> 5: </span>
+<span class="linenr"> 6: </span><span style="color: #0000FF;">do</span> i = <span style="color: #D0372D;">0</span>,max
+<span class="linenr"> 7: </span>   <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">assign to each array component</span>
+<span class="linenr"> 8: </span>   x<span style="color: #707183;">(</span>i<span style="color: #707183;">)</span> = i / <span style="color: #0000FF;">real</span><span style="color: #707183;">(</span>max<span style="color: #707183;">)</span>
+<span class="linenr"> 9: </span>
+<span class="linenr">10: </span>   <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">print current component</span>
+<span class="linenr">11: </span>   <span style="color: #0000FF;">print</span> <span style="color: #008000;">"('x(', i0, ') = ', f3.1)"</span>, i, x<span style="color: #707183;">(</span>i<span style="color: #707183;">)</span>
+<span class="linenr">12: </span><span style="color: #0000FF;">end do</span>
+<span class="linenr">13: </span>
+<span class="linenr">14: </span><span style="color: #0000FF;">deallocate</span><span style="color: #707183;">(</span>x<span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<pre class="example">
+x(0) = 0.0
+x(1) = 0.1
+x(2) = 0.2
+x(3) = 0.3
+x(4) = 0.4
+x(5) = 0.5
+x(6) = 0.6
+x(7) = 0.7
+x(8) = 0.8
+x(9) = 0.9
+x(10) = 1.0
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline26" class="outline-4">
+<h4 id="orgheadline26"><span class="section-number-4">4.2.2</span> Example: row-major matrix</h4>
+<div class="outline-text-4" id="text-4-2-2">
+<div class="org-src-container">
+
+<pre class="src src-fortran"><span class="linenr"> 1: </span><span style="color: #6434A3;">integer</span> ::<span style="color: #BA36A5;"> n_rows = 4, n_cols = 3</span>
+<span class="linenr"> 2: </span><span style="color: #6434A3;">real</span>, <span style="color: #0000FF;">allocatable</span> ::<span style="color: #BA36A5;"> matrix</span><span style="color: #707183;">(</span><span style="color: #BA36A5;">:</span><span style="color: #707183;">)</span>
+<span class="linenr"> 3: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">temporary indices</span>
+<span class="linenr"> 4: </span><span style="color: #6434A3;">integer</span> ::<span style="color: #BA36A5;"> i,j,k</span>
+<span class="linenr"> 5: </span>
+<span class="linenr"> 6: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">row-major matrix array fs m,</span>
+<span class="linenr"> 7: </span><span style="color: #0000FF;">allocate</span><span style="color: #707183;">(</span>matrix<span style="color: #7388D6;">(</span><span style="color: #D0372D;">1</span>:n_rows*n_cols<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<span class="linenr"> 8: </span>
+<span class="linenr"> 9: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">assign 0 to all elements of matrix</span>
+<span class="linenr">10: </span>matrix = <span style="color: #D0372D;">0</span>.<span style="color: #D0372D;">0</span>
+<span class="linenr">11: </span>
+<span class="linenr">12: </span><span style="color: #0000FF;">do</span> i = <span style="color: #D0372D;">1</span>,n_rows
+<span class="linenr">13: </span>   <span style="color: #0000FF;">do</span> j = <span style="color: #D0372D;">1</span>,n_cols
+<span class="linenr">14: </span>      <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">convert (i,j) matrix index to "flat" row-major index</span>
+<span class="linenr">15: </span>      k = <span style="color: #707183;">(</span>i-<span style="color: #D0372D;">1</span><span style="color: #707183;">)</span>*n_cols + j
+<span class="linenr">16: </span>
+<span class="linenr">17: </span>      <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">assign 1 to the diagonal</span>
+<span class="linenr">18: </span>      <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">2 to the off-diagonal</span>
+<span class="linenr">19: </span>      <span style="color: #0000FF;">if</span> <span style="color: #707183;">(</span>i==j<span style="color: #707183;">)</span> <span style="color: #0000FF;">then</span>
+<span class="linenr">20: </span>         matrix<span style="color: #707183;">(</span>k<span style="color: #707183;">)</span> = <span style="color: #D0372D;">1</span>.<span style="color: #D0372D;">0</span>
+<span class="linenr">21: </span>      <span style="color: #0000FF;">else if</span> <span style="color: #707183;">(</span><span style="color: #7388D6;">(</span>i==j-<span style="color: #D0372D;">1</span><span style="color: #7388D6;">)</span><span style="color: #0000FF;">.or.</span><span style="color: #7388D6;">(</span>i==j+<span style="color: #D0372D;">1</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span> <span style="color: #0000FF;">then</span>
+<span class="linenr">22: </span>         matrix<span style="color: #707183;">(</span>k<span style="color: #707183;">)</span> = <span style="color: #D0372D;">2</span>.<span style="color: #D0372D;">0</span>
+<span class="linenr">23: </span>      <span style="color: #0000FF;">end if</span>
+<span class="linenr">24: </span>   <span style="color: #0000FF;">end do</span>
+<span class="linenr">25: </span><span style="color: #0000FF;">end do</span>
+<span class="linenr">26: </span>
+<span class="linenr">27: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">print matrix components</span>
+<span class="linenr">28: </span><span style="color: #0000FF;">do</span> i = <span style="color: #D0372D;">1</span>,n_rows
+<span class="linenr">29: </span>   <span style="color: #0000FF;">print</span>*, matrix<span style="color: #707183;">(</span><span style="color: #D0372D;">1</span>+<span style="color: #7388D6;">(</span>i-<span style="color: #D0372D;">1</span><span style="color: #7388D6;">)</span>*n_cols:i*n_cols<span style="color: #707183;">)</span>
+<span class="linenr">30: </span><span style="color: #0000FF;">end do</span>
+<span class="linenr">31: </span>
+<span class="linenr">32: </span><span style="color: #0000FF;">deallocate</span><span style="color: #707183;">(</span>matrix<span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<pre class="example">
+1.00000000       2.00000000       0.00000000    
+2.00000000       1.00000000       2.00000000    
+0.00000000       2.00000000       1.00000000    
+0.00000000       0.00000000       2.00000000
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline29" class="outline-4">
+<h4 id="orgheadline29"><span class="section-number-4">4.2.3</span> The <code>do while</code> loop</h4>
+<div class="outline-text-4" id="text-4-2-3">
+<p>
+A <code>do while</code> loop iterates while a logical condition evaluates to <code>.true.</code>.
+</p>
+</div>
+
+<ol class="org-ol"><li><a id="orgheadline27"></a>Example: truncated sum<br  /><div class="outline-text-5" id="text-4-2-3-1">
+<p>
+The following code approximates the geometric series
+</p>
+\begin{equation*}
+\sum_{n=1}^{\infty}\left(\frac12\right)^n=1.
+\end{equation*}
+<p>
+The <code>do while</code> loop exits when the absolute error
+</p>
+\begin{equation*}
+E=1-\sum_{n=1}^{\infty}\left(\frac12\right)^n
+\end{equation*}
+<p>
+is less than a specified tolerance <code>tol</code>.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-fortran"><span class="linenr"> 1: </span><span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> sum = 0.0, base = 0.5, tol = 1e-4</span>
+<span class="linenr"> 2: </span><span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> pow = 0.5</span>
+<span class="linenr"> 3: </span><span style="color: #6434A3;">integer</span> ::<span style="color: #BA36A5;"> iter = 1</span>
+<span class="linenr"> 4: </span>
+<span class="linenr"> 5: </span><span style="color: #0000FF;">do while</span><span style="color: #707183;">(</span><span style="color: #D0372D;">1</span>-sum &gt;= tol<span style="color: #707183;">)</span>
+<span class="linenr"> 6: </span>   <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">add pow to sum</span>
+<span class="linenr"> 7: </span>   sum = sum+pow
+<span class="linenr"> 8: </span>   <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">update pow by one power of base</span>
+<span class="linenr"> 9: </span>   pow = pow*base
+<span class="linenr">10: </span>
+<span class="linenr">11: </span>   <span style="color: #0000FF;">print</span> <span style="color: #008000;">"('Iter: ', i3, ', Sum: ', f0.5, ', Abs Err: ', f0.5)"</span>, iter, sum, <span style="color: #D0372D;">1</span>-sum
+<span class="linenr">12: </span>   
+<span class="linenr">13: </span>   <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">update iter by 1</span>
+<span class="linenr">14: </span>   iter = iter+<span style="color: #D0372D;">1</span>
+<span class="linenr">15: </span><span style="color: #0000FF;">end do</span>
+</pre>
+</div>
+
+<pre class="example">
+Iter:   1, Sum: .50000, Abs Err: .50000
+Iter:   2, Sum: .75000, Abs Err: .25000
+Iter:   3, Sum: .87500, Abs Err: .12500
+Iter:   4, Sum: .93750, Abs Err: .06250
+Iter:   5, Sum: .96875, Abs Err: .03125
+Iter:   6, Sum: .98438, Abs Err: .01562
+Iter:   7, Sum: .99219, Abs Err: .00781
+Iter:   8, Sum: .99609, Abs Err: .00391
+Iter:   9, Sum: .99805, Abs Err: .00195
+Iter:  10, Sum: .99902, Abs Err: .00098
+Iter:  11, Sum: .99951, Abs Err: .00049
+Iter:  12, Sum: .99976, Abs Err: .00024
+Iter:  13, Sum: .99988, Abs Err: .00012
+Iter:  14, Sum: .99994, Abs Err: .00006
+</pre>
+</div></li>
+
+
+<li><a id="orgheadline28"></a>Example: estimating machine epsilon<br  /><div class="outline-text-5" id="text-4-2-3-2">
+<div class="org-src-container">
+
+<pre class="src src-fortran"><span class="linenr"> 1: </span><span style="color: #6434A3;">double precision</span> ::<span style="color: #BA36A5;"> eps</span>
+<span class="linenr"> 2: </span><span style="color: #6434A3;">integer</span>, <span style="color: #0000FF;">parameter</span> ::<span style="color: #BA36A5;"> dp = kind</span><span style="color: #707183;">(</span><span style="color: #BA36A5;">eps</span><span style="color: #707183;">)</span>
+<span class="linenr"> 3: </span><span style="color: #6434A3;">integer</span> ::<span style="color: #BA36A5;"> count = 1</span>
+<span class="linenr"> 4: </span>
+<span class="linenr"> 5: </span>eps = <span style="color: #D0372D;">1</span>.<span style="color: #D0372D;">0_dp</span>
+<span class="linenr"> 6: </span><span style="color: #0000FF;">do while</span> <span style="color: #707183;">(</span><span style="color: #D0372D;">1</span>.<span style="color: #D0372D;">0_dp</span> + eps*<span style="color: #D0372D;">0</span>.<span style="color: #D0372D;">5</span> &gt; <span style="color: #D0372D;">1</span>.<span style="color: #D0372D;">0_dp</span><span style="color: #707183;">)</span>
+<span class="linenr"> 7: </span>   eps = eps*<span style="color: #D0372D;">0</span>.<span style="color: #D0372D;">5</span>
+<span class="linenr"> 8: </span>   count = count+<span style="color: #D0372D;">1</span>
+<span class="linenr"> 9: </span><span style="color: #0000FF;">end do</span>
+<span class="linenr">10: </span>
+<span class="linenr">11: </span><span style="color: #0000FF;">print</span>*, eps
+<span class="linenr">12: </span><span style="color: #0000FF;">print</span>*, <span style="color: #0000FF;">epsilon</span><span style="color: #707183;">(</span>eps<span style="color: #707183;">)</span>
+<span class="linenr">13: </span><span style="color: #0000FF;">print</span>*, count
+<span class="linenr">14: </span><span style="color: #0000FF;">print</span>*, <span style="color: #0000FF;">digits</span><span style="color: #707183;">(</span>eps<span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<pre class="example">
+2.2204460492503131E-016
+2.2204460492503131E-016
+       53
+       53
+</pre>
+</div></li></ol>
+</div>
+
+<div id="outline-container-orgheadline30" class="outline-4">
+<h4 id="orgheadline30"><span class="section-number-4">4.2.4</span> Example: <code>exit</code> keyword</h4>
+<div class="outline-text-4" id="text-4-2-4">
+<p>
+The <code>exit</code> keyword is used to stop execution of code within the current scope. The following code finds the <i>hailstone sequence</i> of \(a_1=6\) defined recursively by
+</p>
+\begin{equation*}
+a_{n+1} =
+\begin{cases}
+a_n/2 & \text{if } a_n \text{ is even}\\
+3a_n+1 & \text{ if } a_n \text{ is odd} 
+\end{cases}
+\end{equation*}
+<p>
+for \(n\geq1\). It is an open conjecture whether the hailstone sequence of any initial value \(a_1\) converges to the periodic sequence \(1, 4, 2, 1, 4, 2,\ldots\). Luckily, it does for \(a_1=6\) and the following <code>do while</code> loop exits.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-fortran"><span class="linenr"> 1: </span><span style="color: #6434A3;">integer</span> ::<span style="color: #BA36A5;"> a = 6, count = 1</span>
+<span class="linenr"> 2: </span>
+<span class="linenr"> 3: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">infinite loop</span>
+<span class="linenr"> 4: </span><span style="color: #0000FF;">do while</span><span style="color: #707183;">(</span><span style="color: #0000FF;">.true.</span><span style="color: #707183;">)</span>
+<span class="linenr"> 5: </span>   <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">if a is even, divide by 2</span>
+<span class="linenr"> 6: </span>   <span style="color: #0000FF;">if</span> <span style="color: #707183;">(</span><span style="color: #0000FF;">mod</span><span style="color: #7388D6;">(</span>a,<span style="color: #D0372D;">2</span><span style="color: #7388D6;">)</span>==<span style="color: #D0372D;">0</span><span style="color: #707183;">)</span> <span style="color: #0000FF;">then</span>
+<span class="linenr"> 7: </span>      a = a/<span style="color: #D0372D;">2</span>
+<span class="linenr"> 8: </span>   <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">otherwise multiply by 3 and add 1</span>
+<span class="linenr"> 9: </span>   <span style="color: #0000FF;">else</span>
+<span class="linenr">10: </span>      a = <span style="color: #D0372D;">3</span>*a+<span style="color: #D0372D;">1</span>
+<span class="linenr">11: </span>   <span style="color: #0000FF;">end if</span>
+<span class="linenr">12: </span>
+<span class="linenr">13: </span>   <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">if a is 1, exit infinite loop</span>
+<span class="linenr">14: </span>   <span style="color: #0000FF;">if</span> <span style="color: #707183;">(</span>a==<span style="color: #D0372D;">1</span><span style="color: #707183;">)</span> <span style="color: #0000FF;">then</span>
+<span class="linenr">15: </span>      <span style="color: #0000FF;">exit</span>
+<span class="linenr">16: </span>   <span style="color: #0000FF;">end if</span>
+<span class="linenr">17: </span>
+<span class="linenr">18: </span>   <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">print n</span>
+<span class="linenr">19: </span>   <span style="color: #0000FF;">print</span> <span style="color: #008000;">"('count: ', i2, ', a: ', i2)"</span>, count, a
+<span class="linenr">20: </span>
+<span class="linenr">21: </span>   <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">increment count</span>
+<span class="linenr">22: </span>   count = count + <span style="color: #D0372D;">1</span>
+<span class="linenr">23: </span><span style="color: #0000FF;">end do</span>
+</pre>
+</div>
+
+<pre class="example">
+count:  1, a:  3
+count:  2, a: 10
+count:  3, a:  5
+count:  4, a: 16
+count:  5, a:  8
+count:  6, a:  4
+count:  7, a:  2
+</pre>
+
+
+</div>
+</div>
 </div>
 </div>
 </div>
