@@ -471,7 +471,7 @@ print whether or not the number was greater than 0.5.
 
 *** Example: =if= / =else if= / =else=
 
-You can follow =else= immediate by another =if= to have mutiple mutually-
+You can follow =else= immediate by another =if= to have multiple mutually-
 exclusive blocks:
 
 #+begin_src cpp -n :exports both :results output
@@ -1020,7 +1020,7 @@ Now the main function is very nice and clean, but now we 3 separate files we
 must compile into one executable. This is done as follows:
 
 #+begin_src bash
-  # Convert the library into an obect file.
+  # Convert the library into an object file.
   g++ -c my_library.cpp
   # Compile the main to an executable.
   g++ my_library.o main.cpp -o main.exe
@@ -1200,45 +1200,16 @@ improves upon the default =double= array.
 *** The header file
 
 Create the header file, =vector.h=:
-   
-#+begin_src cpp -n
-  #ifndef VECTOR_H
-  #define VECTOR_H
 
-  namespace vec {
-    class vector {
-    public:
-      // Constructor. This function is called when the object is created.
-      vector(unsigned len);
-  
-      // Destructor. This function is called when the object is destroyed.
-      ~vector();
-
-      // length accessor.
-      unsigned len();
-
-      // data accessor.
-      double & element(unsigned i);
-
-      // Simple print function.
-      void print();
-
-    private:
-      unsigned length;
-      double * data;
-      void check_index(unsigned i);
-    };
-  }
-  #endif
-#+end_src
+#+include: ./vector/init/vector.h src cpp -n
 
 First note the macro guards, =#ifndef=, =#define=, and =#endif=, as well as the 
 namespace, =vec=, wrapping the =class= declaration. Macro guards and namespaces 
 were previously discussed when we initially introduced 
 [[Header and implementation files][how to write header and implementation files]]. 
 
-Now, within the namespace, we've declared a =class=, =vector=, which 
-contains =public= and =private= variables and funcion declartations. Private 
+Now, within the namespace, we've declared a class, =vector=, which 
+contains =public= and =private= variables and function declarations. Private 
 functions and variables may only be accessed through the public methods. This 
 means if you created an instance of the class, =vector=, you would not be able 
 to access the private variable directly. You could only call the *public 
@@ -1264,55 +1235,7 @@ i.e., to treat it as the value of the component.
 
 Create the implementation file, =vector.cpp=:
 
-#+begin_src cpp -n
-  #include <iostream>
-  #include <cstdlib>
-  #include "vector.h"
-
-  namespace vec {
-    vector::vector(unsigned len) {
-      this->length = len;
-      this->data = new double[len];
-      // Initialize data to zeros.
-      for(int i=0; i < this->len(); i++) { this->data[i] = 0.0; }
-    }
-
-    vector::~vector() {
-      delete [] this->data;
-    }
-
-    unsigned vector::len() {
-      return this->length;
-    }
-
-    double & vector::element(unsigned i) {
-      #ifndef NDEBUG
-      check_index(i);
-      #endif
-      return this->data[i];
-    }
-
-    void vector::print() {
-      for(int i=0; i < this->len(); i++) {
-        std::cout << this->data[i] << '\n';
-      }
-    }
-
-    void vector::check_index(unsigned i) {
-      if (i < 0) {
-          std::cerr << "ERROR: index (" << i 
-                    << ") is out of bounds (< 0)\n";
-          exit(1);
-      }
-      else if (i >= this->length) {
-          std::cerr << "ERROR: index (" << i
-                    << ") is out of bounds (>= "
-                    << this->length << ")\n";
-          exit(1);
-      }
-    }
-  }
-#+end_src
+#+include: ./vector/init/vector.cpp src cpp -n
 
 Note that we again wrap the implementations in the same namespace as wrapped 
 by the class declaration. Also observe how each member-function is prepended 
@@ -1337,25 +1260,7 @@ of headaches in the future.
 
 Ok. Let's see some example usage, by creating a =main.cpp=, containing:
 
-#+begin_src cpp -n
-  #include <iostream>
-  #include "vector.h"
-
-  int main() {
-      vec::vector v(5);
-
-      std::cout << "`v` has length = " << v.len() << "\n";
-
-      v.element(0) = -1.27;
-      v.element(3) = 3.1;
-
-      v.print();
-
-      v.element(5) = 1234.0;
-
-      return 0;
-  }
-#+end_src
+#+include: ./vector/init/main.cpp src cpp -n
 
 Let's first compile with our =check_index= debugger function in place:
 
@@ -1390,40 +1295,27 @@ by liberally sprinkling these sorts of assertions through your code, you
 will (sometimes) find debugging much easier. After you're fairly certain 
 that your code is working, you can simply compile with =-DNEDUBG=.
 
-** Example continued: operator overloading
+** Example cont'd: operator overloading
    
 The =v.element(i)= accessor is a bit clunky. We can replace this with the 
 more natural, =v[i]=, by *overloading* the =[]= operator. Indeed,
  [[http://en.cppreference.com/w/cpp/language/operators][we can overload many]] of the normal C++ operators, e.g. =+=, =-=, ===, etc.
- 
 
 *** Overloading =operator[]=
 
-In the header file, simply replace the =element= function declaration with:
+In the header file, replace the =element= function declaration with:
 
-#+begin_src cpp -n
-  double & operator[](unsigned i);
-#+end_src
+#+include: ./vector/operator=/vector.h :lines "15-18" src cpp -n
 
 and in the implementation file, replace the =element= implementation with:
 
-#+begin_src cpp -n
-  double & vector::operator[](unsigned i) {
-      #ifndef NDEBUG
-      check_index(i);
-      #endif
-      return this->data[i];
-  }
-#+end_src
+#+include: ./vector/operator=/vector.cpp :lines "21-27" src cpp -n
 
-Just think of =operator[]= as the name of the function. We can now use the 
-overloaded operator just like how we used the =element= function before:
+Just think of =operator[]= as the new name of the function, =element=. We 
+can now use the overloaded operator just like how we used the =element= 
+function before:
 
-#+begin_src cpp -n
-  v[0] = -1.27;
-  v[3] = 3.1;
-  v.print();
-#+end_src
+#+include: ./vector/operator=/main.cpp :lines "7-10" src cpp -n
 
 Compile and run:
 
@@ -1439,6 +1331,8 @@ and you should see:
 : 3.1
 : 0
 
+just like before.
+
 *** Overloading =operator==
     
 Let's overload the === operator so we can assign one vector to another. 
@@ -1447,34 +1341,16 @@ overwritten by the one on the right.
 
 Let's add a declaration to the header file,
 
-#+begin_src cpp -n
-  // Assignment operator.
-  vector & operator=(vector & src);
-#+end_src
+#+include: ./vector/operator=/vector.h :lines "19-21" src cpp -n
 
 and let's add to the implementation file,
 
-#+begin_src cpp -n
-  vector & vector::operator=(vector & src) {
-    // Delete the old data.
-    delete [] this->data;
-
-    // Initialize the new data.
-    this->length = src.len();
-    this->data = new double[this->len()];
-
-    // Copy over the new data.
-    for(int i=0; i < this->len(); i++) {
-      this->data[i] = src[i];
-    }
-
-    return *this;
-  }
-#+end_src
+#+include: ./vector/operator=/vector.cpp :lines "28-43" src cpp -n
 
 Now, let's assume the =vector= instance, =v=, from above is still defined, and
 we'll create a new vector:
 
+#+include: ./vector/operator=/main.cpp
 #+begin_src cpp -n
   vec::vector w(14);
   w = v;
@@ -1493,7 +1369,9 @@ Notice that =w= is intially defined to be of length =14=, but this is
 overwritten, and its new length is the length of =v=. Also note that all of
 =w='s old data is deleted.
 
-Now, it may at this point be tempting to attempt to initialize =w= from =v=
+** Example cont'd: the copy constructor
+
+It may be tempting at this point to attempt to initialize =w= from =v=
 directly:
 
 #+begin_src cpp -n
@@ -1513,8 +1391,6 @@ code is essentially equivalent to
 In other words, the constructor is called with the existing vector, =v=, as
 the argument, but we have not written a constructor yet with such a call 
 signature.
-
-** Example continued: the copy constructor
     
 The constructor can be overloaded, i.e., we can write multiple versions of the 
 constructor function, and the one that matches the correct call signature will 
@@ -1523,31 +1399,15 @@ in C++.
 
 Let's add the copy constructor declaration to the header file:
 
-#+begin_src cpp -n
-  // Copy constructor.
-  vector(vector & src);
-#+end_src
+#+include: ./vector/copy-construct/vector.h :lines "10-12" src cpp -n
 
 and let's add its implementation:
 
-#+begin_src cpp -n
-  vector::vector(vector & src) {
-    this->length = src.len();
-    this->data = new double[this->len()];
-
-    // Copy over the data.
-    for(int i=0; i < this->len(); i++) {
-      this->data[i] = src[i];
-    }
-  }
-#+end_src
+#+include: ./vector/copy-construct/vector.cpp :lines "13-22" src cpp -n
 
 Now we compile and run something like:
 
-#+begin_src cpp -n
-  vec::vector w = v;
-  w.print()
-#+end_src
+#+include: ./vector/copy-construct/main.cpp :lines "10-12" src cpp -n
 
 we will see:
 
@@ -1557,50 +1417,24 @@ we will see:
 : 3.1
 : 0
 
-** Exampled continued: overloading the arithmetic operators
+** Exampled cont'd: more overloading - =operator+=
    
 Let's overload the =+= operator so we can add two vectors. First add to 
 the header file:
 
-#+begin_src cpp -n
-  // Arithmetic operators.
-  vector & operator+(vector & src);
-#+end_src
+#+include: ./vector/operator+/vector.h :lines "25-27" src cpp -n
 
 also add:
 
-#+begin_src cpp -n
-  void check_same_len(vector & src);
-#+end_src
+#+include: ./vector/operator+/vector.h :lines "35-36" src cpp -n
 
-to the list of private declarations.
+to the list of private declarations in =vector.h=
 
 Next, let's add the implementation of these two functions:
 
-#+begin_src cpp -n
-  vector & vector::operator+(vector & src) {
-    #ifndef NDEBUG
-    this->check_same_len(src);
-    #endif
+#+include: ./vector/operator+/vector.cpp :lines "54-67" src cpp -n
 
-    vector * result = new vector(this->len());
-
-    for(int i=0; i < this->len(); i++) {
-      result->data[i] = this->data[i] + src[i];
-    }
-    
-    return *result;
-  }
-
-  void vector::check_same_len(vector & src) {
-    if (this->len() != src.len()) {
-      std::cerr << "ERROR: length mismatch.\n"
-                << "(left len: " << this->len() << ", "
-                << "right len: " << src.len() << ")\n";
-      exit(1);
-    }
-  }
-#+end_src
+#+include: ./vector/operator+/vector.cpp :lines "82-90" src cpp -n
 
 Note how we create the =result= vector in =operator+= as a pointer, and then 
 we deference it when its returned. This matches the return type of the function, 
@@ -1610,20 +1444,7 @@ skipped by adding the =-DNDEBUG= flag during compile time.
 
 Let's look at an example usage where 
 
-#+begin_src cpp -n
-  vec::vector v(5);
-
-  v[0] = -1.27;
-  v[3] = 3.1;
-
-  vec::vector w = v;
-
-  vec::vector z = w+v;
-  z.print();
-
-  vec::vector q(6);
-  q+v;
-#+end_src
+#+include: ./vector/operator+/main.cpp src cpp -n
 
 This will print the sum for =z=, but it will error when we add =q= and =z=:
 
