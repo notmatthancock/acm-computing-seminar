@@ -510,7 +510,7 @@ in the same directory. The first four lines of =makefile= assign variables for t
 * Data types
 We will use the =implicit none= keyword at the beginning of each code block as in line [[(in1)]] of =header.f90= and line [[(in2)]] of =main.f90= in Section [[Template]]. The role of this keyword is to suppress some implicit rules that Fortran has for undeclared variables, and by including it we force ourselves to declare each variable that we use. This means our code will be slightly longer than necessary but it will facilitate debugging when our program fails to compile. Without the =implicit none= keyword, an undeclared variable with a name such as =i= is assumed to be an integer data type whereas an undeclared variable with a name such as =x= is assumed to be a real data type.
 
-In addition to the most common data types presented below, Fortran has =complex= and =character= data types and support for user-defined data types.
+In addition to the most common data types presented below, Fortran has a =complex= data type and support for user-defined data types.
 
 ** The =logical= type
 A variable of the =logical= type can have values =.true.= or =.false.=. Logical expressions can be computed with a few operators 
@@ -535,6 +535,8 @@ c = (1 == 2) ! c is false
 ! '/=' is test for inequality
 c = (1 /= 2) ! c is true
 #+end_src
+
+#+RESULTS[aafe5eb2ce157c09b1e0faff1d07c64e2138c81b]:
 
 Other logical operators include
 - =<= or =.lt.=: less than
@@ -578,6 +580,24 @@ print*, epsilon(a)
 ! Print machine epsilon for the double precision floating point system
 print*, epsilon(b)
 #+end_src
+
+** The =character= type
+A =character= data type is used to store letters. The maximum length of a character data type is specified with a positive =integer= argument at declaration.
+
+#+begin_src fortran -n :exports both :results output
+! declare a character variable s at most 32 characters
+character(32) :: s
+
+! assign value to s
+s = 'file_name'
+
+! trim trailing spaces from s and
+! append a character literal '.dat'
+print*, trim(s) // '.dat'
+#+end_src
+
+#+RESULTS[c3a6a5819483cbe582a8e546b85faea5057dd928]:
+: file_name.dat
 
 ** Casting
 An integer can be cast to a real number or vice versa.
@@ -657,15 +677,26 @@ nullify(p)
 ** Arrays
 The length of an array can be fixed or dynamic. The index of an array starts at 1 by default, but any index range can be specified.
 *** Fixed-length arrays
+Here's a one-dimensional array example.
 #+begin_src fortran -n
 real :: a(5)
 
 a(1) = 1.0
 ! etc
 #+end_src
+
+And, here's a two-dimensional array example.
+#+begin_src fortran -n
+real :: a(5,5)
+
+a(1,1) = 1.0
+! etc
+#+end_src
+
 *** Dynamic length arrays
 Dynamic arrays are declared with the =allocatable= modifier. Before storing values in such an array, you must =allocate= memory for the array. After you are finished the array, you ought to =deallocate= the memory that it occupies.
 
+Here's a one-dimensional example.
 #+begin_src fortran -n -r
 ! declare a one-dim. dynamic length array
 real, allocatable :: a(:)
@@ -691,10 +722,34 @@ deallocate(a) (ref:d)
 
 Without the last =dellaocate= statement on line [[(d)]] the code above is valid, but the memory that is allocated for =a= will not be freed. That memory then cannot be allocated to other resources.
 
+Here's a two-dimensional example.
+#+begin_src fortran -n -r
+! declare a one-dim. dynamic length array
+real, allocatable :: a(:,:)
+
+! allocate memory for a
+allocate(a(5,2))
+
+! now you can treat a like a normal array
+a(1,1) = 1.0
+! etc...
+
+! deallocate memory occupied by a
+deallocate(a)
+
+! we can change the size and index range of a
+allocate(a(0:9,0:1))
+
+a(0,0) = 1.0
+! etc...
+
+deallocate(a)
+#+end_src
+
 * Control structures
 ** Conditionals
 *** Example: =if= / =else= and random number generation
-You can control execution of two blocks of code with mutually exclusive logic using the =if=/=else= construct. The following code generates a random number between 0 and 1, then prints the number and whether or not the number is greater than 0.5
+You can control execution of two blocks of code with mutually exclusive logic using the =if= / =else= construct. An =else= block is optional and can be omitted to form an =if= construct in which a block of code executes if a logical expression evaluates to =.true.=. The following code generates a random number between 0 and 1, then prints the number and whether or not the number is greater than 0.5
 
 #+begin_src fortran -n :exports both :results output
 real :: num
@@ -767,7 +822,7 @@ Since the random number generator was seeded with the current time, the above co
 
 ** Loops
 *** The =do= loop
-The =do= loop requires two =integer= arguments specifying a minimum and maximum (inclusive) range and takes an optional third =integer= argument specifying the stride in the form =do i=min,max,stride=. If omitted, stride is 1.
+A =do= loop iterates a block of code over a range of integers. It takes two =integer= arguments specifying the minimum and maximum (inclusive) of the range and takes an optional third =integer= argument specifying the iteration stride in the form =do i=min,max,stride=. If omitted, the stride is 1.
 
 The following code assigns a value to each component of an array then prints it.
 
@@ -796,7 +851,7 @@ real, allocatable :: matrix(:)
 ! temporary indices
 integer :: i,j,k
 
-! row-major matrix array fs m,
+! row-major matrix array
 allocate(matrix(1:n_rows*n_cols))
 
 ! assign 0 to all elements of matrix
@@ -907,13 +962,13 @@ a_n/2 & \text{if } a_n \text{ is even}\\
 3a_n+1 & \text{ if } a_n \text{ is odd} 
 \end{cases}
 \end{equation*}
-for \(n\geq1\). It is an open conjecture whether the hailstone sequence of any initial value \(a_1\) converges to the periodic sequence \(4, 2, 1, 4, 2, 1\ldots\). Luckily, it does for \(a_1=6\) and the following =do while= loop exits.
+for \(n\geq1\). It is an open conjecture that the hailstone sequence of any initial value \(a_1\) converges to the periodic sequence \(4, 2, 1, 4, 2, 1\ldots\). Luckily, it does for \(a_1=6\) and the following =do= loop exits.
 
 #+begin_src fortran -n :exports both :results output
 integer :: a = 6, count = 1
 
 ! infinite loop
-do while(.true.)
+do
    ! if a is even, divide by 2
    ! otherwise multiply by 3 and add 1
    if (mod(a,2)==0) then
@@ -927,7 +982,7 @@ do while(.true.)
       exit
    end if
 
-   ! print n
+   ! print count and a
    print "('count: ', i2, ', a: ', i2)", count, a
 
    ! increment count
@@ -935,12 +990,118 @@ do while(.true.)
 end do
 #+end_src
 
-#+RESULTS[32b9ee4612c0d669ba06ae4625d1997f4dd7e4b0]:
+#+RESULTS[613047b57264c89ba471cfa6803babdc9f7f47d2]:
 : count:  1, a:  3
 : count:  2, a: 10
 : count:  3, a:  5
 : count:  4, a: 16
 : count:  5, a:  8
 
+* Input/Output
+** Command line arguments
+Arguments can be received by the main program from the command line using =get_command_argument=. The first argument received by this command is the executable file name and the remaining arguments are supplied by the user. The following program accepts any number of arguments, each at most 32 characters, and prints them.
+
+#+name: command_line_arguments
+#+begin_src fortran -n :tangle ./command_line_arguments/main.f90
+program main
+  implicit none
+
+  character(32) :: arg
+  integer :: n_arg = 0
+
+  do
+     ! get next command line argument
+     call get_command_argument(n_arg, arg)
+
+     ! if it is empty, exit
+     if (len_trim(arg) == 0) exit
+
+     ! print argument to screen
+     print"('argument ', i0, ': ', a)", n_arg, trim(arg)
+
+     ! increment count
+     n_arg = n_arg+1
+  end do
+
+  ! print total number of arguments
+  print*, 'number of arguments: ', n_arg
+
+end program main
+#+end_src
+
+#+begin_src sh :exports none :dir ./command_line_arguments
+gfortran main.f90
+#+end_src
+
+After compiling to =a.out=, you can pass arguments in the executing command.
+
+#+begin_src sh :exports both :results output :dir ./command_line_arguments
+./a.out 1 2 34
+#+end_src
+
+#+RESULTS[62b2c39a3227cfd15861809a5e48b5e3774e5e87]:
+: argument 0: ./a.out
+: argument 1: 1
+: argument 2: 2
+: argument 3: 34
+:  number of arguments:            4
+
+** File input/output
+*** Reading data from file
+
+The contents of a data file can be read into an array using =read=. Suppose you have a file =./data/array.txt= that contains
+
+: 1 1.23
+: 2 2.34
+: 3 3.45
+
+This file can be opened in the program with the =open= command. The required first argument of =open= is an =integer= that specifies the /file unit/. Choose any number that is not in use. The unit numbers =0=, =5=, and =6= are reserved for system files and should not be used accidentally. Data is read in *column-major* format, i.e. down each row, one column at a time.
+
+The following code reads the contents of =./data/array.txt= into an array called =array=.
+
+#+begin_src fortran -n
+! declare array
+real :: array(3,2)
+integer :: row
+
+! open file and assign file unit 10
+open (10, file='./data/array.txt', action='read')
+
+! read data from file unit 10 into array
+do row = 1,3
+   read(10,*) array(row,:)
+end do
+
+! close file
+close(10)
+#+end_src
+
+** Writing data to file
+
+Data can be written to a file with the =write= command.
+
+#+begin_src fortran -n
+real :: x
+integer :: i, max = 5
+
+! open file, specify unit 10, overwrite if exists
+open(10, file='./data/sine.txt', action='write', status='replace')
+
+do i = 0,max
+   x = i / real(max)
+
+   ! write to file unit 10
+   write(10,*) x, sin(x)
+end do
+#+end_src
+
+This produces a file =sine.txt= in the directory =data= containing
+
+:   0.00000000       0.00000000    
+:  0.200000003      0.198669329    
+:  0.400000006      0.389418334    
+:  0.600000024      0.564642489    
+:  0.800000012      0.717356086    
+:   1.00000000      0.841470957    
 
 #+html: </div>
