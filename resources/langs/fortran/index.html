@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2016-08-22 Mon 21:13 -->
+<!-- 2016-08-22 Mon 21:24 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title>ACM Computing Seminar Fortran Guide</title>
@@ -995,7 +995,6 @@ Iter:  14, Sum: .99994, Abs Err: .00006
 </pre>
 </div></li>
 
-
 <li><a id="orgheadline28"></a>Example: estimating machine epsilon<br  /><div class="outline-text-5" id="text-4-2-3-2">
 <div class="org-src-container">
 
@@ -1039,7 +1038,7 @@ a_n/2 & \text{if } a_n \text{ is even}\\
 \end{cases}
 \end{equation*}
 <p>
-for \(n\geq1\). It is an open conjecture whether the hailstone sequence of any initial value \(a_1\) converges to the periodic sequence \(1, 4, 2, 1, 4, 2,\ldots\). Luckily, it does for \(a_1=6\) and the following <code>do while</code> loop exits.
+for \(n\geq1\). It is an open conjecture whether the hailstone sequence of any initial value \(a_1\) converges to the periodic sequence \(4, 2, 1, 4, 2, 1\ldots\). Luckily, it does for \(a_1=6\) and the following <code>do while</code> loop exits.
 </p>
 
 <div class="org-src-container">
@@ -1057,7 +1056,7 @@ for \(n\geq1\). It is an open conjecture whether the hailstone sequence of any i
 <span class="linenr">11: </span>   <span style="color: #0000FF;">end if</span>
 <span class="linenr">12: </span>
 <span class="linenr">13: </span>   <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">if a is 1, exit infinite loop</span>
-<span class="linenr">14: </span>   <span style="color: #0000FF;">if</span> <span style="color: #707183;">(</span>a==<span style="color: #D0372D;">1</span><span style="color: #707183;">)</span> <span style="color: #0000FF;">then</span>
+<span class="linenr">14: </span>   <span style="color: #0000FF;">if</span> <span style="color: #707183;">(</span>a==<span style="color: #D0372D;">4</span><span style="color: #707183;">)</span> <span style="color: #0000FF;">then</span>
 <span class="linenr">15: </span>      <span style="color: #0000FF;">exit</span>
 <span class="linenr">16: </span>   <span style="color: #0000FF;">end if</span>
 <span class="linenr">17: </span>
@@ -1076,8 +1075,6 @@ count:  2, a: 10
 count:  3, a:  5
 count:  4, a: 16
 count:  5, a:  8
-count:  6, a:  4
-count:  7, a:  2
 </pre>
 
 

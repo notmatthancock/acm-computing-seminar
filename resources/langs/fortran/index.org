@@ -875,7 +875,6 @@ Iter: 13, Sum: .99988, Abs Err: .00012
 Iter: 14, Sum: .99994, Abs Err: .00006
 #+end_example
 
-
 **** Example: estimating machine epsilon
 
 #+begin_src fortran -n :exports both :results output
@@ -908,7 +907,7 @@ a_n/2 & \text{if } a_n \text{ is even}\\
 3a_n+1 & \text{ if } a_n \text{ is odd} 
 \end{cases}
 \end{equation*}
-for \(n\geq1\). It is an open conjecture whether the hailstone sequence of any initial value \(a_1\) converges to the periodic sequence \(1, 4, 2, 1, 4, 2,\ldots\). Luckily, it does for \(a_1=6\) and the following =do while= loop exits.
+for \(n\geq1\). It is an open conjecture whether the hailstone sequence of any initial value \(a_1\) converges to the periodic sequence \(4, 2, 1, 4, 2, 1\ldots\). Luckily, it does for \(a_1=6\) and the following =do while= loop exits.
 
 #+begin_src fortran -n :exports both :results output
 integer :: a = 6, count = 1
@@ -924,7 +923,7 @@ do while(.true.)
    end if
 
    ! if a is 1, exit infinite loop
-   if (a==1) then
+   if (a==4) then
       exit
    end if
 
@@ -936,14 +935,12 @@ do while(.true.)
 end do
 #+end_src
 
-#+RESULTS[6032635a8b593603d4f586b8684e1925330b3662]:
+#+RESULTS[32b9ee4612c0d669ba06ae4625d1997f4dd7e4b0]:
 : count:  1, a:  3
 : count:  2, a: 10
 : count:  3, a:  5
 : count:  4, a: 16
 : count:  5, a:  8
-: count:  6, a:  4
-: count:  7, a:  2
 
 
 #+html: </div>
