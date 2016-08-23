@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2016-08-23 Tue 03:48 -->
+<!-- 2016-08-23 Tue 03:52 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title>ACM Computing Seminar Fortran Guide</title>
@@ -1243,7 +1243,7 @@ The contents of a data file can be read into an array using <code>read</code>. S
 </pre>
 
 <p>
-This file can be opened in the program with the <code>open</code> command. The required first argument of <code>open</code> is an <code>integer</code> that specifies the <i>file unit</i>. Choose any number that is not in use. The unit numbers <code>0</code>, <code>5</code>, and <code>6</code> are reserved for system files and should not be used accidentally. Data is read in <b>column-major</b> format, i.e. down each row, one column at a time.
+This file can be opened in the program with the <code>open</code> command. The required first argument of <code>open</code> is an <code>integer</code> that specifies the <i>file unit</i>. Choose any number that is not in use. The unit numbers <code>0</code>, <code>5</code>, and <code>6</code> are reserved for system files and should not be used accidentally. Data is read in <b>column-major</b> format, i.e. down the first column, then down the second column, etc.
 </p>
 
 <p>

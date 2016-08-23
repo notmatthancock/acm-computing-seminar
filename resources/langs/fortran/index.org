@@ -1055,7 +1055,7 @@ The contents of a data file can be read into an array using =read=. Suppose you 
 : 2 2.34
 : 3 3.45
 
-This file can be opened in the program with the =open= command. The required first argument of =open= is an =integer= that specifies the /file unit/. Choose any number that is not in use. The unit numbers =0=, =5=, and =6= are reserved for system files and should not be used accidentally. Data is read in *column-major* format, i.e. down each row, one column at a time.
+This file can be opened in the program with the =open= command. The required first argument of =open= is an =integer= that specifies the /file unit/. Choose any number that is not in use. The unit numbers =0=, =5=, and =6= are reserved for system files and should not be used accidentally. Data is read in *column-major* format, i.e. down the first column, then down the second column, etc.
 
 The following code reads the contents of =./data/array.txt= into an array called =array=.
 
