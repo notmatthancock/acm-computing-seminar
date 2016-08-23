@@ -915,14 +915,14 @@ integer :: a = 6, count = 1
 ! infinite loop
 do while(.true.)
    ! if a is even, divide by 2
+   ! otherwise multiply by 3 and add 1
    if (mod(a,2)==0) then
       a = a/2
-   ! otherwise multiply by 3 and add 1
    else
       a = 3*a+1
    end if
 
-   ! if a is 1, exit infinite loop
+   ! if a is 4, exit infinite loop
    if (a==4) then
       exit
    end if

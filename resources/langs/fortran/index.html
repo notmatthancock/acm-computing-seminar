@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2016-08-22 Mon 21:24 -->
+<!-- 2016-08-22 Mon 21:30 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title>ACM Computing Seminar Fortran Guide</title>
@@ -1048,14 +1048,14 @@ for \(n\geq1\). It is an open conjecture whether the hailstone sequence of any i
 <span class="linenr"> 3: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">infinite loop</span>
 <span class="linenr"> 4: </span><span style="color: #0000FF;">do while</span><span style="color: #707183;">(</span><span style="color: #0000FF;">.true.</span><span style="color: #707183;">)</span>
 <span class="linenr"> 5: </span>   <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">if a is even, divide by 2</span>
-<span class="linenr"> 6: </span>   <span style="color: #0000FF;">if</span> <span style="color: #707183;">(</span><span style="color: #0000FF;">mod</span><span style="color: #7388D6;">(</span>a,<span style="color: #D0372D;">2</span><span style="color: #7388D6;">)</span>==<span style="color: #D0372D;">0</span><span style="color: #707183;">)</span> <span style="color: #0000FF;">then</span>
-<span class="linenr"> 7: </span>      a = a/<span style="color: #D0372D;">2</span>
-<span class="linenr"> 8: </span>   <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">otherwise multiply by 3 and add 1</span>
+<span class="linenr"> 6: </span>   <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">otherwise multiply by 3 and add 1</span>
+<span class="linenr"> 7: </span>   <span style="color: #0000FF;">if</span> <span style="color: #707183;">(</span><span style="color: #0000FF;">mod</span><span style="color: #7388D6;">(</span>a,<span style="color: #D0372D;">2</span><span style="color: #7388D6;">)</span>==<span style="color: #D0372D;">0</span><span style="color: #707183;">)</span> <span style="color: #0000FF;">then</span>
+<span class="linenr"> 8: </span>      a = a/<span style="color: #D0372D;">2</span>
 <span class="linenr"> 9: </span>   <span style="color: #0000FF;">else</span>
 <span class="linenr">10: </span>      a = <span style="color: #D0372D;">3</span>*a+<span style="color: #D0372D;">1</span>
 <span class="linenr">11: </span>   <span style="color: #0000FF;">end if</span>
 <span class="linenr">12: </span>
-<span class="linenr">13: </span>   <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">if a is 1, exit infinite loop</span>
+<span class="linenr">13: </span>   <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">if a is 4, exit infinite loop</span>
 <span class="linenr">14: </span>   <span style="color: #0000FF;">if</span> <span style="color: #707183;">(</span>a==<span style="color: #D0372D;">4</span><span style="color: #707183;">)</span> <span style="color: #0000FF;">then</span>
 <span class="linenr">15: </span>      <span style="color: #0000FF;">exit</span>
 <span class="linenr">16: </span>   <span style="color: #0000FF;">end if</span>
