@@ -1,0 +1,123 @@
+#+title: MAT5939-03 ACM Computing Seminar – Fall 2016
+#+name: Matt Hancock
+#+options: html-postamble:nil toc:nil name:nil
+#+options: H:1 num:0
+#+html_head: <link rel="stylesheet" type="text/css" href="css/main.css">
+#+html: <div id="main">
+
+* Course Information 
+
+| *Time & Place:* | Monday 6:45PM - 8:00PM, LOV 102                   |
+| *Instructor:*   | Matt Hancock                                      |
+| *Office Hours:* | Tues 12-2, Thurs 2-4, 409 B MCH                   |
+| *Email:*        | [[mailto:mhancock@math.fsu.edu?subject=MAT5939 ... ][mhancock@math.fsu.edu]]                             |
+| *Website:*      | [[./][www.math.fsu.edu/~mhancock/acm-computing-seminar/]] |
+
+* Course Objectives
+
+To learn the C++ programming langauge with a focus on  mathematical 
+and scientific programming applications.
+
+* Prerequisites
+
+Graduate standing in mathematics.
+
+* Course Outline
+
+1. Getting started
+   + compilers, editors
+   + writing a simple program
+2. Data types
+   + common data types, casting, arrays, etc.
+3. Control Structures
+   + conditionals
+   + structures for iterating
+4. Input and output
+   + arguments from the command line
+   + reading and writing to files
+5. Functions
+   + writing functions
+   + modularizing code with header and implementation files
+   + function pointers
+6. Object-oriented programming
+   + basics of writing classes: constructors, destructors, operator overloading, etc.
+
+* Grade Policy:
+
+Homework is assigned weekly. Homework is graded on a 0 – 3 scale:
+
+    + 0 - no homework submitted or code copied from another source
+    + 1 - homework submitted, but did not demonstrate code functions properly
+    + 2 - showed code functions properly, but results not fully explained
+    + 3 - showed code functions properly, presented results clearly and fully
+
+To earn a grade of S, you must average a 2 or higher across all the homeworks. 
+For each homework assignment you will hand in a hard-copy report and e-mail me 
+your source code. When e-mailing, please include [MAT5939] in the subject line 
+of the email.
+
+* Homework Policy
+
+You must convince me your code functions as required. It is up to you to 
+consider sufficient test cases, although I will provide guidance and more 
+examples of what this means in the first couple of assignments. The reports 
+should be considerably less detailed than those submitted for FCM. For example, 
+there is no need for a "Description of Mathematics" or 
+"Decription of Algorithm"; rather, an explanation of why you chose the 
+test cases and any special programming methods/data structures you decided 
+to use to solve the problem will be sufficient.
+ 
+* Attendance Policy
+
+Excused absences include documented illness, deaths in the family and other 
+documented crises, call to active military duty or jury duty, religious holy 
+days, and official University activities. These absences will be accommodated 
+in a way that does not arbitrarily penalize students who have a valid excuse. 
+Consideration will also be given to students whose dependent children 
+experience serious illness.
+
+* Academic Honor Policy
+
+The Florida State University Academic Honor Policy outlines the University’s 
+expectations for the integrity of students’ academic work, the procedures for 
+resolving alleged violations of those expectations, and the rights and 
+responsibilities of students and faculty members throughout the process. 
+Students are responsible for reading the Academic Honor Policy and for living 
+up to their pledge to “... be honest and truthful and ... [to] strive for 
+personal and institutional integrity at Florida State University.” 
+
+(Florida State University Academic Honor Policy, found at
+http://fda.fsu.edu/Academics/Academic-Honor-Policy.)
+
+* Americans with Disabilities
+
+Students with disabilities needing academic accommodation should:
+
+1. Register with and provide documentation to the Student Disability Resource Center
+2. Bring a letter to the instructor indicating the need for accommodation and what type. This should be done
+
+during the first week of class.
+
+This syllabus and other class materials are available in alternative format 
+upon request. For more information about services available to FSU students 
+with disabilities, contact the:
+
+Student Disability Resource Center
+874 Traditions Way
+108 Student Services Building
+Florida State University
+Tallahassee, FL 32306-4167
+(850) 644-9566 (voice)
+(850) 644-8504 (TDD)
+
+sdrc@admin.fsu.edu
+http://www.disabilitycenter.fsu.edu/
+
+* Syllabus Change Policy
+
+Except for changes that substantially affect implementation of the evaluation (grading)
+statement, this syllabus is a guide for the course and is subject to change with advance notice.
+
+
+#+html: <div id="main">
+

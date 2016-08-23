@@ -1,0 +1,25 @@
+#+title: MAT5939-03 ACM Computing Seminar – Fall 2016
+#+name: Matt Hancock
+#+options: html-postamble:nil toc:nil name:nil
+#+options: H:3 num:0
+#+html_head: <link rel="stylesheet" type="text/css" href="css/main.css">
+#+html: <div id="main">
+
+* Course Information [[./syllabus.html][(syllabus)]]
+
+| *Time & Place:* | Monday 6:45PM - 8:00PM, LOV 102 |
+| *Instructor:*   | Matt Hancock                    |
+| *Office Hours:* | Tues 12-2, Thurs 2-4, 409 B MCH |
+| *Email:*        | [[mailto:mhancock@math.fsu.edu?subject=MAT5939 ... ][mhancock@math.fsu.edu]]           |
+
+* Resources
+** Programming Language Guides
+   
++ [[./resources/langs/cpp/][C++ guide]]
++ [[./resources/langs/fortran/][Fortran guide]]
+  
+** Programming assignment resources
++ [[./resources/prog/assignment-template.zip][Programming assignment template]] (Read the README!)
++ [[./resources/prog/example-assignment.zip][Example programming assignment and solution]]
+
+#+html: </div>
