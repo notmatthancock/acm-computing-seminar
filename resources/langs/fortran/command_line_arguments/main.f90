@@ -14,11 +14,11 @@ program main
      ! print argument to screen
      print"('argument ', i0, ': ', a)", n_arg, trim(arg)
 
-     ! increment number of arguments
+     ! increment count
      n_arg = n_arg+1
   end do
 
   ! print total number of arguments
-  print*, 'number of arguments: ', n_arg
+  print "('number of arguments: ', i0)", n_arg
 
 end program main

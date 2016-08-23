@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2016-08-23 Tue 03:39 -->
+<!-- 2016-08-23 Tue 03:47 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title>ACM Computing Seminar Fortran Guide</title>
@@ -1200,7 +1200,7 @@ Arguments can be received by the main program from the command line using <code>
 <span class="linenr">19: </span>  <span style="color: #0000FF;">end do</span>
 <span class="linenr">20: </span>
 <span class="linenr">21: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">print total number of arguments</span>
-<span class="linenr">22: </span>  <span style="color: #0000FF;">print</span>*, <span style="color: #008000;">'number of arguments: '</span>, n_arg
+<span class="linenr">22: </span>  <span style="color: #0000FF;">print</span> <span style="color: #008000;">"('number of arguments: ', i0)"</span>, n_arg
 <span class="linenr">23: </span>
 <span class="linenr">24: </span><span style="color: #0000FF;">end program</span> <span style="color: #006699;">main</span>
 </pre>
@@ -1221,7 +1221,7 @@ argument 0: ./a.out
 argument 1: 1
 argument 2: 2
 argument 3: 34
- number of arguments:            4
+number of arguments: 4
 </pre>
 </div>
 </div>

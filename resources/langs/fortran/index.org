@@ -1024,7 +1024,7 @@ program main
   end do
 
   ! print total number of arguments
-  print*, 'number of arguments: ', n_arg
+  print "('number of arguments: ', i0)", n_arg
 
 end program main
 #+end_src
@@ -1044,7 +1044,7 @@ After compiling to =a.out=, you can pass arguments in the executing command.
 : argument 1: 1
 : argument 2: 2
 : argument 3: 34
-:  number of arguments:            4
+: number of arguments: 4
 
 ** File input/output
 *** Reading data from file
