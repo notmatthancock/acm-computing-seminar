@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2016-08-23 Tue 03:52 -->
+<!-- 2016-08-24 Wed 07:49 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title>ACM Computing Seminar Fortran Guide</title>
@@ -227,7 +227,7 @@ for the JavaScript code in this tag.
 </li>
 </ul>
 </li>
-<li><a href="#orgheadline37">5. Input/Output</a>
+<li><a href="#orgheadline38">5. Input/Output</a>
 <ul>
 <li><a href="#orgheadline33">5.1. Command line arguments</a></li>
 <li><a href="#orgheadline36">5.2. File input/output</a>
@@ -236,13 +236,36 @@ for the JavaScript code in this tag.
 <li><a href="#orgheadline35">5.2.2. Writing data to file</a></li>
 </ul>
 </li>
+<li><a href="#orgheadline37">5.3. Formatted input/output</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline44">6. Functions</a>
+<ul>
+<li><a href="#orgheadline40">6.1. Writing a function</a>
+<ul>
+<li><a href="#orgheadline39">6.1.1. Example: <code>linspace</code>: generating a set of equally-space points</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline43">6.2. Interfaces</a>
+<ul>
+<li><a href="#orgheadline41">6.2.1. Example: Newton's method for rootfinding</a></li>
+<li><a href="#orgheadline42">6.2.2. Example: The midpoint rule for definite integrals</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgheadline46">7. Subroutines</a>
+<ul>
+<li><a href="#orgheadline45">7.1. Writing a subroutine</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 <div id="main">
-<a href="../../../" id="home-link">ACM Computing Seminar Home</a>
+<div id="footer"><a href="../../../">ACM Computing Seminar Home</a> &mdash; This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US">Creative Commons Attribution 3.0 Unported License</a>.</div>
+<a href="javascript:;" id="toc-open">&#9776;</a>
+<a href="javascript:;" id="toc-close">&times;</a>
 
 <div id="outline-container-orgheadline2" class="outline-2">
 <h2 id="orgheadline2"><span class="section-number-2">1</span> Introduction</h2>
@@ -255,7 +278,7 @@ This guide is intended to quickly get you up-and-running in scientific computing
 <h3 id="orgheadline1"><span class="section-number-3">1.1</span> About the language</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
-Fortran was created in the 1950s for mathematical <b>FOR</b>-mula <b>TRAN</b>-slation, and has since gone through a number of revisions (FORTRAN 66, 77, and Fortran 90, 95, 2003, 2008, 2015). The language standards are put forth by the Fortran standards committee <a href="http://www.j3-fortran.org/">J3</a> in a document (ISO 1539-1:2010) available for purchase. The syntax and intrinsic capabilities of the language make it especially suited for scientific computing. Like C/C++, Fortran is a <b>statically-typed</b> and <b>compiled</b> language. You must declare the <b>type</b>, i.e. integer, real number, etc. of variables in programs you write. Your programs will be translated from human-readable <i>source code</i> into a machine-executable file by software called a <b>compiler</b>. 
+Fortran was created in the 1950s for mathematical <b>FOR</b>-mula <b>TRAN</b>-slation, and has since gone through a number of revisions (FORTRAN 66, 77, and Fortran 90, 95, 2003, 2008, 2015). The language standards are put forth by the Fortran standards committee <a href="http://www.j3-fortran.org/">J3</a> in a document (ISO 1539-1:2010) available for purchase. The syntax and intrinsic capabilities of the language make it especially suited for scientific computing. Like C/C++, Fortran is a <b>statically-typed</b> and <b>compiled</b> language. You must declare the <b>type</b>, i.e. integer, real number, etc. of variables in programs you write. Your programs will be translated from human-readable <i>source code</i> into a machine-executable file by software called a <b>compiler</b>. Fortran is <b>not case-sensitive</b>, so <code>matrix</code> and <code>MaTrIx</code> are translated to the same token by the compiler.
 </p>
 </div>
 </div>
@@ -280,7 +303,7 @@ You will write the source code of your programs using a text editor. There are m
 <h3 id="orgheadline4"><span class="section-number-3">2.2</span> Compiler</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
-To translate your source code into an executable, you will need a Fortran compiler. A free option is <b>gfortran</b>, part of the GNU compiler collection (gcc). The features of the Fortran language that are supported by the compiler are specified in the compiler documentation. This is your most complete reference for the intrinsic capabilities of Fortran that your programs can use. At the time of this writing, <code>gfortran</code> completely supports Fortran 95 and partially supports more recent standards.
+To translate your source code into an executable, you will need a Fortran compiler. A free option is <b>gfortran</b>, part of the GNU compiler collection (gcc). The features of the Fortran language that are supported by the <code>gfortran</code> compiler are specified in the <a href="https://gcc.gnu.org/onlinedocs/gfortran/">compiler documentation</a>. This is your most complete reference for the intrinsic capabilities of Fortran that your programs can use. At the time of this writing, <code>gfortran</code> completely supports Fortran 95 and partially supports more recent standards.
 </p>
 </div>
 </div>
@@ -458,7 +481,11 @@ in the same directory. The first four lines of <code>makefile</code> assign vari
 <h2 id="orgheadline22"><span class="section-number-2">3</span> Data types</h2>
 <div class="outline-text-2" id="text-3">
 <p>
-We will use the <code>implicit none</code> keyword at the beginning of each code block as in line <a href="#coderef-in1"class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-in1');" onmouseout="CodeHighlightOff(this, 'coderef-in1');">2</a> of <code>header.f90</code> and line <a href="#coderef-in2"class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-in2');" onmouseout="CodeHighlightOff(this, 'coderef-in2');">3</a> of <code>main.f90</code> in Section <a href="#orgheadline6">2.3.2</a>. The role of this keyword is to suppress some implicit rules that Fortran has for undeclared variables, and by including it we force ourselves to declare each variable that we use. This means our code will be slightly longer than necessary but it will facilitate debugging when our program fails to compile. Without the <code>implicit none</code> keyword, an undeclared variable with a name such as <code>i</code> is assumed to be an integer data type whereas an undeclared variable with a name such as <code>x</code> is assumed to be a real data type.
+In each program element, the data types of variables are declared first, preceding complex variable assignments and other procedures.
+</p>
+
+<p>
+We will use the <code>implicit none</code> keyword at the beginning of each program and module as in line <a href="#coderef-in1"class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-in1');" onmouseout="CodeHighlightOff(this, 'coderef-in1');">2</a> of <code>header.f90</code> and line <a href="#coderef-in2"class="coderef" onmouseover="CodeHighlightOn(this, 'coderef-in2');" onmouseout="CodeHighlightOff(this, 'coderef-in2');">3</a> of <code>main.f90</code> in Section <a href="#orgheadline6">2.3.2</a>. The role of this keyword is to suppress some implicit rules that Fortran has for undeclared variables, and by including it we force ourselves to declare each variable that we use. This means our code will be slightly longer than necessary but it will facilitate debugging when our program fails to compile. Without the <code>implicit none</code> keyword, an undeclared variable with a name such as <code>i</code> is assumed to be an integer data type whereas an undeclared variable with a name such as <code>x</code> is assumed to be a real data type.
 </p>
 
 <p>
@@ -521,15 +548,18 @@ An <code>integer</code> data type can hold integer values. If a real value is as
 
 <div class="org-src-container">
 
-<pre class="src src-fortran"><span class="linenr">1: </span><span style="color: #6434A3;">integer</span> ::<span style="color: #BA36A5;"> a = 6, b = 7 </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">initialize a and b to 6 and 7, resp</span>
-<span class="linenr">2: </span><span style="color: #6434A3;">integer</span> ::<span style="color: #BA36A5;"> c</span>
-<span class="linenr">3: </span>
-<span class="linenr">4: </span>c = a / b <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">c is 0</span>
-<span class="linenr">5: </span>c = b / a <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">c is 1</span>
-<span class="linenr">6: </span>c = <span style="color: #0000FF;">mod</span><span style="color: #707183;">(</span>b,a<span style="color: #707183;">)</span> <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">c is 1, 'mod' is the modulo operator</span>
-<span class="linenr">7: </span>c = b - a <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">c is -1</span>
-<span class="linenr">8: </span>c = a &gt; b <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">c is 0 (logical gets cast to integer)</span>
-<span class="linenr">9: </span>c = a &lt; b <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">c is 1 (logical gets cast to integer)</span>
+<pre class="src src-fortran"><span class="linenr"> 1: </span><span style="color: #6434A3;">integer</span> ::<span style="color: #BA36A5;"> a = 6, b = 7 </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">initialize a and b to 6 and 7, resp</span>
+<span class="linenr"> 2: </span><span style="color: #6434A3;">integer</span> ::<span style="color: #BA36A5;"> c</span>
+<span class="linenr"> 3: </span>
+<span class="linenr"> 4: </span>c = a / b <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">c is 0</span>
+<span class="linenr"> 5: </span>c = b / a <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">c is 1</span>
+<span class="linenr"> 6: </span>c = a + b <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">c is 13</span>
+<span class="linenr"> 7: </span>c = b - a <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">c is -1</span>
+<span class="linenr"> 8: </span>c = a*b <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">c is 42</span>
+<span class="linenr"> 9: </span>c = a**b <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">c is 6^7</span>
+<span class="linenr">10: </span>c = <span style="color: #0000FF;">mod</span><span style="color: #707183;">(</span>b,a<span style="color: #707183;">)</span> <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">c is 1, 'mod' is the modulo operator</span>
+<span class="linenr">11: </span>c = a &gt; b <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">c is 0 (logical gets cast to integer)</span>
+<span class="linenr">12: </span>c = a &lt; b <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">c is 1 (logical gets cast to integer)</span>
 </pre>
 </div>
 </div>
@@ -539,7 +569,7 @@ An <code>integer</code> data type can hold integer values. If a real value is as
 <h3 id="orgheadline13"><span class="section-number-3">3.3</span> Floating point types</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
-The two floating point data types <code>real</code> and <code>double precision</code> correspond to <a href="https://en.wikipedia.org/wiki/IEEE_floating_point">IEEE 32- and 64-bit floating point data types</a>.
+The two floating point data types <code>real</code> and <code>double precision</code> correspond to <a href="https://en.wikipedia.org/wiki/IEEE_floating_point">IEEE 32- and 64-bit floating point data types</a>. A constant called <i>machine epsilon</i> is the smallest number in a floating point system that when added to 1 results in a floating point number larger than 1. It is used in a lot of numerical analysis error estimates. 
 </p>
 
 <div class="org-src-container">
@@ -547,25 +577,19 @@ The two floating point data types <code>real</code> and <code>double precision</
 <pre class="src src-fortran"><span class="linenr"> 1: </span><span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> a </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">declare a single precision float</span>
 <span class="linenr"> 2: </span><span style="color: #6434A3;">double precision</span> ::<span style="color: #BA36A5;"> b </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">declare a double precision float</span>
 <span class="linenr"> 3: </span>
-<span class="linenr"> 4: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">Print the max value of a real type</span>
-<span class="linenr"> 5: </span><span style="color: #0000FF;">print</span>*, <span style="color: #0000FF;">huge</span><span style="color: #707183;">(</span>a<span style="color: #707183;">)</span>
-<span class="linenr"> 6: </span>
-<span class="linenr"> 7: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">Print the max value of a double precision type</span>
-<span class="linenr"> 8: </span><span style="color: #0000FF;">print</span>*, <span style="color: #0000FF;">huge</span><span style="color: #707183;">(</span>b<span style="color: #707183;">)</span>
-<span class="linenr"> 9: </span>
-<span class="linenr">10: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">Print machine epsilon for the single precision floating point system</span>
-<span class="linenr">11: </span><span style="color: #0000FF;">print</span>*, <span style="color: #0000FF;">epsilon</span><span style="color: #707183;">(</span>a<span style="color: #707183;">)</span>
-<span class="linenr">12: </span>
-<span class="linenr">13: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">Print machine epsilon for the double precision floating point system</span>
-<span class="linenr">14: </span><span style="color: #0000FF;">print</span>*, <span style="color: #0000FF;">epsilon</span><span style="color: #707183;">(</span>b<span style="color: #707183;">)</span>
+<span class="linenr"> 4: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">Print the min/max value of single precision float</span>
+<span class="linenr"> 5: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">and machine epsilon for the single precision floating point system</span>
+<span class="linenr"> 6: </span><span style="color: #0000FF;">print</span>*, <span style="color: #0000FF;">tiny</span><span style="color: #707183;">(</span>a<span style="color: #707183;">)</span>, <span style="color: #0000FF;">huge</span><span style="color: #707183;">(</span>a<span style="color: #707183;">)</span>, <span style="color: #0000FF;">epsilon</span><span style="color: #707183;">(</span>a<span style="color: #707183;">)</span>
+<span class="linenr"> 7: </span>
+<span class="linenr"> 8: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">Print the min/max value of a double precision float</span>
+<span class="linenr"> 9: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">and machine epsilon for the double precision floating point system</span>
+<span class="linenr">10: </span><span style="color: #0000FF;">print</span>*, <span style="color: #0000FF;">tiny</span><span style="color: #707183;">(</span>b<span style="color: #707183;">)</span>, <span style="color: #0000FF;">huge</span><span style="color: #707183;">(</span>b<span style="color: #707183;">)</span>, <span style="color: #0000FF;">epsilon</span><span style="color: #707183;">(</span>b<span style="color: #707183;">)</span>
 </pre>
 </div>
 
 <pre class="example">
-3.40282347E+38
-1.7976931348623157E+308
-1.19209290E-07
-2.2204460492503131E-016
+1.17549435E-38   3.40282347E+38   1.19209290E-07
+2.2250738585072014E-308   1.7976931348623157E+308   2.2204460492503131E-016
 </pre>
 </div>
 </div>
@@ -574,7 +598,7 @@ The two floating point data types <code>real</code> and <code>double precision</
 <h3 id="orgheadline14"><span class="section-number-3">3.4</span> The <code>character</code> type</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
-A <code>character</code> data type is used to store letters. The maximum length of a character data type is specified with a positive <code>integer</code> argument at declaration.
+A <code>character</code> data type is used to store letters. The maximum length of a character string is specified with a positive <code>integer</code> argument at declaration.
 </p>
 
 <div class="org-src-container">
@@ -587,12 +611,12 @@ A <code>character</code> data type is used to store letters. The maximum length 
 <span class="linenr">6: </span>
 <span class="linenr">7: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">trim trailing spaces from s and</span>
 <span class="linenr">8: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">append a character literal '.dat'</span>
-<span class="linenr">9: </span><span style="color: #0000FF;">print</span>*, <span style="color: #0000FF;">trim</span><span style="color: #707183;">(</span>s<span style="color: #707183;">)</span> // <span style="color: #008000;">'.dat'</span>
+<span class="linenr">9: </span><span style="color: #0000FF;">print</span>*, <span style="color: #0000FF;">trim</span><span style="color: #707183;">(</span>s<span style="color: #707183;">)</span> // <span style="color: #008000;">'.txt'</span>
 </pre>
 </div>
 
 <pre class="example">
-file_name.dat
+file_name.txt
 </pre>
 </div>
 </div>
@@ -601,19 +625,22 @@ file_name.dat
 <h3 id="orgheadline15"><span class="section-number-3">3.5</span> Casting</h3>
 <div class="outline-text-3" id="text-3-5">
 <p>
-An integer can be cast to a real number or vice versa.
+An <code>integer</code> can be cast to a <code>real</code> or vice versa.
 </p>
 
 <div class="org-src-container">
 
-<pre class="src src-fortran"><span class="linenr">1: </span><span style="color: #6434A3;">integer</span> ::<span style="color: #BA36A5;"> a = 1, b</span>
-<span class="linenr">2: </span><span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> c, PI = 3.14159</span>
-<span class="linenr">3: </span>
-<span class="linenr">4: </span>b = <span style="color: #0000FF;">int</span><span style="color: #707183;">(</span>PI<span style="color: #707183;">)</span> <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">b is 3</span>
-<span class="linenr">5: </span>
-<span class="linenr">6: </span>c = a/b <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">c is 0</span>
-<span class="linenr">7: </span>
-<span class="linenr">8: </span>c = a/<span style="color: #0000FF;">real</span><span style="color: #707183;">(</span>b<span style="color: #707183;">)</span> <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">c is .3333...</span>
+<pre class="src src-fortran"><span class="linenr"> 1: </span><span style="color: #6434A3;">integer</span> ::<span style="color: #BA36A5;"> a = 1, b</span>
+<span class="linenr"> 2: </span><span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> c, PI = 3.14159</span>
+<span class="linenr"> 3: </span>
+<span class="linenr"> 4: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">explicit cast real to int</span>
+<span class="linenr"> 5: </span>b = <span style="color: #0000FF;">int</span><span style="color: #707183;">(</span>PI<span style="color: #707183;">)</span> <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">b is 3</span>
+<span class="linenr"> 6: </span>
+<span class="linenr"> 7: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">implicit cast real to int</span>
+<span class="linenr"> 8: </span>c = a/b <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">c is 0</span>
+<span class="linenr"> 9: </span>
+<span class="linenr">10: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">explicit cast int to real and divide</span>
+<span class="linenr">11: </span>c = a/<span style="color: #0000FF;">real</span><span style="color: #707183;">(</span>b<span style="color: #707183;">)</span> <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">c is .3333...</span>
 </pre>
 </div>
 </div>
@@ -623,7 +650,7 @@ An integer can be cast to a real number or vice versa.
 <h3 id="orgheadline16"><span class="section-number-3">3.6</span> The <code>parameter</code> modifier</h3>
 <div class="outline-text-3" id="text-3-6">
 <p>
-To protect a variable from reassignment, you can use the <code>parameter</code> modifier. If this modifier is used, the corresponding variable must be assigned a value at declaration, and that value cannot be reassigned. The following code is not valid because of the reassignment <code>PI = 3</code>.
+The <code>parameter</code> keyword is used to declare constant variables. When a variable is declared with the <code>parameter</code> keyword, it must be assigned a value at declaration and that value cannot be reassigned later. The following code is not valid because of the reassignment <code>PI = 3</code>.
 </p>
 
 <div class="org-src-container">
@@ -645,7 +672,7 @@ The compiler produces an error like <code>Error: Named constant ‘pi’ in vari
 <h3 id="orgheadline17"><span class="section-number-3">3.7</span> Setting the precision</h3>
 <div class="outline-text-3" id="text-3-7">
 <p>
-Each data type is assigned an integer by the Fortran <code>kind</code> function. You can write a program in a chosen precision with the <code>kind</code> of the precision stored in a variable <code>rp</code>. Then, if you want to change the precision, you could change the value of <code>rp</code> and recompile. The precision of a variable can be set at declaration and a variable or constant can be cast to a specified precision, each by supplying an extra argument.
+The <code>kind</code> function returns an <code>integer</code> for each data type. The <code>kind</code> of a floating point number can be specified at declaration. We could work in either single or double precision by storing the <code>kind</code> of a <code>real</code> or <code>double precision</code>, resp., in a constant <code>rp</code> then declaring each new variable with that <code>kind</code>. Then, to switch precision, we would only need to switch <code>rp</code>.
 </p>
 
 <div class="org-src-container">
@@ -675,7 +702,7 @@ Each data type is assigned an integer by the Fortran <code>kind</code> function.
 <h3 id="orgheadline18"><span class="section-number-3">3.8</span> Pointers</h3>
 <div class="outline-text-3" id="text-3-8">
 <p>
-Pointers have the same meaning in Fortran as in C++. A pointer is a variable that holds the <b>memory address</b> for a variable of a specific type. The implementation of pointers is qualitatively different in Fortran than in C++. In Fortran, the user cannot view the memory address that a pointer stores. A pointer variable is declared with the <code>pointer</code> modifier, and a variable that it points to is declared with the <code>target</code> modifier. The types of a <code>pointer</code> and its <code>target</code> must match.
+Pointers have the same meaning in Fortran as in C++. A pointer is a variable that holds the <b>memory address</b> of a variable. The implementation of pointers is qualitatively different in Fortran than in C++. In Fortran, the user cannot view the memory address that a pointer stores. A pointer variable is declared with the <code>pointer</code> modifier, and a variable that it points to is declared with the <code>target</code> modifier. The types of a <code>pointer</code> and its <code>target</code> must match.
 </p>
 
 <div class="org-src-container">
@@ -728,10 +755,19 @@ Here's a one-dimensional array example.
 </p>
 <div class="org-src-container">
 
-<pre class="src src-fortran"><span class="linenr">1: </span><span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> a</span><span style="color: #707183;">(</span><span style="color: #BA36A5;">5</span><span style="color: #707183;">)</span>
-<span class="linenr">2: </span>
-<span class="linenr">3: </span>a<span style="color: #707183;">(</span><span style="color: #D0372D;">1</span><span style="color: #707183;">)</span> = <span style="color: #D0372D;">1</span>.<span style="color: #D0372D;">0</span>
-<span class="linenr">4: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">etc</span>
+<pre class="src src-fortran"><span class="linenr"> 1: </span><span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> a</span><span style="color: #707183;">(</span><span style="color: #BA36A5;">5</span><span style="color: #707183;">)</span>
+<span class="linenr"> 2: </span>
+<span class="linenr"> 3: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">you can work with each component individually</span>
+<span class="linenr"> 4: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">set the first component to 1</span>
+<span class="linenr"> 5: </span>a<span style="color: #707183;">(</span><span style="color: #D0372D;">1</span><span style="color: #707183;">)</span> = <span style="color: #D0372D;">1</span>.<span style="color: #D0372D;">0</span>
+<span class="linenr"> 6: </span>
+<span class="linenr"> 7: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">or you can work with the whole array</span>
+<span class="linenr"> 8: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">set the whole array to 2</span>
+<span class="linenr"> 9: </span>a = <span style="color: #D0372D;">2</span>.<span style="color: #D0372D;">0</span>
+<span class="linenr">10: </span>
+<span class="linenr">11: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">or you can with slices of the array</span>
+<span class="linenr">12: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">set first three components to 3</span>
+<span class="linenr">13: </span>a<span style="color: #707183;">(</span><span style="color: #D0372D;">1</span>:<span style="color: #D0372D;">3</span><span style="color: #707183;">)</span> = <span style="color: #D0372D;">3</span>.<span style="color: #D0372D;">0</span>
 </pre>
 </div>
 
@@ -740,12 +776,35 @@ And, here's a two-dimensional array example.
 </p>
 <div class="org-src-container">
 
-<pre class="src src-fortran"><span class="linenr">1: </span><span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> a</span><span style="color: #707183;">(</span><span style="color: #BA36A5;">5,5</span><span style="color: #707183;">)</span>
-<span class="linenr">2: </span>
-<span class="linenr">3: </span>a<span style="color: #707183;">(</span><span style="color: #D0372D;">1</span>,<span style="color: #D0372D;">1</span><span style="color: #707183;">)</span> = <span style="color: #D0372D;">1</span>.<span style="color: #D0372D;">0</span>
-<span class="linenr">4: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">etc</span>
+<pre class="src src-fortran"><span class="linenr"> 1: </span><span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> a</span><span style="color: #707183;">(</span><span style="color: #BA36A5;">5,5</span><span style="color: #707183;">)</span>
+<span class="linenr"> 2: </span>
+<span class="linenr"> 3: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">you can work with each component individually</span>
+<span class="linenr"> 4: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">set upper left component to 1</span>
+<span class="linenr"> 5: </span>a<span style="color: #707183;">(</span><span style="color: #D0372D;">1</span>,<span style="color: #D0372D;">1</span><span style="color: #707183;">)</span> = <span style="color: #D0372D;">1</span>.<span style="color: #D0372D;">0</span>
+<span class="linenr"> 6: </span>
+<span class="linenr"> 7: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">or you can work with the whole array</span>
+<span class="linenr"> 8: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">set the whole array to 2</span>
+<span class="linenr"> 9: </span>a = <span style="color: #D0372D;">2</span>.<span style="color: #D0372D;">0</span>
+<span class="linenr">10: </span>
+<span class="linenr">11: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">or you can with slices of the array</span>
+<span class="linenr">12: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">set upper left 2x2 submatrix to 3</span>
+<span class="linenr">13: </span>a<span style="color: #707183;">(</span><span style="color: #D0372D;">1</span>:<span style="color: #D0372D;">2</span>, <span style="color: #D0372D;">1</span>:<span style="color: #D0372D;">2</span><span style="color: #707183;">)</span> = <span style="color: #D0372D;">3</span>.<span style="color: #D0372D;">0</span>
 </pre>
 </div>
+
+<p>
+Fortran includes intrinsic functions to operate on an array <code>a</code> such as
+</p>
+<ul class="org-ul">
+<li><code>size(a)</code>: number of elements of <code>a</code></li>
+<li><code>minval(a)</code>: minimum value of <code>a</code></li>
+<li><code>maxval(a)</code>: maximum value of <code>a</code></li>
+<li><code>sum(a)</code>: sum of elements in <code>a</code></li>
+<li><code>product(a)</code>: product of elements in <code>a</code></li>
+</ul>
+<p>
+See the <code>gfortran</code> documentation for more.
+</p>
 </div>
 </div>
 
@@ -775,7 +834,7 @@ Here's a one-dimensional example.
 <span class="linenr">12: </span><span style="color: #0000FF;">deallocate</span><span style="color: #707183;">(</span>a<span style="color: #707183;">)</span>
 <span class="linenr">13: </span>
 <span class="linenr">14: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">we can change the size and index range of a</span>
-<span class="linenr">15: </span><span style="color: #0000FF;">allocate</span><span style="color: #707183;">(</span>a<span style="color: #7388D6;">(</span><span style="color: #D0372D;">0</span>:<span style="color: #D0372D;">9</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<span class="linenr">15: </span><span style="color: #0000FF;">allocate</span><span style="color: #707183;">(</span>a<span style="color: #7388D6;">(</span><span style="color: #D0372D;">0</span>:<span style="color: #D0372D;">10</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
 <span class="linenr">16: </span>
 <span class="linenr">17: </span>a<span style="color: #707183;">(</span><span style="color: #D0372D;">0</span><span style="color: #707183;">)</span> = <span style="color: #D0372D;">1</span>.<span style="color: #D0372D;">0</span>
 <span class="linenr">18: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">etc...</span>
@@ -797,7 +856,7 @@ Here's a two-dimensional example.
 <span class="linenr"> 2: </span><span style="color: #6434A3;">real</span>, <span style="color: #0000FF;">allocatable</span> ::<span style="color: #BA36A5;"> a</span><span style="color: #707183;">(</span><span style="color: #BA36A5;">:,:</span><span style="color: #707183;">)</span>
 <span class="linenr"> 3: </span>
 <span class="linenr"> 4: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">allocate memory for a</span>
-<span class="linenr"> 5: </span><span style="color: #0000FF;">allocate</span><span style="color: #707183;">(</span>a<span style="color: #7388D6;">(</span><span style="color: #D0372D;">5</span>,<span style="color: #D0372D;">2</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<span class="linenr"> 5: </span><span style="color: #0000FF;">allocate</span><span style="color: #707183;">(</span>a<span style="color: #7388D6;">(</span><span style="color: #D0372D;">5</span>,<span style="color: #D0372D;">5</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
 <span class="linenr"> 6: </span>
 <span class="linenr"> 7: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">now you can treat a like a normal array</span>
 <span class="linenr"> 8: </span>a<span style="color: #707183;">(</span><span style="color: #D0372D;">1</span>,<span style="color: #D0372D;">1</span><span style="color: #707183;">)</span> = <span style="color: #D0372D;">1</span>.<span style="color: #D0372D;">0</span>
@@ -807,7 +866,7 @@ Here's a two-dimensional example.
 <span class="linenr">12: </span><span style="color: #0000FF;">deallocate</span><span style="color: #707183;">(</span>a<span style="color: #707183;">)</span>
 <span class="linenr">13: </span>
 <span class="linenr">14: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">we can change the size and index range of a</span>
-<span class="linenr">15: </span><span style="color: #0000FF;">allocate</span><span style="color: #707183;">(</span>a<span style="color: #7388D6;">(</span><span style="color: #D0372D;">0</span>:<span style="color: #D0372D;">9</span>,<span style="color: #D0372D;">0</span>:<span style="color: #D0372D;">1</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<span class="linenr">15: </span><span style="color: #0000FF;">allocate</span><span style="color: #707183;">(</span>a<span style="color: #7388D6;">(</span><span style="color: #D0372D;">0</span>:<span style="color: #D0372D;">10</span>,<span style="color: #D0372D;">0</span>:<span style="color: #D0372D;">10</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
 <span class="linenr">16: </span>
 <span class="linenr">17: </span>a<span style="color: #707183;">(</span><span style="color: #D0372D;">0</span>,<span style="color: #D0372D;">0</span><span style="color: #707183;">)</span> = <span style="color: #D0372D;">1</span>.<span style="color: #D0372D;">0</span>
 <span class="linenr">18: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">etc...</span>
@@ -830,7 +889,7 @@ Here's a two-dimensional example.
 <h4 id="orgheadline23"><span class="section-number-4">4.1.1</span> Example: <code>if</code> / <code>else</code> and random number generation</h4>
 <div class="outline-text-4" id="text-4-1-1">
 <p>
-You can control execution of two blocks of code with mutually exclusive logic using the <code>if</code> / <code>else</code> construct. An <code>else</code> block is optional and can be omitted to form an <code>if</code> construct in which a block of code executes if a logical expression evaluates to <code>.true.</code>. The following code generates a random number between 0 and 1, then prints the number and whether or not the number is greater than 0.5
+Execution of two blocks of code can be controlled with mutually exclusive logic using the <code>if</code> / <code>else</code> construct. The following code generates a random number between 0 and 1, then prints the number and whether or not the number is greater than 0.5
 </p>
 
 <div class="org-src-container">
@@ -874,6 +933,10 @@ num is greater then 0.5
 <p>
 Since the random number generator was seeded with a literal integer, the above code will produce the <i>same</i> output each time it is run.
 </p>
+
+<p>
+An <code>else</code> block is optional and can be omitted to form an <code>if</code> construct in which a block of code executes if a logical expression evaluates to <code>.true.</code>.
+</p>
 </div>
 </div>
 
@@ -881,7 +944,7 @@ Since the random number generator was seeded with a literal integer, the above c
 <h4 id="orgheadline24"><span class="section-number-4">4.1.2</span> Example: <code>if</code> / <code>else if</code> / <code>else</code></h4>
 <div class="outline-text-4" id="text-4-1-2">
 <p>
-You can control execution of two blocks of code with mutually exclusive logic using the <code>if=/=else</code> construct. The following code generates a random number between 0 and 1, then prints the number and the quarter of the interval \([0,1]\) that the number is in.
+Execution of three or more blocks of code with mutually exclusive logic can be controlled using the <code>if</code> / <code>else if</code> / <code>else</code> construct. The following code generates a random number between 0 and 1, then prints the number and which quarter of the interval \([0,1]\) that the number is in.
 </p>
 
 <div class="org-src-container">
@@ -966,12 +1029,34 @@ x(8) = 0.8
 x(9) = 0.9
 x(10) = 1.0
 </pre>
+
+<p>
+An <i>implicit</i> <code>do loop</code> can be used for formulaic array assignments. The following code creates the same array as the last example.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-fortran"><span style="color: #6434A3;">integer</span> ::<span style="color: #BA36A5;"> max = 10</span>
+<span style="color: #6434A3;">real</span>, <span style="color: #0000FF;">allocatable</span> ::<span style="color: #BA36A5;"> x</span><span style="color: #707183;">(</span><span style="color: #BA36A5;">:</span><span style="color: #707183;">)</span>
+
+<span style="color: #0000FF;">allocate</span><span style="color: #707183;">(</span>x<span style="color: #7388D6;">(</span><span style="color: #D0372D;">0</span>:max<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">implicit do loop for formulaic array assignment</span>
+x = <span style="color: #707183;">[</span><span style="color: #7388D6;">(</span>i / <span style="color: #0000FF;">real</span><span style="color: #909183;">(</span>max<span style="color: #909183;">)</span>, i=<span style="color: #D0372D;">0</span>, max<span style="color: #7388D6;">)</span><span style="color: #707183;">]</span>
+
+<span style="color: #0000FF;">deallocate</span><span style="color: #707183;">(</span>x<span style="color: #707183;">)</span>
+</pre>
+</div>
 </div>
 </div>
 
 <div id="outline-container-orgheadline27" class="outline-4">
 <h4 id="orgheadline27"><span class="section-number-4">4.2.2</span> Example: row-major matrix</h4>
 <div class="outline-text-4" id="text-4-2-2">
+<p>
+The following code stores matrix data in a one-dimensional array named <code>matrix</code> in <code>row-major</code> order. This means the first <code>n_cols</code> elements of the array will contain the first row of the matrix, the next <code>n_cols</code> of the array will contain the second row of the matrix, etc.
+</p>
+
 <div class="org-src-container">
 
 <pre class="src src-fortran"><span class="linenr"> 1: </span><span style="color: #6434A3;">integer</span> ::<span style="color: #BA36A5;"> n_rows = 4, n_cols = 3</span>
@@ -1002,7 +1087,7 @@ x(10) = 1.0
 <span class="linenr">26: </span>
 <span class="linenr">27: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">print matrix components</span>
 <span class="linenr">28: </span><span style="color: #0000FF;">do</span> i = <span style="color: #D0372D;">1</span>,n_rows
-<span class="linenr">29: </span>   <span style="color: #0000FF;">print</span>*, matrix<span style="color: #707183;">(</span><span style="color: #D0372D;">1</span>+<span style="color: #7388D6;">(</span>i-<span style="color: #D0372D;">1</span><span style="color: #7388D6;">)</span>*n_cols:i*n_cols<span style="color: #707183;">)</span>
+<span class="linenr">29: </span>   <span style="color: #0000FF;">print</span> <span style="color: #008000;">"(2(f3.1,', '), f3.1)"</span>, matrix<span style="color: #707183;">(</span><span style="color: #D0372D;">1</span>+<span style="color: #7388D6;">(</span>i-<span style="color: #D0372D;">1</span><span style="color: #7388D6;">)</span>*n_cols:i*n_cols<span style="color: #707183;">)</span>
 <span class="linenr">30: </span><span style="color: #0000FF;">end do</span>
 <span class="linenr">31: </span>
 <span class="linenr">32: </span><span style="color: #0000FF;">deallocate</span><span style="color: #707183;">(</span>matrix<span style="color: #707183;">)</span>
@@ -1010,10 +1095,10 @@ x(10) = 1.0
 </div>
 
 <pre class="example">
-1.00000000       2.00000000       0.00000000    
-2.00000000       1.00000000       2.00000000    
-0.00000000       2.00000000       1.00000000    
-0.00000000       0.00000000       2.00000000
+1.0, 2.0, 0.0
+2.0, 1.0, 2.0
+0.0, 2.0, 1.0
+0.0, 0.0, 2.0
 </pre>
 </div>
 </div>
@@ -1167,14 +1252,14 @@ count:  5, a:  8
 </div>
 </div>
 
-<div id="outline-container-orgheadline37" class="outline-2">
-<h2 id="orgheadline37"><span class="section-number-2">5</span> Input/Output</h2>
+<div id="outline-container-orgheadline38" class="outline-2">
+<h2 id="orgheadline38"><span class="section-number-2">5</span> Input/Output</h2>
 <div class="outline-text-2" id="text-5">
 </div><div id="outline-container-orgheadline33" class="outline-3">
 <h3 id="orgheadline33"><span class="section-number-3">5.1</span> Command line arguments</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
-Arguments can be received by the main program from the command line using <code>get_command_argument</code>. The first argument received by this command is the executable file name and the remaining arguments are supplied by the user. The following program accepts any number of arguments, each at most 32 characters, and prints them.
+Arguments can be passed to a program from the command line using <code>get_command_argument</code>. The first argument received by <code>get_command_argument</code> is the program executable file name and the remaining arguments are passed by the user. The following program accepts any number of arguments, each at most 32 characters, and prints them.
 </p>
 
 <div class="org-src-container">
@@ -1233,17 +1318,19 @@ number of arguments: 4
 <h4 id="orgheadline34"><span class="section-number-4">5.2.1</span> Reading data from file</h4>
 <div class="outline-text-4" id="text-5-2-1">
 <p>
-The contents of a data file can be read into an array using <code>read</code>. Suppose you have a file <code>./data/array.txt</code> that contains
+The contents of a data file can be read into an array using <code>read</code>. Suppose you have a file <code>./data/array.txt</code> that contains two columns of data
 </p>
 
 <pre class="example">
 1 1.23
 2 2.34
 3 3.45
+4 4.56
+5 5.67
 </pre>
 
 <p>
-This file can be opened in the program with the <code>open</code> command. The required first argument of <code>open</code> is an <code>integer</code> that specifies the <i>file unit</i>. Choose any number that is not in use. The unit numbers <code>0</code>, <code>5</code>, and <code>6</code> are reserved for system files and should not be used accidentally. Data is read in <b>column-major</b> format, i.e. down the first column, then down the second column, etc.
+This file can be opened with the <code>open</code> command. The required first argument of <code>open</code> is an <code>integer</code> that specifies a <i>file unit</i> for <code>array.txt</code>. Choose any number that is not in use. The unit numbers <code>0</code>, <code>5</code>, and <code>6</code> are reserved for system files and should not be used accidentally. Data are read in <b>row-major</b> format, i.e. across the first row, then across the second row, etc.
 </p>
 
 <p>
@@ -1253,14 +1340,14 @@ The following code reads the contents of <code>./data/array.txt</code> into an a
 <div class="org-src-container">
 
 <pre class="src src-fortran"><span class="linenr"> 1: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">declare array</span>
-<span class="linenr"> 2: </span><span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> array</span><span style="color: #707183;">(</span><span style="color: #BA36A5;">3,2</span><span style="color: #707183;">)</span>
+<span class="linenr"> 2: </span><span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> array</span><span style="color: #707183;">(</span><span style="color: #BA36A5;">5,2</span><span style="color: #707183;">)</span>
 <span class="linenr"> 3: </span><span style="color: #6434A3;">integer</span> ::<span style="color: #BA36A5;"> row</span>
 <span class="linenr"> 4: </span>
 <span class="linenr"> 5: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">open file and assign file unit 10</span>
 <span class="linenr"> 6: </span><span style="color: #0000FF;">open</span> <span style="color: #707183;">(</span><span style="color: #D0372D;">10</span>, file=<span style="color: #008000;">'./data/array.txt'</span>, action=<span style="color: #008000;">'read'</span><span style="color: #707183;">)</span>
 <span class="linenr"> 7: </span>
 <span class="linenr"> 8: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">read data from file unit 10 into array</span>
-<span class="linenr"> 9: </span><span style="color: #0000FF;">do</span> row = <span style="color: #D0372D;">1</span>,<span style="color: #D0372D;">3</span>
+<span class="linenr"> 9: </span><span style="color: #0000FF;">do</span> row = <span style="color: #D0372D;">1</span>,<span style="color: #D0372D;">5</span>
 <span class="linenr">10: </span>   <span style="color: #0000FF;">read</span><span style="color: #707183;">(</span><span style="color: #D0372D;">10</span>,*<span style="color: #707183;">)</span> array<span style="color: #707183;">(</span>row,:<span style="color: #707183;">)</span>
 <span class="linenr">11: </span><span style="color: #0000FF;">end do</span>
 <span class="linenr">12: </span>
@@ -1307,8 +1394,318 @@ This produces a file <code>sine.txt</code> in the directory <code>data</code> co
 0.800000012      0.717356086    
  1.00000000      0.841470957    
 </pre>
-
 </div>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline37" class="outline-3">
+<h3 id="orgheadline37"><span class="section-number-3">5.3</span> Formatted input/output</h3>
+<div class="outline-text-3" id="text-5-3">
+<p>
+The format of a <code>print</code>, <code>read</code>, or <code>write</code> statement can be specified with a <code>character</code> string. A format character string replaces the <code>*</code> symbol in <code>print*</code> and the second <code>*</code> symbol in <code>read(*,*)</code> or <code>write(*,*)</code>. A format string is a list of literal character strings or character descriptors from
+</p>
+<ul class="org-ul">
+<li><code>a</code>: character string</li>
+<li><code>iW</code>: integer</li>
+<li><code>fW.D</code>: float point</li>
+<li><code>esW.DeE</code>: scientific notation</li>
+<li><code>Wx</code>: space</li>
+</ul>
+<p>
+where <code>W</code>, <code>D</code>, and <code>E</code> should be replaced by numbers specifying width, number of digits, or number  of exponent digits, resp. The width of a formatted integer or float defaults to the width of the number when <code>W</code> is <code>0</code>.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-fortran"><span class="linenr"> 1: </span><span style="color: #6434A3;">character</span><span style="color: #707183;">(</span><span style="color: #D0372D;">32</span><span style="color: #707183;">)</span> ::<span style="color: #BA36A5;"> fmt, a = 'word' </span>
+<span class="linenr"> 2: </span><span style="color: #6434A3;">integer</span> ::<span style="color: #BA36A5;"> b = 1</span>
+<span class="linenr"> 3: </span><span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> c = 2.0, d = 3.0</span>
+<span class="linenr"> 4: </span>
+<span class="linenr"> 5: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">character string and 4 space-delimited values</span>
+<span class="linenr"> 6: </span><span style="color: #0000FF;">print</span> <span style="color: #008000;">"('four values: ', a, 1x i0, 1x f0.1, 1x, es6.1e1)"</span>, <span style="color: #0000FF;">trim</span><span style="color: #707183;">(</span>a<span style="color: #707183;">)</span>, b, c, d
+<span class="linenr"> 7: </span>
+<span class="linenr"> 8: </span><span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">character string and 2 space-delimited values</span>
+<span class="linenr"> 9: </span>fmt = <span style="color: #008000;">'(a, 2(f0.1, 1x))'</span>
+<span class="linenr">10: </span><span style="color: #0000FF;">print</span> fmt, <span style="color: #008000;">'two values: '</span>, c, d
+</pre>
+</div>
+
+<pre class="example">
+four values: word 1 2.0 3.0E+0
+two values: 2.0 3.0
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline44" class="outline-2">
+<h2 id="orgheadline44"><span class="section-number-2">6</span> Functions</h2>
+<div class="outline-text-2" id="text-6">
+</div><div id="outline-container-orgheadline40" class="outline-3">
+<h3 id="orgheadline40"><span class="section-number-3">6.1</span> Writing a function</h3>
+<div class="outline-text-3" id="text-6-1">
+<p>
+Functions are defined after the <code>contains</code> keyword in a <code>module</code> or <code>program</code>. The definition of a function starts with the name of the function followed by a list of arguments and return variable. The data types of the arguments and return variable are defined within the <code>function</code> body.
+</p>
+</div>
+
+<div id="outline-container-orgheadline39" class="outline-4">
+<h4 id="orgheadline39"><span class="section-number-4">6.1.1</span> Example: <code>linspace</code>: generating a set of equally-space points</h4>
+<div class="outline-text-4" id="text-6-1-1">
+<p>
+The following program defines a function <code>linspace</code> that returns a set of equidistant points on an interval. The main function makes a call to the function.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-fortran"><span class="linenr"> 1: </span><span style="color: #0000FF;">program</span> <span style="color: #006699;">main</span>
+<span class="linenr"> 2: </span>  <span style="color: #0000FF;">implicit</span> <span style="color: #6434A3;">none</span>
+<span class="linenr"> 3: </span>
+<span class="linenr"> 4: </span>  <span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> xs</span><span style="color: #707183;">(</span><span style="color: #BA36A5;">10</span><span style="color: #707183;">)</span>
+<span class="linenr"> 5: </span>
+<span class="linenr"> 6: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">call function linspace to set values in xs</span>
+<span class="linenr"> 7: </span>  xs = linspace<span style="color: #707183;">(</span><span style="color: #D0372D;">0</span>.<span style="color: #D0372D;">0</span>, <span style="color: #D0372D;">1</span>.<span style="color: #D0372D;">0</span>, <span style="color: #D0372D;">10</span><span style="color: #707183;">)</span>
+<span class="linenr"> 8: </span>
+<span class="linenr"> 9: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">print returned value of xs</span>
+<span class="linenr">10: </span>  <span style="color: #0000FF;">print</span> <span style="color: #008000;">"(10(f0.1, 1x))"</span> , xs
+<span class="linenr">11: </span>
+<span class="linenr">12: </span><span style="color: #0000FF;">contains</span>
+<span class="linenr">13: </span>
+<span class="linenr">14: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">linspace: return a set of equidistant points on an interval</span>
+<span class="linenr">15: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">min: minimum value of interval</span>
+<span class="linenr">16: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">max: maximum value of interval</span>
+<span class="linenr">17: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">n_points: number of points in returned set</span>
+<span class="linenr">18: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">xs: set of points</span>
+<span class="linenr">19: </span>  <span style="color: #0000FF;">function</span> <span style="color: #006699;">linspace</span><span style="color: #707183;">(</span>min, max, n_points<span style="color: #707183;">)</span> <span style="color: #0000FF;">result</span><span style="color: #707183;">(</span>xs<span style="color: #707183;">)</span>
+<span class="linenr">20: </span>    <span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> min, max, dx</span>
+<span class="linenr">21: </span>    <span style="color: #6434A3;">integer</span> ::<span style="color: #BA36A5;"> n_points</span>
+<span class="linenr">22: </span>    <span style="color: #6434A3;">integer</span> ::<span style="color: #BA36A5;"> i</span>
+<span class="linenr">23: </span>    <span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> xs</span><span style="color: #707183;">(</span><span style="color: #BA36A5;">n_points</span><span style="color: #707183;">)</span>
+<span class="linenr">24: </span>
+<span class="linenr">25: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">calculate width of subintervals</span>
+<span class="linenr">26: </span>    dx = <span style="color: #707183;">(</span>max-min<span style="color: #707183;">)</span> / <span style="color: #0000FF;">real</span><span style="color: #707183;">(</span>n_points-<span style="color: #D0372D;">1</span><span style="color: #707183;">)</span>
+<span class="linenr">27: </span>
+<span class="linenr">28: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">fill xs with points</span>
+<span class="linenr">29: </span>    <span style="color: #0000FF;">do</span> i = <span style="color: #D0372D;">1</span>,n_points
+<span class="linenr">30: </span>       xs<span style="color: #707183;">(</span>i<span style="color: #707183;">)</span> = min + <span style="color: #707183;">(</span>i-<span style="color: #D0372D;">1</span><span style="color: #707183;">)</span>*dx
+<span class="linenr">31: </span>    <span style="color: #0000FF;">end do</span>
+<span class="linenr">32: </span>
+<span class="linenr">33: </span>  <span style="color: #0000FF;">end function</span> <span style="color: #006699;">linspace</span>
+<span class="linenr">34: </span>
+<span class="linenr">35: </span><span style="color: #0000FF;">end program</span> <span style="color: #006699;">main</span>
+</pre>
+</div>
+
+<pre class="example">
+.0 .1 .2 .3 .4 .6 .7 .8 .9 1.0
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline43" class="outline-3">
+<h3 id="orgheadline43"><span class="section-number-3">6.2</span> Interfaces</h3>
+<div class="outline-text-3" id="text-6-2">
+<p>
+A function can be passed as an argument to another function if there is an <code>interface</code> to instruct the receiving function how to use the passed function. An <code>interface</code> to a function is essentially the function itself with only declarations and without implementation.
+</p>
+</div>
+
+<div id="outline-container-orgheadline41" class="outline-4">
+<h4 id="orgheadline41"><span class="section-number-4">6.2.1</span> Example: Newton's method for rootfinding</h4>
+<div class="outline-text-4" id="text-6-2-1">
+<p>
+Newton's method for finding the root of a function \(f:\mathbb{R}\rightarrow\mathbb{R}\) refines an initial guess \(x_0\) according to the iteration rule
+</p>
+\begin{equation*}
+x_{n}=x_n-\frac{f(x_n)}{f'(x_n)}
+\end{equation*}
+<p>
+for \(n\geq1\) until \(f(x)\) is less than a chosen tolerance or a maximum number of iterations. The following code converges to a root of \(f(x)=x^2-2\) from an initial guess \(x_0=1\).
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-fortran"><span class="linenr"> 1: </span><span style="color: #0000FF;">program</span> <span style="color: #006699;">main</span>
+<span class="linenr"> 2: </span>  <span style="color: #0000FF;">implicit</span> <span style="color: #6434A3;">none</span>
+<span class="linenr"> 3: </span>
+<span class="linenr"> 4: </span>  <span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> x</span>
+<span class="linenr"> 5: </span>
+<span class="linenr"> 6: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">call newton rootfinding function</span>
+<span class="linenr"> 7: </span>  x = newton<span style="color: #707183;">(</span>f, df, <span style="color: #D0372D;">1</span>.<span style="color: #D0372D;">0</span>, <span style="color: #D0372D;">1e</span>-<span style="color: #D0372D;">6</span>, <span style="color: #D0372D;">1000</span>, <span style="color: #0000FF;">.true.</span><span style="color: #707183;">)</span>
+<span class="linenr"> 8: </span>
+<span class="linenr"> 9: </span><span style="color: #0000FF;">contains</span>
+<span class="linenr">10: </span>
+<span class="linenr">11: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">function f(x) = x^2 - 2</span>
+<span class="linenr">12: </span>  <span style="color: #0000FF;">function</span> <span style="color: #006699;">f</span><span style="color: #707183;">(</span>x<span style="color: #707183;">)</span> <span style="color: #0000FF;">result</span><span style="color: #707183;">(</span>y<span style="color: #707183;">)</span>
+<span class="linenr">13: </span>    <span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> x, y</span>
+<span class="linenr">14: </span>    y = x*x - <span style="color: #D0372D;">2</span>
+<span class="linenr">15: </span>  <span style="color: #0000FF;">end function</span> <span style="color: #006699;">f</span>
+<span class="linenr">16: </span>
+<span class="linenr">17: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">function df(x) = 2x</span>
+<span class="linenr">18: </span>  <span style="color: #0000FF;">function</span> <span style="color: #006699;">df</span><span style="color: #707183;">(</span>x<span style="color: #707183;">)</span> <span style="color: #0000FF;">result</span><span style="color: #707183;">(</span>dy<span style="color: #707183;">)</span>
+<span class="linenr">19: </span>    <span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> x, dy</span>
+<span class="linenr">20: </span>    dy = <span style="color: #D0372D;">2</span>*x
+<span class="linenr">21: </span>  <span style="color: #0000FF;">end function</span> <span style="color: #006699;">df</span>
+<span class="linenr">22: </span>
+<span class="linenr">23: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">newton: newtons method for rootfinding</span>
+<span class="linenr">24: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">f: function with root</span>
+<span class="linenr">25: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">df: derivative of f</span>
+<span class="linenr">26: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">x0: initial iterate</span>
+<span class="linenr">27: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">tol: absolute tolerance</span>
+<span class="linenr">28: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">max_iters: maximum number of iterations</span>
+<span class="linenr">29: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">print_iters: boolean to toggle verbosity</span>
+<span class="linenr">30: </span>  <span style="color: #0000FF;">function</span> <span style="color: #006699;">newton</span><span style="color: #707183;">(</span>f, df, x0, tol, max_iters, print_iters<span style="color: #707183;">)</span> <span style="color: #0000FF;">result</span><span style="color: #707183;">(</span>x<span style="color: #707183;">)</span>
+<span class="linenr">31: </span>
+<span class="linenr">32: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">interface to function f</span>
+<span class="linenr">33: </span>    <span style="color: #0000FF;">interface</span>
+<span class="linenr">34: </span>       <span style="color: #0000FF;">function</span> <span style="color: #006699;">f</span><span style="color: #707183;">(</span>x<span style="color: #707183;">)</span> <span style="color: #0000FF;">result</span><span style="color: #707183;">(</span>y<span style="color: #707183;">)</span>
+<span class="linenr">35: </span>         <span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> x, y</span>
+<span class="linenr">36: </span>       <span style="color: #0000FF;">end function</span> <span style="color: #006699;">f</span>
+<span class="linenr">37: </span>    <span style="color: #0000FF;">end interface</span>
+<span class="linenr">38: </span>
+<span class="linenr">39: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">interface to function df</span>
+<span class="linenr">40: </span>    <span style="color: #0000FF;">interface</span>
+<span class="linenr">41: </span>       <span style="color: #0000FF;">function</span> <span style="color: #006699;">df</span><span style="color: #707183;">(</span>x<span style="color: #707183;">)</span> <span style="color: #0000FF;">result</span><span style="color: #707183;">(</span>dy<span style="color: #707183;">)</span>
+<span class="linenr">42: </span>         <span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> x, dy</span>
+<span class="linenr">43: </span>       <span style="color: #0000FF;">end function</span> <span style="color: #006699;">df</span>
+<span class="linenr">44: </span>    <span style="color: #0000FF;">end interface</span>
+<span class="linenr">45: </span>
+<span class="linenr">46: </span>    <span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> x0, tol, x</span>
+<span class="linenr">47: </span>    <span style="color: #6434A3;">integer</span> ::<span style="color: #BA36A5;"> iter, max_iters</span>
+<span class="linenr">48: </span>    <span style="color: #6434A3;">logical</span> ::<span style="color: #BA36A5;"> print_iters</span>
+<span class="linenr">49: </span>
+<span class="linenr">50: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">initialize x</span>
+<span class="linenr">51: </span>    x=x0
+<span class="linenr">52: </span>
+<span class="linenr">53: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">while f(x) greater than absolute tolerance</span>
+<span class="linenr">54: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">and max number of iterations not exceeded</span>
+<span class="linenr">55: </span>    <span style="color: #0000FF;">do while</span> <span style="color: #707183;">(</span><span style="color: #0000FF;">abs</span><span style="color: #7388D6;">(</span>f<span style="color: #909183;">(</span>x<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span>&gt;tol<span style="color: #0000FF;">.and.</span>iter&lt;max_iters<span style="color: #707183;">)</span>
+<span class="linenr">56: </span>       <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">print current x and f(x)</span>
+<span class="linenr">57: </span>       <span style="color: #0000FF;">if</span> <span style="color: #707183;">(</span>print_iters<span style="color: #707183;">)</span> <span style="color: #0000FF;">print</span> <span style="color: #008000;">"('f(', f0.7, ') = ', f0.7)"</span>, x, f<span style="color: #707183;">(</span>x<span style="color: #707183;">)</span>
+<span class="linenr">58: </span>
+<span class="linenr">59: </span>       <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">Newton's update rule</span>
+<span class="linenr">60: </span>       x = x - f<span style="color: #707183;">(</span>x<span style="color: #707183;">)</span>/df<span style="color: #707183;">(</span>x<span style="color: #707183;">)</span>
+<span class="linenr">61: </span>
+<span class="linenr">62: </span>       <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">increment number of iterations</span>
+<span class="linenr">63: </span>       iter = iter + <span style="color: #D0372D;">1</span>
+<span class="linenr">64: </span>    <span style="color: #0000FF;">end do</span>
+<span class="linenr">65: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">print last x and f(x)</span>
+<span class="linenr">66: </span>    <span style="color: #0000FF;">if</span> <span style="color: #707183;">(</span>print_iters<span style="color: #707183;">)</span> <span style="color: #0000FF;">print</span> <span style="color: #008000;">"('f(', f0.7, ') = ', f0.7)"</span>, x, f<span style="color: #707183;">(</span>x<span style="color: #707183;">)</span>
+<span class="linenr">67: </span>
+<span class="linenr">68: </span>  <span style="color: #0000FF;">end function</span> <span style="color: #006699;">newton</span>
+<span class="linenr">69: </span>
+<span class="linenr">70: </span><span style="color: #0000FF;">end program</span> <span style="color: #006699;">main</span>
+</pre>
+</div>
+
+<pre class="example">
+f(1.0000000) = -1.0000000
+f(1.5000000) = .2500000
+f(1.4166666) = .0069444
+f(1.4142157) = .0000060
+f(1.4142135) = -.0000001
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline42" class="outline-4">
+<h4 id="orgheadline42"><span class="section-number-4">6.2.2</span> Example: The midpoint rule for definite integrals</h4>
+<div class="outline-text-4" id="text-6-2-2">
+<div class="org-src-container">
+
+<pre class="src src-fortran"><span class="linenr"> 1: </span><span style="color: #0000FF;">program</span> <span style="color: #006699;">main</span>
+<span class="linenr"> 2: </span>  <span style="color: #0000FF;">implicit</span> <span style="color: #6434A3;">none</span>
+<span class="linenr"> 3: </span>
+<span class="linenr"> 4: </span>  <span style="color: #6434A3;">real</span>, <span style="color: #0000FF;">parameter</span> ::<span style="color: #BA36A5;"> E = exp</span><span style="color: #707183;">(</span><span style="color: #BA36A5;">1.</span><span style="color: #707183;">)</span>
+<span class="linenr"> 5: </span>  <span style="color: #6434A3;">integer</span> ::<span style="color: #BA36A5;"> n</span>
+<span class="linenr"> 6: </span>  <span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> integral</span>
+<span class="linenr"> 7: </span>
+<span class="linenr"> 8: </span>  <span style="color: #0000FF;">do</span> n = <span style="color: #D0372D;">2</span>,<span style="color: #D0372D;">20</span>,<span style="color: #D0372D;">2</span>
+<span class="linenr"> 9: </span>     <span style="color: #0000FF;">print</span> <span style="color: #008000;">"('n: ', i0, ' M_n: ', f0.6)"</span>, n, midpoint<span style="color: #707183;">(</span>f, <span style="color: #D0372D;">1</span>.<span style="color: #D0372D;">0</span>, E, n<span style="color: #707183;">)</span>
+<span class="linenr">10: </span>  <span style="color: #0000FF;">end do</span>
+<span class="linenr">11: </span>
+<span class="linenr">12: </span><span style="color: #0000FF;">contains</span>
+<span class="linenr">13: </span>
+<span class="linenr">14: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">function f(x) = 1/x</span>
+<span class="linenr">15: </span>  <span style="color: #0000FF;">function</span> <span style="color: #006699;">f</span><span style="color: #707183;">(</span>x<span style="color: #707183;">)</span> <span style="color: #0000FF;">result</span><span style="color: #707183;">(</span>y<span style="color: #707183;">)</span>
+<span class="linenr">16: </span>    <span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> x, y</span>
+<span class="linenr">17: </span>    y = <span style="color: #D0372D;">1</span>.<span style="color: #D0372D;">0</span>/x
+<span class="linenr">18: </span>  <span style="color: #0000FF;">end function</span> <span style="color: #006699;">f</span>
+<span class="linenr">19: </span>
+<span class="linenr">20: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">midpoint: midpoint rule for definite integral</span>
+<span class="linenr">21: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">f: integrand</span>
+<span class="linenr">22: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">a: left endpoint of interval of integration</span>
+<span class="linenr">23: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">b: right endpoint of interval of integration</span>
+<span class="linenr">24: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">n: number of subintervals</span>
+<span class="linenr">25: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">sum: approximate definite integral</span>
+<span class="linenr">26: </span>  <span style="color: #0000FF;">function</span> <span style="color: #006699;">midpoint</span><span style="color: #707183;">(</span>f, a, b, n<span style="color: #707183;">)</span> <span style="color: #0000FF;">result</span><span style="color: #707183;">(</span>sum<span style="color: #707183;">)</span>
+<span class="linenr">27: </span>
+<span class="linenr">28: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">interface to f</span>
+<span class="linenr">29: </span>    <span style="color: #0000FF;">interface</span>
+<span class="linenr">30: </span>       <span style="color: #0000FF;">function</span> <span style="color: #006699;">f</span><span style="color: #707183;">(</span>x<span style="color: #707183;">)</span>
+<span class="linenr">31: </span>         <span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> x, y</span>
+<span class="linenr">32: </span>       <span style="color: #0000FF;">end function</span> <span style="color: #006699;">f</span>
+<span class="linenr">33: </span>    <span style="color: #0000FF;">end interface</span>
+<span class="linenr">34: </span>
+<span class="linenr">35: </span>    <span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> a, b, min, xi, dx, sum</span>
+<span class="linenr">36: </span>    <span style="color: #6434A3;">integer</span> ::<span style="color: #BA36A5;"> n, i</span>
+<span class="linenr">37: </span>
+<span class="linenr">38: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">subinterval increment</span>
+<span class="linenr">39: </span>    dx = <span style="color: #707183;">(</span>b-a<span style="color: #707183;">)</span>/<span style="color: #0000FF;">real</span><span style="color: #707183;">(</span>n<span style="color: #707183;">)</span>
+<span class="linenr">40: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">minimum to increment from</span>
+<span class="linenr">41: </span>    min = a - dx/<span style="color: #D0372D;">2</span>.<span style="color: #D0372D;">0</span>
+<span class="linenr">42: </span>
+<span class="linenr">43: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">midpoint rule</span>
+<span class="linenr">44: </span>    <span style="color: #0000FF;">do</span> i = <span style="color: #D0372D;">1</span>,n
+<span class="linenr">45: </span>       xi = min + i*dx
+<span class="linenr">46: </span>       sum = sum + f<span style="color: #707183;">(</span>xi<span style="color: #707183;">)</span>
+<span class="linenr">47: </span>    <span style="color: #0000FF;">end do</span>
+<span class="linenr">48: </span>    sum = sum*dx
+<span class="linenr">49: </span>
+<span class="linenr">50: </span>  <span style="color: #0000FF;">end function</span> <span style="color: #006699;">midpoint</span>
+<span class="linenr">51: </span>
+<span class="linenr">52: </span><span style="color: #0000FF;">end program</span> <span style="color: #006699;">main</span>
+</pre>
+</div>
+
+<pre class="example">
+n: 2 M_n: .976360
+n: 4 M_n: .993575
+n: 6 M_n: .997091
+n: 8 M_n: .998353
+n: 10 M_n: .998942
+n: 12 M_n: .999264
+n: 14 M_n: .999459
+n: 16 M_n: .999585
+n: 18 M_n: .999672
+n: 20 M_n: .999735
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline46" class="outline-2">
+<h2 id="orgheadline46"><span class="section-number-2">7</span> Subroutines</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+Whereas a <code>function</code> does not return changes to its arguments and returns at most one value, a <code>subroutine</code> can be used to return changes to multiple arguments.
+</p>
+</div>
+<div id="outline-container-orgheadline45" class="outline-3">
+<h3 id="orgheadline45"><span class="section-number-3">7.1</span> Writing a subroutine</h3>
+<div class="outline-text-3" id="text-7-1">
+<p>
+A <code>subroutine</code> is defined after the <code>contains</code> keyword in a program or module. The definition of a subroutine begins with the name of the subroutine and list of arguments. Arguments are defined within the <code>subroutine</code> body with one of the following intents
+</p>
+<ul class="org-ul">
+<li><code>intent(in)</code>: changes to the argument are not returned</li>
+<li><code>intent(inout)</code>: changes to the argument are returned</li>
+<li><code>intent(out)</code>: the initial value of the argument is ignored and changes to the argument are returned.</li>
+</ul>
+
 </div>
 </div>
 </div>

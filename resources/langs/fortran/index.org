@@ -11,6 +11,8 @@
 #+html_head: <script src="../js/main.js"></script>
 #+html: <div id="main">
 #+html: <div id="footer"><a href="../../../">ACM Computing Seminar Home</a> &mdash; This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US">Creative Commons Attribution 3.0 Unported License</a>.</div>
+#+html: <a href="javascript:;" id="toc-open">&#9776;</a>
+#+html: <a href="javascript:;" id="toc-close">&times;</a>
 
 :snippets:
 # * ${n \choose k}$
@@ -399,14 +401,14 @@
 * Introduction
 This guide is intended to quickly get you up-and-running in scientific computing with Fortran. There is a companion [[../cpp/index.html][C++ guide]] that parallels the content of this guide. 
 ** About the language
-Fortran was created in the 1950s for mathematical *FOR*-mula *TRAN*-slation, and has since gone through a number of revisions (FORTRAN 66, 77, and Fortran 90, 95, 2003, 2008, 2015). The language standards are put forth by the Fortran standards committee [[http://www.j3-fortran.org][J3]] in a document (ISO 1539-1:2010) available for purchase. The syntax and intrinsic capabilities of the language make it especially suited for scientific computing. Like C/C++, Fortran is a *statically-typed* and *compiled* language. You must declare the *type*, i.e. integer, real number, etc. of variables in programs you write. Your programs will be translated from human-readable /source code/ into a machine-executable file by software called a *compiler*. 
+Fortran was created in the 1950s for mathematical *FOR*-mula *TRAN*-slation, and has since gone through a number of revisions (FORTRAN 66, 77, and Fortran 90, 95, 2003, 2008, 2015). The language standards are put forth by the Fortran standards committee [[http://www.j3-fortran.org][J3]] in a document (ISO 1539-1:2010) available for purchase. The syntax and intrinsic capabilities of the language make it especially suited for scientific computing. Like C/C++, Fortran is a *statically-typed* and *compiled* language. You must declare the *type*, i.e. integer, real number, etc. of variables in programs you write. Your programs will be translated from human-readable /source code/ into a machine-executable file by software called a *compiler*. Fortran is *not case-sensitive*, so =matrix= and =MaTrIx= are translated to the same token by the compiler.
 
 * Getting started
 The software that you need to get started comes prepackaged and ready to download on most Linux distributions. There are a few options for emulating a Linux environment in Windows or Mac OS, such as a virtual machine (VirtualBox) or package manager (MinGW or Cygwin on Windows and Brew on Mac OS).
 ** Text editor
 You will write the source code of your programs using a text editor. There are many options that have features designed for programming such as syntax highlighting and auto-completion. If you are an impossible-to-please perfectionist, you might want to check out [[https://www.gnu.org/s/emacs/][Emacs]]. If you are easier to please, you might want to check out [[https://www.sublimetext.com/][Sublime Text]].
 ** Compiler
-To translate your source code into an executable, you will need a Fortran compiler. A free option is *gfortran*, part of the GNU compiler collection (gcc). The features of the Fortran language that are supported by the compiler are specified in the compiler documentation. This is your most complete reference for the intrinsic capabilities of Fortran that your programs can use. At the time of this writing, =gfortran= completely supports Fortran 95 and partially supports more recent standards.
+To translate your source code into an executable, you will need a Fortran compiler. A free option is *gfortran*, part of the GNU compiler collection (gcc). The features of the Fortran language that are supported by the =gfortran= compiler are specified in the [[https://gcc.gnu.org/onlinedocs/gfortran/][compiler documentation]]. This is your most complete reference for the intrinsic capabilities of Fortran that your programs can use. At the time of this writing, =gfortran= completely supports Fortran 95 and partially supports more recent standards.
 ** Writing a program
 *** Hello world
 Let's write a tiny program that prints "hello world" to the terminal screen in =hello.f90=
@@ -508,7 +510,9 @@ in the same directory. The first four lines of =makefile= assign variables for t
 2. Execute =man gfortran= in any directory to bring up the manual for =gfortran=. Read the description and skim through the options. Do the same for =make=.
 
 * Data types
-We will use the =implicit none= keyword at the beginning of each code block as in line [[(in1)]] of =header.f90= and line [[(in2)]] of =main.f90= in Section [[Template]]. The role of this keyword is to suppress some implicit rules that Fortran has for undeclared variables, and by including it we force ourselves to declare each variable that we use. This means our code will be slightly longer than necessary but it will facilitate debugging when our program fails to compile. Without the =implicit none= keyword, an undeclared variable with a name such as =i= is assumed to be an integer data type whereas an undeclared variable with a name such as =x= is assumed to be a real data type.
+In each program element, the data types of variables are declared first, preceding complex variable assignments and other procedures.
+
+We will use the =implicit none= keyword at the beginning of each program and module as in line [[(in1)]] of =header.f90= and line [[(in2)]] of =main.f90= in Section [[Template]]. The role of this keyword is to suppress some implicit rules that Fortran has for undeclared variables, and by including it we force ourselves to declare each variable that we use. This means our code will be slightly longer than necessary but it will facilitate debugging when our program fails to compile. Without the =implicit none= keyword, an undeclared variable with a name such as =i= is assumed to be an integer data type whereas an undeclared variable with a name such as =x= is assumed to be a real data type.
 
 In addition to the most common data types presented below, Fortran has a =complex= data type and support for user-defined data types.
 
@@ -555,34 +559,37 @@ integer :: c
 
 c = a / b ! c is 0
 c = b / a ! c is 1
-c = mod(b,a) ! c is 1, 'mod' is the modulo operator
+c = a + b ! c is 13
 c = b - a ! c is -1
+c = a*b ! c is 42
+c = a**b ! c is 6^7
+c = mod(b,a) ! c is 1, 'mod' is the modulo operator
 c = a > b ! c is 0 (logical gets cast to integer)
 c = a < b ! c is 1 (logical gets cast to integer)
 #+end_src
 
 ** Floating point types
-The two floating point data types =real= and =double precision= correspond to [[https://en.wikipedia.org/wiki/IEEE_floating_point][IEEE 32- and 64-bit floating point data types]].
+The two floating point data types =real= and =double precision= correspond to [[https://en.wikipedia.org/wiki/IEEE_floating_point][IEEE 32- and 64-bit floating point data types]]. A constant called /machine epsilon/ is the smallest number in a floating point system that when added to 1 results in a floating point number larger than 1. It is used in a lot of numerical analysis error estimates. 
 
 #+begin_src fortran -n :exports both :results output
 real :: a ! declare a single precision float
 double precision :: b ! declare a double precision float
 
-! Print the max value of a real type
-print*, huge(a)
+! Print the min/max value of single precision float
+! and machine epsilon for the single precision floating point system
+print*, tiny(a), huge(a), epsilon(a)
 
-! Print the max value of a double precision type
-print*, huge(b)
-
-! Print machine epsilon for the single precision floating point system
-print*, epsilon(a)
-
-! Print machine epsilon for the double precision floating point system
-print*, epsilon(b)
+! Print the min/max value of a double precision float
+! and machine epsilon for the double precision floating point system
+print*, tiny(b), huge(b), epsilon(b)
 #+end_src
 
+#+RESULTS[45ea6a3e832d9c6a899dc779e2e66766e89492d4]:
+: 1.17549435E-38   3.40282347E+38   1.19209290E-07
+: 2.2250738585072014E-308   1.7976931348623157E+308   2.2204460492503131E-016
+
 ** The =character= type
-A =character= data type is used to store letters. The maximum length of a character data type is specified with a positive =integer= argument at declaration.
+A =character= data type is used to store letters. The maximum length of a character string is specified with a positive =integer= argument at declaration.
 
 #+begin_src fortran -n :exports both :results output
 ! declare a character variable s at most 32 characters
@@ -593,28 +600,31 @@ s = 'file_name'
 
 ! trim trailing spaces from s and
 ! append a character literal '.dat'
-print*, trim(s) // '.dat'
+print*, trim(s) // '.txt'
 #+end_src
 
-#+RESULTS[c3a6a5819483cbe582a8e546b85faea5057dd928]:
-: file_name.dat
+#+RESULTS[93961e2b9ba8076aca493c454705d660c4c13cad]:
+: file_name.txt
 
 ** Casting
-An integer can be cast to a real number or vice versa.
+An =integer= can be cast to a =real= or vice versa.
 
 #+begin_src fortran -n
 integer :: a = 1, b
 real :: c, PI = 3.14159
 
+! explicit cast real to int
 b = int(PI) ! b is 3
 
+! implicit cast real to int
 c = a/b ! c is 0
 
+! explicit cast int to real and divide
 c = a/real(b) ! c is .3333...
 #+end_src
 
 ** The =parameter= modifier
-To protect a variable from reassignment, you can use the =parameter= modifier. If this modifier is used, the corresponding variable must be assigned a value at declaration, and that value cannot be reassigned. The following code is not valid because of the reassignment =PI = 3=.
+The =parameter= keyword is used to declare constant variables. When a variable is declared with the =parameter= keyword, it must be assigned a value at declaration and that value cannot be reassigned later. The following code is not valid because of the reassignment =PI = 3=.
 
 #+begin_src fortran -n
 ! declare constant
@@ -626,7 +636,7 @@ PI = 3
 The compiler produces an error like =Error: Named constant ‘pi’ in variable definition context (assignment)=.
 
 ** Setting the precision
-Each data type is assigned an integer by the Fortran =kind= function. You can write a program in a chosen precision with the =kind= of the precision stored in a variable =rp=. Then, if you want to change the precision, you could change the value of =rp= and recompile. The precision of a variable can be set at declaration and a variable or constant can be cast to a specified precision, each by supplying an extra argument.
+The =kind= function returns an =integer= for each data type. The =kind= of a floating point number can be specified at declaration. We could work in either single or double precision by storing the =kind= of a =real= or =double precision=, resp., in a constant =rp= then declaring each new variable with that =kind=. Then, to switch precision, we would only need to switch =rp=.
 
 #+begin_src fortran -n
 real :: r ! declare a real, single precision by default
@@ -648,7 +658,7 @@ a = real(b,rp)
 #+end_src
 
 ** Pointers
-Pointers have the same meaning in Fortran as in C++. A pointer is a variable that holds the *memory address* for a variable of a specific type. The implementation of pointers is qualitatively different in Fortran than in C++. In Fortran, the user cannot view the memory address that a pointer stores. A pointer variable is declared with the =pointer= modifier, and a variable that it points to is declared with the =target= modifier. The types of a =pointer= and its =target= must match.
+Pointers have the same meaning in Fortran as in C++. A pointer is a variable that holds the *memory address* of a variable. The implementation of pointers is qualitatively different in Fortran than in C++. In Fortran, the user cannot view the memory address that a pointer stores. A pointer variable is declared with the =pointer= modifier, and a variable that it points to is declared with the =target= modifier. The types of a =pointer= and its =target= must match.
 
 #+begin_src fortran -n :exports both :results output
 ! declare pointer
@@ -681,17 +691,43 @@ Here's a one-dimensional array example.
 #+begin_src fortran -n
 real :: a(5)
 
+! you can work with each component individually
+! set the first component to 1
 a(1) = 1.0
-! etc
+
+! or you can work with the whole array
+! set the whole array to 2
+a = 2.0
+
+! or you can with slices of the array
+! set first three components to 3
+a(1:3) = 3.0
 #+end_src
 
 And, here's a two-dimensional array example.
 #+begin_src fortran -n
 real :: a(5,5)
 
+! you can work with each component individually
+! set upper left component to 1
 a(1,1) = 1.0
-! etc
+
+! or you can work with the whole array
+! set the whole array to 2
+a = 2.0
+
+! or you can with slices of the array
+! set upper left 2x2 submatrix to 3
+a(1:2, 1:2) = 3.0
 #+end_src
+
+Fortran includes intrinsic functions to operate on an array =a= such as
+- =size(a)=: number of elements of =a=
+- =minval(a)=: minimum value of =a=
+- =maxval(a)=: maximum value of =a=
+- =sum(a)=: sum of elements in =a=
+- =product(a)=: product of elements in =a=
+See the =gfortran= documentation for more.
 
 *** Dynamic length arrays
 Dynamic arrays are declared with the =allocatable= modifier. Before storing values in such an array, you must =allocate= memory for the array. After you are finished the array, you ought to =deallocate= the memory that it occupies.
@@ -712,7 +748,7 @@ a(1) = 1.0
 deallocate(a)
 
 ! we can change the size and index range of a
-allocate(a(0:9))
+allocate(a(0:10))
 
 a(0) = 1.0
 ! etc...
@@ -728,7 +764,7 @@ Here's a two-dimensional example.
 real, allocatable :: a(:,:)
 
 ! allocate memory for a
-allocate(a(5,2))
+allocate(a(5,5))
 
 ! now you can treat a like a normal array
 a(1,1) = 1.0
@@ -738,7 +774,7 @@ a(1,1) = 1.0
 deallocate(a)
 
 ! we can change the size and index range of a
-allocate(a(0:9,0:1))
+allocate(a(0:10,0:10))
 
 a(0,0) = 1.0
 ! etc...
@@ -749,7 +785,7 @@ deallocate(a)
 * Control structures
 ** Conditionals
 *** Example: =if= / =else= and random number generation
-You can control execution of two blocks of code with mutually exclusive logic using the =if= / =else= construct. An =else= block is optional and can be omitted to form an =if= construct in which a block of code executes if a logical expression evaluates to =.true.=. The following code generates a random number between 0 and 1, then prints the number and whether or not the number is greater than 0.5
+Execution of two blocks of code can be controlled with mutually exclusive logic using the =if= / =else= construct. The following code generates a random number between 0 and 1, then prints the number and whether or not the number is greater than 0.5
 
 #+begin_src fortran -n :exports both :results output
 real :: num
@@ -788,9 +824,10 @@ end if
 
 Since the random number generator was seeded with a literal integer, the above code will produce the /same/ output each time it is run.
 
-*** Example: =if= / =else if= / =else=
+An =else= block is optional and can be omitted to form an =if= construct in which a block of code executes if a logical expression evaluates to =.true.=.
 
-You can control execution of two blocks of code with mutually exclusive logic using the =if=/=else= construct. The following code generates a random number between 0 and 1, then prints the number and the quarter of the interval $[0,1]$ that the number is in.
+*** Example: =if= / =else if= / =else=
+Execution of three or more blocks of code with mutually exclusive logic can be controlled using the =if= / =else if= / =else= construct. The following code generates a random number between 0 and 1, then prints the number and which quarter of the interval $[0,1]$ that the number is in.
 
 #+begin_src fortran -n -r :exports both :results output
 real :: num
@@ -843,7 +880,38 @@ end do
 deallocate(x)
 #+end_src
 
+#+RESULTS[7206fde40ebad375a7845fa70c041c34fbb7f2c0]:
+#+begin_example
+x(0) = 0.0
+x(1) = 0.1
+x(2) = 0.2
+x(3) = 0.3
+x(4) = 0.4
+x(5) = 0.5
+x(6) = 0.6
+x(7) = 0.7
+x(8) = 0.8
+x(9) = 0.9
+x(10) = 1.0
+#+end_example
+
+An /implicit/ =do loop= can be used for formulaic array assignments. The following code creates the same array as the last example.
+
+#+begin_src fortran :export code
+integer :: max = 10
+real, allocatable :: x(:)
+
+allocate(x(0:max))
+
+! implicit do loop for formulaic array assignment
+x = [(i / real(max), i=0, max)]
+
+deallocate(x)
+#+end_src
+
 *** Example: row-major matrix
+
+The following code stores matrix data in a one-dimensional array named =matrix= in =row-major= order. This means the first =n_cols= elements of the array will contain the first row of the matrix, the next =n_cols= of the array will contain the second row of the matrix, etc.
 
 #+begin_src fortran -n :exports both :results output
 integer :: n_rows = 4, n_cols = 3
@@ -874,11 +942,17 @@ end do
 
 ! print matrix components
 do i = 1,n_rows
-   print*, matrix(1+(i-1)*n_cols:i*n_cols)
+   print "(2(f3.1,', '), f3.1)", matrix(1+(i-1)*n_cols:i*n_cols)
 end do
 
 deallocate(matrix)
 #+end_src
+
+#+RESULTS[41c26f0f73c7120d07d5ab121287a34124c3d767]:
+: 1.0, 2.0, 0.0
+: 2.0, 1.0, 2.0
+: 0.0, 2.0, 1.0
+: 0.0, 0.0, 2.0
 
 *** The =do while= loop
 A =do while= loop iterates while a logical condition evaluates to =.true.=.
@@ -999,7 +1073,7 @@ end do
 
 * Input/Output
 ** Command line arguments
-Arguments can be received by the main program from the command line using =get_command_argument=. The first argument received by this command is the executable file name and the remaining arguments are supplied by the user. The following program accepts any number of arguments, each at most 32 characters, and prints them.
+Arguments can be passed to a program from the command line using =get_command_argument=. The first argument received by =get_command_argument= is the program executable file name and the remaining arguments are passed by the user. The following program accepts any number of arguments, each at most 32 characters, and prints them.
 
 #+name: command_line_arguments
 #+begin_src fortran -n :tangle ./command_line_arguments/main.f90
@@ -1049,26 +1123,28 @@ After compiling to =a.out=, you can pass arguments in the executing command.
 ** File input/output
 *** Reading data from file
 
-The contents of a data file can be read into an array using =read=. Suppose you have a file =./data/array.txt= that contains
+The contents of a data file can be read into an array using =read=. Suppose you have a file =./data/array.txt= that contains two columns of data
 
 : 1 1.23
 : 2 2.34
 : 3 3.45
+: 4 4.56
+: 5 5.67
 
-This file can be opened in the program with the =open= command. The required first argument of =open= is an =integer= that specifies the /file unit/. Choose any number that is not in use. The unit numbers =0=, =5=, and =6= are reserved for system files and should not be used accidentally. Data is read in *column-major* format, i.e. down the first column, then down the second column, etc.
+This file can be opened with the =open= command. The required first argument of =open= is an =integer= that specifies a /file unit/ for =array.txt=. Choose any number that is not in use. The unit numbers =0=, =5=, and =6= are reserved for system files and should not be used accidentally. Data are read in *row-major* format, i.e. across the first row, then across the second row, etc.
 
 The following code reads the contents of =./data/array.txt= into an array called =array=.
 
 #+begin_src fortran -n
 ! declare array
-real :: array(3,2)
+real :: array(5,2)
 integer :: row
 
 ! open file and assign file unit 10
 open (10, file='./data/array.txt', action='read')
 
 ! read data from file unit 10 into array
-do row = 1,3
+do row = 1,5
    read(10,*) array(row,:)
 end do
 
@@ -1103,5 +1179,237 @@ This produces a file =sine.txt= in the directory =data= containing
 :  0.600000024      0.564642489    
 :  0.800000012      0.717356086    
 :   1.00000000      0.841470957    
+
+
+** Formatted input/output
+The format of a =print=, =read=, or =write= statement can be specified with a =character= string. A format character string replaces the =*= symbol in =print*= and the second =*= symbol in =read(*,*)= or =write(*,*)=. A format string is a list of literal character strings or character descriptors from
+- =a=: character string
+- =iW=: integer
+- =fW.D=: float point 
+- =esW.DeE=: scientific notation
+- =Wx=: space
+where =W=, =D=, and =E= should be replaced by numbers specifying width, number of digits, or number  of exponent digits, resp. The width of a formatted integer or float defaults to the width of the number when =W= is =0=.
+
+#+begin_src fortran -n :exports both :results output
+character(32) :: fmt, a = 'word' 
+integer :: b = 1
+real :: c = 2.0, d = 3.0
+
+! character string and 4 space-delimited values
+print "('four values: ', a, 1x i0, 1x f0.1, 1x, es6.1e1)", trim(a), b, c, d
+
+! character string and 2 space-delimited values
+fmt = '(a, 2(f0.1, 1x))'
+print fmt, 'two values: ', c, d
+#+end_src
+
+#+RESULTS[12f83e2b7b1136a7e36d7b049b73fcde8eda8ff4]:
+: four values: word 1 2.0 3.0E+0
+: two values: 2.0 3.0
+
+* Functions
+** Writing a function
+Functions are defined after the =contains= keyword in a =module= or =program=. The definition of a function starts with the name of the function followed by a list of arguments and return variable. The data types of the arguments and return variable are defined within the =function= body.
+
+*** Example: =linspace=: generating a set of equally-space points
+
+The following program defines a function =linspace= that returns a set of equidistant points on an interval. The main function makes a call to the function.
+
+#+begin_src fortran -n :exports both :results output
+program main
+  implicit none
+
+  real :: xs(10)
+
+  ! call function linspace to set values in xs
+  xs = linspace(0.0, 1.0, 10)
+
+  ! print returned value of xs
+  print "(10(f0.1, 1x))" , xs
+
+contains
+
+  ! linspace: return a set of equidistant points on an interval
+  ! min: minimum value of interval
+  ! max: maximum value of interval
+  ! n_points: number of points in returned set
+  ! xs: set of points
+  function linspace(min, max, n_points) result(xs)
+    real :: min, max, dx
+    integer :: n_points
+    integer :: i
+    real :: xs(n_points)
+
+    ! calculate width of subintervals
+    dx = (max-min) / real(n_points-1)
+
+    ! fill xs with points
+    do i = 1,n_points
+       xs(i) = min + (i-1)*dx
+    end do
+
+  end function linspace
+
+end program main
+#+end_src
+
+#+RESULTS[2f414e387f7f8b99f2dc9e98a02dc427b7af34a0]:
+: .0 .1 .2 .3 .4 .6 .7 .8 .9 1.0
+
+** Interfaces
+A function can be passed as an argument to another function if there is an =interface= to instruct the receiving function how to use the passed function. An =interface= to a function is essentially the function itself with only declarations and without implementation.
+
+*** Example: Newton's method for rootfinding
+Newton's method for finding the root of a function $f:\mathbb{R}\rightarrow\mathbb{R}$ refines an initial guess $x_0$ according to the iteration rule
+\begin{equation*}
+x_{n}=x_n-\frac{f(x_n)}{f'(x_n)}
+\end{equation*}
+for $n\geq1$ until $f(x)$ is less than a chosen tolerance or a maximum number of iterations. The following code converges to a root of $f(x)=x^2-2$ from an initial guess $x_0=1$.
+
+#+begin_src fortran -n :exports both :results output
+program main
+  implicit none
+
+  real :: x
+
+  ! call newton rootfinding function
+  x = newton(f, df, 1.0, 1e-6, 1000, .true.)
+
+contains
+
+  ! function f(x) = x^2 - 2
+  function f(x) result(y)
+    real :: x, y
+    y = x*x - 2
+  end function f
+
+  ! function df(x) = 2x
+  function df(x) result(dy)
+    real :: x, dy
+    dy = 2*x
+  end function df
+
+  ! newton: newtons method for rootfinding
+  ! f: function with root
+  ! df: derivative of f
+  ! x0: initial iterate
+  ! tol: absolute tolerance
+  ! max_iters: maximum number of iterations
+  ! print_iters: boolean to toggle verbosity
+  function newton(f, df, x0, tol, max_iters, print_iters) result(x)
+
+    ! interface to function f
+    interface
+       function f(x) result(y)
+         real :: x, y
+       end function f
+    end interface
+
+    ! interface to function df
+    interface
+       function df(x) result(dy)
+         real :: x, dy
+       end function df
+    end interface
+
+    real :: x0, tol, x
+    integer :: iter, max_iters
+    logical :: print_iters
+
+    ! initialize x
+    x=x0
+
+    ! while f(x) greater than absolute tolerance
+    ! and max number of iterations not exceeded
+    do while (abs(f(x))>tol.and.iter<max_iters)
+       ! print current x and f(x)
+       if (print_iters) print "('f(', f0.7, ') = ', f0.7)", x, f(x)
+
+       ! Newton's update rule
+       x = x - f(x)/df(x)
+
+       ! increment number of iterations
+       iter = iter + 1
+    end do
+    ! print last x and f(x)
+    if (print_iters) print "('f(', f0.7, ') = ', f0.7)", x, f(x)
+
+  end function newton
+
+end program main
+#+end_src
+
+#+RESULTS[3767d56cfea7d6663ee3887561495277dadfafaf]:
+: f(1.0000000) = -1.0000000
+: f(1.5000000) = .2500000
+: f(1.4166666) = .0069444
+: f(1.4142157) = .0000060
+: f(1.4142135) = -.0000001
+
+*** Example: The midpoint rule for definite integrals
+
+#+begin_src fortran -n :exports both :results output
+program main
+  implicit none
+
+  real, parameter :: E = exp(1.)
+  integer :: n
+  real :: integral
+
+  do n = 2,20,2
+     print "('n: ', i0, ' M_n: ', f0.6)", n, midpoint(f, 1.0, E, n)
+  end do
+
+contains
+
+  ! function f(x) = 1/x
+  function f(x) result(y)
+    real :: x, y
+    y = 1.0/x
+  end function f
+
+  ! midpoint: midpoint rule for definite integral
+  ! f: integrand
+  ! a: left endpoint of interval of integration
+  ! b: right endpoint of interval of integration
+  ! n: number of subintervals
+  ! sum: approximate definite integral
+  function midpoint(f, a, b, n) result(sum)
+
+    ! interface to f
+    interface
+       function f(x)
+         real :: x, y
+       end function f
+    end interface
+
+    real :: a, b, min, xi, dx, sum
+    integer :: n, i
+
+    ! subinterval increment
+    dx = (b-a)/real(n)
+    ! minimum to increment from
+    min = a - dx/2.0
+
+    ! midpoint rule
+    do i = 1,n
+       xi = min + i*dx
+       sum = sum + f(xi)
+    end do
+    sum = sum*dx
+
+  end function midpoint
+
+end program main
+
+#+end_src
+
+* Subroutines
+Whereas a =function= does not return changes to its arguments and returns at most one value, a =subroutine= can be used to return changes to multiple arguments.
+** Writing a subroutine
+ A =subroutine= is defined after the =contains= keyword in a program or module. The definition of a subroutine begins with the name of the subroutine and list of arguments. Arguments are defined within the =subroutine= body with one of the following intents
+- =intent(in)=: changes to the argument are not returned
+- =intent(inout)=: changes to the argument are returned
+- =intent(out)=: the initial value of the argument is ignored and changes to the argument are returned.
 
 #+html: </div>
