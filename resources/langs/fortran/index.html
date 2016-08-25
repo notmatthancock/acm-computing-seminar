@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2016-08-24 Wed 07:49 -->
+<!-- 2016-08-24 Wed 23:11 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title>ACM Computing Seminar Fortran Guide</title>
@@ -239,24 +239,41 @@ for the JavaScript code in this tag.
 <li><a href="#orgheadline37">5.3. Formatted input/output</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline44">6. Functions</a>
+<li><a href="#orgheadline49">6. Functions/Subroutines</a>
 <ul>
 <li><a href="#orgheadline40">6.1. Writing a function</a>
 <ul>
 <li><a href="#orgheadline39">6.1.1. Example: <code>linspace</code>: generating a set of equally-space points</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline43">6.2. Interfaces</a>
+<li><a href="#orgheadline42">6.2. Writing a subroutine</a>
 <ul>
-<li><a href="#orgheadline41">6.2.1. Example: Newton's method for rootfinding</a></li>
-<li><a href="#orgheadline42">6.2.2. Example: The midpoint rule for definite integrals</a></li>
+<li><a href="#orgheadline41">6.2.1. Example: polar coordinates</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline45">6.3. Passing procedures as arguments</a>
+<ul>
+<li><a href="#orgheadline43">6.3.1. Example: Newton's method for rootfinding</a></li>
+<li><a href="#orgheadline44">6.3.2. Example: The midpoint rule for definite integrals</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline46">6.4. Polymorphism</a></li>
+<li><a href="#orgheadline48">6.5. Recursion</a>
+<ul>
+<li><a href="#orgheadline47">6.5.1. Example: factorial</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orgheadline46">7. Subroutines</a>
+<li><a href="#orgheadline54">7. Object-oriented programming</a>
 <ul>
-<li><a href="#orgheadline45">7.1. Writing a subroutine</a></li>
+<li><a href="#orgheadline50">7.1. Derived types</a></li>
+<li><a href="#orgheadline52">7.2. Modules</a>
+<ul>
+<li><a href="#orgheadline51">7.2.1. Example: determinant of random matrix</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline53">7.3. Parameterized data types</a></li>
 </ul>
 </li>
 </ul>
@@ -972,8 +989,8 @@ Execution of three or more blocks of code with mutually exclusive logic can be c
 </div>
 
 <pre class="example">
-num:  0.693089724    
-num is between 0.5 and 0.75
+num:  0.156652212    
+num is between 0 and 0.25
 </pre>
 
 <p>
@@ -1398,7 +1415,6 @@ This produces a file <code>sine.txt</code> in the directory <code>data</code> co
 </div>
 </div>
 
-
 <div id="outline-container-orgheadline37" class="outline-3">
 <h3 id="orgheadline37"><span class="section-number-3">5.3</span> Formatted input/output</h3>
 <div class="outline-text-3" id="text-5-3">
@@ -1439,24 +1455,26 @@ two values: 2.0 3.0
 </div>
 </div>
 
-<div id="outline-container-orgheadline44" class="outline-2">
-<h2 id="orgheadline44"><span class="section-number-2">6</span> Functions</h2>
+<div id="outline-container-orgheadline49" class="outline-2">
+<h2 id="orgheadline49"><span class="section-number-2">6</span> Functions/Subroutines</h2>
 <div class="outline-text-2" id="text-6">
-</div><div id="outline-container-orgheadline40" class="outline-3">
+<p>
+Functions and subroutines are callable blocks of code. A <code>function</code> returns a value from a set of arguments. A <code>subroutine</code> executes a block of code from a set of arguments but does not explicitly return a value. Changes to arguments made within a <code>function</code> are not returned whereas changes to arguments made within a <code>subroutine</code> can be returned to the calling program. Both functions and subroutines are defined after the <code>contains</code> keyword in a <code>module</code> or <code>program</code>.
+</p>
+</div>
+<div id="outline-container-orgheadline40" class="outline-3">
 <h3 id="orgheadline40"><span class="section-number-3">6.1</span> Writing a function</h3>
 <div class="outline-text-3" id="text-6-1">
 <p>
-Functions are defined after the <code>contains</code> keyword in a <code>module</code> or <code>program</code>. The definition of a function starts with the name of the function followed by a list of arguments and return variable. The data types of the arguments and return variable are defined within the <code>function</code> body.
+The definition of a function starts with the name of the function followed by a list of arguments and return variable. The data types of the arguments and return variable are defined within the <code>function</code> body.
 </p>
 </div>
-
 <div id="outline-container-orgheadline39" class="outline-4">
 <h4 id="orgheadline39"><span class="section-number-4">6.1.1</span> Example: <code>linspace</code>: generating a set of equally-space points</h4>
 <div class="outline-text-4" id="text-6-1-1">
 <p>
 The following program defines a function <code>linspace</code> that returns a set of equidistant points on an interval. The main function makes a call to the function.
 </p>
-
 <div class="org-src-container">
 
 <pre class="src src-fortran"><span class="linenr"> 1: </span><span style="color: #0000FF;">program</span> <span style="color: #006699;">main</span>
@@ -1504,25 +1522,84 @@ The following program defines a function <code>linspace</code> that returns a se
 </div>
 </div>
 
-<div id="outline-container-orgheadline43" class="outline-3">
-<h3 id="orgheadline43"><span class="section-number-3">6.2</span> Interfaces</h3>
+<div id="outline-container-orgheadline42" class="outline-3">
+<h3 id="orgheadline42"><span class="section-number-3">6.2</span> Writing a subroutine</h3>
 <div class="outline-text-3" id="text-6-2">
 <p>
-A function can be passed as an argument to another function if there is an <code>interface</code> to instruct the receiving function how to use the passed function. An <code>interface</code> to a function is essentially the function itself with only declarations and without implementation.
+The definition of a subroutine begins with the name of the subroutine and list of arguments. Arguments are defined within the <code>subroutine</code> body with one of the following intents
+</p>
+<ul class="org-ul">
+<li><code>intent(in)</code>: changes to the argument are not returned</li>
+<li><code>intent(inout)</code>: changes to the argument are returned</li>
+<li><code>intent(out)</code>: the initial value of the argument is ignored and changes to the argument are returned.</li>
+</ul>
+<p>
+Subroutines are called using the <code>call</code> keyword followed by the subroutine name.
 </p>
 </div>
 
 <div id="outline-container-orgheadline41" class="outline-4">
-<h4 id="orgheadline41"><span class="section-number-4">6.2.1</span> Example: Newton's method for rootfinding</h4>
+<h4 id="orgheadline41"><span class="section-number-4">6.2.1</span> Example: polar coordinates</h4>
 <div class="outline-text-4" id="text-6-2-1">
+<p>
+The following code defines a subroutine <code>polar_coord</code> that returns the polar coordinates \((r,\theta)\) of a rectangular coordinate pair \((x,y)\) defined by \(r=\sqrt{x^2+y^2}\) and \(\theta=\arctan(y/x)\).
+</p>
+<div class="org-src-container">
+
+<pre class="src src-fortran"><span class="linenr"> 1: </span><span style="color: #0000FF;">program</span> <span style="color: #006699;">main</span>
+<span class="linenr"> 2: </span>
+<span class="linenr"> 3: </span>  <span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> x = 1.0, y = 1.0, r, t</span>
+<span class="linenr"> 4: </span>
+<span class="linenr"> 5: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">call subroutine that returns polar coords</span>
+<span class="linenr"> 6: </span>  <span style="color: #0000FF;">call</span> <span style="color: #006699;">polar_coord</span><span style="color: #707183;">(</span>x, y, r, t<span style="color: #707183;">)</span>
+<span class="linenr"> 7: </span>  <span style="color: #0000FF;">print</span>*, r, t
+<span class="linenr"> 8: </span>
+<span class="linenr"> 9: </span><span style="color: #0000FF;">contains</span>
+<span class="linenr">10: </span>
+<span class="linenr">11: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">polar_coord: return the polar coordinates of a rect coord pair</span>
+<span class="linenr">12: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">x,y: rectangular coord</span>
+<span class="linenr">13: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">r,t: polar coord</span>
+<span class="linenr">14: </span>  <span style="color: #0000FF;">subroutine</span> <span style="color: #006699;">polar_coord</span><span style="color: #707183;">(</span>x, y, r, t<span style="color: #707183;">)</span>
+<span class="linenr">15: </span>    <span style="color: #6434A3;">real</span>, <span style="color: #0000FF;">intent</span><span style="color: #707183;">(</span>in<span style="color: #707183;">)</span> ::<span style="color: #BA36A5;"> x, y</span>
+<span class="linenr">16: </span>    <span style="color: #6434A3;">real</span>, <span style="color: #0000FF;">intent</span><span style="color: #707183;">(</span>out<span style="color: #707183;">)</span> ::<span style="color: #BA36A5;"> r, t</span>
+<span class="linenr">17: </span>
+<span class="linenr">18: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">compute polar coord</span>
+<span class="linenr">19: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">hypot = sqrt(x**2+y**2) is an intrinsic function</span>
+<span class="linenr">20: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">atan2 = arctan with correct sign is an intrinsic function</span>
+<span class="linenr">21: </span>    r = <span style="color: #0000FF;">hypot</span><span style="color: #707183;">(</span>x, y<span style="color: #707183;">)</span>
+<span class="linenr">22: </span>    t = <span style="color: #0000FF;">atan2</span><span style="color: #707183;">(</span>y, x<span style="color: #707183;">)</span>
+<span class="linenr">23: </span>
+<span class="linenr">24: </span>    <span style="color: #0000FF;">end subroutine</span> <span style="color: #006699;">polar_coord</span>
+<span class="linenr">25: </span>
+<span class="linenr">26: </span><span style="color: #0000FF;">end program</span> <span style="color: #006699;">main</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline45" class="outline-3">
+<h3 id="orgheadline45"><span class="section-number-3">6.3</span> Passing procedures as arguments</h3>
+<div class="outline-text-3" id="text-6-3">
+<p>
+An <code>inteface</code> can be used to pass a function or subroutine to another function or a subroutine. An <code>interface</code> is defined in the receiving procedure essentially as the same way as the passed procedure itself but only with declarations and without implementation.
+</p>
+</div>
+<div id="outline-container-orgheadline43" class="outline-4">
+<h4 id="orgheadline43"><span class="section-number-4">6.3.1</span> Example: Newton's method for rootfinding</h4>
+<div class="outline-text-4" id="text-6-3-1">
 <p>
 Newton's method for finding the root of a function \(f:\mathbb{R}\rightarrow\mathbb{R}\) refines an initial guess \(x_0\) according to the iteration rule
 </p>
 \begin{equation*}
-x_{n}=x_n-\frac{f(x_n)}{f'(x_n)}
+x_{n+1}=x_n-\frac{f(x_n)}{f'(x_n)}
 \end{equation*}
 <p>
-for \(n\geq1\) until \(f(x)\) is less than a chosen tolerance or a maximum number of iterations. The following code converges to a root of \(f(x)=x^2-2\) from an initial guess \(x_0=1\).
+for \(n\geq1\) until \(f(x)\) is less than a chosen tolerance or a maximum number of iterations.
+</p>
+
+<p>
+The following code defines a subroutine <code>newton_root</code> that returns a root of an input function as well as the number of iterations of Newton's method used to find the root. It is called by the  main program to approximate the positive root of \(f(x)=x^2-2\) from an initial guess \(x_0=1\).
 </p>
 
 <div class="org-src-container">
@@ -1530,73 +1607,79 @@ for \(n\geq1\) until \(f(x)\) is less than a chosen tolerance or a maximum numbe
 <pre class="src src-fortran"><span class="linenr"> 1: </span><span style="color: #0000FF;">program</span> <span style="color: #006699;">main</span>
 <span class="linenr"> 2: </span>  <span style="color: #0000FF;">implicit</span> <span style="color: #6434A3;">none</span>
 <span class="linenr"> 3: </span>
-<span class="linenr"> 4: </span>  <span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> x</span>
-<span class="linenr"> 5: </span>
-<span class="linenr"> 6: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">call newton rootfinding function</span>
-<span class="linenr"> 7: </span>  x = newton<span style="color: #707183;">(</span>f, df, <span style="color: #D0372D;">1</span>.<span style="color: #D0372D;">0</span>, <span style="color: #D0372D;">1e</span>-<span style="color: #D0372D;">6</span>, <span style="color: #D0372D;">1000</span>, <span style="color: #0000FF;">.true.</span><span style="color: #707183;">)</span>
-<span class="linenr"> 8: </span>
-<span class="linenr"> 9: </span><span style="color: #0000FF;">contains</span>
+<span class="linenr"> 4: </span>  <span style="color: #6434A3;">character</span><span style="color: #707183;">(</span><span style="color: #D0372D;">64</span><span style="color: #707183;">)</span> ::<span style="color: #BA36A5;"> fmt</span>
+<span class="linenr"> 5: </span>  <span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> x = 1.0</span>
+<span class="linenr"> 6: </span>  <span style="color: #6434A3;">integer</span> ::<span style="color: #BA36A5;"> iter = 1000</span>
+<span class="linenr"> 7: </span>
+<span class="linenr"> 8: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">call newton rootfinding function</span>
+<span class="linenr"> 9: </span>  <span style="color: #0000FF;">call</span> <span style="color: #006699;">newton_root</span><span style="color: #707183;">(</span>f, df, x, iter, <span style="color: #D0372D;">1e</span>-<span style="color: #D0372D;">6</span>, <span style="color: #0000FF;">.true.</span><span style="color: #707183;">)</span>
 <span class="linenr">10: </span>
-<span class="linenr">11: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">function f(x) = x^2 - 2</span>
-<span class="linenr">12: </span>  <span style="color: #0000FF;">function</span> <span style="color: #006699;">f</span><span style="color: #707183;">(</span>x<span style="color: #707183;">)</span> <span style="color: #0000FF;">result</span><span style="color: #707183;">(</span>y<span style="color: #707183;">)</span>
-<span class="linenr">13: </span>    <span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> x, y</span>
-<span class="linenr">14: </span>    y = x*x - <span style="color: #D0372D;">2</span>
-<span class="linenr">15: </span>  <span style="color: #0000FF;">end function</span> <span style="color: #006699;">f</span>
+<span class="linenr">11: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">print found root and number of iterations used</span>
+<span class="linenr">12: </span>  fmt = <span style="color: #008000;">"('number of iterations: ', i0, ', x: ', f0.7, ', f(x): ', f0.7)"</span>
+<span class="linenr">13: </span>  <span style="color: #0000FF;">print</span> fmt, iter, x, f<span style="color: #707183;">(</span>x<span style="color: #707183;">)</span>
+<span class="linenr">14: </span>
+<span class="linenr">15: </span><span style="color: #0000FF;">contains</span>
 <span class="linenr">16: </span>
-<span class="linenr">17: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">function df(x) = 2x</span>
-<span class="linenr">18: </span>  <span style="color: #0000FF;">function</span> <span style="color: #006699;">df</span><span style="color: #707183;">(</span>x<span style="color: #707183;">)</span> <span style="color: #0000FF;">result</span><span style="color: #707183;">(</span>dy<span style="color: #707183;">)</span>
-<span class="linenr">19: </span>    <span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> x, dy</span>
-<span class="linenr">20: </span>    dy = <span style="color: #D0372D;">2</span>*x
-<span class="linenr">21: </span>  <span style="color: #0000FF;">end function</span> <span style="color: #006699;">df</span>
+<span class="linenr">17: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">function f(x) = x^2 - 2</span>
+<span class="linenr">18: </span>  <span style="color: #0000FF;">function</span> <span style="color: #006699;">f</span><span style="color: #707183;">(</span>x<span style="color: #707183;">)</span> <span style="color: #0000FF;">result</span><span style="color: #707183;">(</span>y<span style="color: #707183;">)</span>
+<span class="linenr">19: </span>    <span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> x, y</span>
+<span class="linenr">20: </span>    y = x*x - <span style="color: #D0372D;">2</span>
+<span class="linenr">21: </span>  <span style="color: #0000FF;">end function</span> <span style="color: #006699;">f</span>
 <span class="linenr">22: </span>
-<span class="linenr">23: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">newton: newtons method for rootfinding</span>
-<span class="linenr">24: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">f: function with root</span>
-<span class="linenr">25: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">df: derivative of f</span>
-<span class="linenr">26: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">x0: initial iterate</span>
-<span class="linenr">27: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">tol: absolute tolerance</span>
-<span class="linenr">28: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">max_iters: maximum number of iterations</span>
-<span class="linenr">29: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">print_iters: boolean to toggle verbosity</span>
-<span class="linenr">30: </span>  <span style="color: #0000FF;">function</span> <span style="color: #006699;">newton</span><span style="color: #707183;">(</span>f, df, x0, tol, max_iters, print_iters<span style="color: #707183;">)</span> <span style="color: #0000FF;">result</span><span style="color: #707183;">(</span>x<span style="color: #707183;">)</span>
-<span class="linenr">31: </span>
-<span class="linenr">32: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">interface to function f</span>
-<span class="linenr">33: </span>    <span style="color: #0000FF;">interface</span>
-<span class="linenr">34: </span>       <span style="color: #0000FF;">function</span> <span style="color: #006699;">f</span><span style="color: #707183;">(</span>x<span style="color: #707183;">)</span> <span style="color: #0000FF;">result</span><span style="color: #707183;">(</span>y<span style="color: #707183;">)</span>
-<span class="linenr">35: </span>         <span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> x, y</span>
-<span class="linenr">36: </span>       <span style="color: #0000FF;">end function</span> <span style="color: #006699;">f</span>
-<span class="linenr">37: </span>    <span style="color: #0000FF;">end interface</span>
-<span class="linenr">38: </span>
-<span class="linenr">39: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">interface to function df</span>
-<span class="linenr">40: </span>    <span style="color: #0000FF;">interface</span>
-<span class="linenr">41: </span>       <span style="color: #0000FF;">function</span> <span style="color: #006699;">df</span><span style="color: #707183;">(</span>x<span style="color: #707183;">)</span> <span style="color: #0000FF;">result</span><span style="color: #707183;">(</span>dy<span style="color: #707183;">)</span>
-<span class="linenr">42: </span>         <span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> x, dy</span>
-<span class="linenr">43: </span>       <span style="color: #0000FF;">end function</span> <span style="color: #006699;">df</span>
-<span class="linenr">44: </span>    <span style="color: #0000FF;">end interface</span>
-<span class="linenr">45: </span>
-<span class="linenr">46: </span>    <span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> x0, tol, x</span>
-<span class="linenr">47: </span>    <span style="color: #6434A3;">integer</span> ::<span style="color: #BA36A5;"> iter, max_iters</span>
-<span class="linenr">48: </span>    <span style="color: #6434A3;">logical</span> ::<span style="color: #BA36A5;"> print_iters</span>
-<span class="linenr">49: </span>
-<span class="linenr">50: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">initialize x</span>
-<span class="linenr">51: </span>    x=x0
-<span class="linenr">52: </span>
-<span class="linenr">53: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">while f(x) greater than absolute tolerance</span>
-<span class="linenr">54: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">and max number of iterations not exceeded</span>
-<span class="linenr">55: </span>    <span style="color: #0000FF;">do while</span> <span style="color: #707183;">(</span><span style="color: #0000FF;">abs</span><span style="color: #7388D6;">(</span>f<span style="color: #909183;">(</span>x<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span>&gt;tol<span style="color: #0000FF;">.and.</span>iter&lt;max_iters<span style="color: #707183;">)</span>
-<span class="linenr">56: </span>       <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">print current x and f(x)</span>
-<span class="linenr">57: </span>       <span style="color: #0000FF;">if</span> <span style="color: #707183;">(</span>print_iters<span style="color: #707183;">)</span> <span style="color: #0000FF;">print</span> <span style="color: #008000;">"('f(', f0.7, ') = ', f0.7)"</span>, x, f<span style="color: #707183;">(</span>x<span style="color: #707183;">)</span>
-<span class="linenr">58: </span>
-<span class="linenr">59: </span>       <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">Newton's update rule</span>
-<span class="linenr">60: </span>       x = x - f<span style="color: #707183;">(</span>x<span style="color: #707183;">)</span>/df<span style="color: #707183;">(</span>x<span style="color: #707183;">)</span>
-<span class="linenr">61: </span>
-<span class="linenr">62: </span>       <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">increment number of iterations</span>
-<span class="linenr">63: </span>       iter = iter + <span style="color: #D0372D;">1</span>
-<span class="linenr">64: </span>    <span style="color: #0000FF;">end do</span>
-<span class="linenr">65: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">print last x and f(x)</span>
-<span class="linenr">66: </span>    <span style="color: #0000FF;">if</span> <span style="color: #707183;">(</span>print_iters<span style="color: #707183;">)</span> <span style="color: #0000FF;">print</span> <span style="color: #008000;">"('f(', f0.7, ') = ', f0.7)"</span>, x, f<span style="color: #707183;">(</span>x<span style="color: #707183;">)</span>
-<span class="linenr">67: </span>
-<span class="linenr">68: </span>  <span style="color: #0000FF;">end function</span> <span style="color: #006699;">newton</span>
+<span class="linenr">23: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">function df(x) = 2x</span>
+<span class="linenr">24: </span>  <span style="color: #0000FF;">function</span> <span style="color: #006699;">df</span><span style="color: #707183;">(</span>x<span style="color: #707183;">)</span> <span style="color: #0000FF;">result</span><span style="color: #707183;">(</span>dy<span style="color: #707183;">)</span>
+<span class="linenr">25: </span>    <span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> x, dy</span>
+<span class="linenr">26: </span>    dy = <span style="color: #D0372D;">2</span>*x
+<span class="linenr">27: </span>  <span style="color: #0000FF;">end function</span> <span style="color: #006699;">df</span>
+<span class="linenr">28: </span>
+<span class="linenr">29: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">newton_root: newtons method for rootfinding</span>
+<span class="linenr">30: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">f: function with root</span>
+<span class="linenr">31: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">df: derivative of f</span>
+<span class="linenr">32: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">x: sequence iterate</span>
+<span class="linenr">33: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">iter: max number of iterations at call, number of iterations at return</span>
+<span class="linenr">34: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">tol: absolute tolerance</span>
+<span class="linenr">35: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">print_iters: boolean to toggle verbosity</span>
+<span class="linenr">36: </span>  <span style="color: #0000FF;">subroutine</span> <span style="color: #006699;">newton_root</span><span style="color: #707183;">(</span>f, df, x, iter, tol, print_iters<span style="color: #707183;">)</span>
+<span class="linenr">37: </span>
+<span class="linenr">38: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">interface to function f</span>
+<span class="linenr">39: </span>    <span style="color: #0000FF;">interface</span>
+<span class="linenr">40: </span>       <span style="color: #0000FF;">function</span> <span style="color: #006699;">f</span><span style="color: #707183;">(</span>x<span style="color: #707183;">)</span> <span style="color: #0000FF;">result</span><span style="color: #707183;">(</span>y<span style="color: #707183;">)</span>
+<span class="linenr">41: </span>         <span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> x, y</span>
+<span class="linenr">42: </span>       <span style="color: #0000FF;">end function</span> <span style="color: #006699;">f</span>
+<span class="linenr">43: </span>    <span style="color: #0000FF;">end interface</span>
+<span class="linenr">44: </span>
+<span class="linenr">45: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">interface to function df</span>
+<span class="linenr">46: </span>    <span style="color: #0000FF;">interface</span>
+<span class="linenr">47: </span>       <span style="color: #0000FF;">function</span> <span style="color: #006699;">df</span><span style="color: #707183;">(</span>x<span style="color: #707183;">)</span> <span style="color: #0000FF;">result</span><span style="color: #707183;">(</span>dy<span style="color: #707183;">)</span>
+<span class="linenr">48: </span>         <span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> x, dy</span>
+<span class="linenr">49: </span>       <span style="color: #0000FF;">end function</span> <span style="color: #006699;">df</span>
+<span class="linenr">50: </span>    <span style="color: #0000FF;">end interface</span>
+<span class="linenr">51: </span>
+<span class="linenr">52: </span>    <span style="color: #6434A3;">real</span>, <span style="color: #0000FF;">intent</span><span style="color: #707183;">(</span>inout<span style="color: #707183;">)</span> ::<span style="color: #BA36A5;"> x</span>
+<span class="linenr">53: </span>    <span style="color: #6434A3;">real</span>, <span style="color: #0000FF;">intent</span><span style="color: #707183;">(</span>in<span style="color: #707183;">)</span> ::<span style="color: #BA36A5;"> tol</span>
+<span class="linenr">54: </span>    <span style="color: #6434A3;">integer</span>, <span style="color: #0000FF;">intent</span><span style="color: #707183;">(</span>inout<span style="color: #707183;">)</span> ::<span style="color: #BA36A5;"> iter</span>
+<span class="linenr">55: </span>    <span style="color: #6434A3;">logical</span>, <span style="color: #0000FF;">intent</span><span style="color: #707183;">(</span>in<span style="color: #707183;">)</span> ::<span style="color: #BA36A5;"> print_iters</span>
+<span class="linenr">56: </span>    <span style="color: #6434A3;">integer</span> ::<span style="color: #BA36A5;"> max_iters</span>
+<span class="linenr">57: </span>
+<span class="linenr">58: </span>    max_iters = iter
+<span class="linenr">59: </span>    iter = <span style="color: #D0372D;">0</span>
+<span class="linenr">60: </span>
+<span class="linenr">61: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">while f(x) greater than absolute tolerance</span>
+<span class="linenr">62: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">and max number of iterations not exceeded</span>
+<span class="linenr">63: </span>    <span style="color: #0000FF;">do while</span> <span style="color: #707183;">(</span><span style="color: #0000FF;">abs</span><span style="color: #7388D6;">(</span>f<span style="color: #909183;">(</span>x<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span>&gt;tol<span style="color: #0000FF;">.and.</span>iter&lt;max_iters<span style="color: #707183;">)</span>
+<span class="linenr">64: </span>       <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">print current x and f(x)</span>
+<span class="linenr">65: </span>       <span style="color: #0000FF;">if</span> <span style="color: #707183;">(</span>print_iters<span style="color: #707183;">)</span> <span style="color: #0000FF;">print</span> <span style="color: #008000;">"('f(', f0.7, ') = ', f0.7)"</span>, x, f<span style="color: #707183;">(</span>x<span style="color: #707183;">)</span>
+<span class="linenr">66: </span>
+<span class="linenr">67: </span>       <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">Newton's update rule</span>
+<span class="linenr">68: </span>       x = x - f<span style="color: #707183;">(</span>x<span style="color: #707183;">)</span>/df<span style="color: #707183;">(</span>x<span style="color: #707183;">)</span>
 <span class="linenr">69: </span>
-<span class="linenr">70: </span><span style="color: #0000FF;">end program</span> <span style="color: #006699;">main</span>
+<span class="linenr">70: </span>       <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">increment number of iterations</span>
+<span class="linenr">71: </span>       iter = iter + <span style="color: #D0372D;">1</span>
+<span class="linenr">72: </span>    <span style="color: #0000FF;">end do</span>
+<span class="linenr">73: </span>
+<span class="linenr">74: </span>  <span style="color: #0000FF;">end subroutine</span> <span style="color: #006699;">newton_root</span>
+<span class="linenr">75: </span>
+<span class="linenr">76: </span><span style="color: #0000FF;">end program</span> <span style="color: #006699;">main</span>
 </pre>
 </div>
 
@@ -1605,14 +1688,28 @@ f(1.0000000) = -1.0000000
 f(1.5000000) = .2500000
 f(1.4166666) = .0069444
 f(1.4142157) = .0000060
-f(1.4142135) = -.0000001
+number of iterations: 4, x: 1.4142135, f(x): -.0000001
 </pre>
 </div>
 </div>
 
-<div id="outline-container-orgheadline42" class="outline-4">
-<h4 id="orgheadline42"><span class="section-number-4">6.2.2</span> Example: The midpoint rule for definite integrals</h4>
-<div class="outline-text-4" id="text-6-2-2">
+<div id="outline-container-orgheadline44" class="outline-4">
+<h4 id="orgheadline44"><span class="section-number-4">6.3.2</span> Example: The midpoint rule for definite integrals</h4>
+<div class="outline-text-4" id="text-6-3-2">
+<p>
+The midpoint rule approximates the definite integral \(\int_a^bf(x)~dx\) with integrand \(f:\mathbb{R}\rightarrow\mathbb{R}\) by
+</p>
+\begin{equation}
+\Delta x\sum_{i=1}^nf(\bar{x}_i)
+\end{equation}
+<p>
+where \(\Delta x=(b-a)/n\), \(x_i=a+(i-1)\Delta x\) and \(\bar{x}_i=(x_{i-1}+x_i)/2\).
+</p>
+
+<p>
+The following code defines a function <code>midpoint</code> that computes the approximation <a href="#orglatexenvironment1">1</a> given \(a\), \(b\), and \(n\). The main program calls <code>midpoint</code> to approximate the definite integral of \(f(x)=1/x\) on \([1,e]\) for a range of \(n\).
+</p>
+
 <div class="org-src-container">
 
 <pre class="src src-fortran"><span class="linenr"> 1: </span><span style="color: #0000FF;">program</span> <span style="color: #006699;">main</span>
@@ -1622,90 +1719,368 @@ f(1.4142135) = -.0000001
 <span class="linenr"> 5: </span>  <span style="color: #6434A3;">integer</span> ::<span style="color: #BA36A5;"> n</span>
 <span class="linenr"> 6: </span>  <span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> integral</span>
 <span class="linenr"> 7: </span>
-<span class="linenr"> 8: </span>  <span style="color: #0000FF;">do</span> n = <span style="color: #D0372D;">2</span>,<span style="color: #D0372D;">20</span>,<span style="color: #D0372D;">2</span>
-<span class="linenr"> 9: </span>     <span style="color: #0000FF;">print</span> <span style="color: #008000;">"('n: ', i0, ' M_n: ', f0.6)"</span>, n, midpoint<span style="color: #707183;">(</span>f, <span style="color: #D0372D;">1</span>.<span style="color: #D0372D;">0</span>, E, n<span style="color: #707183;">)</span>
-<span class="linenr">10: </span>  <span style="color: #0000FF;">end do</span>
-<span class="linenr">11: </span>
-<span class="linenr">12: </span><span style="color: #0000FF;">contains</span>
+<span class="linenr"> 8: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">Approximate the integral of 1/x from 1 to e</span>
+<span class="linenr"> 9: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">with the midpoint rule for a range of number of subintervals</span>
+<span class="linenr">10: </span>  <span style="color: #0000FF;">do</span> n = <span style="color: #D0372D;">2</span>,<span style="color: #D0372D;">20</span>,<span style="color: #D0372D;">2</span>
+<span class="linenr">11: </span>     <span style="color: #0000FF;">print</span> <span style="color: #008000;">"('n: ', i0, ', M_n: ', f0.6)"</span>, n, midpoint<span style="color: #707183;">(</span>f, <span style="color: #D0372D;">1</span>.<span style="color: #D0372D;">0</span>, E, n<span style="color: #707183;">)</span>
+<span class="linenr">12: </span>  <span style="color: #0000FF;">end do</span>
 <span class="linenr">13: </span>
-<span class="linenr">14: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">function f(x) = 1/x</span>
-<span class="linenr">15: </span>  <span style="color: #0000FF;">function</span> <span style="color: #006699;">f</span><span style="color: #707183;">(</span>x<span style="color: #707183;">)</span> <span style="color: #0000FF;">result</span><span style="color: #707183;">(</span>y<span style="color: #707183;">)</span>
-<span class="linenr">16: </span>    <span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> x, y</span>
-<span class="linenr">17: </span>    y = <span style="color: #D0372D;">1</span>.<span style="color: #D0372D;">0</span>/x
-<span class="linenr">18: </span>  <span style="color: #0000FF;">end function</span> <span style="color: #006699;">f</span>
-<span class="linenr">19: </span>
-<span class="linenr">20: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">midpoint: midpoint rule for definite integral</span>
-<span class="linenr">21: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">f: integrand</span>
-<span class="linenr">22: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">a: left endpoint of interval of integration</span>
-<span class="linenr">23: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">b: right endpoint of interval of integration</span>
-<span class="linenr">24: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">n: number of subintervals</span>
-<span class="linenr">25: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">sum: approximate definite integral</span>
-<span class="linenr">26: </span>  <span style="color: #0000FF;">function</span> <span style="color: #006699;">midpoint</span><span style="color: #707183;">(</span>f, a, b, n<span style="color: #707183;">)</span> <span style="color: #0000FF;">result</span><span style="color: #707183;">(</span>sum<span style="color: #707183;">)</span>
-<span class="linenr">27: </span>
-<span class="linenr">28: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">interface to f</span>
-<span class="linenr">29: </span>    <span style="color: #0000FF;">interface</span>
-<span class="linenr">30: </span>       <span style="color: #0000FF;">function</span> <span style="color: #006699;">f</span><span style="color: #707183;">(</span>x<span style="color: #707183;">)</span>
-<span class="linenr">31: </span>         <span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> x, y</span>
-<span class="linenr">32: </span>       <span style="color: #0000FF;">end function</span> <span style="color: #006699;">f</span>
-<span class="linenr">33: </span>    <span style="color: #0000FF;">end interface</span>
-<span class="linenr">34: </span>
-<span class="linenr">35: </span>    <span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> a, b, min, xi, dx, sum</span>
-<span class="linenr">36: </span>    <span style="color: #6434A3;">integer</span> ::<span style="color: #BA36A5;"> n, i</span>
-<span class="linenr">37: </span>
-<span class="linenr">38: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">subinterval increment</span>
-<span class="linenr">39: </span>    dx = <span style="color: #707183;">(</span>b-a<span style="color: #707183;">)</span>/<span style="color: #0000FF;">real</span><span style="color: #707183;">(</span>n<span style="color: #707183;">)</span>
-<span class="linenr">40: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">minimum to increment from</span>
-<span class="linenr">41: </span>    min = a - dx/<span style="color: #D0372D;">2</span>.<span style="color: #D0372D;">0</span>
-<span class="linenr">42: </span>
-<span class="linenr">43: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">midpoint rule</span>
-<span class="linenr">44: </span>    <span style="color: #0000FF;">do</span> i = <span style="color: #D0372D;">1</span>,n
-<span class="linenr">45: </span>       xi = min + i*dx
-<span class="linenr">46: </span>       sum = sum + f<span style="color: #707183;">(</span>xi<span style="color: #707183;">)</span>
-<span class="linenr">47: </span>    <span style="color: #0000FF;">end do</span>
-<span class="linenr">48: </span>    sum = sum*dx
-<span class="linenr">49: </span>
-<span class="linenr">50: </span>  <span style="color: #0000FF;">end function</span> <span style="color: #006699;">midpoint</span>
+<span class="linenr">14: </span><span style="color: #0000FF;">contains</span>
+<span class="linenr">15: </span>
+<span class="linenr">16: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">function f(x) = 1/x</span>
+<span class="linenr">17: </span>  <span style="color: #0000FF;">function</span> <span style="color: #006699;">f</span><span style="color: #707183;">(</span>x<span style="color: #707183;">)</span> <span style="color: #0000FF;">result</span><span style="color: #707183;">(</span>y<span style="color: #707183;">)</span>
+<span class="linenr">18: </span>    <span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> x, y</span>
+<span class="linenr">19: </span>    y = <span style="color: #D0372D;">1</span>.<span style="color: #D0372D;">0</span>/x
+<span class="linenr">20: </span>  <span style="color: #0000FF;">end function</span> <span style="color: #006699;">f</span>
+<span class="linenr">21: </span>
+<span class="linenr">22: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">midpoint: midpoint rule for definite integral</span>
+<span class="linenr">23: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">f: integrand</span>
+<span class="linenr">24: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">a: left endpoint of interval of integration</span>
+<span class="linenr">25: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">b: right endpoint of interval of integration</span>
+<span class="linenr">26: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">n: number of subintervals</span>
+<span class="linenr">27: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">sum: approximate definite integral</span>
+<span class="linenr">28: </span>  <span style="color: #0000FF;">function</span> <span style="color: #006699;">midpoint</span><span style="color: #707183;">(</span>f, a, b, n<span style="color: #707183;">)</span> <span style="color: #0000FF;">result</span><span style="color: #707183;">(</span>sum<span style="color: #707183;">)</span>
+<span class="linenr">29: </span>
+<span class="linenr">30: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">interface to f</span>
+<span class="linenr">31: </span>    <span style="color: #0000FF;">interface</span>
+<span class="linenr">32: </span>       <span style="color: #0000FF;">function</span> <span style="color: #006699;">f</span><span style="color: #707183;">(</span>x<span style="color: #707183;">)</span>
+<span class="linenr">33: </span>         <span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> x, y</span>
+<span class="linenr">34: </span>       <span style="color: #0000FF;">end function</span> <span style="color: #006699;">f</span>
+<span class="linenr">35: </span>    <span style="color: #0000FF;">end interface</span>
+<span class="linenr">36: </span>
+<span class="linenr">37: </span>    <span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> a, b, min, xi, dx, sum</span>
+<span class="linenr">38: </span>    <span style="color: #6434A3;">integer</span> ::<span style="color: #BA36A5;"> n, i</span>
+<span class="linenr">39: </span>
+<span class="linenr">40: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">subinterval increment</span>
+<span class="linenr">41: </span>    dx = <span style="color: #707183;">(</span>b-a<span style="color: #707183;">)</span>/<span style="color: #0000FF;">real</span><span style="color: #707183;">(</span>n<span style="color: #707183;">)</span>
+<span class="linenr">42: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">minimum to increment from</span>
+<span class="linenr">43: </span>    min = a - dx/<span style="color: #D0372D;">2</span>.<span style="color: #D0372D;">0</span>
+<span class="linenr">44: </span>
+<span class="linenr">45: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">midpoint rule</span>
+<span class="linenr">46: </span>    <span style="color: #0000FF;">do</span> i = <span style="color: #D0372D;">1</span>,n
+<span class="linenr">47: </span>       xi = min + i*dx
+<span class="linenr">48: </span>       sum = sum + f<span style="color: #707183;">(</span>xi<span style="color: #707183;">)</span>
+<span class="linenr">49: </span>    <span style="color: #0000FF;">end do</span>
+<span class="linenr">50: </span>    sum = sum*dx
 <span class="linenr">51: </span>
-<span class="linenr">52: </span><span style="color: #0000FF;">end program</span> <span style="color: #006699;">main</span>
+<span class="linenr">52: </span>  <span style="color: #0000FF;">end function</span> <span style="color: #006699;">midpoint</span>
+<span class="linenr">53: </span>
+<span class="linenr">54: </span><span style="color: #0000FF;">end program</span> <span style="color: #006699;">main</span>
 </pre>
 </div>
 
 <pre class="example">
-n: 2 M_n: .976360
-n: 4 M_n: .993575
-n: 6 M_n: .997091
-n: 8 M_n: .998353
-n: 10 M_n: .998942
-n: 12 M_n: .999264
-n: 14 M_n: .999459
-n: 16 M_n: .999585
-n: 18 M_n: .999672
-n: 20 M_n: .999735
+n: 2, M_n: .976360
+n: 4, M_n: .993575
+n: 6, M_n: .997091
+n: 8, M_n: .998353
+n: 10, M_n: .998942
+n: 12, M_n: .999264
+n: 14, M_n: .999459
+n: 16, M_n: .999585
+n: 18, M_n: .999672
+n: 20, M_n: .999735
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline46" class="outline-3">
+<h3 id="orgheadline46"><span class="section-number-3">6.4</span> Polymorphism</h3>
+<div class="outline-text-3" id="text-6-4">
+<p>
+An <code>interface</code> can be used as an entry into two different implementations of a subroutine or function with the same name so long as the different implementations have different argument signatures. This may be particularly useful for defining both a single precision and double precision version of a function or subroutine.
+</p>
+
+<p>
+The following code implements two versions of a function that computes machine epsilon in either single or double precision. The different implementations are distinguished by their arguments. The single precision version <code>mach_eps_sp</code> accepts one single precision float and the double precision version <code>mach_eps_dp</code> accepts one double precision float. Both functions are listed in the <code>interface</code> and can be called by its name <code>mach_eps</code>.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-fortran"><span class="linenr"> 1: </span><span style="color: #0000FF;">program</span> <span style="color: #006699;">main</span>
+<span class="linenr"> 2: </span>  <span style="color: #0000FF;">implicit</span> <span style="color: #6434A3;">none</span>
+<span class="linenr"> 3: </span>
+<span class="linenr"> 4: </span>  <span style="color: #6434A3;">integer</span>, <span style="color: #0000FF;">parameter</span> ::<span style="color: #BA36A5;"> sp = kind</span><span style="color: #707183;">(</span><span style="color: #BA36A5;">0.0</span><span style="color: #707183;">)</span>
+<span class="linenr"> 5: </span>  <span style="color: #6434A3;">integer</span>, <span style="color: #0000FF;">parameter</span> ::<span style="color: #BA36A5;"> dp = kind</span><span style="color: #707183;">(</span><span style="color: #BA36A5;">0.d0</span><span style="color: #707183;">)</span>
+<span class="linenr"> 6: </span>
+<span class="linenr"> 7: </span>  <span style="color: #0000FF;">interface</span> <span style="color: #006699;">mach_eps</span>
+<span class="linenr"> 8: </span>     <span style="color: #6434A3;">procedure</span><span style="color: #BA36A5;"> mach_eps_sp, mach_eps_dp</span>
+<span class="linenr"> 9: </span>  <span style="color: #0000FF;">end interface</span> <span style="color: #006699;">mach_eps</span>
+<span class="linenr">10: </span>
+<span class="linenr">11: </span>  <span style="color: #0000FF;">print</span>*, mach_eps<span style="color: #707183;">(</span><span style="color: #D0372D;">0</span>.<span style="color: #D0372D;">0_sp</span><span style="color: #707183;">)</span>, <span style="color: #0000FF;">epsilon</span><span style="color: #707183;">(</span><span style="color: #D0372D;">0</span>.<span style="color: #D0372D;">0_sp</span><span style="color: #707183;">)</span>
+<span class="linenr">12: </span>  <span style="color: #0000FF;">print</span>*, mach_eps<span style="color: #707183;">(</span><span style="color: #D0372D;">0</span>.<span style="color: #D0372D;">0_dp</span><span style="color: #707183;">)</span>, <span style="color: #0000FF;">epsilon</span><span style="color: #707183;">(</span><span style="color: #D0372D;">0</span>.<span style="color: #D0372D;">0_dp</span><span style="color: #707183;">)</span>
+<span class="linenr">13: </span>
+<span class="linenr">14: </span><span style="color: #0000FF;">contains</span>
+<span class="linenr">15: </span>
+<span class="linenr">16: </span>  <span style="color: #0000FF;">function</span> <span style="color: #006699;">mach_eps_sp</span><span style="color: #707183;">(</span>x<span style="color: #707183;">)</span> <span style="color: #0000FF;">result</span><span style="color: #707183;">(</span>eps<span style="color: #707183;">)</span>
+<span class="linenr">17: </span>    <span style="color: #6434A3;">real</span><span style="color: #707183;">(</span>sp<span style="color: #707183;">)</span> ::<span style="color: #BA36A5;"> x, eps</span>
+<span class="linenr">18: </span>    <span style="color: #6434A3;">integer</span> ::<span style="color: #BA36A5;"> count = 0</span>
+<span class="linenr">19: </span>
+<span class="linenr">20: </span>    eps = <span style="color: #D0372D;">1</span>.<span style="color: #D0372D;">0_sp</span>
+<span class="linenr">21: </span>    <span style="color: #0000FF;">do while</span> <span style="color: #707183;">(</span><span style="color: #D0372D;">1</span>.<span style="color: #D0372D;">0_sp</span> + eps*<span style="color: #D0372D;">0</span>.<span style="color: #D0372D;">5</span> &gt; <span style="color: #D0372D;">1</span>.<span style="color: #D0372D;">0_sp</span><span style="color: #707183;">)</span>
+<span class="linenr">22: </span>       eps = eps*<span style="color: #D0372D;">0</span>.<span style="color: #D0372D;">5</span>
+<span class="linenr">23: </span>       count = count+<span style="color: #D0372D;">1</span>
+<span class="linenr">24: </span>    <span style="color: #0000FF;">end do</span>
+<span class="linenr">25: </span>  <span style="color: #0000FF;">end function</span> <span style="color: #006699;">mach_eps_sp</span>
+<span class="linenr">26: </span>
+<span class="linenr">27: </span>  <span style="color: #0000FF;">function</span> <span style="color: #006699;">mach_eps_dp</span><span style="color: #707183;">(</span>x<span style="color: #707183;">)</span> <span style="color: #0000FF;">result</span><span style="color: #707183;">(</span>eps<span style="color: #707183;">)</span>
+<span class="linenr">28: </span>    <span style="color: #6434A3;">real</span><span style="color: #707183;">(</span>dp<span style="color: #707183;">)</span> ::<span style="color: #BA36A5;"> x, eps</span>
+<span class="linenr">29: </span>    <span style="color: #6434A3;">integer</span> ::<span style="color: #BA36A5;"> count = 0</span>
+<span class="linenr">30: </span>
+<span class="linenr">31: </span>    eps = <span style="color: #D0372D;">1</span>.<span style="color: #D0372D;">0_dp</span>
+<span class="linenr">32: </span>    <span style="color: #0000FF;">do while</span> <span style="color: #707183;">(</span><span style="color: #D0372D;">1</span>.<span style="color: #D0372D;">0_dp</span> + eps*<span style="color: #D0372D;">0</span>.<span style="color: #D0372D;">5</span> &gt; <span style="color: #D0372D;">1</span>.<span style="color: #D0372D;">0_dp</span><span style="color: #707183;">)</span>
+<span class="linenr">33: </span>       eps = eps*<span style="color: #D0372D;">0</span>.<span style="color: #D0372D;">5</span>
+<span class="linenr">34: </span>       count = count+<span style="color: #D0372D;">1</span>
+<span class="linenr">35: </span>    <span style="color: #0000FF;">end do</span>
+<span class="linenr">36: </span>  <span style="color: #0000FF;">end function</span> <span style="color: #006699;">mach_eps_dp</span>
+<span class="linenr">37: </span>
+<span class="linenr">38: </span><span style="color: #0000FF;">end program</span> <span style="color: #006699;">main</span>
+</pre>
+</div>
+
+<pre class="example">
+1.19209290E-07   1.19209290E-07
+2.2204460492503131E-016   2.2204460492503131E-016
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline48" class="outline-3">
+<h3 id="orgheadline48"><span class="section-number-3">6.5</span> Recursion</h3>
+<div class="outline-text-3" id="text-6-5">
+<p>
+A function or subroutine that calls itself must be defined with the <code>recursive</code> keyword preceding the construct name.
+</p>
+</div>
+
+<div id="outline-container-orgheadline47" class="outline-4">
+<h4 id="orgheadline47"><span class="section-number-4">6.5.1</span> Example: factorial</h4>
+<div class="outline-text-4" id="text-6-5-1">
+<p>
+The following code defines a recursive function <code>factorial</code> that computes \(n!\). If \(n>1\), the function call itself to return \(n(n-1)!\), otherwise the function returns \(1\). The main program calls <code>factorial</code> to compute \(5!\).
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-fortran"><span class="linenr"> 1: </span><span style="color: #0000FF;">program</span> <span style="color: #006699;">main</span>
+<span class="linenr"> 2: </span>  <span style="color: #0000FF;">implicit</span> <span style="color: #6434A3;">none</span>
+<span class="linenr"> 3: </span>
+<span class="linenr"> 4: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">print 5 factorial</span>
+<span class="linenr"> 5: </span>  <span style="color: #0000FF;">print</span>*, factorial<span style="color: #707183;">(</span><span style="color: #D0372D;">5</span><span style="color: #707183;">)</span>
+<span class="linenr"> 6: </span>
+<span class="linenr"> 7: </span><span style="color: #0000FF;">contains</span>
+<span class="linenr"> 8: </span>
+<span class="linenr"> 9: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">factorial(n): product of natural numbers up to n</span>
+<span class="linenr">10: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">n: integer argument</span>
+<span class="linenr">11: </span>  <span style="color: #0000FF;">recursive</span> <span style="color: #0000FF;">function</span> <span style="color: #006699;">factorial</span><span style="color: #707183;">(</span>n<span style="color: #707183;">)</span> <span style="color: #0000FF;">result</span><span style="color: #707183;">(</span>m<span style="color: #707183;">)</span>
+<span class="linenr">12: </span>    <span style="color: #6434A3;">integer</span> ::<span style="color: #BA36A5;"> n, m</span>
+<span class="linenr">13: </span>
+<span class="linenr">14: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">if n&gt;1, call factorial recursively</span>
+<span class="linenr">15: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">otherwise 1 factorial is 1</span>
+<span class="linenr">16: </span>    <span style="color: #0000FF;">if</span> <span style="color: #707183;">(</span>n&gt;1<span style="color: #707183;">)</span> <span style="color: #0000FF;">then</span>
+<span class="linenr">17: </span>       m = n*factorial<span style="color: #707183;">(</span>n-<span style="color: #D0372D;">1</span><span style="color: #707183;">)</span>
+<span class="linenr">18: </span>    <span style="color: #0000FF;">else</span>
+<span class="linenr">19: </span>       m = <span style="color: #D0372D;">1</span>
+<span class="linenr">20: </span>    <span style="color: #0000FF;">end if</span>
+<span class="linenr">21: </span>
+<span class="linenr">22: </span>  <span style="color: #0000FF;">end function</span> <span style="color: #006699;">factorial</span>
+<span class="linenr">23: </span>
+<span class="linenr">24: </span><span style="color: #0000FF;">end program</span> <span style="color: #006699;">main</span>
+</pre>
+</div>
+
+<pre class="example">
+120
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgheadline46" class="outline-2">
-<h2 id="orgheadline46"><span class="section-number-2">7</span> Subroutines</h2>
+<div id="outline-container-orgheadline54" class="outline-2">
+<h2 id="orgheadline54"><span class="section-number-2">7</span> Object-oriented programming</h2>
 <div class="outline-text-2" id="text-7">
-<p>
-Whereas a <code>function</code> does not return changes to its arguments and returns at most one value, a <code>subroutine</code> can be used to return changes to multiple arguments.
-</p>
+</div><div id="outline-container-orgheadline50" class="outline-3">
+<h3 id="orgheadline50"><span class="section-number-3">7.1</span> Derived types</h3>
 </div>
-<div id="outline-container-orgheadline45" class="outline-3">
-<h3 id="orgheadline45"><span class="section-number-3">7.1</span> Writing a subroutine</h3>
-<div class="outline-text-3" id="text-7-1">
+<div id="outline-container-orgheadline52" class="outline-3">
+<h3 id="orgheadline52"><span class="section-number-3">7.2</span> Modules</h3>
+<div class="outline-text-3" id="text-7-2">
+</div><div id="outline-container-orgheadline51" class="outline-4">
+<h4 id="orgheadline51"><span class="section-number-4">7.2.1</span> Example: determinant of random matrix</h4>
+<div class="outline-text-4" id="text-7-2-1">
 <p>
-A <code>subroutine</code> is defined after the <code>contains</code> keyword in a program or module. The definition of a subroutine begins with the name of the subroutine and list of arguments. Arguments are defined within the <code>subroutine</code> body with one of the following intents
+The following module defines a <code>matrix</code> type with two variables: an <code>integer</code> array <code>shape</code> that stores the number of rows and columns of the matrix and a <code>real</code> array <code>data</code> that stores the elements of the matrix. The type also has five procedures: a subroutine <code>construct</code> that allocates memory for the matrix, a subroutine <code>delete</code> that deallocates the memory the matrix occupies, a subroutine <code>print</code> that prints a matrix, a function <code>random_matrix</code> that returns matrix with random entries, and a function <code>det</code> that computes the determinant of a matrix using the recursive definition based on cofactors.
 </p>
-<ul class="org-ul">
-<li><code>intent(in)</code>: changes to the argument are not returned</li>
-<li><code>intent(inout)</code>: changes to the argument are returned</li>
-<li><code>intent(out)</code>: the initial value of the argument is ignored and changes to the argument are returned.</li>
-</ul>
 
+<div class="org-src-container">
+
+<pre class="src src-fortran"><span class="linenr">  1: </span><span style="color: #0000FF;">module</span> <span style="color: #006699;">matrix_module</span>
+<span class="linenr">  2: </span>  <span style="color: #0000FF;">implicit</span> <span style="color: #6434A3;">none</span>
+<span class="linenr">  3: </span>
+<span class="linenr">  4: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">matrix type</span>
+<span class="linenr">  5: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">shape: number of rows, cols</span>
+<span class="linenr">  6: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">data: elements of matrix</span>
+<span class="linenr">  7: </span>  <span style="color: #0000FF;">type</span> <span style="color: #006699;">matrix</span>
+<span class="linenr">  8: </span>     <span style="color: #6434A3;">integer</span> ::<span style="color: #BA36A5;"> shape</span><span style="color: #707183;">(</span><span style="color: #BA36A5;">2</span><span style="color: #707183;">)</span>
+<span class="linenr">  9: </span>     <span style="color: #6434A3;">real</span>, <span style="color: #0000FF;">allocatable</span> ::<span style="color: #BA36A5;"> data</span><span style="color: #707183;">(</span><span style="color: #BA36A5;">:,:</span><span style="color: #707183;">)</span>
+<span class="linenr"> 10: </span>   <span style="color: #0000FF;">contains</span>
+<span class="linenr"> 11: </span>     <span style="color: #6434A3;">procedure</span> ::<span style="color: #BA36A5;"> construct</span>
+<span class="linenr"> 12: </span>     <span style="color: #6434A3;">procedure</span> ::<span style="color: #BA36A5;"> delete</span>
+<span class="linenr"> 13: </span>     <span style="color: #6434A3;">procedure</span> ::<span style="color: #BA36A5;"> print</span>
+<span class="linenr"> 14: </span>     <span style="color: #6434A3;">procedure</span> ::<span style="color: #BA36A5;"> det</span>
+<span class="linenr"> 15: </span>  <span style="color: #0000FF;">end type</span> <span style="color: #006699;">matrix</span>
+<span class="linenr"> 16: </span>
+<span class="linenr"> 17: </span><span style="color: #0000FF;">contains</span>
+<span class="linenr"> 18: </span>
+<span class="linenr"> 19: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">construct: populate shape and allocate memory for matrix</span>
+<span class="linenr"> 20: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">m,n: number of rows cols</span>
+<span class="linenr"> 21: </span>  <span style="color: #0000FF;">subroutine</span> <span style="color: #006699;">construct</span><span style="color: #707183;">(</span>this, m, n<span style="color: #707183;">)</span>
+<span class="linenr"> 22: </span>    <span style="color: #6434A3;">class</span><span style="color: #707183;">(</span><span style="color: #6434A3;">matrix</span><span style="color: #707183;">)</span> :: <span style="color: #BA36A5;">this</span>
+<span class="linenr"> 23: </span>    <span style="color: #6434A3;">integer</span> ::<span style="color: #BA36A5;"> m,n</span>
+<span class="linenr"> 24: </span>    this%shape = <span style="color: #707183;">[</span>m,n<span style="color: #707183;">]</span>
+<span class="linenr"> 25: </span>    <span style="color: #0000FF;">allocate</span><span style="color: #707183;">(</span>this%data<span style="color: #7388D6;">(</span>m,n<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<span class="linenr"> 26: </span>  <span style="color: #0000FF;">end subroutine</span> <span style="color: #006699;">construct</span>
+<span class="linenr"> 27: </span>
+<span class="linenr"> 28: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">delete: deallocate memory that matrix occupies</span>
+<span class="linenr"> 29: </span>  <span style="color: #0000FF;">subroutine</span> <span style="color: #006699;">delete</span><span style="color: #707183;">(</span>this<span style="color: #707183;">)</span>
+<span class="linenr"> 30: </span>    <span style="color: #6434A3;">class</span><span style="color: #707183;">(</span><span style="color: #6434A3;">matrix</span><span style="color: #707183;">)</span> :: <span style="color: #BA36A5;">this</span>
+<span class="linenr"> 31: </span>    <span style="color: #0000FF;">deallocate</span><span style="color: #707183;">(</span>this%data<span style="color: #707183;">)</span>
+<span class="linenr"> 32: </span>  <span style="color: #0000FF;">end subroutine</span> <span style="color: #006699;">delete</span>
+<span class="linenr"> 33: </span>
+<span class="linenr"> 34: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">print: formatted print of matrix</span>
+<span class="linenr"> 35: </span>  <span style="color: #0000FF;">subroutine</span> <span style="color: #006699;">print</span><span style="color: #707183;">(</span>this<span style="color: #707183;">)</span>
+<span class="linenr"> 36: </span>    <span style="color: #6434A3;">class</span><span style="color: #707183;">(</span><span style="color: #6434A3;">matrix</span><span style="color: #707183;">)</span> :: <span style="color: #BA36A5;">this</span>
+<span class="linenr"> 37: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">row_fmt: format character string for row printing</span>
+<span class="linenr"> 38: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">fmt: temporary format string</span>
+<span class="linenr"> 39: </span>    <span style="color: #6434A3;">character</span><span style="color: #707183;">(</span><span style="color: #D0372D;">32</span><span style="color: #707183;">)</span> ::<span style="color: #BA36A5;"> row_fmt, fmt = '(a,i0,a,i0,a,i0,a)'</span>
+<span class="linenr"> 40: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">w: width of each entry printed</span>
+<span class="linenr"> 41: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">d: number of decimal digits printed</span>
+<span class="linenr"> 42: </span>    <span style="color: #6434A3;">integer</span> ::<span style="color: #BA36A5;"> w, d = 2, row</span>
+<span class="linenr"> 43: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">find largest width of element in matrix</span>
+<span class="linenr"> 44: </span>    w = <span style="color: #0000FF;">ceiling</span><span style="color: #707183;">(</span><span style="color: #0000FF;">log10</span><span style="color: #7388D6;">(</span><span style="color: #0000FF;">maxval</span><span style="color: #909183;">(</span><span style="color: #0000FF;">abs</span><span style="color: #709870;">(</span>this%data<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span> + d + <span style="color: #D0372D;">2</span>
+<span class="linenr"> 45: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">write row formatting to 'row_fmt' variable</span>
+<span class="linenr"> 46: </span>    <span style="color: #0000FF;">write</span><span style="color: #707183;">(</span>row_fmt,fmt<span style="color: #707183;">)</span> <span style="color: #008000;">'('</span>,this%<span style="color: #0000FF;">shape</span><span style="color: #707183;">(</span><span style="color: #D0372D;">2</span><span style="color: #707183;">)</span>,<span style="color: #008000;">'(f'</span>,w,<span style="color: #008000;">'.'</span>,d,<span style="color: #008000;">',1x))'</span>
+<span class="linenr"> 47: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">print matrix row by row</span>
+<span class="linenr"> 48: </span>    <span style="color: #0000FF;">do</span> row = <span style="color: #D0372D;">1</span>,this%<span style="color: #0000FF;">shape</span><span style="color: #707183;">(</span><span style="color: #D0372D;">1</span><span style="color: #707183;">)</span>
+<span class="linenr"> 49: </span>       <span style="color: #0000FF;">print</span> row_fmt, this%data<span style="color: #707183;">(</span>row,:<span style="color: #707183;">)</span>
+<span class="linenr"> 50: </span>    <span style="color: #0000FF;">end do</span>
+<span class="linenr"> 51: </span>  <span style="color: #0000FF;">end subroutine</span> <span style="color: #006699;">print</span>
+<span class="linenr"> 52: </span>
+<span class="linenr"> 53: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">random_matrix: generate matrix with random entries in [-1,1]</span>
+<span class="linenr"> 54: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">m,n: number of rows,cols</span>
+<span class="linenr"> 55: </span>  <span style="color: #0000FF;">function</span> <span style="color: #006699;">random_matrix</span><span style="color: #707183;">(</span>m,n<span style="color: #707183;">)</span> <span style="color: #0000FF;">result</span><span style="color: #707183;">(</span>mat<span style="color: #707183;">)</span>
+<span class="linenr"> 56: </span>    <span style="color: #6434A3;">integer</span> ::<span style="color: #BA36A5;"> m,n,i,j</span>
+<span class="linenr"> 57: </span>    <span style="color: #6434A3;">type</span><span style="color: #707183;">(</span><span style="color: #6434A3;">matrix</span><span style="color: #707183;">)</span> :: <span style="color: #BA36A5;">mat</span>
+<span class="linenr"> 58: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">allocate memory for matrix</span>
+<span class="linenr"> 59: </span>    <span style="color: #0000FF;">call</span> <span style="color: #006699;">mat</span>%construct<span style="color: #707183;">(</span>m,n<span style="color: #707183;">)</span>
+<span class="linenr"> 60: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">seed random number generator</span>
+<span class="linenr"> 61: </span>    <span style="color: #0000FF;">call</span> <span style="color: #006699;">srand</span><span style="color: #707183;">(</span>time<span style="color: #7388D6;">()</span><span style="color: #707183;">)</span>
+<span class="linenr"> 62: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">populate matrix</span>
+<span class="linenr"> 63: </span>    <span style="color: #0000FF;">do</span> i = <span style="color: #D0372D;">1</span>,m
+<span class="linenr"> 64: </span>       <span style="color: #0000FF;">do</span> j = <span style="color: #D0372D;">1</span>,n
+<span class="linenr"> 65: </span>          mat%data<span style="color: #707183;">(</span>i,j<span style="color: #707183;">)</span> = <span style="color: #D0372D;">2</span>.<span style="color: #D0372D;">0</span>*rand<span style="color: #707183;">()</span> - <span style="color: #D0372D;">1</span>.<span style="color: #D0372D;">0</span>
+<span class="linenr"> 66: </span>       <span style="color: #0000FF;">end do</span>
+<span class="linenr"> 67: </span>    <span style="color: #0000FF;">end do</span>
+<span class="linenr"> 68: </span>  <span style="color: #0000FF;">end function</span> <span style="color: #006699;">random_matrix</span>
+<span class="linenr"> 69: </span>
+<span class="linenr"> 70: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">det: compute determinant of matrix</span>
+<span class="linenr"> 71: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">using recursive definition based on cofactors</span>
+<span class="linenr"> 72: </span>  <span style="color: #0000FF;">recursive</span> <span style="color: #0000FF;">function</span> <span style="color: #006699;">det</span><span style="color: #707183;">(</span>this<span style="color: #707183;">)</span> <span style="color: #0000FF;">result</span><span style="color: #707183;">(</span>d<span style="color: #707183;">)</span>
+<span class="linenr"> 73: </span>    <span style="color: #6434A3;">class</span><span style="color: #707183;">(</span><span style="color: #6434A3;">matrix</span><span style="color: #707183;">)</span> :: <span style="color: #BA36A5;">this</span>
+<span class="linenr"> 74: </span>    <span style="color: #6434A3;">type</span><span style="color: #707183;">(</span><span style="color: #6434A3;">matrix</span><span style="color: #707183;">)</span> :: <span style="color: #BA36A5;">submatrix</span>
+<span class="linenr"> 75: </span>    <span style="color: #6434A3;">real</span> ::<span style="color: #BA36A5;"> d, sgn, element, minor</span>
+<span class="linenr"> 76: </span>    <span style="color: #6434A3;">integer</span> ::<span style="color: #BA36A5;"> m, n, row, col, i, j</span>
+<span class="linenr"> 77: </span>
+<span class="linenr"> 78: </span>    m = this%<span style="color: #0000FF;">shape</span><span style="color: #707183;">(</span><span style="color: #D0372D;">1</span><span style="color: #707183;">)</span>
+<span class="linenr"> 79: </span>    n = this%<span style="color: #0000FF;">shape</span><span style="color: #707183;">(</span><span style="color: #D0372D;">2</span><span style="color: #707183;">)</span>
+<span class="linenr"> 80: </span>    d = <span style="color: #D0372D;">0</span>.<span style="color: #D0372D;">0</span>
+<span class="linenr"> 81: </span>
+<span class="linenr"> 82: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">compute cofactor</span>
+<span class="linenr"> 83: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">if 1x1 matrix, return value</span>
+<span class="linenr"> 84: </span>    <span style="color: #0000FF;">if</span> <span style="color: #707183;">(</span>m==<span style="color: #D0372D;">1</span><span style="color: #0000FF;">.and.</span>n==<span style="color: #D0372D;">1</span><span style="color: #707183;">)</span> <span style="color: #0000FF;">then</span>
+<span class="linenr"> 85: </span>       d = this%data<span style="color: #707183;">(</span><span style="color: #D0372D;">1</span>,<span style="color: #D0372D;">1</span><span style="color: #707183;">)</span>
+<span class="linenr"> 86: </span>    <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">if square and not 1x1</span>
+<span class="linenr"> 87: </span>    <span style="color: #0000FF;">else if</span> <span style="color: #707183;">(</span>m==n<span style="color: #707183;">)</span> <span style="color: #0000FF;">then</span>
+<span class="linenr"> 88: </span>       <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">cofactor sum down the first column</span>
+<span class="linenr"> 89: </span>       <span style="color: #0000FF;">do</span> row = <span style="color: #D0372D;">1</span>,m
+<span class="linenr"> 90: </span>          <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">sign of term</span>
+<span class="linenr"> 91: </span>          sgn = <span style="color: #707183;">(</span>-<span style="color: #D0372D;">1</span>.<span style="color: #D0372D;">0</span><span style="color: #707183;">)</span>**<span style="color: #707183;">(</span>row+<span style="color: #D0372D;">1</span><span style="color: #707183;">)</span>
+<span class="linenr"> 92: </span>          <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">matrix element</span>
+<span class="linenr"> 93: </span>          element = this%data<span style="color: #707183;">(</span>row,<span style="color: #D0372D;">1</span><span style="color: #707183;">)</span>
+<span class="linenr"> 94: </span>          <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">construct the cofactor submatrix and compute its determinant</span>
+<span class="linenr"> 95: </span>          <span style="color: #0000FF;">call</span> <span style="color: #006699;">submatrix</span>%construct<span style="color: #707183;">(</span>m-<span style="color: #D0372D;">1</span>,n-<span style="color: #D0372D;">1</span><span style="color: #707183;">)</span>
+<span class="linenr"> 96: </span>          <span style="color: #0000FF;">if</span> <span style="color: #707183;">(</span>row==<span style="color: #D0372D;">1</span><span style="color: #707183;">)</span> <span style="color: #0000FF;">then</span>
+<span class="linenr"> 97: </span>             submatrix%data = this%data<span style="color: #707183;">(</span><span style="color: #D0372D;">2</span>:,<span style="color: #D0372D;">2</span>:<span style="color: #707183;">)</span>
+<span class="linenr"> 98: </span>          <span style="color: #0000FF;">else if</span> <span style="color: #707183;">(</span>row==m<span style="color: #707183;">)</span> <span style="color: #0000FF;">then</span>
+<span class="linenr"> 99: </span>             submatrix%data = this%data<span style="color: #707183;">(</span>:m-<span style="color: #D0372D;">1</span>,<span style="color: #D0372D;">2</span>:<span style="color: #707183;">)</span>
+<span class="linenr">100: </span>          <span style="color: #0000FF;">else</span>
+<span class="linenr">101: </span>             submatrix%data<span style="color: #707183;">(</span>:row-<span style="color: #D0372D;">1</span>,:<span style="color: #707183;">)</span> = this%data<span style="color: #707183;">(</span>:row-<span style="color: #D0372D;">1</span>,<span style="color: #D0372D;">2</span>:<span style="color: #707183;">)</span>
+<span class="linenr">102: </span>             submatrix%data<span style="color: #707183;">(</span>row:,:<span style="color: #707183;">)</span> = this%data<span style="color: #707183;">(</span>row+<span style="color: #D0372D;">1</span>:,<span style="color: #D0372D;">2</span>:<span style="color: #707183;">)</span>
+<span class="linenr">103: </span>          <span style="color: #0000FF;">end if</span>
+<span class="linenr">104: </span>          minor = submatrix%det<span style="color: #707183;">()</span>
+<span class="linenr">105: </span>          <span style="color: #0000FF;">call</span> <span style="color: #006699;">submatrix</span>%delete<span style="color: #707183;">()</span>
+<span class="linenr">106: </span>
+<span class="linenr">107: </span>          <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">determinant accumulator</span>
+<span class="linenr">108: </span>          d = d + sgn*element*minor
+<span class="linenr">109: </span>       <span style="color: #0000FF;">end do</span>
+<span class="linenr">110: </span>    <span style="color: #0000FF;">end if</span>
+<span class="linenr">111: </span>  <span style="color: #0000FF;">end function</span> <span style="color: #006699;">det</span>
+<span class="linenr">112: </span>
+<span class="linenr">113: </span><span style="color: #0000FF;">end module</span> <span style="color: #006699;">matrix_module</span>
+</pre>
+</div>
+
+<p>
+The main program uses the <code>matrix_module</code> defined above to find the determinants of a number of random matrices of increasing size. 
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-fortran"><span class="linenr"> 1: </span><span style="color: #0000FF;">program</span> <span style="color: #006699;">main</span>
+<span class="linenr"> 2: </span>  <span style="color: #0000FF;">use</span> <span style="color: #006699;">matrix_module</span>
+<span class="linenr"> 3: </span>  <span style="color: #0000FF;">implicit</span> <span style="color: #6434A3;">none</span>
+<span class="linenr"> 4: </span>
+<span class="linenr"> 5: </span>  <span style="color: #6434A3;">type</span><span style="color: #707183;">(</span><span style="color: #6434A3;">matrix</span><span style="color: #707183;">)</span> :: <span style="color: #BA36A5;">mat</span>
+<span class="linenr"> 6: </span>  <span style="color: #6434A3;">integer</span> ::<span style="color: #BA36A5;"> n</span>
+<span class="linenr"> 7: </span>
+<span class="linenr"> 8: </span>  <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">compute determinants of random matrices</span>
+<span class="linenr"> 9: </span>  <span style="color: #0000FF;">do</span> n = <span style="color: #D0372D;">1</span>,<span style="color: #D0372D;">5</span>
+<span class="linenr">10: </span>     <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">generate random  matrix</span>
+<span class="linenr">11: </span>     mat = random_matrix<span style="color: #707183;">(</span>n,n<span style="color: #707183;">)</span>
+<span class="linenr">12: </span>
+<span class="linenr">13: </span>     <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">print determinant of matrix</span>
+<span class="linenr">14: </span>     <span style="color: #0000FF;">print</span> <span style="color: #008000;">"('n: ', i0, ', det: ', f0.5)"</span>, n, det<span style="color: #707183;">(</span>mat<span style="color: #707183;">)</span>
+<span class="linenr">15: </span>
+<span class="linenr">16: </span>     <span style="color: #8D8D84;">! </span><span style="color: #8D8D84; font-style: italic;">delete matrix</span>
+<span class="linenr">17: </span>     <span style="color: #0000FF;">call</span> <span style="color: #006699;">mat</span>%delete<span style="color: #707183;">()</span>
+<span class="linenr">18: </span>  <span style="color: #0000FF;">end do</span>
+<span class="linenr">19: </span>
+<span class="linenr">20: </span><span style="color: #0000FF;">end program</span> <span style="color: #006699;">main</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">./main
+</pre>
+</div>
+
+<pre class="example">
+n: 1, det: -.68676
+n: 2, det: .45054
+n: 3, det: .37319
+n: 4, det: -.27328
+n: 5, det: .26695
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline53" class="outline-3">
+<h3 id="orgheadline53"><span class="section-number-3">7.3</span> Parameterized data types</h3>
+<div class="outline-text-3" id="text-7-3">
 </div>
 </div>
 </div>

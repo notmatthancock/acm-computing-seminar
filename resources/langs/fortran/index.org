@@ -14,390 +14,6 @@
 #+html: <a href="javascript:;" id="toc-open">&#9776;</a>
 #+html: <a href="javascript:;" id="toc-close">&times;</a>
 
-:snippets:
-# * ${n \choose k}$
-# #+begin_src fortran :tangle choose/main.f90
-#   program main
-#     implicit none
-#     print*, choose(4,0), choose(4,1), &
-#          choose(4,2), choose(4,3), choose(4,4)
-#   contains
-#     function choose(n,k) result(c)
-#       integer, intent(in) :: n, k
-#       integer :: c, i
-#       c = 1
-#       do i = 1, min(k,n-k)
-#          c = c * (n-i+1) / i
-#       end do
-#     end function choose
-#   end program main
-# #+end_src
-
-# #+begin_src sh :dir choose
-# gfortran main.f90 -o main
-# #+end_src
-
-# #+begin_src sh :dir choose
-# ./main
-# #+end_src
-
-# * Setting precision of variables
-# #+begin_src fortran :tangle precision/constants.f90
-#   module constants
-#     implicit none
-#     integer, parameter :: sp = kind(0.), dp = kind(0.d0)
-#     integer, parameter :: rp = dp
-#   end module constants
-# #+end_src
-
-# #+begin_src sh :dir precision
-# gfortran -c constants.f90
-# #+end_src
-
-# #+begin_src fortran :tangle precision/main.f90
-#   program main
-#     use constants
-#     implicit none
-#     real(rp) :: x, y
-#     x = 1._rp
-#     y = real(1,rp)
-#   end program main
-# #+end_src
-
-# #+begin_src sh :dir precision
-# gfortran main.f90 constants.o -o main
-# #+end_src
-
-# #+begin_src sh :dir precision
-# ./main
-# #+end_src
-
-# #+begin_src make :exports none :tangle precision/makefile
-#   FC = gfortran
-#   SRC = main.f90
-#   EXE = main
-#   OBJ = constants.o
-
-#   all: $(EXE)
-#   $(EXE): $(OBJ)
-#     $(FC) $(OBJ) $(SRC) -o $(EXE) 
-#   %.o: %.f90
-#     $(FC) -c $< -o $@
-#   clean:
-#     $(RM) *.o $(EXE)
-# #+end_src
-
-# * Machine Epsilon
-# #+begin_src fortran :tangle epsilon/constants.f90
-#   module constants
-#     implicit none
-
-#     integer, parameter :: sp = kind(0.), dp = kind(0.d0)
-#     integer, parameter :: rp = dp
-
-#     interface machine_epsilon
-#        module procedure machine_epsilon_sp, machine_epsilon_dp
-#     end interface machine_epsilon
-
-#   contains
-
-#     function machine_epsilon_sp(x) result(e)
-#       implicit none
-#       real(sp), intent(in) :: x
-#       real :: e
-#       e = .5
-#       do while (1._sp + e > 1._sp)
-#          e = .5 * e
-#       end do
-#     end function machine_epsilon_sp
-
-#     function machine_epsilon_dp(x) result(e)
-#       implicit none
-#       real(dp), intent(in) :: x
-#       real :: e
-#       e = .5
-#       do while (1._dp + e > 1._dp)
-#          e = .5 * e
-#       end do
-#     end function machine_epsilon_dp
-
-#   end module constants
-# #+end_src
-
-# #+begin_src sh :dir epsilon
-# gfortran -c constants.f90
-# #+end_src
-
-# #+begin_src fortran :tangle epsilon/main.f90
-#   program main
-#     use constants
-#     implicit none
-#     print*, machine_epsilon(0._sp), machine_epsilon(0._dp)
-#   end program main
-# #+end_src
-
-# #+begin_src sh :dir epsilon
-# gfortran main.f90 constants.o -o main
-# #+end_src
- 
-# #+begin_src sh :dir epsilon
-# ./main
-# #+end_src
-
-# #+begin_src make :exports none :tangle epsilon/makefile
-#   FC = gfortran
-#   SRC = main.f90
-#   EXE = main
-#   OBJ = constants.o
-
-#   all: $(EXE)
-#   $(EXE): $(OBJ)
-#     $(FC) $(OBJ) $(SRC) -o $(EXE) 
-#   %.o: %.f90
-#     $(FC) -c $< -o $@
-#   clean:
-#     $(RM) *.o $(EXE)
-# #+end_src
-
-# #+begin_src fortran :exports both
-#   print*, epsilon(0.), epsilon(0.d0)
-# #+end_src
-
-# * Rootfinding
-
-# #+begin_src fortran :tangle rootfind/functions.f90
-#   module functions
-#     implicit none
-
-#   contains
-
-#     function f1(x)
-#       real, intent(in) :: x
-#       real :: f1
-#       f1 = sin(x)
-#     end function f1
-
-#     function df1dx(x)
-#       real, intent(in) :: x
-#       real :: df1dx
-#       df1dx = cos(x)
-#     end function df1dx
-
-#   end module functions
-# #+end_src
-
-# #+begin_src sh :dir rootfind
-# gfortran -c functions.f90
-# #+end_src
-
-# #+begin_src fortran :tangle rootfind/rootfind.f90
-#   module rootfind
-#     implicit none
-
-#     interface
-#        function fun(x)
-#          real, intent(in) :: x
-#          real :: fun
-#        end function fun
-#     end interface
-
-#   contains
-
-#     function newton(f,dfdx,x0,tol,maxstep) result(xn)
-#       procedure(fun), pointer :: f, dfdx
-#       real, intent(in) :: x0, tol
-#       integer, intent(in) :: maxstep
-#       real :: xn
-#       integer :: n = 0
-
-#       xn = x0
-#       do while (abs(f(xn))>tol .and. n<maxstep)
-#          xn = xn - f(xn)/dfdx(xn)
-#          n = n + 1
-#       end do
-#     end function newton
-
-#   end module rootfind
-# #+end_src
-
-# #+begin_src sh :dir rootfind
-# gfortran -c rootfind.f90
-# #+end_src
-
-# #+begin_src fortran :tangle rootfind/main.f90
-#   program main
-#   	use functions
-#     use rootfind
-#     implicit none
-
-#     procedure(fun), pointer :: f, dfdx
-#     real :: x = 1., tol = 1e-5
-#     integer :: maxstep = 100
-#     f => f1
-#     dfdx => df1dx
-#     print*, newton(f,dfdx,x,tol,maxstep)
-
-#   end program main
-# #+end_src
-
-# #+begin_src sh :dir rootfind
-# gfortran main.f90 functions.o rootfind.o -o main
-# #+end_src
-
-# #+begin_src make :exports none :tangle rootfind/makefile
-#   FC = gfortran
-#   SRC = main.f90
-#   EXE = main
-#   OBJ = functions.o rootfind.o
-
-#   all: $(EXE)
-#   $(EXE): $(OBJ)
-#     $(FC) $(OBJ) $(SRC) -o $(EXE) 
-#   %.o: %.f90
-#     $(FC) -c $< -o $@
-#   clean:
-#     $(RM) *.o $(EXE)
-# #+end_src
-
-# #+begin_src sh :dir rootfind
-# ./main
-# #+end_src
-
-# * Quadrature
-
-# #+begin_src fortran :tangle quadrature/functions.f90
-#   module functions
-#     implicit none
-
-#   contains
-
-#     function f1(x)
-#       real, intent(in) :: x
-#       real :: f1
-#       f1 = x
-#     end function f1
-
-#   end module functions
-# #+end_src
-
-# #+begin_src sh :dir quadrature
-#   gfortran -c functions.f90
-# #+end_src
-
-# #+begin_src fortran :tangle quadrature/quadrature.f90
-#   module quadrature
-#     implicit none
-
-#   contains
-
-#     function midpoint_rule(f,a,b,n) result(I)
-#       interface
-#          function f(x)
-#            real, intent(in) :: x
-#            real :: f
-#          end function f
-#       end interface
-#       real :: a, b
-#       integer :: n, j
-#       real :: I, dx
-
-#       dx = (b-a)/real(n)
-#       I = 0
-#       do j = 0,n-1
-#          I = I + f(a + (j+.5)*dx)
-#       end do
-#       I = dx*I
-#     end function midpoint_rule
-
-#   end module quadrature
-# #+end_src
-
-# #+begin_src sh :dir quadrature
-#   gfortran -c quadrature.f90
-# #+end_src
-
-# #+begin_src fortran :tangle quadrature/main.f90
-#   program main
-#     use functions
-#     use quadrature
-#     implicit none
-
-#     real :: a = 0, b = 1
-#     integer :: n = 5
-#     print*, midpoint_rule(f1,a,b,n)
-
-#   end program main
-# #+end_src
-
-# #+begin_src sh :dir quadrature
-#   gfortran main.f90 functions.o quadrature.o -o main
-# #+end_src
-
-# #+begin_src make :exports none :tangle quadrature/makefile
-#   FC = gfortran
-#   SRC = main.f90
-#   EXE = main
-#   OBJ = functions.o quadrature.o
-
-#   all: $(EXE)
-#   $(EXE): $(OBJ)
-#     $(FC) $(OBJ) $(SRC) -o $(EXE) 
-#   %.o: %.f90
-#     $(FC) -c $< -o $@
-#   clean:
-#     $(RM) *.o $(EXE)
-# #+end_src
-
-# #+begin_src sh :dir quadrature
-#   ./main
-# #+end_src
-
-# * Matrix multiplication
-# #+begin_src fortran :exports both :tangle matmul/main.f90
-#   program main
-#     implicit none
-
-#     real :: A(4,4), B(4,4)
-#     A=1; B=2
-
-#     print*, matrix_multiply(A,B)
-
-#   contains
-
-#     function matrix_multiply(A,B) result(C)
-#       implicit none
-#       real :: A(4,4), B(4,4), C(4,4)
-#       integer :: i,j,k
-
-#       C = 0
-#       do i=1,4
-#          do j=1,4
-#             do k=1,4
-#                C(i,j) = C(i,j) + A(i,k)*B(k,j)
-#             end do
-#          end do
-#       end do
-
-#       end function matrix_multiply
-
-#   end program main
-# #+end_src
-# * $\sum_{n=0}^{\infty}\frac1{n!}$
-# #+begin_src fortran :exports both :tangle series/main.f90
-#   program main
-#     implicit none
-#     integer :: n = 0, nf = 1
-#     real :: s = 0
-#     do while (1./real(nf) > 0)
-#        s = s + 1./real(nf)
-#        n = n + 1
-#        nf = nf * n
-#     end do
-#     print*, s, exp(1.)-s
-#   end program main
-# #+end_src
-:end:
-
 * Introduction
 This guide is intended to quickly get you up-and-running in scientific computing with Fortran. There is a companion [[../cpp/index.html][C++ guide]] that parallels the content of this guide. 
 ** About the language
@@ -787,7 +403,7 @@ deallocate(a)
 *** Example: =if= / =else= and random number generation
 Execution of two blocks of code can be controlled with mutually exclusive logic using the =if= / =else= construct. The following code generates a random number between 0 and 1, then prints the number and whether or not the number is greater than 0.5
 
-#+begin_src fortran -n :exports both :results output
+#+begin_src fortran -n :exports both :results output :cache no
 real :: num
 
 ! seed random number generator
@@ -829,7 +445,7 @@ An =else= block is optional and can be omitted to form an =if= construct in whic
 *** Example: =if= / =else if= / =else=
 Execution of three or more blocks of code with mutually exclusive logic can be controlled using the =if= / =else if= / =else= construct. The following code generates a random number between 0 and 1, then prints the number and which quarter of the interval $[0,1]$ that the number is in.
 
-#+begin_src fortran -n -r :exports both :results output
+#+begin_src fortran -n -r :exports both :results output :cache no
 real :: num
 
 ! seed random number generator with current time
@@ -1153,7 +769,6 @@ close(10)
 #+end_src
 
 *** Writing data to file
-
 Data can be written to a file with the =write= command.
 
 #+begin_src fortran -n
@@ -1179,7 +794,6 @@ This produces a file =sine.txt= in the directory =data= containing
 :  0.600000024      0.564642489    
 :  0.800000012      0.717356086    
 :   1.00000000      0.841470957    
-
 
 ** Formatted input/output
 The format of a =print=, =read=, or =write= statement can be specified with a =character= string. A format character string replaces the =*= symbol in =print*= and the second =*= symbol in =read(*,*)= or =write(*,*)=. A format string is a list of literal character strings or character descriptors from
@@ -1207,14 +821,12 @@ print fmt, 'two values: ', c, d
 : four values: word 1 2.0 3.0E+0
 : two values: 2.0 3.0
 
-* Functions
+* Functions/Subroutines
+Functions and subroutines are callable blocks of code. A =function= returns a value from a set of arguments. A =subroutine= executes a block of code from a set of arguments but does not explicitly return a value. Changes to arguments made within a =function= are not returned whereas changes to arguments made within a =subroutine= can be returned to the calling program. Both functions and subroutines are defined after the =contains= keyword in a =module= or =program=.
 ** Writing a function
-Functions are defined after the =contains= keyword in a =module= or =program=. The definition of a function starts with the name of the function followed by a list of arguments and return variable. The data types of the arguments and return variable are defined within the =function= body.
-
+The definition of a function starts with the name of the function followed by a list of arguments and return variable. The data types of the arguments and return variable are defined within the =function= body.
 *** Example: =linspace=: generating a set of equally-space points
-
 The following program defines a function =linspace= that returns a set of equidistant points on an interval. The main function makes a call to the function.
-
 #+begin_src fortran -n :exports both :results output
 program main
   implicit none
@@ -1253,27 +865,75 @@ contains
 end program main
 #+end_src
 
-#+RESULTS[2f414e387f7f8b99f2dc9e98a02dc427b7af34a0]:
+#+RESULTS[1bda5368f45f20fae2dd9028b6d56cc60cf51094]:
 : .0 .1 .2 .3 .4 .6 .7 .8 .9 1.0
 
-** Interfaces
-A function can be passed as an argument to another function if there is an =interface= to instruct the receiving function how to use the passed function. An =interface= to a function is essentially the function itself with only declarations and without implementation.
+** Writing a subroutine
+The definition of a subroutine begins with the name of the subroutine and list of arguments. Arguments are defined within the =subroutine= body with one of the following intents
+- =intent(in)=: changes to the argument are not returned
+- =intent(inout)=: changes to the argument are returned
+- =intent(out)=: the initial value of the argument is ignored and changes to the argument are returned.
+Subroutines are called using the =call= keyword followed by the subroutine name.
 
+*** Example: polar coordinates
+The following code defines a subroutine =polar_coord= that returns the polar coordinates $(r,\theta)$ of a rectangular coordinate pair $(x,y)$ defined by $r=\sqrt{x^2+y^2}$ and $\theta=\arctan(y/x)$.
+#+begin_src fortran -n
+program main
+
+  real :: x = 1.0, y = 1.0, r, t
+
+  ! call subroutine that returns polar coords
+  call polar_coord(x, y, r, t)
+  print*, r, t
+
+contains
+
+  ! polar_coord: return the polar coordinates of a rect coord pair
+  ! x,y: rectangular coord
+  ! r,t: polar coord
+  subroutine polar_coord(x, y, r, t)
+    real, intent(in) :: x, y
+    real, intent(out) :: r, t
+
+    ! compute polar coord
+    ! hypot = sqrt(x**2+y**2) is an intrinsic function
+    ! atan2 = arctan with correct sign is an intrinsic function
+    r = hypot(x, y)
+    t = atan2(y, x)
+
+    end subroutine polar_coord
+
+end program main
+#+end_src
+
+#+RESULTS[0497f45ff55c43631edabaea41c8c2521168224e]:
+: 1.41421354      0.785398185
+
+** Passing procedures as arguments
+An =inteface= can be used to pass a function or subroutine to another function or a subroutine. An =interface= is defined in the receiving procedure essentially as the same way as the passed procedure itself but only with declarations and without implementation.
 *** Example: Newton's method for rootfinding
 Newton's method for finding the root of a function $f:\mathbb{R}\rightarrow\mathbb{R}$ refines an initial guess $x_0$ according to the iteration rule
 \begin{equation*}
-x_{n}=x_n-\frac{f(x_n)}{f'(x_n)}
+x_{n+1}=x_n-\frac{f(x_n)}{f'(x_n)}
 \end{equation*}
-for $n\geq1$ until $f(x)$ is less than a chosen tolerance or a maximum number of iterations. The following code converges to a root of $f(x)=x^2-2$ from an initial guess $x_0=1$.
+for $n\geq1$ until $f(x)$ is less than a chosen tolerance or a maximum number of iterations.
+
+The following code defines a subroutine =newton_root= that returns a root of an input function as well as the number of iterations of Newton's method used to find the root. It is called by the  main program to approximate the positive root of $f(x)=x^2-2$ from an initial guess $x_0=1$.
 
 #+begin_src fortran -n :exports both :results output
 program main
   implicit none
 
-  real :: x
+  character(64) :: fmt
+  real :: x = 1.0
+  integer :: iter = 1000
 
   ! call newton rootfinding function
-  x = newton(f, df, 1.0, 1e-6, 1000, .true.)
+  call newton_root(f, df, x, iter, 1e-6, .true.)
+
+  ! print found root and number of iterations used
+  fmt = "('number of iterations: ', i0, ', x: ', f0.7, ', f(x): ', f0.7)"
+  print fmt, iter, x, f(x)
 
 contains
 
@@ -1289,14 +949,14 @@ contains
     dy = 2*x
   end function df
 
-  ! newton: newtons method for rootfinding
+  ! newton_root: newtons method for rootfinding
   ! f: function with root
   ! df: derivative of f
-  ! x0: initial iterate
+  ! x: sequence iterate
+  ! iter: max number of iterations at call, number of iterations at return
   ! tol: absolute tolerance
-  ! max_iters: maximum number of iterations
   ! print_iters: boolean to toggle verbosity
-  function newton(f, df, x0, tol, max_iters, print_iters) result(x)
+  subroutine newton_root(f, df, x, iter, tol, print_iters)
 
     ! interface to function f
     interface
@@ -1312,12 +972,14 @@ contains
        end function df
     end interface
 
-    real :: x0, tol, x
-    integer :: iter, max_iters
-    logical :: print_iters
+    real, intent(inout) :: x
+    real, intent(in) :: tol
+    integer, intent(inout) :: iter
+    logical, intent(in) :: print_iters
+    integer :: max_iters
 
-    ! initialize x
-    x=x0
+    max_iters = iter
+    iter = 0
 
     ! while f(x) greater than absolute tolerance
     ! and max number of iterations not exceeded
@@ -1331,22 +993,28 @@ contains
        ! increment number of iterations
        iter = iter + 1
     end do
-    ! print last x and f(x)
-    if (print_iters) print "('f(', f0.7, ') = ', f0.7)", x, f(x)
 
-  end function newton
+  end subroutine newton_root
 
 end program main
 #+end_src
 
-#+RESULTS[3767d56cfea7d6663ee3887561495277dadfafaf]:
+#+RESULTS[cb2f39c0348f9d2670ad06b2c5371ca75a7b8aff]:
 : f(1.0000000) = -1.0000000
 : f(1.5000000) = .2500000
 : f(1.4166666) = .0069444
 : f(1.4142157) = .0000060
-: f(1.4142135) = -.0000001
+: number of iterations: 4, x: 1.4142135, f(x): -.0000001
 
 *** Example: The midpoint rule for definite integrals
+The midpoint rule approximates the definite integral $\int_a^bf(x)~dx$ with integrand $f:\mathbb{R}\rightarrow\mathbb{R}$ by
+#+name: eq:midpoint
+\begin{equation}
+\Delta x\sum_{i=1}^nf(\bar{x}_i)
+\end{equation}
+where $\Delta x=(b-a)/n$, $x_i=a+(i-1)\Delta x$ and $\bar{x}_i=(x_{i-1}+x_i)/2$.
+
+The following code defines a function =midpoint= that computes the approximation [[eq:midpoint]] given $a$, $b$, and $n$. The main program calls =midpoint= to approximate the definite integral of $f(x)=1/x$ on $[1,e]$ for a range of $n$.
 
 #+begin_src fortran -n :exports both :results output
 program main
@@ -1356,8 +1024,10 @@ program main
   integer :: n
   real :: integral
 
+  ! Approximate the integral of 1/x from 1 to e
+  ! with the midpoint rule for a range of number of subintervals
   do n = 2,20,2
-     print "('n: ', i0, ' M_n: ', f0.6)", n, midpoint(f, 1.0, E, n)
+     print "('n: ', i0, ', M_n: ', f0.6)", n, midpoint(f, 1.0, E, n)
   end do
 
 contains
@@ -1404,12 +1074,667 @@ end program main
 
 #+end_src
 
-* Subroutines
-Whereas a =function= does not return changes to its arguments and returns at most one value, a =subroutine= can be used to return changes to multiple arguments.
-** Writing a subroutine
- A =subroutine= is defined after the =contains= keyword in a program or module. The definition of a subroutine begins with the name of the subroutine and list of arguments. Arguments are defined within the =subroutine= body with one of the following intents
-- =intent(in)=: changes to the argument are not returned
-- =intent(inout)=: changes to the argument are returned
-- =intent(out)=: the initial value of the argument is ignored and changes to the argument are returned.
+#+RESULTS[9b3fb8a119d308dc17c4e45e434941423c5b27c6]:
+#+begin_example
+n: 2, M_n: .976360
+n: 4, M_n: .993575
+n: 6, M_n: .997091
+n: 8, M_n: .998353
+n: 10, M_n: .998942
+n: 12, M_n: .999264
+n: 14, M_n: .999459
+n: 16, M_n: .999585
+n: 18, M_n: .999672
+n: 20, M_n: .999735
+#+end_example
+
+** Polymorphism
+An =interface= can be used as an entry into two different implementations of a subroutine or function with the same name so long as the different implementations have different argument signatures. This may be particularly useful for defining both a single precision and double precision version of a function or subroutine.
+
+The following code implements two versions of a function that computes machine epsilon in either single or double precision. The different implementations are distinguished by their arguments. The single precision version =mach_eps_sp= accepts one single precision float and the double precision version =mach_eps_dp= accepts one double precision float. Both functions are listed in the =interface= and can be called by its name =mach_eps=.
+
+#+begin_src fortran -n :exports both
+program main
+  implicit none
+
+  integer, parameter :: sp = kind(0.0)
+  integer, parameter :: dp = kind(0.d0)
+
+  interface mach_eps
+     procedure mach_eps_sp, mach_eps_dp
+  end interface mach_eps
+
+  print*, mach_eps(0.0_sp), epsilon(0.0_sp)
+  print*, mach_eps(0.0_dp), epsilon(0.0_dp)
+
+contains
+
+  function mach_eps_sp(x) result(eps)
+    real(sp) :: x, eps
+    integer :: count = 0
+
+    eps = 1.0_sp
+    do while (1.0_sp + eps*0.5 > 1.0_sp)
+       eps = eps*0.5
+       count = count+1
+    end do
+  end function mach_eps_sp
+
+  function mach_eps_dp(x) result(eps)
+    real(dp) :: x, eps
+    integer :: count = 0
+
+    eps = 1.0_dp
+    do while (1.0_dp + eps*0.5 > 1.0_dp)
+       eps = eps*0.5
+       count = count+1
+    end do
+  end function mach_eps_dp
+
+end program main
+#+end_src
+
+#+RESULTS[144f4cbe0a48286fbe18e3cd26c2968fba053579]:
+: 1.19209290E-07   1.19209290E-07
+: 2.2204460492503131E-016   2.2204460492503131E-016
+
+** Recursion
+A function or subroutine that calls itself must be defined with the =recursive= keyword preceding the construct name.
+
+*** Example: factorial
+The following code defines a recursive function =factorial= that computes $n!$. If $n>1$, the function call itself to return $n(n-1)!$, otherwise the function returns $1$. The main program calls =factorial= to compute $5!$.
+
+#+begin_src fortran -n :exports both :results output
+program main
+  implicit none
+
+  ! print 5 factorial
+  print*, factorial(5)
+
+contains
+
+  ! factorial(n): product of natural numbers up to n
+  ! n: integer argument
+  recursive function factorial(n) result(m)
+    integer :: n, m
+
+    ! if n>1, call factorial recursively
+    ! otherwise 1 factorial is 1
+    if (n>1) then
+       m = n*factorial(n-1)
+    else
+       m = 1
+    end if
+
+  end function factorial
+
+end program main
+#+end_src 
+
+#+RESULTS[2b27d6cfd1a9469447bca79a6235af0bc5610364]:
+: 120
+
+* Object-oriented programming
+** Derived types
+** Modules
+*** Example: determinant of random matrix
+The following module defines a =matrix= type with two variables: an =integer= array =shape= that stores the number of rows and columns of the matrix and a =real= array =data= that stores the elements of the matrix. The type also has five procedures: a subroutine =construct= that allocates memory for the matrix, a subroutine =delete= that deallocates the memory the matrix occupies, a subroutine =print= that prints a matrix, a function =random_matrix= that returns matrix with random entries, and a function =det= that computes the determinant of a matrix using the recursive definition based on cofactors.
+
+#+begin_src fortran -n :tangle ./matrix/matrix_module.f90
+module matrix_module
+  implicit none
+
+  ! matrix type
+  ! shape: number of rows, cols
+  ! data: elements of matrix
+  type matrix
+     integer :: shape(2)
+     real, allocatable :: data(:,:)
+   contains
+     procedure :: construct
+     procedure :: delete
+     procedure :: print
+     procedure :: det
+  end type matrix
+
+contains
+
+  ! construct: populate shape and allocate memory for matrix
+  ! m,n: number of rows cols
+  subroutine construct(this, m, n)
+    class(matrix) :: this
+    integer :: m,n
+    this%shape = [m,n]
+    allocate(this%data(m,n))
+  end subroutine construct
+
+  ! delete: deallocate memory that matrix occupies
+  subroutine delete(this)
+    class(matrix) :: this
+    deallocate(this%data)
+  end subroutine delete
+
+  ! print: formatted print of matrix
+  subroutine print(this)
+    class(matrix) :: this
+    ! row_fmt: format character string for row printing
+    ! fmt: temporary format string
+    character(32) :: row_fmt, fmt = '(a,i0,a,i0,a,i0,a)'
+    ! w: width of each entry printed
+    ! d: number of decimal digits printed
+    integer :: w, d = 2, row
+    ! find largest width of element in matrix
+    w = ceiling(log10(maxval(abs(this%data)))) + d + 2
+    ! write row formatting to 'row_fmt' variable
+    write(row_fmt,fmt) '(',this%shape(2),'(f',w,'.',d,',1x))'
+    ! print matrix row by row
+    do row = 1,this%shape(1)
+       print row_fmt, this%data(row,:)
+    end do
+  end subroutine print
+
+  ! random_matrix: generate matrix with random entries in [-1,1]
+  ! m,n: number of rows,cols
+  function random_matrix(m,n) result(mat)
+    integer :: m,n,i,j
+    type(matrix) :: mat
+    ! allocate memory for matrix
+    call mat%construct(m,n)
+    ! seed random number generator
+    call srand(time())
+    ! populate matrix
+    do i = 1,m
+       do j = 1,n
+          mat%data(i,j) = 2.0*rand() - 1.0
+       end do
+    end do
+  end function random_matrix
+
+  ! det: compute determinant of matrix
+  ! using recursive definition based on cofactors
+  recursive function det(this) result(d)
+    class(matrix) :: this
+    type(matrix) :: submatrix
+    real :: d, sgn, element, minor
+    integer :: m, n, row, col, i, j
+
+    m = this%shape(1)
+    n = this%shape(2)
+    d = 0.0
+
+    ! compute cofactor
+    ! if 1x1 matrix, return value
+    if (m==1.and.n==1) then
+       d = this%data(1,1)
+    ! if square and not 1x1
+    else if (m==n) then
+       ! cofactor sum down the first column
+       do row = 1,m
+          ! sign of term
+          sgn = (-1.0)**(row+1)
+          ! matrix element
+          element = this%data(row,1)
+          ! construct the cofactor submatrix and compute its determinant
+          call submatrix%construct(m-1,n-1)
+          if (row==1) then
+             submatrix%data = this%data(2:,2:)
+          else if (row==m) then
+             submatrix%data = this%data(:m-1,2:)
+          else
+             submatrix%data(:row-1,:) = this%data(:row-1,2:)
+             submatrix%data(row:,:) = this%data(row+1:,2:)
+          end if
+          minor = submatrix%det()
+          call submatrix%delete()
+
+          ! determinant accumulator
+          d = d + sgn*element*minor
+       end do
+    end if
+  end function det
+
+end module matrix_module
+#+end_src
+
+The main program uses the =matrix_module= defined above to find the determinants of a number of random matrices of increasing size. 
+
+#+begin_src fortran -n :tangle ./matrix/main.f90
+program main
+  use matrix_module
+  implicit none
+
+  type(matrix) :: mat
+  integer :: n
+
+  ! compute determinants of random matrices
+  do n = 1,5
+     ! generate random  matrix
+     mat = random_matrix(n,n)
+
+     ! print determinant of matrix
+     print "('n: ', i0, ', det: ', f0.5)", n, det(mat)
+
+     ! delete matrix
+     call mat%delete()
+  end do
+
+end program main
+#+end_src
+
+#+begin_src make :exports none :tangle ./matrix/makefile
+FC = gfortran
+SRC = main.f90
+EXE = main
+OBJ = matrix_module.o
+
+all: $(EXE)
+$(EXE): $(OBJ)
+	$(FC) $(OBJ) $(SRC) -o $(EXE) 
+%.o: %.f90
+	$(FC) -c $< -o $@
+#+end_src
+
+#+begin_src sh :exports none :dir ./matrix/
+make
+#+end_src
+
+#+begin_src sh :exports both :results output :dir ./matrix/
+./main
+#+end_src
+
+#+RESULTS[454f897ef1a25a8e3061863e449279bd2b8b6850]:
+: n: 1, det: -.68676
+: n: 2, det: .45054
+: n: 3, det: .37319
+: n: 4, det: -.27328
+: n: 5, det: .26695
+
+** Parameterized data types
+
+:snippets:
+# ** ${n \choose k}$
+# #+begin_src fortran :tangle choose/main.f90
+#   program main
+#     implicit none
+#     print*, choose(4,0), choose(4,1), &
+#          choose(4,2), choose(4,3), choose(4,4)
+#   contains
+#     function choose(n,k) result(c)
+#       integer, intent(in) :: n, k
+#       integer :: c, i
+#       c = 1
+#       do i = 1, min(k,n-k)
+#          c = c * (n-i+1) / i
+#       end do
+#     end function choose
+#   end program main
+# #+end_src
+
+# #+begin_src sh :dir choose
+# gfortran main.f90 -o main
+# #+end_src
+
+# #+begin_src sh :dir choose
+# ./main
+# #+end_src
+
+# ** Setting precision of variables
+# #+begin_src fortran :tangle precision/constants.f90
+#   module constants
+#     implicit none
+#     integer, parameter :: sp = kind(0.), dp = kind(0.d0)
+#     integer, parameter :: rp = dp
+#   end module constants
+# #+end_src
+
+# #+begin_src sh :dir precision
+# gfortran -c constants.f90
+# #+end_src
+
+# #+begin_src fortran :tangle precision/main.f90
+#   program main
+#     use constants
+#     implicit none
+#     real(rp) :: x, y
+#     x = 1._rp
+#     y = real(1,rp)
+#   end program main
+# #+end_src
+
+# #+begin_src sh :dir precision
+# gfortran main.f90 constants.o -o main
+# #+end_src
+
+# #+begin_src sh :dir precision
+# ./main
+# #+end_src
+
+# #+begin_src make :exports none :tangle precision/makefile
+#   FC = gfortran
+#   SRC = main.f90
+#   EXE = main
+#   OBJ = constants.o
+
+#   all: $(EXE)
+#   $(EXE): $(OBJ)
+#     $(FC) $(OBJ) $(SRC) -o $(EXE) 
+#   %.o: %.f90
+#     $(FC) -c $< -o $@
+#   clean:
+#     $(RM) *.o $(EXE)
+# #+end_src
+
+# ** Machine Epsilon
+# #+begin_src fortran :tangle epsilon/constants.f90
+#   module constants
+#     implicit none
+
+#     integer, parameter :: sp = kind(0.), dp = kind(0.d0)
+#     integer, parameter :: rp = dp
+
+#     interface machine_epsilon
+#        module procedure machine_epsilon_sp, machine_epsilon_dp
+#     end interface machine_epsilon
+
+#   contains
+
+#     function machine_epsilon_sp(x) result(e)
+#       implicit none
+#       real(sp), intent(in) :: x
+#       real :: e
+#       e = .5
+#       do while (1._sp + e > 1._sp)
+#          e = .5 * e
+#       end do
+#     end function machine_epsilon_sp
+
+#     function machine_epsilon_dp(x) result(e)
+#       implicit none
+#       real(dp), intent(in) :: x
+#       real :: e
+#       e = .5
+#       do while (1._dp + e > 1._dp)
+#          e = .5 * e
+#       end do
+#     end function machine_epsilon_dp
+
+#   end module constants
+# #+end_src
+
+# #+begin_src sh :dir epsilon
+# gfortran -c constants.f90
+# #+end_src
+
+# #+begin_src fortran :tangle epsilon/main.f90
+#   program main
+#     use constants
+#     implicit none
+#     print*, machine_epsilon(0._sp), machine_epsilon(0._dp)
+#   end program main
+# #+end_src
+
+# #+begin_src sh :dir epsilon
+# gfortran main.f90 constants.o -o main
+# #+end_src
+ 
+# #+begin_src sh :dir epsilon
+# ./main
+# #+end_src
+
+# #+begin_src make :exports none :tangle epsilon/makefile
+#   FC = gfortran
+#   SRC = main.f90
+#   EXE = main
+#   OBJ = constants.o
+
+#   all: $(EXE)
+#   $(EXE): $(OBJ)
+#     $(FC) $(OBJ) $(SRC) -o $(EXE) 
+#   %.o: %.f90
+#     $(FC) -c $< -o $@
+#   clean:
+#     $(RM) *.o $(EXE)
+# #+end_src
+
+# #+begin_src fortran :exports both
+#   print*, epsilon(0.), epsilon(0.d0)
+# #+end_src
+
+# ** Rootfinding
+
+# #+begin_src fortran :tangle rootfind/functions.f90
+#   module functions
+#     implicit none
+
+#   contains
+
+#     function f1(x)
+#       real, intent(in) :: x
+#       real :: f1
+#       f1 = sin(x)
+#     end function f1
+
+#     function df1dx(x)
+#       real, intent(in) :: x
+#       real :: df1dx
+#       df1dx = cos(x)
+#     end function df1dx
+
+#   end module functions
+# #+end_src
+
+# #+begin_src sh :dir rootfind
+# gfortran -c functions.f90
+# #+end_src
+
+# #+begin_src fortran :tangle rootfind/rootfind.f90
+#   module rootfind
+#     implicit none
+
+#     interface
+#        function fun(x)
+#          real, intent(in) :: x
+#          real :: fun
+#        end function fun
+#     end interface
+
+#   contains
+
+#     function newton(f,dfdx,x0,tol,maxstep) result(xn)
+#       procedure(fun), pointer :: f, dfdx
+#       real, intent(in) :: x0, tol
+#       integer, intent(in) :: maxstep
+#       real :: xn
+#       integer :: n = 0
+
+#       xn = x0
+#       do while (abs(f(xn))>tol .and. n<maxstep)
+#          xn = xn - f(xn)/dfdx(xn)
+#          n = n + 1
+#       end do
+#     end function newton
+
+#   end module rootfind
+# #+end_src
+
+# #+begin_src sh :dir rootfind
+# gfortran -c rootfind.f90
+# #+end_src
+
+# #+begin_src fortran :tangle rootfind/main.f90
+#   program main
+#   	use functions
+#     use rootfind
+#     implicit none
+
+#     procedure(fun), pointer :: f, dfdx
+#     real :: x = 1., tol = 1e-5
+#     integer :: maxstep = 100
+#     f => f1
+#     dfdx => df1dx
+#     print*, newton(f,dfdx,x,tol,maxstep)
+
+#   end program main
+# #+end_src
+
+# #+begin_src sh :dir rootfind
+# gfortran main.f90 functions.o rootfind.o -o main
+# #+end_src
+
+# #+begin_src make :exports none :tangle rootfind/makefile
+#   FC = gfortran
+#   SRC = main.f90
+#   EXE = main
+#   OBJ = functions.o rootfind.o
+
+#   all: $(EXE)
+#   $(EXE): $(OBJ)
+#     $(FC) $(OBJ) $(SRC) -o $(EXE) 
+#   %.o: %.f90
+#     $(FC) -c $< -o $@
+#   clean:
+#     $(RM) *.o $(EXE)
+# #+end_src
+
+# #+begin_src sh :dir rootfind
+# ./main
+# #+end_src
+
+# ** Quadrature
+
+# #+begin_src fortran :tangle quadrature/functions.f90
+#   module functions
+#     implicit none
+
+#   contains
+
+#     function f1(x)
+#       real, intent(in) :: x
+#       real :: f1
+#       f1 = x
+#     end function f1
+
+#   end module functions
+# #+end_src
+
+# #+begin_src sh :dir quadrature
+#   gfortran -c functions.f90
+# #+end_src
+
+# #+begin_src fortran :tangle quadrature/quadrature.f90
+#   module quadrature
+#     implicit none
+
+#   contains
+
+#     function midpoint_rule(f,a,b,n) result(I)
+#       interface
+#          function f(x)
+#            real, intent(in) :: x
+#            real :: f
+#          end function f
+#       end interface
+#       real :: a, b
+#       integer :: n, j
+#       real :: I, dx
+
+#       dx = (b-a)/real(n)
+#       I = 0
+#       do j = 0,n-1
+#          I = I + f(a + (j+.5)*dx)
+#       end do
+#       I = dx*I
+#     end function midpoint_rule
+
+#   end module quadrature
+# #+end_src
+
+# #+begin_src sh :dir quadrature
+#   gfortran -c quadrature.f90
+# #+end_src
+
+# #+begin_src fortran :tangle quadrature/main.f90
+#   program main
+#     use functions
+#     use quadrature
+#     implicit none
+
+#     real :: a = 0, b = 1
+#     integer :: n = 5
+#     print*, midpoint_rule(f1,a,b,n)
+
+#   end program main
+# #+end_src
+
+# #+begin_src sh :dir quadrature
+#   gfortran main.f90 functions.o quadrature.o -o main
+# #+end_src
+
+# #+begin_src make :exports none :tangle quadrature/makefile
+#   FC = gfortran
+#   SRC = main.f90
+#   EXE = main
+#   OBJ = functions.o quadrature.o
+
+#   all: $(EXE)
+#   $(EXE): $(OBJ)
+#     $(FC) $(OBJ) $(SRC) -o $(EXE) 
+#   %.o: %.f90
+#     $(FC) -c $< -o $@
+#   clean:
+#     $(RM) *.o $(EXE)
+# #+end_src
+
+# #+begin_src sh :dir quadrature
+#   ./main
+# #+end_src
+
+# ** Matrix multiplication
+# #+begin_src fortran :exports both :tangle matmul/main.f90
+#   program main
+#     implicit none
+
+#     real :: A(4,4), B(4,4)
+#     A=1; B=2
+
+#     print*, matrix_multiply(A,B)
+
+#   contains
+
+#     function matrix_multiply(A,B) result(C)
+#       implicit none
+#       real :: A(4,4), B(4,4), C(4,4)
+#       integer :: i,j,k
+
+#       C = 0
+#       do i=1,4
+#          do j=1,4
+#             do k=1,4
+#                C(i,j) = C(i,j) + A(i,k)*B(k,j)
+#             end do
+#          end do
+#       end do
+
+#       end function matrix_multiply
+
+#   end program main
+# #+end_src
+# ** $\sum_{n=0}^{\infty}\frac1{n!}$
+# #+begin_src fortran :exports both :tangle series/main.f90
+#   program main
+#     implicit none
+#     integer :: n = 0, nf = 1
+#     real :: s = 0
+#     do while (1./real(nf) > 0)
+#        s = s + 1./real(nf)
+#        n = n + 1
+#        nf = nf * n
+#     end do
+#     print*, s, exp(1.)-s
+#   end program main
+# #+end_src
+:end:
 
 #+html: </div>
+
+
