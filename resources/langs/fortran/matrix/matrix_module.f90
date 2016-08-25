@@ -1,9 +1,6 @@
 module matrix_module
   implicit none
 
-  ! matrix type
-  ! shape: number of rows, cols
-  ! data: elements of matrix
   type matrix
      integer :: shape(2)
      real, allocatable :: data(:,:)
@@ -16,8 +13,6 @@ module matrix_module
 
 contains
 
-  ! construct: populate shape and allocate memory for matrix
-  ! m,n: number of rows cols
   subroutine construct(this, m, n)
     class(matrix) :: this
     integer :: m,n
@@ -25,7 +20,6 @@ contains
     allocate(this%data(m,n))
   end subroutine construct
 
-  ! delete: deallocate memory that matrix occupies
   subroutine delete(this)
     class(matrix) :: this
     deallocate(this%data)
@@ -49,23 +43,6 @@ contains
        print row_fmt, this%data(row,:)
     end do
   end subroutine print
-
-  ! random_matrix: generate matrix with random entries in [-1,1]
-  ! m,n: number of rows,cols
-  function random_matrix(m,n) result(mat)
-    integer :: m,n,i,j
-    type(matrix) :: mat
-    ! allocate memory for matrix
-    call mat%construct(m,n)
-    ! seed random number generator
-    call srand(time())
-    ! populate matrix
-    do i = 1,m
-       do j = 1,n
-          mat%data(i,j) = 2.0*rand() - 1.0
-       end do
-    end do
-  end function random_matrix
 
   ! det: compute determinant of matrix
   ! using recursive definition based on cofactors
@@ -109,5 +86,22 @@ contains
        end do
     end if
   end function det
+
+  ! random_matrix: generate matrix with random entries in [-1,1]
+  ! m,n: number of rows,cols
+  function random_matrix(m,n) result(mat)
+    integer :: m,n,i,j
+    type(matrix) :: mat
+    ! allocate memory for matrix
+    call mat%construct(m,n)
+    ! seed random number generator
+    call srand(time())
+    ! populate matrix
+    do i = 1,m
+       do j = 1,n
+          mat%data(i,j) = 2.0*rand() - 1.0
+       end do
+    end do
+  end function random_matrix
 
 end module matrix_module
