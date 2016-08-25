@@ -1294,7 +1294,7 @@ program main
 end program main
 #+end_src
 
-*** Example: determinant of random matrix
+** Example: determinant of random matrix
 The following module defines a =matrix= type with two variables: an =integer= array =shape= that stores the number of rows and columns of the matrix and a =real= array =data= that stores the elements of the matrix. The type has four procedures: a subroutine =construct= that allocates memory for the matrix, a subroutine =delete= that deallocates the memory the matrix occupies, a subroutine =print= that prints a matrix, and a function =det= that computes the determinant of a matrix using the recursive definition based on cofactors. A function =random_matrix= defined within the module generates a matrix with uniform random entries in $[-1,1]$.
 
 #+begin_src fortran -n :tangle ./matrix/matrix_module.f90

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2016-08-25 Thu 15:29 -->
+<!-- 2016-08-25 Thu 15:34 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title>ACM Computing Seminar Fortran Guide</title>
@@ -275,12 +275,9 @@ for the JavaScript code in this tag.
 <li><a href="#orgheadline56">7. Object-oriented programming</a>
 <ul>
 <li><a href="#orgheadline52">7.1. Defined types</a></li>
-<li><a href="#orgheadline54">7.2. Modules</a>
-<ul>
-<li><a href="#orgheadline53">7.2.1. Example: determinant of random matrix</a></li>
-</ul>
-</li>
-<li><a href="#orgheadline55">7.3. Parameterized data types</a></li>
+<li><a href="#orgheadline53">7.2. Modules</a></li>
+<li><a href="#orgheadline54">7.3. Example: determinant of random matrix</a></li>
+<li><a href="#orgheadline55">7.4. Parameterized data types</a></li>
 </ul>
 </li>
 </ul>
@@ -1046,7 +1043,7 @@ The <code>if</code> / <code>else if</code> / <code>else</code> construct control
 </div>
 
 <pre class="example">
-num:  0.615778208    
+num:  0.617993116    
 num is between 0.5 and 0.75
 </pre>
 
@@ -2009,8 +2006,8 @@ Data types can be defined by the programmer. Variables and procedures that belon
 </div>
 </div>
 
-<div id="outline-container-orgheadline54" class="outline-3">
-<h3 id="orgheadline54"><span class="section-number-3">7.2</span> Modules</h3>
+<div id="outline-container-orgheadline53" class="outline-3">
+<h3 id="orgheadline53"><span class="section-number-3">7.2</span> Modules</h3>
 <div class="outline-text-3" id="text-7-2">
 <p>
 A type-bound procedure can be defined after the <code>contains</code> keyword in the same program construct, i.e. a <code>module</code>, as the type definition. The first argument in the definition of a type-bound procedure is of the defined type and is declared within the procedure body with the <code>class</code> keyword and the name of the type.
@@ -2076,10 +2073,11 @@ To define variables of the <code>matrix</code> type in the main program, tell it
 </pre>
 </div>
 </div>
+</div>
 
-<div id="outline-container-orgheadline53" class="outline-4">
-<h4 id="orgheadline53"><span class="section-number-4">7.2.1</span> Example: determinant of random matrix</h4>
-<div class="outline-text-4" id="text-7-2-1">
+<div id="outline-container-orgheadline54" class="outline-3">
+<h3 id="orgheadline54"><span class="section-number-3">7.3</span> Example: determinant of random matrix</h3>
+<div class="outline-text-3" id="text-7-3">
 <p>
 The following module defines a <code>matrix</code> type with two variables: an <code>integer</code> array <code>shape</code> that stores the number of rows and columns of the matrix and a <code>real</code> array <code>data</code> that stores the elements of the matrix. The type has four procedures: a subroutine <code>construct</code> that allocates memory for the matrix, a subroutine <code>delete</code> that deallocates the memory the matrix occupies, a subroutine <code>print</code> that prints a matrix, and a function <code>det</code> that computes the determinant of a matrix using the recursive definition based on cofactors. A function <code>random_matrix</code> defined within the module generates a matrix with uniform random entries in \([-1,1]\).
 </p>
@@ -2240,11 +2238,10 @@ n: 5, det: .26695
 </pre>
 </div>
 </div>
-</div>
 
 <div id="outline-container-orgheadline55" class="outline-3">
-<h3 id="orgheadline55"><span class="section-number-3">7.3</span> Parameterized data types</h3>
-<div class="outline-text-3" id="text-7-3">
+<h3 id="orgheadline55"><span class="section-number-3">7.4</span> Parameterized data types</h3>
+<div class="outline-text-3" id="text-7-4">
 <p>
 google it.
 </p>
