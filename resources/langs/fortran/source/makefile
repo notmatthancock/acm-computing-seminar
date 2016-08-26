@@ -4,7 +4,7 @@ EXECUTABLE = main
 OBJECTS = header.o
 
 all: $(EXECUTABLE)
-$(EXE): $(OBJECTS)
+$(EXECUTABLE): $(OBJECTS)
 	$(COMPILER) $(SOURCE) $(OBJECTS) -o $(EXECUTABLE)
 %.o: %.f90
-	$(COMPILER) -c $< -o $@
+	$(COMPILER) -c $<

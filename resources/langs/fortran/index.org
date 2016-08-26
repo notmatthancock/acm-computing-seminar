@@ -108,10 +108,10 @@ EXECUTABLE = main
 OBJECTS = header.o(ref:obj)
 
 all: $(EXECUTABLE)
-$(EXE): $(OBJECTS)
+$(EXECUTABLE): $(OBJECTS)
 	$(COMPILER) $(SOURCE) $(OBJECTS) -o $(EXECUTABLE)
 %.o: %.f90
-	$(COMPILER) -c $< -o $@
+	$(COMPILER) -c $<
 #+end_src
 
 Then, to recompile both =header.f90= and =main.f90= after modifying either file, execute
