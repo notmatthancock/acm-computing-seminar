@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2016-08-23 Tue 18:19 -->
+<!-- 2016-08-28 Sun 18:20 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title>ACM Computing Seminar C++ Guide</title>
@@ -267,7 +267,25 @@ for the JavaScript code in this tag.
 </li>
 </ul>
 </li>
-<li><a href="#orgheadline9">7. Object-oriented programming</a></li>
+<li><a href="#orgheadline9">7. Object-oriented programming</a>
+<ul>
+<li><a href="#orgheadline52">7.1. Example: a vector <code>class</code></a>
+<ul>
+<li><a href="#orgheadline49">7.1.1. The header file</a></li>
+<li><a href="#orgheadline50">7.1.2. The implementation file</a></li>
+<li><a href="#orgheadline51">7.1.3. Example usage</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline55">7.2. Example cont'd: operator overloading</a>
+<ul>
+<li><a href="#orgheadline53">7.2.1. Overloading <code>operator[]</code></a></li>
+<li><a href="#orgheadline54">7.2.2. Overloading <code>operator=</code></a></li>
+</ul>
+</li>
+<li><a href="#orgheadline56">7.3. Example cont'd: the copy constructor</a></li>
+<li><a href="#orgheadline57">7.4. Exampled cont'd: more overloading - <code>operator+</code></a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -706,7 +724,7 @@ The memory address for a variable can be obtained by the <code>&amp;</code> oper
 </div>
 
 <pre class="example">
-0x7ffedb1c7ed8
+0x7ffe0c721878
 </pre>
 
 <p>
@@ -778,8 +796,8 @@ a: 2.1, b: 2.1
 a: 3.1, b: 3.1
 
 
-&amp;a: 0x7ffc6758af58
-&amp;b: 0x7ffc6758af58
+&amp;a: 0x7fff1726d688
+&amp;b: 0x7fff1726d688
 </pre>
 
 <p>
@@ -965,8 +983,8 @@ exclusive blocks:
 </div>
 
 <pre class="example">
-num: 0.111544
-num was between 0 and 0.25
+num: 0.958531
+num was between 0.75 and 1.
 </pre>
 
 <p>
@@ -1856,6 +1874,618 @@ state variables and functions that act on the state variables. An instance
 of a <code>class</code> is called an <b>object</b>. Let's write a <code>vector</code> class that 
 improves upon the default <code>double</code> array.
 </p>
+</div>
+
+<div id="outline-container-orgheadline52" class="outline-3">
+<h3 id="orgheadline52"><span class="section-number-3">7.1</span> Example: a vector <code>class</code></h3>
+<div class="outline-text-3" id="text-7-1">
+</div><div id="outline-container-orgheadline49" class="outline-4">
+<h4 id="orgheadline49"><span class="section-number-4">7.1.1</span> The header file</h4>
+<div class="outline-text-4" id="text-7-1-1">
+<p>
+Create the header file, <code>vector.h</code>:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #6495ed;">#if</span><span style="color: #6495ed;">n</span><span style="color: #6495ed;">def</span> VECTOR_H
+<span class="linenr"> 2: </span><span style="color: #6495ed;">#define</span> <span style="color: #9acd32;">VECTOR_H</span>
+<span class="linenr"> 3: </span>
+<span class="linenr"> 4: </span><span style="color: #20b2aa; font-weight: bold;">namespace</span> <span style="color: #1e90ff;">vec</span> {
+<span class="linenr"> 5: </span>  <span style="color: #20b2aa; font-weight: bold;">class</span> <span style="color: #9370db;">vector</span> {
+<span class="linenr"> 6: </span>  <span style="color: #20b2aa; font-weight: bold;">public</span>:
+<span class="linenr"> 7: </span>    <span style="color: #cd853f;">// </span><span style="color: #cd853f;">Constructor. This function is called when the object is created.</span>
+<span class="linenr"> 8: </span>    <span style="color: #00ff7f;">vector</span>(<span style="color: #9370db;">unsigned</span> <span style="color: #9acd32;">len</span>);
+<span class="linenr"> 9: </span>
+<span class="linenr">10: </span>    <span style="color: #cd853f;">// </span><span style="color: #cd853f;">Destructor. This function is called when the object is destroyed.</span>
+<span class="linenr">11: </span>    ~<span style="color: #00ff7f;">vector</span>();
+<span class="linenr">12: </span>
+<span class="linenr">13: </span>    <span style="color: #cd853f;">// </span><span style="color: #cd853f;">length accessor.</span>
+<span class="linenr">14: </span>    <span style="color: #9370db;">unsigned</span> <span style="color: #00ff7f;">len</span>();
+<span class="linenr">15: </span>
+<span class="linenr">16: </span>    <span style="color: #cd853f;">// </span><span style="color: #cd853f;">data accessor.</span>
+<span class="linenr">17: </span>    <span style="color: #9370db;">double</span> &amp; <span style="color: #00ff7f;">element</span>(<span style="color: #9370db;">unsigned</span> <span style="color: #9acd32;">i</span>);
+<span class="linenr">18: </span>
+<span class="linenr">19: </span>    <span style="color: #cd853f;">// </span><span style="color: #cd853f;">Simple print function.</span>
+<span class="linenr">20: </span>    <span style="color: #9370db;">void</span> <span style="color: #00ff7f;">print</span>();
+<span class="linenr">21: </span>
+<span class="linenr">22: </span>  <span style="color: #20b2aa; font-weight: bold;">private</span>:
+<span class="linenr">23: </span>    <span style="color: #9370db;">unsigned</span> <span style="color: #9acd32;">length</span>;
+<span class="linenr">24: </span>    <span style="color: #9370db;">double</span> * <span style="color: #9acd32;">data</span>;
+<span class="linenr">25: </span>    <span style="color: #9370db;">void</span> <span style="color: #00ff7f;">check_index</span>(<span style="color: #9370db;">unsigned</span> <span style="color: #9acd32;">i</span>);
+<span class="linenr">26: </span>  };
+<span class="linenr">27: </span>}
+<span class="linenr">28: </span><span style="color: #6495ed;">#endif</span>
+</pre>
+</div>
+
+<p>
+First note the macro guards, <code>#ifndef</code>, <code>#define</code>, and <code>#endif</code>, as well as the 
+namespace, <code>vec</code>, wrapping the <code>class</code> declaration. Macro guards and namespaces 
+were previously discussed when we initially introduced 
+<a href="#orgheadline45">how to write header and implementation files</a>. 
+</p>
+
+<p>
+Now, within the namespace, we've declared a class, <code>vector</code>, which 
+contains <code>public</code> and <code>private</code> variables and function declarations. Private 
+functions and variables may only be accessed through the public methods. This 
+means if you created an instance of the class, <code>vector</code>, you would not be able 
+to access the private variable directly. You could only call the <b>public 
+member-functions</b>, which, in turn, may manipulate the 
+<b>private member-variables</b>, or call the <b>private member-functions</b>. 
+Splitting variables and functions into public and private helps to ensure 
+that other libraries and programs use your class as intended.
+</p>
+
+<p>
+Thus far, this class has 5 public member-functions, 2 private member-variables, 
+and 1 private member-function. The first two member functions are special, 
+the <b>constructor</b> and <b>destructor</b>, respectively. The constructor is called 
+explicitly when you declare a new instance of this class, while the destructor 
+is usually called implicitly when the object is deleted or when it goes out of 
+scope.
+</p>
+
+<p>
+Notice that the method for accessing elements of <code>vector</code> is called <code>element</code> 
+and its return type is a <b>reference</b> (<a href="#orgheadline19">discussed previously</a>). This allows us 
+to use this function on both the left side of assignment operators, i.e., to 
+assign values to <code>vector</code> components, and on the right side of assignments, 
+i.e., to treat it as the value of the component.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline50" class="outline-4">
+<h4 id="orgheadline50"><span class="section-number-4">7.1.2</span> The implementation file</h4>
+<div class="outline-text-4" id="text-7-1-2">
+<p>
+Create the implementation file, <code>vector.cpp</code>:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #6495ed;">#include</span> <span style="color: #ffa07a;">&lt;iostream&gt;</span>
+<span class="linenr"> 2: </span><span style="color: #6495ed;">#include</span> <span style="color: #ffa07a;">&lt;cstdlib&gt;</span>
+<span class="linenr"> 3: </span><span style="color: #6495ed;">#include</span> <span style="color: #ffa07a;">"vector.h"</span>
+<span class="linenr"> 4: </span>
+<span class="linenr"> 5: </span><span style="color: #20b2aa; font-weight: bold;">namespace</span> <span style="color: #1e90ff;">vec</span> {
+<span class="linenr"> 6: </span>  <span style="color: #1e90ff;">vector</span>::<span style="color: #00ff7f;">vector</span>(<span style="color: #9370db;">unsigned</span> <span style="color: #9acd32;">len</span>) {
+<span class="linenr"> 7: </span>    <span style="color: #20b2aa; font-weight: bold;">this</span>-&gt;length = len;
+<span class="linenr"> 8: </span>    <span style="color: #20b2aa; font-weight: bold;">this</span>-&gt;data = <span style="color: #20b2aa; font-weight: bold;">new</span> <span style="color: #9370db;">double</span>[len];
+<span class="linenr"> 9: </span>    <span style="color: #cd853f;">// </span><span style="color: #cd853f;">Initialize data to zeros.</span>
+<span class="linenr">10: </span>    <span style="color: #20b2aa; font-weight: bold;">for</span>(<span style="color: #9370db;">int</span> <span style="color: #9acd32;">i</span>=0; i &lt; <span style="color: #20b2aa; font-weight: bold;">this</span>-&gt;len(); i++) { <span style="color: #20b2aa; font-weight: bold;">this</span>-&gt;data[i] = 0.0; }
+<span class="linenr">11: </span>  }
+<span class="linenr">12: </span>
+<span class="linenr">13: </span>  <span style="color: #1e90ff;">vector</span>::~<span style="color: #00ff7f;">vector</span>() {
+<span class="linenr">14: </span>    <span style="color: #20b2aa; font-weight: bold;">delete</span> [] <span style="color: #20b2aa; font-weight: bold;">this</span>-&gt;data;
+<span class="linenr">15: </span>  }
+<span class="linenr">16: </span>
+<span class="linenr">17: </span>  <span style="color: #9370db;">unsigned</span> <span style="color: #1e90ff;">vector</span>::<span style="color: #00ff7f;">len</span>() {
+<span class="linenr">18: </span>    <span style="color: #20b2aa; font-weight: bold;">return</span> <span style="color: #20b2aa; font-weight: bold;">this</span>-&gt;length;
+<span class="linenr">19: </span>  }
+<span class="linenr">20: </span>
+<span class="linenr">21: </span>  <span style="color: #9370db;">double</span> &amp; <span style="color: #1e90ff;">vector</span>::<span style="color: #00ff7f;">element</span>(<span style="color: #9370db;">unsigned</span> <span style="color: #9acd32;">i</span>) {
+<span class="linenr">22: </span><span style="color: #6495ed;">    #if</span><span style="color: #6495ed;">n</span><span style="color: #6495ed;">def</span> NDEBUG
+<span class="linenr">23: </span>    check_index(i);
+<span class="linenr">24: </span><span style="color: #6495ed;">    #endif</span>
+<span class="linenr">25: </span>    <span style="color: #20b2aa; font-weight: bold;">return</span> <span style="color: #20b2aa; font-weight: bold;">this</span>-&gt;data[i];
+<span class="linenr">26: </span>  }
+<span class="linenr">27: </span>
+<span class="linenr">28: </span>  <span style="color: #9370db;">void</span> <span style="color: #1e90ff;">vector</span>::<span style="color: #00ff7f;">print</span>() {
+<span class="linenr">29: </span>    <span style="color: #20b2aa; font-weight: bold;">for</span>(<span style="color: #9370db;">int</span> <span style="color: #9acd32;">i</span>=0; i &lt; <span style="color: #20b2aa; font-weight: bold;">this</span>-&gt;len(); i++) {
+<span class="linenr">30: </span>      <span style="color: #1e90ff;">std</span>::cout &lt;&lt; <span style="color: #20b2aa; font-weight: bold;">this</span>-&gt;data[i] &lt;&lt; <span style="color: #ffa07a;">'\n'</span>;
+<span class="linenr">31: </span>    }
+<span class="linenr">32: </span>  }
+<span class="linenr">33: </span>
+<span class="linenr">34: </span>  <span style="color: #9370db;">void</span> <span style="color: #1e90ff;">vector</span>::<span style="color: #00ff7f;">check_index</span>(<span style="color: #9370db;">unsigned</span> <span style="color: #9acd32;">i</span>) {
+<span class="linenr">35: </span>    <span style="color: #20b2aa; font-weight: bold;">if</span> (i &lt; 0 || i &gt;= <span style="color: #20b2aa; font-weight: bold;">this</span>-&gt;length) {
+<span class="linenr">36: </span>      <span style="color: #1e90ff;">std</span>::cerr &lt;&lt; <span style="color: #ffa07a;">"ERROR: index, "</span> &lt;&lt; i &lt;&lt; <span style="color: #ffa07a;">", is out-of-bounds.\n"</span>
+<span class="linenr">37: </span>                &lt;&lt; <span style="color: #ffa07a;">"(valid indices are 0-"</span> &lt;&lt; (<span style="color: #20b2aa; font-weight: bold;">this</span>-&gt;length-1) &lt;&lt; <span style="color: #ffa07a;">")\n"</span>;
+<span class="linenr">38: </span>      exit(1);
+<span class="linenr">39: </span>    }
+<span class="linenr">40: </span>  }
+<span class="linenr">41: </span>}
+</pre>
+</div>
+
+<p>
+Note that we again wrap the implementations in the same namespace as wrapped 
+by the class declaration. Also observe how each member-function is prepended 
+by <code>vector::</code>.
+</p>
+
+<p>
+The keyword, <code>this</code>, is a pointer to the calling object. Writing, <code>this-&gt;</code>,
+is equivalent to <code>(*this).</code>, and in fact, can be used for any pointer. Thus,
+<code>this-&gt;length</code> is equivalent to <code>(*this).length</code>.
+</p>
+
+<p>
+Observe how the private member function, <code>check_index</code>, is used in the 
+public <code>element</code> accessor function. If this library is compiled with the 
+flag, <code>-DNEDUBG</code>, then the check function will not be called. You could 
+read this flag as "define no debug". Thus, when this flag is present, the 
+debug function <code>check_index</code> is called whenever the element accessor is 
+called. The <code>check_index</code> function simply checks if the provided index is 
+out-of-bounds for the vector. If it is, an informative message is printed, 
+and the program terminates prematurely by calling <code>exit(1)</code>. Such assertions 
+with informative messages are a good practice, and will likely save you lots 
+of headaches in the future.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline51" class="outline-4">
+<h4 id="orgheadline51"><span class="section-number-4">7.1.3</span> Example usage</h4>
+<div class="outline-text-4" id="text-7-1-3">
+<p>
+Ok. Let's see some example usage, by creating a <code>main.cpp</code>, containing:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #6495ed;">#include</span> <span style="color: #ffa07a;">&lt;iostream&gt;</span>
+<span class="linenr"> 2: </span><span style="color: #6495ed;">#include</span> <span style="color: #ffa07a;">"vector.h"</span>
+<span class="linenr"> 3: </span>
+<span class="linenr"> 4: </span><span style="color: #9370db;">int</span> <span style="color: #00ff7f;">main</span>() {
+<span class="linenr"> 5: </span>    <span style="color: #1e90ff;">vec</span>::<span style="color: #9370db;">vector</span> <span style="color: #9acd32;">v</span>(5);
+<span class="linenr"> 6: </span>
+<span class="linenr"> 7: </span>    <span style="color: #1e90ff;">std</span>::cout &lt;&lt; <span style="color: #ffa07a;">"`v` has length = "</span> &lt;&lt; v.len() &lt;&lt; <span style="color: #ffa07a;">"\n"</span>;
+<span class="linenr"> 8: </span>
+<span class="linenr"> 9: </span>    v.element(0) = -1.27;
+<span class="linenr">10: </span>    v.element(3) = 3.1;
+<span class="linenr">11: </span>
+<span class="linenr">12: </span>    v.print();
+<span class="linenr">13: </span>
+<span class="linenr">14: </span>    v.element(5) = 1234.0;
+<span class="linenr">15: </span>
+<span class="linenr">16: </span>    <span style="color: #20b2aa; font-weight: bold;">return</span> 0;
+<span class="linenr">17: </span>}
+</pre>
+</div>
+
+<p>
+Let's first compile with our <code>check_index</code> debugger function in place:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-bash">g++ -c vector.cpp
+g++ vector.o main.cpp
+./a.out
+</pre>
+</div>
+
+<p>
+If successful, you should see:
+</p>
+
+<pre class="example">
+`v` has length = 5
+-1.27
+0
+0
+3.1
+0
+ERROR: index, 5, is out-of-bounds.
+(valid indices are 0-4)
+</pre>
+
+<p>
+Now let's run without <code>check_index</code>:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-bash">g++ -DNDEBUG -c vector.cpp
+g++ vector.o main.cpp
+./a.out
+</pre>
+</div>
+
+<p>
+Upon running, you will likely see some extensive list of errors when 
+the element beyond the array's length is attempted to be accessed. Again, 
+by liberally sprinkling these sorts of assertions through your code, you 
+will (sometimes) find debugging much easier. After you're fairly certain 
+that your code is working, you can simply compile with <code>-DNEDUBG</code>.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline55" class="outline-3">
+<h3 id="orgheadline55"><span class="section-number-3">7.2</span> Example cont'd: operator overloading</h3>
+<div class="outline-text-3" id="text-7-2">
+<p>
+The <code>v.element(i)</code> accessor is a bit clunky. We can replace this with the 
+more natural, <code>v[i]</code>, by <b>overloading</b> the <code>[]</code> operator. Indeed,
+ <a href="http://en.cppreference.com/w/cpp/language/operators">we can overload many</a> of the normal C++ operators, e.g. <code>+</code>, <code>-</code>, <code>=</code>, etc.
+</p>
+</div>
+
+<div id="outline-container-orgheadline53" class="outline-4">
+<h4 id="orgheadline53"><span class="section-number-4">7.2.1</span> Overloading <code>operator[]</code></h4>
+<div class="outline-text-4" id="text-7-2-1">
+<p>
+In the header file, replace the <code>element</code> function declaration with:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #cd853f;">// </span><span style="color: #cd853f;">data accessor.</span>
+<span class="linenr">2: </span><span style="color: #9370db;">double</span> &amp; <span style="color: #20b2aa; font-weight: bold;">operator</span><span style="color: #00ff7f;">[]</span>(<span style="color: #9370db;">unsigned</span> <span style="color: #9acd32;">i</span>);
+</pre>
+</div>
+
+<p>
+and in the implementation file, replace the <code>element</code> implementation with:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #9370db;">double</span> &amp; <span style="color: #1e90ff;">vector</span>::<span style="color: #20b2aa; font-weight: bold;">operator</span><span style="color: #00ff7f;">[]</span>(<span style="color: #9370db;">unsigned</span> <span style="color: #9acd32;">i</span>) {
+<span class="linenr">2: </span><span style="color: #6495ed;">  #if</span><span style="color: #6495ed;">n</span><span style="color: #6495ed;">def</span> NDEBUG
+<span class="linenr">3: </span>  check_index(i);
+<span class="linenr">4: </span><span style="color: #6495ed;">  #endif</span>
+<span class="linenr">5: </span>  <span style="color: #20b2aa; font-weight: bold;">return</span> <span style="color: #20b2aa; font-weight: bold;">this</span>-&gt;data[i];
+<span class="linenr">6: </span>}
+</pre>
+</div>
+
+<p>
+Just think of <code>operator[]</code> as the new name of the function, <code>element</code>. We 
+can now use the overloaded operator just like how we would use the <code>[]</code> for 
+operator for accessing array components, expect now our overloaded operator 
+function is called instead.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr">1: </span>v[0] = -1.27;
+<span class="linenr">2: </span>v[3] = 3.1;
+</pre>
+</div>
+
+<p>
+Compile and run:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-bash">g++ -c vector.cpp &amp;&amp; g++ vector.o main.cpp &amp;&amp; ./a.out
+</pre>
+</div>
+
+<p>
+and you should see:
+</p>
+
+<pre class="example">
+-1.27
+0
+0
+3.1
+0
+</pre>
+
+<p>
+just like before.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline54" class="outline-4">
+<h4 id="orgheadline54"><span class="section-number-4">7.2.2</span> Overloading <code>operator=</code></h4>
+<div class="outline-text-4" id="text-7-2-2">
+<p>
+Let's overload the <code>=</code> operator so we can assign one vector to another. 
+We'll write in a way such that the vector on the left hand side is 
+overwritten by the one on the right.
+</p>
+
+<p>
+Let's add a declaration to the header file,
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #cd853f;">// </span><span style="color: #cd853f;">assignment operator.</span>
+<span class="linenr">2: </span><span style="color: #9370db;">vector</span> &amp; <span style="color: #20b2aa; font-weight: bold;">operator</span><span style="color: #00ff7f;">=</span>(<span style="color: #9370db;">vector</span> &amp; <span style="color: #9acd32;">src</span>);
+</pre>
+</div>
+
+<p>
+and let's add to the implementation file,
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #9370db;">vector</span> &amp; <span style="color: #1e90ff;">vector</span>::<span style="color: #20b2aa; font-weight: bold;">operator</span><span style="color: #00ff7f;">=</span>(<span style="color: #9370db;">vector</span> &amp; <span style="color: #9acd32;">src</span>) {
+<span class="linenr"> 2: </span>  <span style="color: #cd853f;">// </span><span style="color: #cd853f;">Delete the old data.</span>
+<span class="linenr"> 3: </span>  <span style="color: #20b2aa; font-weight: bold;">delete</span> [] <span style="color: #20b2aa; font-weight: bold;">this</span>-&gt;data;
+<span class="linenr"> 4: </span>
+<span class="linenr"> 5: </span>  <span style="color: #cd853f;">// </span><span style="color: #cd853f;">Initialize the new data.</span>
+<span class="linenr"> 6: </span>  <span style="color: #20b2aa; font-weight: bold;">this</span>-&gt;length = src.len();
+<span class="linenr"> 7: </span>  <span style="color: #20b2aa; font-weight: bold;">this</span>-&gt;data = <span style="color: #20b2aa; font-weight: bold;">new</span> <span style="color: #9370db;">double</span>[<span style="color: #20b2aa; font-weight: bold;">this</span>-&gt;len()];
+<span class="linenr"> 8: </span>
+<span class="linenr"> 9: </span>  <span style="color: #cd853f;">// </span><span style="color: #cd853f;">Copy over the new data.</span>
+<span class="linenr">10: </span>  <span style="color: #20b2aa; font-weight: bold;">for</span>(<span style="color: #9370db;">int</span> <span style="color: #9acd32;">i</span>=0; i &lt; <span style="color: #20b2aa; font-weight: bold;">this</span>-&gt;len(); i++) {
+<span class="linenr">11: </span>    <span style="color: #20b2aa; font-weight: bold;">this</span>-&gt;data[i] = src[i];
+<span class="linenr">12: </span>  }
+<span class="linenr">13: </span>
+<span class="linenr">14: </span>  <span style="color: #20b2aa; font-weight: bold;">return</span> *<span style="color: #20b2aa; font-weight: bold;">this</span>;
+<span class="linenr">15: </span>}
+</pre>
+</div>
+
+<p>
+Now, let's assume the <code>vector</code> instance, <code>v</code>, from above is still defined, and
+we'll create a new vector:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #1e90ff;">vec</span>::<span style="color: #9370db;">vector</span> <span style="color: #00ff7f;">w</span>(14);
+<span class="linenr">2: </span>w = v;
+<span class="linenr">3: </span>w.print();
+</pre>
+</div>
+
+<p>
+This should print, 
+</p>
+
+<pre class="example">
+-1.27
+0
+0
+3.1
+0
+</pre>
+
+<p>
+Notice that <code>w</code> is intially defined to be of length <code>14</code>, but this is 
+overwritten, and its new length is the length of <code>v</code>. Also note that all of
+<code>w</code>'s old data is deleted.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline56" class="outline-3">
+<h3 id="orgheadline56"><span class="section-number-3">7.3</span> Example cont'd: the copy constructor</h3>
+<div class="outline-text-3" id="text-7-3">
+<p>
+It may be tempting at this point to attempt to initialize <code>w</code> from <code>v</code>
+directly:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #1e90ff;">vec</span>::<span style="color: #9370db;">vector</span> <span style="color: #9acd32;">w</span> = v;
+</pre>
+</div>
+
+<p>
+If you attempt this currently, you will see all sorts of errors. This is 
+because this type of intialization does not call the assignment operator. 
+It calls the <b>copy constructor</b>. The assignment operator is only called 
+when the object has already been intialized. Writing the previous line of 
+code is essentially equivalent to
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #1e90ff;">vec</span>::<span style="color: #9370db;">vector</span> <span style="color: #00ff7f;">w</span>(v);
+</pre>
+</div>
+
+<p>
+In other words, the constructor is called with the existing vector, <code>v</code>, as
+the argument, but we have not written a constructor yet with such a call 
+signature.
+</p>
+
+<p>
+The constructor can be overloaded, i.e., we can write multiple versions of the 
+constructor function, and the one that matches the correct call signature will 
+be used. This function overloading behavior actually applies to all functions 
+in C++.
+</p>
+
+<p>
+Let's add the copy constructor declaration to the header file:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #cd853f;">// </span><span style="color: #cd853f;">Copy constructor.</span>
+<span class="linenr">2: </span><span style="color: #00ff7f;">vector</span>(<span style="color: #9370db;">vector</span> &amp; <span style="color: #9acd32;">src</span>);
+</pre>
+</div>
+
+<p>
+and let's add its implementation:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #1e90ff;">vector</span>::<span style="color: #00ff7f;">vector</span>(<span style="color: #9370db;">vector</span> &amp; <span style="color: #9acd32;">src</span>) {
+<span class="linenr">2: </span>  <span style="color: #20b2aa; font-weight: bold;">this</span>-&gt;length = src.len();
+<span class="linenr">3: </span>  <span style="color: #20b2aa; font-weight: bold;">this</span>-&gt;data = <span style="color: #20b2aa; font-weight: bold;">new</span> <span style="color: #9370db;">double</span>[<span style="color: #20b2aa; font-weight: bold;">this</span>-&gt;len()];
+<span class="linenr">4: </span>
+<span class="linenr">5: </span>  <span style="color: #cd853f;">// </span><span style="color: #cd853f;">Copy over the data.</span>
+<span class="linenr">6: </span>  <span style="color: #20b2aa; font-weight: bold;">for</span>(<span style="color: #9370db;">int</span> <span style="color: #9acd32;">i</span>=0; i &lt; <span style="color: #20b2aa; font-weight: bold;">this</span>-&gt;len(); i++) {
+<span class="linenr">7: </span>    <span style="color: #20b2aa; font-weight: bold;">this</span>-&gt;data[i] = src[i];
+<span class="linenr">8: </span>  }
+<span class="linenr">9: </span>}
+</pre>
+</div>
+
+<p>
+Now we compile and run something like:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #1e90ff;">vec</span>::<span style="color: #9370db;">vector</span> <span style="color: #9acd32;">w</span> = v;
+<span class="linenr">2: </span>w.print();
+</pre>
+</div>
+
+<p>
+we will see:
+</p>
+
+<pre class="example">
+-1.27
+0
+0
+3.1
+0
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline57" class="outline-3">
+<h3 id="orgheadline57"><span class="section-number-3">7.4</span> Exampled cont'd: more overloading - <code>operator+</code></h3>
+<div class="outline-text-3" id="text-7-4">
+<p>
+Let's overload the <code>+</code> operator so we can add two vectors. First add to 
+the header file:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #cd853f;">// </span><span style="color: #cd853f;">Arithmetic operators...</span>
+<span class="linenr">2: </span><span style="color: #9370db;">vector</span> &amp; <span style="color: #20b2aa; font-weight: bold;">operator</span><span style="color: #00ff7f;">+</span>(<span style="color: #9370db;">vector</span> &amp; <span style="color: #9acd32;">src</span>);
+</pre>
+</div>
+
+<p>
+also add:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #9370db;">void</span> <span style="color: #00ff7f;">check_same_len</span>(<span style="color: #9370db;">vector</span> &amp; <span style="color: #9acd32;">src</span>);
+</pre>
+</div>
+
+<p>
+to the list of private declarations in <code>vector.h</code>
+</p>
+
+<p>
+Next, let's add the implementation of these two functions:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #9370db;">vector</span> &amp; <span style="color: #1e90ff;">vector</span>::<span style="color: #20b2aa; font-weight: bold;">operator</span><span style="color: #00ff7f;">+</span>(<span style="color: #9370db;">vector</span> &amp; <span style="color: #9acd32;">src</span>) {
+<span class="linenr"> 2: </span><span style="color: #6495ed;">  #if</span><span style="color: #6495ed;">n</span><span style="color: #6495ed;">def</span> NDEBUG
+<span class="linenr"> 3: </span>  <span style="color: #20b2aa; font-weight: bold;">this</span>-&gt;check_same_len(src);
+<span class="linenr"> 4: </span><span style="color: #6495ed;">  #endif</span>
+<span class="linenr"> 5: </span>
+<span class="linenr"> 6: </span>  <span style="color: #9370db;">vector</span> * <span style="color: #9acd32;">result</span> = <span style="color: #20b2aa; font-weight: bold;">new</span> <span style="color: #9370db;">vector</span>(<span style="color: #20b2aa; font-weight: bold;">this</span>-&gt;len());
+<span class="linenr"> 7: </span>
+<span class="linenr"> 8: </span>  <span style="color: #20b2aa; font-weight: bold;">for</span>(<span style="color: #9370db;">int</span> <span style="color: #9acd32;">i</span>=0; i &lt; <span style="color: #20b2aa; font-weight: bold;">this</span>-&gt;len(); i++) {
+<span class="linenr"> 9: </span>    result-&gt;data[i] = <span style="color: #20b2aa; font-weight: bold;">this</span>-&gt;data[i] + src[i];
+<span class="linenr">10: </span>  }
+<span class="linenr">11: </span>
+<span class="linenr">12: </span>  <span style="color: #20b2aa; font-weight: bold;">return</span> *result;
+<span class="linenr">13: </span>}
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #9370db;">void</span> <span style="color: #1e90ff;">vector</span>::<span style="color: #00ff7f;">check_same_len</span>(<span style="color: #9370db;">vector</span> &amp; <span style="color: #9acd32;">src</span>) {
+<span class="linenr">2: </span>  <span style="color: #20b2aa; font-weight: bold;">if</span> (<span style="color: #20b2aa; font-weight: bold;">this</span>-&gt;len() != src.len()) {
+<span class="linenr">3: </span>    <span style="color: #1e90ff;">std</span>::cerr &lt;&lt; <span style="color: #ffa07a;">"ERROR: length mismatch.\n"</span>
+<span class="linenr">4: </span>              &lt;&lt; <span style="color: #ffa07a;">"(left len: "</span> &lt;&lt; <span style="color: #20b2aa; font-weight: bold;">this</span>-&gt;len() &lt;&lt; <span style="color: #ffa07a;">", "</span>
+<span class="linenr">5: </span>              &lt;&lt; <span style="color: #ffa07a;">"right len: "</span> &lt;&lt; src.len() &lt;&lt; <span style="color: #ffa07a;">")\n"</span>;
+<span class="linenr">6: </span>    exit(1);
+<span class="linenr">7: </span>  }
+<span class="linenr">8: </span>}
+</pre>
+</div>
+
+<p>
+Note how we create the <code>result</code> vector in <code>operator+</code> as a pointer, and then 
+we deference it when its returned. This matches the return type of the function, 
+which should a reference type. Next, note how we've again added a macro guard, 
+around the <code>check_same_len</code> function, which will allow this safeguard to be 
+skipped by adding the <code>-DNDEBUG</code> flag during compile time.
+</p>
+
+<p>
+Let's look at an example usage where 
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #6495ed;">#include</span> <span style="color: #ffa07a;">&lt;iostream&gt;</span>
+<span class="linenr"> 2: </span><span style="color: #6495ed;">#include</span> <span style="color: #ffa07a;">"vector.h"</span>
+<span class="linenr"> 3: </span>
+<span class="linenr"> 4: </span><span style="color: #9370db;">int</span> <span style="color: #00ff7f;">main</span>() {
+<span class="linenr"> 5: </span>    <span style="color: #1e90ff;">vec</span>::<span style="color: #9370db;">vector</span> <span style="color: #9acd32;">v</span>(5);
+<span class="linenr"> 6: </span>
+<span class="linenr"> 7: </span>    v[0] = -1.27;
+<span class="linenr"> 8: </span>    v[3] = 3.1;
+<span class="linenr"> 9: </span>
+<span class="linenr">10: </span>    <span style="color: #1e90ff;">vec</span>::<span style="color: #9370db;">vector</span> <span style="color: #9acd32;">w</span> = v;
+<span class="linenr">11: </span>
+<span class="linenr">12: </span>    <span style="color: #1e90ff;">vec</span>::<span style="color: #9370db;">vector</span> <span style="color: #9acd32;">z</span> = w+v;
+<span class="linenr">13: </span>    z.print();
+<span class="linenr">14: </span>
+<span class="linenr">15: </span>    <span style="color: #1e90ff;">vec</span>::<span style="color: #9370db;">vector</span> <span style="color: #9acd32;">q</span>(6);
+<span class="linenr">16: </span>    q+v;
+<span class="linenr">17: </span>
+<span class="linenr">18: </span>    <span style="color: #20b2aa; font-weight: bold;">return</span> 0;
+<span class="linenr">19: </span>}
+</pre>
+</div>
+
+<p>
+This will print the sum for <code>z</code>, but it will error when we add <code>q</code> and <code>z</code>:
+</p>
+
+<pre class="example">
+-2.54
+0
+0
+6.2
+0
+ERROR: length mismatch.
+(left len: 6, right len: 5)
+</pre>
+
+</div>
+</div>
 </div>
 </div>
 </div>

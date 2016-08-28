@@ -1305,17 +1305,18 @@ more natural, =v[i]=, by *overloading* the =[]= operator. Indeed,
 
 In the header file, replace the =element= function declaration with:
 
-#+include: ./vector/operator=/vector.h :lines "15-18" src cpp -n
+#+include: ./vector/operator=/vector.h :lines "16-18" src cpp -n
 
 and in the implementation file, replace the =element= implementation with:
 
 #+include: ./vector/operator=/vector.cpp :lines "21-27" src cpp -n
 
 Just think of =operator[]= as the new name of the function, =element=. We 
-can now use the overloaded operator just like how we used the =element= 
-function before:
+can now use the overloaded operator just like how we would use the =[]= for 
+operator for accessing array components, expect now our overloaded operator 
+function is called instead.
 
-#+include: ./vector/operator=/main.cpp :lines "7-10" src cpp -n
+#+include: ./vector/operator=/main.cpp :lines "7-9" src cpp -n
 
 Compile and run:
 
@@ -1333,9 +1334,9 @@ and you should see:
 
 just like before.
 
-*** Overloading =operator==
+*** Overloading ~operator=~
     
-Let's overload the === operator so we can assign one vector to another. 
+Let's overload the ~=~ operator so we can assign one vector to another. 
 We'll write in a way such that the vector on the left hand side is 
 overwritten by the one on the right.
 
@@ -1350,12 +1351,7 @@ and let's add to the implementation file,
 Now, let's assume the =vector= instance, =v=, from above is still defined, and
 we'll create a new vector:
 
-#+include: ./vector/operator=/main.cpp
-#+begin_src cpp -n
-  vec::vector w(14);
-  w = v;
-  w.print();
-#+end_src
+#+include: ./vector/operator=/main.cpp :lines "10-13" src cpp -n
 
 This should print, 
 
