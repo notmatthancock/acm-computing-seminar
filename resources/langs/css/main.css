@@ -38,11 +38,11 @@ div#footer a:hover { color: #707070; }
 a#toc-open, a#toc-close {display: none; }
 
 pre, pre.src {
-    color: #eee;
+    color: #222;
+    background-color: #f6f6f6;
     margin: 10px 0 10px 0;
     padding: 20px;
     overflow-x: auto;
-    background-color: #252525;
     font-size: 100%;
     box-shadow: 0;
 }

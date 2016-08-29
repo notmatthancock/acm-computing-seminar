@@ -236,7 +236,7 @@ which correspond to [[https://en.wikipedia.org/wiki/IEEE_floating_point][IEEE 32
 Sometimes it is useful to explicitly cast one variable type as another. 
 This can be done like the following:
 
-#+begin_src cpp -n :includes <iostream> :exports both :output results
+#+begin_src cpp -n :includes <iostream> :exports both :output results :tangle src/dtypes/casting/main.cpp
   int a; double b = 3.14159;
 
   a = (int) b;
@@ -244,7 +244,7 @@ This can be done like the following:
   std::cout << a << std::endl;
 #+end_src
 
-#+RESULTS:
+#+RESULTS[accfd981d512e31a619201c89ee4b411343f389b]:
 : 3
 
 ** The =const= modifier
@@ -253,11 +253,13 @@ If the value of some variable should not change, you can use the =const=
 keyword to protect its status. It is typical to denote =const= variables 
 with all caps. Try to compile the following program:
 
-#+begin_src cpp -n
+#+begin_src cpp -n :tangle src/dtypes/const/main.cpp
   const double PI = 3.14159;
 
   PI = 3.0;
 #+end_src
+
+#+RESULTS[0d6309bd59e8e0a5e714b688d8de858846cc1301]:
 
 You will see an error like, =error: assignment of read-only variable ‘PI’=. 
 
@@ -270,7 +272,7 @@ something about that doesn't feel right.
 
 Instead, we can use the =typedef= statement to define types:
 
-#+begin_src cpp -n
+#+begin_src cpp -n :tangle src/dtypes/typedef/main.cpp
   // Define "int_type" to be a short int.
   typedef short int int_type;
 
@@ -288,7 +290,6 @@ Instead, we can use the =typedef= statement to define types:
 #+RESULTS:
 
 ** Pointers and references
-  
 *** Pointers
 Pointers are variables that hold the *memory address* for a variable 
 of a specific type. Pointers are declared by specifying the variable 
@@ -298,7 +299,7 @@ The variable, =x=, therefore, does not hold the value of a =double=
 type, but rather, the memory address for a variable of type, =double=.
 The memory address for a variable can be obtained by the =&= operator.
 
-#+begin_src cpp -n :exports both :results output :includes <iostream>
+#+begin_src cpp -n :exports both :results output :includes <iostream> :tangle src/dtypes/pointers/main1.cpp
   double * a;
   double b = 7;
   
@@ -309,8 +310,8 @@ The memory address for a variable can be obtained by the =&= operator.
   std::cout << a << std::endl;
 #+end_src
 
-#+RESULTS:
-: 0x7ffc9f2505a8
+#+RESULTS[2fdeaa25980d5084736b0b9ed6298c0a2b21f3f6]:
+: 0x7ffe0d98f7b8
 
 Similar to obtaining the memory address from a regular variable, using the
 =&= operator, you can use the =*= symbol before a pointer to access the 
@@ -318,7 +319,7 @@ variable value held at the memory location of the pointer. In this context,
 the =*= symbol is called the *dereference operator*. This is probably better 
 understood with a short example:
 
-#+begin_src cpp -n :includes <iostream> :exports both :results output
+#+begin_src cpp -n :includes <iostream> :exports both :results output :tangle src/dtypes/pointers/main2.cpp
   double * a;
   double b = 7.3;
   double c;
@@ -334,7 +335,7 @@ understood with a short example:
   std::cout << c << "\n";
 #+end_src
 
-#+RESULTS:
+#+RESULTS[4faba160c0ff0d4f8e2103ca9ae5fa00c1c3c6dc]:
 : 7.3
 
 *** References
@@ -344,7 +345,7 @@ A good analogy, which you can find in the previous link, is that a reference
 is similar to a symbolic link, or "shortcut" if you're on Windows. You can 
 treat it more-or-less like the original variable, but it's not the original.
 
-#+begin_src cpp -n :includes <iostream> :exports both :results output
+#+begin_src cpp -n :includes <iostream> :exports both :results output src/dtypes/references/main.cpp
   double a = 1.1;
   // `b` is a reference to `a`.
   double & b = a;
@@ -363,14 +364,14 @@ treat it more-or-less like the original variable, but it's not the original.
   std::cout << "&a: " << &a << "\n" << "&b: " << &b << "\n";
 #+end_src
 
-#+RESULTS:
+#+RESULTS[fca20756bf8fb0aa7033917d1f8cf51ef1d8f659]:
 : a: 1.1, b: 1.1
 : a: 2.1, b: 2.1
 : a: 3.1, b: 3.1
 : 
 : 
-: &a: 0x7fff2b3d4a98
-: &b: 0x7fff2b3d4a98
+: &a: 0x7ffcfbe7b1e8
+: &b: 0x7ffcfbe7b1e8
 
 References are useful for passing around large objects, so that the object
 doesn't need to be copied. References are also useful as a return type for 
@@ -384,19 +385,19 @@ declare the array depends on this. Array indexing starts at 0 in C++
 (compared to start at 1, for example, in Fortran or Matlab).
 
 *** Fixed length arrays
-#+begin_src cpp -n
+#+begin_src cpp -n :tangle src/dtypes/arrays/fixed.cpp
 double a[5];
 
 a[0] = 1.0;
 // etc.
 #+end_src
 
-#+RESULTS:
+#+RESULTS[9acd5efc944280def09a7d443465f861a00f28a6]:
 
 *** Dynamic length arrays
 Dynamic length arrays are made possible through pointers:
 
-#+begin_src cpp -n
+#+begin_src cpp -n :tangle src/dtypes/arrays/dynamic.cpp
   // This allocates memory for 5 double types.
   double * a = new double[5];
 
@@ -417,6 +418,8 @@ Dynamic length arrays are made possible through pointers:
   delete [] a;
 #+end_src
 
+#+RESULTS[99c12b3b1f8910dea8d9f6b702187269bfa0d918]:
+
 Note that omitting the first =delete= statement will cause no error. 
 However, the memory allocated by the first =new= statement will not 
 be freed, and thus inaccessible. This is bad because the memory cannot 
@@ -428,13 +431,12 @@ memory problems is called [[http://valgrind.org/][valgrind]].
 
 * Control structures
 ** Conditionals
-   
 *** Example: =if= / =else= and random number generation
 Often a code block should only be executed if some condition is true. 
 Below, we generate a random number between 0 and 1; print the number; and,
 print whether or not the number was greater than 0.5.
 
-#+begin_src cpp -n :exports both :results output
+#+begin_src cpp -n :exports both :results output :tangle src/conditionals/ifelse/main.cpp
   #include <iostream>
   #include <stdlib.h>
   #include <time.h>
@@ -471,7 +473,7 @@ print whether or not the number was greater than 0.5.
   }
 #+end_src
 
-#+RESULTS:
+#+RESULTS[89e0babb392b5cd36e346b57da6e76ba39cea3cf]:
 : num: 0.0600514
 : num was less than 0.5.
 : num: 0.788318
@@ -482,7 +484,7 @@ print whether or not the number was greater than 0.5.
 You can follow =else= immediate by another =if= to have multiple mutually-
 exclusive blocks:
 
-#+begin_src cpp -n :exports both :results output
+#+begin_src cpp -n :exports both :results output :tangle src/conditionals/elif/main.cpp
   #include <iostream>
   #include <stdlib.h>
   #include <time.h>
@@ -513,9 +515,9 @@ exclusive blocks:
   }
 #+end_src
 
-#+RESULTS:
-: num: 0.372381
-: num was between 0.25 and 0.5.
+#+RESULTS[014df5b5413cb63ddbba75f173c7008595bdf56a]:
+: num: 0.0456405
+: num was between 0 and 0.25
 
 The conditions are checked in the order that they're written. So, for example,
 in the second condition, we don't need to specify ~num >= 0.5 && num < 0.75~ 
@@ -524,7 +526,6 @@ was false.
 
 ** Loops
 We discuss two main structures for iterating -- the =for= and =while= loops.
-
 *** The =for= loop
 The =for= loop requires three specifications -- the iteration variable 
 initialization, the termination condition, and the update rule. The body
@@ -532,7 +533,7 @@ of the loop follows these three specifications. Shown below, we declare
 an array; assign to its components; and, print the current component to 
 the screen.
 
-#+begin_src cpp -n :includes <iostream> :results output :exports both
+#+begin_src cpp -n :includes <iostream> :results output :exports both :tangle src/loops/for/linspace.cpp
   int length = 11;
   double x[length];
 
@@ -545,19 +546,19 @@ the screen.
   }
 #+end_src
 
-#+RESULTS:
+#+RESULTS[877d922a085062a38d850eb283cf7b918cdd88aa]:
 #+begin_example
-0
-0.1
-0.2
-0.3
-0.4
-0.5
-0.6
-0.7
-0.8
-0.9
-1
+x[0] = 0
+x[1] = 0.1
+x[2] = 0.2
+x[3] = 0.3
+x[4] = 0.4
+x[5] = 0.5
+x[6] = 0.6
+x[7] = 0.7
+x[8] = 0.8
+x[9] = 0.9
+x[10] = 1
 #+end_example
 
 
@@ -571,7 +572,7 @@ matrix data stored in a flat array. The matrix data is stored in
 array named, =matrix=, will contain the first row of the matrix, 
 the second =n_cols= elements of =matrix= will contain the second row, etc.
 
-#+begin_src cpp -n :includes <iostream> :exports both :results output
+#+begin_src cpp -n :includes <iostream> :exports both :results output :tangle src/loops/for/flat-matrix.cpp
   int n_rows = 4;
   int n_cols = 3;
 
@@ -618,7 +619,7 @@ the second =n_cols= elements of =matrix= will contain the second row, etc.
   }
 #+end_src
 
-#+RESULTS:
+#+RESULTS[453eb42cd8778bde63505600cd96e4583975b649]:
 : 1, 2, 0
 : 2, 1, 2
 : 0, 2, 1
@@ -643,7 +644,7 @@ $$
 
 is less than some specified tolerance, =tol=.
 
-#+begin_src cpp -n :includes <iostream> <cstdio> :exports both :results output
+#+begin_src cpp -n :includes <iostream> <cstdio> :exports both :results output :tangle src/loops/while/sum/main.cpp
   double sum = 0.0;
   double base = 0.5;
   double pow = base; // initialize to base^1
@@ -663,7 +664,7 @@ is less than some specified tolerance, =tol=.
   }
 #+end_src
 
-#+RESULTS:
+#+RESULTS[961ac44668fff1b00dd0f83d5f9512ccea7effcf]:
 #+begin_example
 Iter: 001, Sum: 0.50000, Abs Err: 0.50000
 Iter: 002, Sum: 0.75000, Abs Err: 0.25000
@@ -683,7 +684,7 @@ Iter: 014, Sum: 0.99994, Abs Err: 0.00006
 
 **** Example: estimating machine epsilon
 
-#+begin_src cpp -n :includes <iostream> <limits> :exports both :results output
+#+begin_src cpp -n :includes <iostream> <limits> :exports both :results output :tangle src/loops/while/macheps/main.cpp
   double eps = 1;
   int count = 1;
 
@@ -696,7 +697,7 @@ Iter: 014, Sum: 0.99994, Abs Err: 0.00006
             << count << ", " << std::numeric_limits<double>::digits;
 #+end_src
 
-#+RESULTS:
+#+RESULTS[c3a7af7b2d8705da49b720904d1ca6e52a38c76c]:
 : 2.22045e-16, 2.22045e-16
 : 53, 53
 
@@ -704,7 +705,7 @@ Iter: 014, Sum: 0.99994, Abs Err: 0.00006
 The =break= keyword provides a mechanism for exiting the direct parent loop
 for which the =break= statement is placed. For example:
 
-#+begin_src cpp -n :results output :exports both :includes <iostream>
+#+begin_src cpp -n :results output :exports both :includes <iostream> :tangle src/loops/break/main.cpp
   for(int i=0; i < 3; i++) {
     while(true) {
       std::cout << "Entering infinite loop number " << (i+1) << "\n";
@@ -714,7 +715,7 @@ for which the =break= statement is placed. For example:
   }
 #+end_src
 
-#+RESULTS:
+#+RESULTS[5a9e1b5a8e6ead2c157283224afe0ac32cde0aec]:
 : Entering infinite loop number 1
 : We escaped the infinite loop!
 : Entering infinite loop number 2
@@ -726,7 +727,6 @@ The previous example is contrived, but there are situations, where you
 might find the break statement within an infinite loop useful. Of course,
 you should avoid this sort of thing if there is a more straight-forward 
 approach.
-
 
 ** COMMENT Exercises
 1. Given integers, $n$ and $k$, write a program to compute the binomial coefficient, $\displaystyle {n \choose k}$.
@@ -751,7 +751,7 @@ to the program. The arg count is always at least 1 because the program's
 name is always the first argument. The second, =argv=, is a double pointer to
 =char=. In essence, =argv= is an array of strings.
 
-#+begin_src cpp -n
+#+begin_src cpp -n :tangle src/io/args/main.cpp
   #include <iostream>
 
   int main(int argc, char ** argv) {
@@ -766,13 +766,12 @@ name is always the first argument. The second, =argv=, is a double pointer to
 
 Compile this program, and run, for example:
 
-#+begin_src bash
+#+begin_src bash :exports both :results output :dir src/io/args
+  g++ main.cpp
   ./a.out hello 1 2 34
 #+end_src
 
-and you will see
-
-#+results:
+#+RESULTS[53bac763edb87bb7b31f57514f3f5ef4e0f18b5a]:
 : argc = 5
 : argv[0] = ./a.out
 : argv[1] = hello
@@ -799,7 +798,7 @@ particular fashion. Suppose a text file exists in the directory,
 
 : 1 2 3.14 4 5 6.28
 
-#+begin_src cpp -n :exports both
+#+begin_src cpp -n :exports both :tangle src/io/fstreams/in/main.cpp
 #include <iostream>
 #include <fstream>
 
@@ -813,8 +812,14 @@ int main() {
     }
     return 0;
 }
-
 #+end_src
+
+#+begin_src sh :exports rewiults :dir src/io/fstreams/in
+  g++ main.cpp && ./a.out
+#+end_src
+
+#+RESULTS[dc9907de744360bffc1ef8e5bbb81878c2945a2e]:
+: 1 2 3.14 4 5 6.28
 
 This simply prints the data in the file back out to the console. Note, however, 
 that the data is read into an array of type =double=, so it can be processed 
@@ -829,7 +834,7 @@ depending on the intended format of the data.
     
 Writing to a file is similar, using the =<fstream>= library.
 
-#+begin_src cpp -n
+#+begin_src cpp -n :tangle src/io/fstreams/out/main.cpp
   #include <fstream>
   #include <cmath>
 
@@ -850,21 +855,18 @@ Writing to a file is similar, using the =<fstream>= library.
   }
 #+end_src
 
+#+RESULTS[c8a8d5cb7019f16193d8423bfb7f32f278857520]:
+
+#+begin_src sh :exports none :dir src/io/fstreams/out
+  g++ main.cpp && ./a.out
+#+end_src
+
+#+RESULTS[93337642d8102d27a7d5d685555ccbf4cd69a052]:
+
 This produces a file called =new_shiny_data.txt= in the folder, =data=, 
 containing:
 
-: x	sin(x)
-: 0	0
-: 0.1	0.0998334
-: 0.2	0.198669
-: 0.3	0.29552
-: 0.4	0.389418
-: 0.5	0.479426
-: 0.6	0.564642
-: 0.7	0.644218
-: 0.8	0.717356
-: 0.9	0.783327
-: 1	0.841471
+#+include: src/io/fstreams/out/data/new_shiny_data.txt src sh
 
 * Functions
 
@@ -883,7 +885,7 @@ the declaration before =main= and the implementation after =main=.
 
 *** Example: =linspace=: generating a set of equally-spaced points
 
-#+begin_src cpp -n:exports both :results output
+#+begin_src cpp -n :exports both :results output :tangle src/functions/linspace/main.cpp
   #include <iostream>
 
   // This is the function declaration.
@@ -928,7 +930,7 @@ the declaration before =main= and the implementation after =main=.
   }
 #+end_src
 
-#+RESULTS:
+#+RESULTS[188d6aa51776ba0b2f2f4c47a2aa1a5a0e28c214]:
 : -1
 : -0.5
 : 0
@@ -946,7 +948,7 @@ further, by creating header and implementation files. Here is how we do it:
 
 Put the declarations from the into a header file, called =my_library.h=:
 
-#+begin_src cpp -n
+#+begin_src cpp -n :main no :tangle src/functions/modular/my_library.h
   #ifndef MY_LIBRARY_H
   #define MY_LIBRARY_H
 
@@ -980,38 +982,38 @@ library functions like =<iostream>= begin with =std::=.
     
 Create a file called =my_library.cpp= containing the implementations as follows:
 
-#+begin_src cpp -n
-#include "my_library.h"
+#+begin_src cpp -n :main no :tangle src/functions/modular/my_library.cpp
+  #include "my_library.h"
 
-// Implementation of `linspace`.
-double * my_namespace::linspace(double start, double stop, int n_points) {
-  double * arr = new double [n_points];
-  double dx = (stop-start) / (n_points-1.0);
+  // Implementation of `linspace`.
+  double * my_namespace::linspace(double start, double stop, int n_points) {
+    double * arr = new double [n_points];
+    double dx = (stop-start) / (n_points-1.0);
 
-  for(int i=0; i < n_points; i++) {
-    arr[i] = start + i*dx;
+    for(int i=0; i < n_points; i++) {
+      arr[i] = start + i*dx;
+    }
+
+    return arr;
   }
 
-  return arr;
-}
-
-// Implementation of `print_array`.
-void my_namespace::print_array(double * arr, int arr_len) {
-  for(int i=0; i < arr_len; i++) {
-    std::cout << arr[i] << "\n";
+  // Implementation of `print_array`.
+  void my_namespace::print_array(double * arr, int arr_len) {
+    for(int i=0; i < arr_len; i++) {
+      std::cout << arr[i] << "\n";
+    }
   }
-}
 #+end_src
 
 Note that we have to include the header file in quotations at the beginning, 
 and the names of the functions must be prepended by the namespace that we've 
 given in the header file.
 
-*** The file containing main
+*** The file containing =main=
     
 Create a file with the main function, say =main.cpp=:
 
-#+begin_src cpp -n
+#+begin_src cpp -n :tangle src/functions/modular/main.cpp
 #include <iostream>
 #include "my_library.h"
 
@@ -1027,14 +1029,21 @@ int main() {
 Now the main function is very nice and clean, but now we 3 separate files we 
 must compile into one executable. This is done as follows:
 
-#+begin_src bash
+#+begin_src bash :exports both :results output :dir src/functions/modular
   # Convert the library into an object file.
   g++ -c my_library.cpp
   # Compile the main to an executable.
-  g++ my_library.o main.cpp -o main.exe
+  g++ my_library.o main.cpp
   # Run it.
-  ./main.exe
+  ./a.out
 #+end_src
+
+#+RESULTS[f67f89c0d068ec352bf05b4621a6f8bc93d91659]:
+: -1
+: -0.5
+: 0
+: 0.5
+: 1
 
 If successful, you will see the same output [[Writing a function][as previously]].
 
@@ -1060,7 +1069,7 @@ contain Newton's method.
 
 Let's consider $f(x) = x^2 - 2$.
 
-#+begin_src cpp -n :exports both :results output
+#+begin_src cpp -n :exports both :results output :tangle src/functions/newton/main.cpp
   #include <cmath>
   #include <iostream>
 
@@ -1110,14 +1119,12 @@ Let's consider $f(x) = x^2 - 2$.
   }
 #+end_src
 
-#+RESULTS:
+#+RESULTS[9f25e7b7d701645c163196ec87c539ce982f3880]:
 : f(1) = -1
 : f(1.5) = 0.25
 : f(1.41667) = 0.00694444
 : f(1.41422) = 6.0073e-06
 : f(1.41421) = 4.51061e-12
-: x = 1.41421
-
 
 *** Example: The midpoint rule for definite integrals
     
@@ -1140,7 +1147,7 @@ where $\Delta x = \frac{b-a}{n}$, and $x_i = a + i \cdot \Delta x, \;\; i=0, 1, 
 
 Let's consider $f(x) = \frac{1}{x}$ on $[1, e]$.
 
-#+begin_src cpp -n :exports both :results output
+#+begin_src cpp -n :exports both :results output :tangle src/functions/midpoint/main.cpp
   #include <iostream>
   #include <cmath>
 
@@ -1182,7 +1189,7 @@ Let's consider $f(x) = \frac{1}{x}$ on $[1, e]$.
   }
 #+end_src
 
-#+RESULTS:
+#+RESULTS[ca52deecf244e393f0c6945caf6157b820cfa76f]:
 #+begin_example
 n = 2, M_n = 0.97636
 n = 4, M_n = 0.993575
