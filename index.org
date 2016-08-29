@@ -2,6 +2,7 @@
 #+name: Matt Hancock
 #+options: html-postamble:nil toc:nil name:nil
 #+options: H:3 num:0
+#+options: with-fixed-width:yes
 #+html_head: <link rel="stylesheet" type="text/css" href="css/main.css">
 #+html: <div id="main">
 
@@ -11,6 +12,13 @@
 | *Instructor:*   | Matt Hancock                    |
 | *Office Hours:* | Tues 12-2, Thurs 2-4, 409 B MCH |
 | *Email:*        | [[mailto:mhancock@math.fsu.edu?subject=MAT5939 ... ][mhancock@math.fsu.edu]]           |
+
+* Assignments
+
+| Week               | Assignment                                          |
+| <c>                |                                                     |
+|--------------------+-----------------------------------------------------|
+| 1 <2016-08-29 Mon> | Install gcc / g++; write and compile "hello world". |
 
 * Resources
 ** Programming Language Guides
