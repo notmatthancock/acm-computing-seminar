@@ -2,6 +2,7 @@
 #+author: Matt Hancock
 #+date: 
 #+options: html-postamble:nil
+#+property: header-args :mkdirp yes :cache yes
 #+options: H:4
 #+html_head: <link rel="stylesheet" type="text/css" href="../css/main.css">
 #+html_head: <script src="../js/main.js"></script>
@@ -91,7 +92,7 @@ Let's create our first C++ program, the obligatory "Hello, world!". First,
 fire-up your text editor and create a file called, =hello.cpp=, with the 
 following contents:
 
-#+begin_src cpp -n
+#+begin_src cpp -n :tangle src/hello/hello.cpp
   #include <iostream>
 
   int main() {
@@ -102,21 +103,28 @@ following contents:
 
 Now, to compile the program, execute:
 
-#+begin_src sh
+#+begin_src sh :dir src/hello
   g++ hello.cpp
 #+end_src
 
+#+RESULTS[2569c75ff851326a2241f3dce1cdb3099b98fca4]:
+
 Followed by:
-#+begin_src sh
+#+begin_src sh :dir src/hello
   ./a.out
 #+end_src
+
+#+RESULTS[5abb9750f318cc870453d631847a2525e5a701ee]:
+| Hello | world! |
 
 By default, =g++= names the resulting binary executable, =a.out=, but
 you can specify a different output file name by using the =-o= flag:
 
-#+begin_src sh
+#+begin_src sh :dir src/hello
   g++ hello.cpp -o my_executable_file.bin
 #+end_src
+
+#+RESULTS[9fc39bf8ee6cbae0e89a6dd19cfe230aa8e23c77]:
 
 Note that in Windows, executable files typically end in =.exe=. In Unix-like
 systems, there is no particular file-extension type for executables.
@@ -133,7 +141,7 @@ operators between these types, illustrated in the code snippet below
 (note that lines starting with =//= are comments and are ignored by the 
 compiler):
 
-#+begin_src cpp -n
+#+begin_src cpp -n :tangle ./src/dtypes/bool/main.cpp
   bool a,b,c; // Declare the type of variables a, b, and c.
   a = true;
   b = false;
@@ -160,7 +168,7 @@ couple. These can be modified further using the =short= and =long=
 keywords, changing the number of bytes occupied by the variable (and 
 hence the maximum and minimum size the variable can take on).
 
-#+begin_src cpp -n
+#+begin_src cpp -n :tangle src/dtypes/int/main.cpp
     int a = 6; // initialize a to 6.
     unsigned int b = 7; // initialize b to 7.
     int c; // declare c to be an integer variable.
@@ -193,7 +201,7 @@ may not match your expectations, as shown above.
 There are two main floating point data types in C++, =float= and =double=,
 which correspond to [[https://en.wikipedia.org/wiki/IEEE_floating_point][IEEE 32- and 64-bit floating point types]]. 
 
-#+begin_src cpp -n :exports both :results output
+#+begin_src cpp -n :tangle src/dtypes/float/main.cpp :exports both :results output
   #include <iostream>
   #include <limits>
 
@@ -217,11 +225,11 @@ which correspond to [[https://en.wikipedia.org/wiki/IEEE_floating_point][IEEE 32
   }
 #+end_src
 
-#+RESULTS:
-|  3.40282e+38 |
-| 1.79769e+308 |
-|  1.19209e-07 |
-|  2.22045e-16 |
+#+RESULTS[654068c6d84db6c255469f8810f846be9a6cc34a]:
+: 3.40282e+38
+: 1.79769e+308
+: 1.19209e-07
+: 2.22045e-16
 
 ** Casting
 
