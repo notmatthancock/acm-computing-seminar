@@ -17,16 +17,16 @@
 * Introduction
 This guide is intended to quickly get you up-and-running in scientific computing with Fortran. 
 ** About the language
-Fortran was created in the 1950s for mathematical *FOR*-mula *TRAN*-slation, and has since gone through a number of revisions (FORTRAN 66, 77, and Fortran 90, 95, 2003, 2008, 2015). The language standards are put forth by the Fortran standards committee [[http://www.j3-fortran.org][J3]] in a document (ISO 1539-1:2010) available for purchase. The syntax and intrinsic capabilities of the language make it especially suited for scientific computing. Like C/C++, Fortran is a *statically-typed* and *compiled* language. You must declare the *type*, i.e. integer, real number, etc. of variables in programs you write. Your programs will be translated from human-readable /source code/ into a machine-executable file by software called a *compiler*. Fortran is *not case-sensitive*, so =matrix= and =MaTrIx= are translated to the same token by the compiler.
+Fortran was created in the 1950s for mathematical *FOR*-mula *TRAN*-slation, and has since gone through a number of revisions (FORTRAN 66, 77, and Fortran 90, 95, 2003, 2008, 2015). The language standards are put forth by the Fortran standards committee [[http://www.j3-fortran.org][J3]] in a document (ISO 1539-1:2010) available for purchase. The language syntax and intrinsic procedures make it especially suited for scientific computing. Fortran is a *statically-typed* and *compiled* language, like C++. You must declare the *type*, i.e. integer, real number, etc. of variables in programs you write. Your programs will be translated from human-readable /source code/ into an executable file by software called a *compiler*. Fortran is *not case-sensitive*, so =matrix= and =MaTrIx= are translated to the same token by the compiler.
 
 * Getting started
 The software that you need to get started comes prepackaged and ready to download on most Linux distributions. There are a few options for emulating a Linux environment in Windows or Mac OS, such as a virtual machine (VirtualBox) or package manager (MinGW or Cygwin on Windows and Brew on Mac OS).
 ** Text editor
 You will write the source code of your programs using a text editor. There are many options that have features designed for programming such as syntax highlighting and auto-completion. If you are an impossible-to-please perfectionist, you might want to check out [[https://www.gnu.org/s/emacs/][Emacs]]. If you are easier to please, you might want to check out [[https://www.sublimetext.com/][Sublime Text]].
 ** Compiler
-To translate your source code into an executable, you will need a Fortran compiler. A free option is *gfortran*, part of the GNU compiler collection (gcc). The features of the Fortran language that are supported by the =gfortran= compiler are specified in the [[https://gcc.gnu.org/onlinedocs/gfortran/][compiler documentation]]. This is your most complete reference for the procedures intrinsic to Fortran that your programs can use. At the time of this writing, =gfortran= completely supports Fortran 95 and partially supports more recent standards.
+To translate your source code into an executable, you will need a Fortran compiler. A free option is *gfortran*, part of the GNU compiler collection (gcc). The features of the Fortran language that are supported by the =gfortran= compiler are specified in the [[https://gcc.gnu.org/onlinedocs/gfortran/][compiler manual]]. This is your most complete reference for the procedures intrinsic to Fortran that your programs can use. At the time of this writing, =gfortran= completely supports Fortran 95 and partially supports more recent standards.
 ** Writing and compiling a program
-A program is delimited by the =begin program= / =end program= keywords. A useful program construct for keeping code that a =program= can use is called a =module=. A module is delimited by the =begin module= / =end module= keywords.
+A program is delimited by the =begin program= / =end program= keywords. A useful construct for keeping code that a program can use is called a *module*. A module is delimited by the =begin module= / =end module= keywords.
 *** Hello world
 Let's write a tiny program that prints "hello world" to the terminal screen in =hello.f90=.
 
@@ -57,7 +57,7 @@ gfortran hello.f90 -o my_executable_file
 On Windows, you should append the =.exe= extension to =my_executable_file=.
 
 *** Template
-Now let's write an empty source code template for future projects. Our source code template will consist of two files in the same directory ([[./source/]]). In the following files, the contents of a line after a =!= symbol is a comment that is ignored by the compiler. One file =header.f90= contains a *module* that defines things to be used in the main program.
+Now let's write an empty source code template for future projects. Our source code template will consist of two files in the same directory ([[./source/]]). In the following files, the contents of a line after a =!= symbol is a comment that is ignored by the compiler. One file =header.f90= contains a module that defines things to be used in the main program.
 
 #+begin_src fortran -n -r :tangle ./source/header.f90
 module header
@@ -68,13 +68,13 @@ contains
 end module header
 #+end_src
 
-This file should be compiled into an *object file* with the =-c= option of =gfortran=.
+This file should be compiled with the =-c= option of =gfortran=.
 
 #+begin_src sh :dir ./source
 gfortran -c header.f90
 #+end_src
 
-This outputs the object file named =header.o= by default that can be /linked/ to the main program. A separate file =main.f90= contains the main program.
+This outputs the *object file* named =header.o= by default. An object file contains machine code that can be /linked/ to an executable. A separate file =main.f90= contains the main program.
 
 #+begin_src fortran -n -r :tangle ./source/main.f90
 program main
@@ -87,19 +87,19 @@ contains
 end program main
 #+end_src
 
-On line [[(u)]] of =main.f90=, we instruct the main program to use things defined in =header.f90=, so we must link the object file =header.o= when compiling =main.f90=.
+On line [[(u)]] of =main.f90=, we instruct the main program to use the contents of =header.f90=, so we must link =header.o= when compiling =main.f90=.
 
 #+begin_src sh :dir ./source
 gfortran main.f90 header.o -o main
 #+end_src
 
-To run the program, execute the output file =main= in the same directory.
+To run the program, execute the output file =main=.
 
 #+begin_src sh :dir ./source
 ./main
 #+end_src
 
-As you get more experience, you may find it cumbersome to repeatedly execute =gfortran= commands with every modification to your code. A way around this is to use the =make= command-line utility. Using =make=, all the of the compilation commands for your project can be coded in a file named =makefile= in the same directory as your =.f90= files. For example, the template above could use the following =makefile=.
+As you get more experience, you may find it cumbersome to repeatedly execute =gfortran= commands with every modification to your code. A way around this is to use the =make= command-line utility. Using =make=, all the of the compilation commands for your project can be coded in a file named =makefile= in the same directory as your =.f90= source files. For example, the template above could use the following =makefile=.
 
 #+begin_src make -n -r :tangle ./source/makefile
 COMPILER = gfortran
@@ -116,25 +116,25 @@ $(EXECUTABLE): $(OBJECTS)
 
 Then, to recompile both =header.f90= and =main.f90= after modifying either file, execute
 
-#+begin_src sh :exports code :dir template
+#+begin_src sh :exports code :dir source
 make
 #+end_src
 
-in the same directory as =makefile=. The first four lines of the =makefile= above define the compiler command, file name of the main program, file name of the executable to be created, and file name(s) of linked object file(s), respectively. If you wrote a second module in a separate file =my_second_header.f90= that you wanted to =use= in =main.f90=, you would modify line [[(obj)]] of =makefile= to =OBJ = header.o my_second_header.o=. The remaining lines of the =makefile= define instructions for compilation.
+in the same directory as =makefile=. The first four lines of the =makefile= above define the compiler command, file name of the main program, file name of the executable to be created, and file name(s) of linked object file(s), respectively. If you wrote a second module in a separate file =my_second_header.f90= that you wanted to =use= in =main.f90=, you would modify line [[(obj)]] of =makefile= to =OBJ = header.o my_second_header.o=. The remaining lines of =makefile= define instructions for compilation.
 
 ** Exercises
 1. Compile and run =hello.f90=.
 2. Execute =man gfortran= in any directory to bring up the manual for =gfortran=. Read the description and skim through the options. Do the same for =make=.
 
 * Data types
-In each program construct, variables are declared first before other procedures. A variable is declared by listing its data type followed by =::= and the variable name, i.e. =integer :: i= or =real :: x=.
+In both programs and modules, variables are declared first before other procedures. A variable is declared by listing its data type followed by =::= and the variable name, i.e. =integer :: i= or =real :: x=.
 
-We will use the =implicit none= keyword at the beginning of each program and module as in line [[(in1)]] of =header.f90= and line [[(in2)]] of =main.f90= in Section [[Template]]. The role of this keyword is to suppress implicit rules for interpreting undeclared variables, and by including it we force ourselves to declare each variable we use, which should facilitate debugging when our program fails to compile. Without it, an undeclared variable with a name such as =i= is assumed to be an integer data type whereas an undeclared variable with a name such as =x= is assumed to be a real data type.
+We will use the =implicit none= keyword at the beginning of each program and module as in line [[(in1)]] of =header.f90= and line [[(in2)]] of =main.f90= in Section [[Template]]. The role of this keyword is to suppress implicit rules for interpreting undeclared variables. By including it, we force ourselves to declare each variable we use, which should facilitate debugging when our program fails to compile. Without it, an undeclared variable with a name such as =i= is assumed to be of the =integer= data type whereas an undeclared variable with a name such as =x= is assumed to be of the =real= data type.
 
-In addition to the most common data types presented below, Fortran has a =complex= data type and support for data types defined by the programmer.
+In addition to the most common data types presented below, Fortran has a =complex= data type and support for data types defined by the programmer (see Section [[Derived types]]).
 
 ** The =logical= type
-A =logical= data type can have values =.true.= or =.false.=. Logical expressions can be computed with unary or binary operators.
+A =logical= data type can have values =.true.= or =.false.=. Logical expressions can be expressed by combining unary or binary operations.
 
 #+begin_src fortran -n 
 logical :: a,b,c
@@ -151,10 +151,11 @@ c = a.and.b ! c is false
 c = a.or.b ! c is true
 
 ! '==' is the test for equality
-c = (1 == 2) ! c is false
+c = 1 == 2 ! c is false
 
 ! '/=' is test for inequality
-c = (1 /= 2) ! c is true
+c = 1 /= 2 ! c is true
+print*, c
 #+end_src
 
 Other logical operators include
@@ -166,16 +167,16 @@ Other logical operators include
 Logical expressions are often used in [[Control structures][control structures]].
 
 ** The =integer= type
-An =integer= data type can have integer values. If a real value is assigned to an =integer= type, the decimal portion is truncated.
+An =integer= data type can have integer values. If a real value is assigned to an =integer= type, the decimal portion is chopped off.
 
 #+begin_src fortran -n
 integer :: a = 6, b = 7 ! initialize a and b to 6 and 7, resp
 integer :: c
 
-c = a / b ! c is 0
-c = b / a ! c is 1
 c = a + b ! c is 13
 c = a - b ! c is -1
+c = a / b ! c is 0
+c = b / a ! c is 1
 c = a*b ! c is 42
 c = a**b ! c is 6^7
 c = mod(b,a) ! c is (b mod a) = 1
@@ -204,7 +205,7 @@ print*, tiny(b), huge(b), epsilon(b)
 : 2.2250738585072014E-308   1.7976931348623157E+308   2.2204460492503131E-016
 
 ** The =character= type
-A =character= data type can have character values, i.e. letters or symbols. A character string is declared with a positive =integer= specifying it maximum possible length.
+A =character= data type can have character values, i.e. letters or symbols. A character string is declared with a positive =integer= specifying its maximum possible length.
 
 #+begin_src fortran -n :exports both :results output
 ! declare a character variable s at most 32 characters
@@ -222,7 +223,7 @@ print*, trim(s) // '.txt'
 : file_name.txt
 
 ** Casting
-An =integer= can be cast to a =real= or vice versa.
+An =integer= can be cast to a =real= and vice versa.
 
 #+begin_src fortran -n
 integer :: a = 1, b
@@ -239,7 +240,7 @@ c = a/b ! c is 0
 #+end_src
 
 ** The =parameter= keyword
-The =parameter= keyword is used to declare constant variables. A constant variable must be assigned a value at declaration and cannot be reassigned a value. The following code is not valid because of the reassignment =PI = 3=.
+The =parameter= keyword is used to declare constants. A constant must be assigned a value at declaration and cannot be reassigned a value. The following code is not valid because of an attempt to reassign a constant.
 
 #+begin_src fortran -n
 ! declare constant variable
@@ -251,7 +252,7 @@ PI = 3 ! not valid
 The compiler produces an error like =Error: Named constant ‘pi’ in variable definition context (assignment)=.
 
 ** Setting the precision
-The =kind= function returns an =integer= for each data type. The precision of a floating point number can be specified at declaration by a constant =integer= of the desired =kind=.
+The =kind= function returns an =integer= for each data type. The precision of a floating point number can be specified at declaration by a literal or constant =integer= of the desired =kind=.
 
 #+begin_src fortran -n -r
 ! declare a single precision
@@ -1215,19 +1216,19 @@ end program main
 : 120
 
 * Object-oriented programming
-** Defined types
+** Derived types
 Data types can be defined by the programmer. Variables and procedures that belong to a defined data type are declared between a =type= / =end type= pair. Type-bound procedures, i.e. functions and subroutines, are defined by the =procedure= keyword followed by =::= and the name of the procedure within the =type= / =end type= pair after the =contains= keyword. A variable with defined type is declared with the =type= keyword and the name of the type. The variables and procedures of a defined type variable can be accessed by appending a =%= symbol to the name of the variable.
 
 #+begin_src fortran -n
 ! define a 'matrix' type
-! type-bound variables: shape
-! type-bound procedures: construct, delete
+! type-bound variables: shape, data
+! type-bound procedures: construct, destruct
 type matrix
    integer :: shape(2)
    real, allocatable :: data(:,:)
  contains
    procedure :: construct
-   procedure :: delete
+   procedure :: destruct
 end type matrix
 
 ! declare a matrix variable
@@ -1249,7 +1250,7 @@ module matrix_module
      real, allocatable :: data(:,:)
    contains
      procedure :: construct
-     procedure :: delete
+     procedure :: destruct
   end type matrix
 
 contains
@@ -1263,11 +1264,11 @@ contains
     allocate(this%data(m,n))
   end subroutine construct
 
-  ! delete: deallocate memory that matrix occupies
-  subroutine delete(this)
+  ! destruct: deallocate memory that matrix occupies
+  subroutine destruct(this)
     class(matrix) :: this
     deallocate(this%data)
-  end subroutine delete
+  end subroutine destruct
 
 end module matrix_module
 #+end_src
@@ -1289,13 +1290,13 @@ program main
   mat%data(1,1) = 1.0
   ! etc...
 
-  ! destroy matrix
-  call matrix%delete()
+  ! destruct matrix
+  call matrix%destruct()
 end program main
 #+end_src
 
 ** Example: determinant of random matrix
-The following module defines a =matrix= type with two variables: an =integer= array =shape= that stores the number of rows and columns of the matrix and a =real= array =data= that stores the elements of the matrix. The type has four procedures: a subroutine =construct= that allocates memory for the matrix, a subroutine =delete= that deallocates the memory the matrix occupies, a subroutine =print= that prints a matrix, and a function =det= that computes the determinant of a matrix using the recursive definition based on cofactors. A function =random_matrix= defined within the module generates a matrix with uniform random entries in $[-1,1]$.
+The following module defines a =matrix= type with two variables: an =integer= array =shape= that stores the number of rows and columns of the matrix and a =real= array =data= that stores the elements of the matrix. The type has four procedures: a subroutine =construct= that sets the shape and allocates memory for the data, a subroutine =destruct= that deallocates memory, a subroutine =print= that prints a matrix, and a function =det= that computes the determinant of a matrix. Note =det= is based on the definition of determinant using cofactors, and is very inefficient. A function =random_matrix= defined within the module generates a matrix with uniform random entries in $[-1,1]$.
 
 #+begin_src fortran -n :tangle ./matrix/matrix_module.f90
 module matrix_module
@@ -1306,7 +1307,7 @@ module matrix_module
      real, allocatable :: data(:,:)
    contains
      procedure :: construct
-     procedure :: delete
+     procedure :: destruct
      procedure :: print
      procedure :: det
   end type matrix
@@ -1320,10 +1321,10 @@ contains
     allocate(this%data(m,n))
   end subroutine construct
 
-  subroutine delete(this)
+  subroutine destruct(this)
     class(matrix) :: this
     deallocate(this%data)
-  end subroutine delete
+  end subroutine destruct
 
   ! print: formatted print of matrix
   subroutine print(this)
@@ -1379,7 +1380,7 @@ contains
              submatrix%data(row:,:) = this%data(row+1:,2:)
           end if
           minor = submatrix%det()
-          call submatrix%delete()
+          call submatrix%destruct()
 
           ! determinant accumulator
           d = d + sgn*element*minor
@@ -1425,8 +1426,8 @@ program main
      ! print determinant of matrix
      print "('n: ', i0, ', det: ', f0.5)", n, det(mat)
 
-     ! delete matrix
-     call mat%delete()
+     ! destruct matrix
+     call mat%destruct()
   end do
 
 end program main
@@ -1460,8 +1461,295 @@ make
 : n: 4, det: -.27328
 : n: 5, det: .26695
 
-** Parameterized data types
-google it.
+#+RESULTS[387783cc12b2c4dcfeafd42a3e62cfdab1593c4b]:
+
+** Example: strongest eigenvalue of random matrix
+
+#+begin_src fortran -n :tangle ./power/matrix_module.f90
+module matrix_module
+  implicit none
+
+  type matrix
+     integer :: shape(2)
+     real, allocatable :: data(:,:)
+   contains
+     procedure :: construct => matrix_construct
+     procedure :: destruct => matrix_destruct
+     procedure :: max_eig
+  end type matrix
+
+  type vector
+     integer :: length
+     real, allocatable :: data(:)
+   contains
+     procedure :: construct => vector_construct
+     procedure :: destruct => vector_destruct
+  end type vector
+
+  interface assignment(=)
+     procedure vec_num_assign, vec_vec_assign, mat_num_assign, mat_mat_assign
+  end interface assignment(=)
+
+  interface operator(+)
+     procedure vec_vec_sum, mat_mat_sum
+  end interface operator(+)
+
+  interface operator(-)
+     procedure vec_vec_diff, mat_mat_diff
+  end interface operator(-)
+
+  interface operator(*)
+     procedure num_vec_prod, num_mat_prod, mat_vec_prod, mat_mat_prod
+  end interface operator(*)
+
+  interface operator(/)
+     procedure vec_num_quot, mat_num_quot
+  end interface operator(/)
+
+  interface norm2
+     procedure vec_norm2
+  end interface norm2
+
+contains
+
+  subroutine matrix_construct(this, m, n)
+    class(matrix) :: this
+    integer :: m,n
+    this%shape = [m,n]
+    allocate(this%data(m,n))
+  end subroutine matrix_construct
+
+  subroutine vector_construct(this, n)
+    class(vector) :: this
+    integer :: n
+    this%length = n
+    allocate(this%data(n))
+  end subroutine vector_construct
+
+  subroutine matrix_destruct(this)
+    class(matrix) :: this
+    deallocate(this%data)
+  end subroutine matrix_destruct
+
+  subroutine vector_destruct(this)
+    class(vector) :: this
+    deallocate(this%data)
+  end subroutine vector_destruct
+
+  subroutine max_eig(this, iter, val, vec)
+    class(matrix), intent(in) :: this
+    integer, intent(inout) :: iter
+    real, intent(inout) :: val
+    type(vector), intent(inout) :: vec
+    type(vector) :: last_vec
+    real :: tol=1e-6
+    integer :: max_iters, i
+
+    vec = random_vector(this%shape(2))
+    vec = vec/norm2(vec)
+
+    call last_vec%construct(this%shape(2))
+    last_vec%data = 0.0
+    max_iters = iter
+    iter = 0
+
+    do while (norm2(vec-last_vec)>tol.and.iter<max_iters)
+       last_vec = vec
+       vec = this*last_vec
+       vec = vec/norm2(vec)
+       iter = iter+1
+    end do
+
+    val = norm2(this*vec)
+
+  end subroutine max_eig
+
+  function random_matrix(m,n) result(mat)
+    integer :: m,n,i,j
+    type(matrix) :: mat
+    call mat%construct(m,n)
+    call srand(time())
+    do i = 1,m
+       do j = 1,n
+          mat%data(i,j) = rand()
+       end do
+    end do
+  end function random_matrix
+
+  function random_vector(n) result(vec)
+    integer :: n,i
+    type(vector) :: vec
+    call vec%construct(n)
+    call srand(time())
+    do i = 1,n
+       vec%data(i) = rand()
+    end do
+  end function random_vector
+
+  ! assignment
+  subroutine vec_num_assign(vec,num)
+    type(vector), intent(out) :: vec
+    real, intent(in) :: num
+    vec%data = num
+  end subroutine vec_num_assign
+
+  subroutine vec_vec_assign(vec1,vec2)
+    type(vector), intent(out) :: vec1
+    type(vector), intent(in) :: vec2
+    vec1%data = vec2%data
+  end subroutine vec_vec_assign
+
+  subroutine mat_num_assign(mat,num)
+    type(matrix), intent(out) :: mat
+    real, intent(in) :: num
+    mat%data = num
+  end subroutine mat_num_assign
+
+  subroutine mat_mat_assign(mat1,mat2)
+    type(matrix), intent(out) :: mat1
+    type(matrix), intent(in) :: mat2
+    mat1%data = mat2%data
+  end subroutine mat_mat_assign
+
+  ! addition
+  function vec_vec_sum(vec1,vec2) result(s)
+    type(vector), intent(in) :: vec1, vec2
+    type(vector) :: s
+    call s%construct(vec1%length)
+    s%data = vec1%data + vec2%data
+  end function vec_vec_sum
+
+  function mat_mat_sum(mat1,mat2) result(s)
+    type(matrix), intent(in) :: mat1, mat2
+    type(matrix) :: s
+    call s%construct(mat1%shape(1),mat1%shape(2))
+    s%data = mat1%data+mat2%data
+  end function mat_mat_sum
+
+  ! subtraction
+  function vec_vec_diff(vec1,vec2) result(diff)
+    type(vector), intent(in) :: vec1, vec2
+    type(vector) :: diff
+    call diff%construct(vec1%length)
+    diff%data = vec1%data-vec2%data
+  end function vec_vec_diff
+
+  function mat_mat_diff(mat1,mat2) result(diff)
+    type(matrix), intent(in) :: mat1, mat2
+    type(matrix) :: diff
+    call diff%construct(mat1%shape(1),mat1%shape(2))
+    diff%data = mat1%data-mat2%data
+  end function mat_mat_diff
+
+  ! multiplication
+  function num_vec_prod(num,vec) result(prod)
+    real, intent(in) :: num
+    type(vector), intent(in) :: vec
+    type(vector) :: prod
+    call prod%construct(vec%length)
+    prod%data = num*vec%data
+  end function num_vec_prod
+
+  function num_mat_prod(num,mat) result(prod)
+    real, intent(in) :: num
+    type(matrix), intent(in) :: mat
+    type(matrix) :: prod
+    call prod%construct(mat%shape(1),mat%shape(2))
+    prod%data = num*mat%data
+  end function num_mat_prod
+
+  function mat_vec_prod(mat,vec) result(prod)
+    type(matrix), intent(in) :: mat
+    type(vector), intent(in) :: vec 
+    type(vector) :: prod
+    call prod%construct(mat%shape(1))
+    print*, mat%shape, vec%length
+    prod%data = matmul(mat%data,vec%data)
+  end function mat_vec_prod
+
+  function mat_mat_prod(mat1,mat2) result(prod)
+    type(matrix), intent(in) :: mat1, mat2
+    type(matrix) :: prod
+    call prod%construct(mat1%shape(1),mat2%shape(2))
+    print*, mat1%shape, mat2%shape
+    prod%data = matmul(mat1%data,mat2%data)
+  end function mat_mat_prod
+
+  ! division
+  function vec_num_quot(vec,num) result(quot)
+    type(vector), intent(in) :: vec
+    real, intent(in) :: num
+    type(vector) :: quot
+    call quot%construct(vec%length)
+    quot%data = vec%data/num
+  end function vec_num_quot
+
+  function mat_num_quot(mat,num) result(quot)
+    type(matrix), intent(in) :: mat
+    real, intent(in) :: num
+    type(matrix) :: quot
+    call quot%construct(mat%shape(1),mat%shape(2))
+    quot%data = mat%data/num
+  end function mat_num_quot
+
+  ! norm
+  function vec_norm2(vec) result(norm)
+    type(vector), intent(in) :: vec
+    real :: norm
+    norm = norm2(vec%data)
+  end function vec_norm2
+
+end module matrix_module
+#+end_src
+
+#+begin_src fortran -n :tangle ./power/main.f90
+program main
+  use matrix_module
+  implicit none
+
+  type(matrix) :: mat
+  type(vector) :: vec
+  integer :: n, iter
+  real :: val
+
+  do n = 2,5
+     iter = 100
+     mat = random_matrix(n,n)
+     call mat%max_eig(iter,val,vec)
+     print *, n, iter, val, norm2(mat*vec-val*vec)
+     call mat%destruct()
+     call vec%destruct()
+  end do
+
+end program main
+#+end_src
+
+#+begin_src make :exports none :tangle ./power/makefile
+FC = gfortran
+SRC = main.f90
+EXE = main
+OBJ = matrix_module.o
+
+all: $(EXE)
+$(EXE): $(OBJ)
+	$(FC) $(OBJ) $(SRC) -o $(EXE) 
+%.o: %.f90
+	$(FC) -c $< -o $@
+#+end_src
+
+#+begin_src sh :exports none :dir ./power/
+make
+#+end_src
+
+#+begin_src sh :exports both :results output replace :cache no :dir ./power/
+./main
+#+end_src
+
+#+RESULTS:
+:            2          14   1.03737926       3.62866984E-07
+:            3          10  0.976910591       1.07453801E-07
+:            4           9   1.84589541       2.06476543E-07
+:            5          10   2.39860868       2.45756240E-07
 
 :snippets:
 # ** ${n \choose k}$

@@ -6,7 +6,7 @@ module matrix_module
      real, allocatable :: data(:,:)
    contains
      procedure :: construct
-     procedure :: delete
+     procedure :: destruct
      procedure :: print
      procedure :: det
   end type matrix
@@ -20,10 +20,10 @@ contains
     allocate(this%data(m,n))
   end subroutine construct
 
-  subroutine delete(this)
+  subroutine destruct(this)
     class(matrix) :: this
     deallocate(this%data)
-  end subroutine delete
+  end subroutine destruct
 
   ! print: formatted print of matrix
   subroutine print(this)
@@ -79,7 +79,7 @@ contains
              submatrix%data(row:,:) = this%data(row+1:,2:)
           end if
           minor = submatrix%det()
-          call submatrix%delete()
+          call submatrix%destruct()
 
           ! determinant accumulator
           d = d + sgn*element*minor

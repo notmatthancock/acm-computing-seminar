@@ -13,8 +13,8 @@ program main
      ! print determinant of matrix
      print "('n: ', i0, ', det: ', f0.5)", n, det(mat)
 
-     ! delete matrix
-     call mat%delete()
+     ! destruct matrix
+     call mat%destruct()
   end do
 
 end program main
