@@ -17,7 +17,6 @@ scientific computing applications. The goal of this guide is not to
 make you a C++ expert, but to quickly teach you enough of the C++ 
 fundamentals and design patterns to help you off the ground. If you 
 should like to go beyond this guide, a few references are listed below.
-There is also a [[../fortran/][Fortran guide]] if you want to go beyond C++.
 
 ** A little about the language
 Before you dive in, here is a little about the C++ programming language:
@@ -28,9 +27,9 @@ of variables used in your source code must be declared explicitly and is
 checked when the program is compiled (i.e., translated into a machine 
 executable file).
 
-One (among many) difference between C++ and C, however, is that C++ provides 
-many data structures for the object-oriented programming paradigm. This 
-essentially allows the software writer (that's you) to create custom, complex, 
+One key difference between C++ and C, however, is that C++ provides 
+many mechanisms to allow for [[https://en.wikipedia.org/wiki/Object-oriented_programming][object-oriented programming paradigm]]. This 
+essentially allows the software writer to create custom, complex, 
 reusable data structures. The object-oriented paradigm is extremely useful, 
 but we will only touch the surface of it in this guide.
 

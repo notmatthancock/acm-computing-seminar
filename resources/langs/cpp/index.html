@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2016-08-29 Mon 15:47 -->
+<!-- 2016-08-31 Wed 19:52 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title>ACM Computing Seminar C++ Guide</title>
@@ -303,7 +303,6 @@ scientific computing applications. The goal of this guide is not to
 make you a C++ expert, but to quickly teach you enough of the C++ 
 fundamentals and design patterns to help you off the ground. If you 
 should like to go beyond this guide, a few references are listed below.
-There is also a <a href="../fortran/">Fortran guide</a> if you want to go beyond C++.
 </p>
 </div>
 
@@ -323,9 +322,9 @@ executable file).
 </p>
 
 <p>
-One (among many) difference between C++ and C, however, is that C++ provides 
-many data structures for the object-oriented programming paradigm. This 
-essentially allows the software writer (that's you) to create custom, complex, 
+One key difference between C++ and C, however, is that C++ provides 
+many mechanisms to allow for <a href="https://en.wikipedia.org/wiki/Object-oriented_programming">object-oriented programming paradigm</a>. This 
+essentially allows the software writer to create custom, complex, 
 reusable data structures. The object-oriented paradigm is extremely useful, 
 but we will only touch the surface of it in this guide.
 </p>
@@ -431,11 +430,11 @@ following contents:
 
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;iostream&gt;</span>
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #cdad00;">#include</span> <span style="color: #8b7355;">&lt;iostream&gt;</span>
 <span class="linenr">2: </span>
-<span class="linenr">3: </span><span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>() {
-<span class="linenr">4: </span>  <span style="color: #008b8b;">std</span>::cout &lt;&lt; <span style="color: #8b2252;">"Hello, world!"</span>;
-<span class="linenr">5: </span>  <span style="color: #a020f0;">return</span> 0;
+<span class="linenr">3: </span><span style="color: #00688b;">int</span> <span style="color: #cd9b1d;">main</span>() {
+<span class="linenr">4: </span>  <span style="color: #6e8b3d;">std</span>::cout &lt;&lt; <span style="color: #8b7355;">"Hello, world!"</span>;
+<span class="linenr">5: </span>  <span style="color: #1c86ee;">return</span> 0;
 <span class="linenr">6: </span>}
 </pre>
 </div>
@@ -501,18 +500,18 @@ compiler):
 
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #228b22;">bool</span> <span style="color: #a0522d;">a</span>,<span style="color: #a0522d;">b</span>,<span style="color: #a0522d;">c</span>; <span style="color: #b22222;">// </span><span style="color: #b22222;">Declare the type of variables a, b, and c.</span>
-<span class="linenr"> 2: </span>a = <span style="color: #008b8b;">true</span>;
-<span class="linenr"> 3: </span>b = <span style="color: #008b8b;">false</span>;
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #00688b;">bool</span> <span style="color: #2e8b57;">a</span>,<span style="color: #2e8b57;">b</span>,<span style="color: #2e8b57;">c</span>; <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">Declare the type of variables a, b, and c.</span>
+<span class="linenr"> 2: </span>a = <span style="color: #6e8b3d;">true</span>;
+<span class="linenr"> 3: </span>b = <span style="color: #6e8b3d;">false</span>;
 <span class="linenr"> 4: </span>
-<span class="linenr"> 5: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">!  is logical negation when applied to a single variable.</span>
-<span class="linenr"> 6: </span>c = !a; <span style="color: #b22222;">// </span><span style="color: #b22222;">c is false.</span>
+<span class="linenr"> 5: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">!  is logical negation when applied to a single variable.</span>
+<span class="linenr"> 6: </span>c = !a; <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">c is false.</span>
 <span class="linenr"> 7: </span>
-<span class="linenr"> 8: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">&amp;&amp; is logical and.</span>
-<span class="linenr"> 9: </span>c = (a &amp;&amp; b); <span style="color: #b22222;">// </span><span style="color: #b22222;">c is false.</span>
+<span class="linenr"> 8: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">&amp;&amp; is logical and.</span>
+<span class="linenr"> 9: </span>c = (a &amp;&amp; b); <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">c is false.</span>
 <span class="linenr">10: </span>
-<span class="linenr">11: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">|| is logical or.</span>
-<span class="linenr">12: </span>c = (a || b); <span style="color: #b22222;">// </span><span style="color: #b22222;">c is true.</span>
+<span class="linenr">11: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">|| is logical or.</span>
+<span class="linenr">12: </span>c = (a || b); <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">c is true.</span>
 </pre>
 </div>
 
@@ -537,25 +536,25 @@ hence the maximum and minimum size the variable can take on).
 
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #228b22;">int</span> <span style="color: #a0522d;">a</span> = 6; <span style="color: #b22222;">// </span><span style="color: #b22222;">initialize a to 6.</span>
-<span class="linenr"> 2: </span><span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">int</span> <span style="color: #a0522d;">b</span> = 7; <span style="color: #b22222;">// </span><span style="color: #b22222;">initialize b to 7.</span>
-<span class="linenr"> 3: </span><span style="color: #228b22;">int</span> <span style="color: #a0522d;">c</span>; <span style="color: #b22222;">// </span><span style="color: #b22222;">declare c to be an integer variable.</span>
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #00688b;">int</span> <span style="color: #2e8b57;">a</span> = 6; <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">initialize a to 6.</span>
+<span class="linenr"> 2: </span><span style="color: #00688b;">unsigned</span> <span style="color: #00688b;">int</span> <span style="color: #2e8b57;">b</span> = 7; <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">initialize b to 7.</span>
+<span class="linenr"> 3: </span><span style="color: #00688b;">int</span> <span style="color: #2e8b57;">c</span>; <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">declare c to be an integer variable.</span>
 <span class="linenr"> 4: </span>
 <span class="linenr"> 5: </span>a = 6;
 <span class="linenr"> 6: </span>b = 7;
 <span class="linenr"> 7: </span>
-<span class="linenr"> 8: </span>c = a / b; <span style="color: #b22222;">// </span><span style="color: #b22222;">c is 0</span>
-<span class="linenr"> 9: </span>c = b / a; <span style="color: #b22222;">// </span><span style="color: #b22222;">c is 1</span>
-<span class="linenr">10: </span>c = b % a; <span style="color: #b22222;">// </span><span style="color: #b22222;">c is 1 (% is the integer remainder or modulo operator)</span>
-<span class="linenr">11: </span>c = a - b; <span style="color: #b22222;">// </span><span style="color: #b22222;">c is -1</span>
-<span class="linenr">12: </span>c = a &gt; b; <span style="color: #b22222;">// </span><span style="color: #b22222;">c is 0 (boolean gets cast to integer)</span>
-<span class="linenr">13: </span>c = a &lt; b; <span style="color: #b22222;">// </span><span style="color: #b22222;">c is 1 (boolean gets cast to integer)</span>
-<span class="linenr">14: </span>c++;       <span style="color: #b22222;">// </span><span style="color: #b22222;">c is 2 (++ is shorthand for c = c + 1)</span>
+<span class="linenr"> 8: </span>c = a / b; <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">c is 0</span>
+<span class="linenr"> 9: </span>c = b / a; <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">c is 1</span>
+<span class="linenr">10: </span>c = b % a; <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">c is 1 (% is the integer remainder or modulo operator)</span>
+<span class="linenr">11: </span>c = a - b; <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">c is -1</span>
+<span class="linenr">12: </span>c = a &gt; b; <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">c is 0 (boolean gets cast to integer)</span>
+<span class="linenr">13: </span>c = a &lt; b; <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">c is 1 (boolean gets cast to integer)</span>
+<span class="linenr">14: </span>c++;       <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">c is 2 (++ is shorthand for c = c + 1)</span>
 <span class="linenr">15: </span>
-<span class="linenr">16: </span>b = a - b; <span style="color: #b22222;">// </span><span style="color: #b22222;">b is 4294967295 (-1 gets cast to unsigned)</span>
-<span class="linenr">17: </span>b = b + 1; <span style="color: #b22222;">// </span><span style="color: #b22222;">b is 0 (b was previously the largest unsigned,</span>
-<span class="linenr">18: </span>           <span style="color: #b22222;">// </span><span style="color: #b22222;">so adding one circles it back to zero.)</span>
-<span class="linenr">19: </span>b += 7;    <span style="color: #b22222;">// </span><span style="color: #b22222;">b is 7 (+= is shorthand for b = b + 7;</span>
+<span class="linenr">16: </span>b = a - b; <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">b is 4294967295 (-1 gets cast to unsigned)</span>
+<span class="linenr">17: </span>b = b + 1; <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">b is 0 (b was previously the largest unsigned,</span>
+<span class="linenr">18: </span>           <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">so adding one circles it back to zero.)</span>
+<span class="linenr">19: </span>b += 7;    <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">b is 7 (+= is shorthand for b = b + 7;</span>
 </pre>
 </div>
 
@@ -580,26 +579,26 @@ which correspond to <a href="https://en.wikipedia.org/wiki/IEEE_floating_point">
 
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;iostream&gt;</span>
-<span class="linenr"> 2: </span><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;limits&gt;</span>
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #cdad00;">#include</span> <span style="color: #8b7355;">&lt;iostream&gt;</span>
+<span class="linenr"> 2: </span><span style="color: #cdad00;">#include</span> <span style="color: #8b7355;">&lt;limits&gt;</span>
 <span class="linenr"> 3: </span>
-<span class="linenr"> 4: </span><span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>() {
-<span class="linenr"> 5: </span>  <span style="color: #228b22;">float</span> <span style="color: #a0522d;">a</span>; <span style="color: #b22222;">//  </span><span style="color: #b22222;">Declare a single precision float.</span>
-<span class="linenr"> 6: </span>  <span style="color: #228b22;">double</span> <span style="color: #a0522d;">b</span>; <span style="color: #b22222;">// </span><span style="color: #b22222;">Declare a double precision float.</span>
+<span class="linenr"> 4: </span><span style="color: #00688b;">int</span> <span style="color: #cd9b1d;">main</span>() {
+<span class="linenr"> 5: </span>  <span style="color: #00688b;">float</span> <span style="color: #2e8b57;">a</span>; <span style="color: #7f7f7f;">//  </span><span style="color: #7f7f7f;">Declare a single precision float.</span>
+<span class="linenr"> 6: </span>  <span style="color: #00688b;">double</span> <span style="color: #2e8b57;">b</span>; <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">Declare a double precision float.</span>
 <span class="linenr"> 7: </span>
-<span class="linenr"> 8: </span>  <span style="color: #b22222;">// </span><span style="color: #b22222;">Print the max value of a float type.</span>
-<span class="linenr"> 9: </span>  <span style="color: #008b8b;">std</span>::cout &lt;&lt; <span style="color: #008b8b;">std</span>::<span style="color: #008b8b;">numeric_limits</span>&lt;<span style="color: #228b22;">float</span>&gt;::max() &lt;&lt; <span style="color: #008b8b;">std</span>::endl;
+<span class="linenr"> 8: </span>  <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">Print the max value of a float type.</span>
+<span class="linenr"> 9: </span>  <span style="color: #6e8b3d;">std</span>::cout &lt;&lt; <span style="color: #6e8b3d;">std</span>::<span style="color: #6e8b3d;">numeric_limits</span>&lt;<span style="color: #00688b;">float</span>&gt;::max() &lt;&lt; <span style="color: #6e8b3d;">std</span>::endl;
 <span class="linenr">10: </span>
-<span class="linenr">11: </span>  <span style="color: #b22222;">// </span><span style="color: #b22222;">Print the max value of a double type.</span>
-<span class="linenr">12: </span>  <span style="color: #008b8b;">std</span>::cout &lt;&lt; <span style="color: #008b8b;">std</span>::<span style="color: #008b8b;">numeric_limits</span>&lt;<span style="color: #228b22;">double</span>&gt;::max() &lt;&lt; <span style="color: #008b8b;">std</span>::endl;
+<span class="linenr">11: </span>  <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">Print the max value of a double type.</span>
+<span class="linenr">12: </span>  <span style="color: #6e8b3d;">std</span>::cout &lt;&lt; <span style="color: #6e8b3d;">std</span>::<span style="color: #6e8b3d;">numeric_limits</span>&lt;<span style="color: #00688b;">double</span>&gt;::max() &lt;&lt; <span style="color: #6e8b3d;">std</span>::endl;
 <span class="linenr">13: </span>
-<span class="linenr">14: </span>  <span style="color: #b22222;">// </span><span style="color: #b22222;">Print machine epsilon of a float type.</span>
-<span class="linenr">15: </span>  <span style="color: #008b8b;">std</span>::cout &lt;&lt; <span style="color: #008b8b;">std</span>::<span style="color: #008b8b;">numeric_limits</span>&lt;<span style="color: #228b22;">float</span>&gt;::epsilon() &lt;&lt; <span style="color: #008b8b;">std</span>::endl;
+<span class="linenr">14: </span>  <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">Print machine epsilon of a float type.</span>
+<span class="linenr">15: </span>  <span style="color: #6e8b3d;">std</span>::cout &lt;&lt; <span style="color: #6e8b3d;">std</span>::<span style="color: #6e8b3d;">numeric_limits</span>&lt;<span style="color: #00688b;">float</span>&gt;::epsilon() &lt;&lt; <span style="color: #6e8b3d;">std</span>::endl;
 <span class="linenr">16: </span>
-<span class="linenr">17: </span>  <span style="color: #b22222;">// </span><span style="color: #b22222;">Print machine epsilon of a double type.</span>
-<span class="linenr">18: </span>  <span style="color: #008b8b;">std</span>::cout &lt;&lt; <span style="color: #008b8b;">std</span>::<span style="color: #008b8b;">numeric_limits</span>&lt;<span style="color: #228b22;">double</span>&gt;::epsilon() &lt;&lt; <span style="color: #008b8b;">std</span>::endl;
+<span class="linenr">17: </span>  <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">Print machine epsilon of a double type.</span>
+<span class="linenr">18: </span>  <span style="color: #6e8b3d;">std</span>::cout &lt;&lt; <span style="color: #6e8b3d;">std</span>::<span style="color: #6e8b3d;">numeric_limits</span>&lt;<span style="color: #00688b;">double</span>&gt;::epsilon() &lt;&lt; <span style="color: #6e8b3d;">std</span>::endl;
 <span class="linenr">19: </span>
-<span class="linenr">20: </span>  <span style="color: #a020f0;">return</span> 0;
+<span class="linenr">20: </span>  <span style="color: #1c86ee;">return</span> 0;
 <span class="linenr">21: </span>}
 </pre>
 </div>
@@ -623,11 +622,11 @@ This can be done like the following:
 
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #228b22;">int</span> <span style="color: #a0522d;">a</span>; <span style="color: #228b22;">double</span> <span style="color: #a0522d;">b</span> = 3.14159;
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #00688b;">int</span> <span style="color: #2e8b57;">a</span>; <span style="color: #00688b;">double</span> <span style="color: #2e8b57;">b</span> = 3.14159;
 <span class="linenr">2: </span>
-<span class="linenr">3: </span>a = (<span style="color: #228b22;">int</span>) b;
+<span class="linenr">3: </span>a = (<span style="color: #00688b;">int</span>) b;
 <span class="linenr">4: </span>
-<span class="linenr">5: </span><span style="color: #008b8b;">std</span>::cout &lt;&lt; a &lt;&lt; <span style="color: #008b8b;">std</span>::endl;
+<span class="linenr">5: </span><span style="color: #6e8b3d;">std</span>::cout &lt;&lt; a &lt;&lt; <span style="color: #6e8b3d;">std</span>::endl;
 </pre>
 </div>
 
@@ -648,7 +647,7 @@ with all caps. Try to compile the following program:
 
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #a020f0;">const</span> <span style="color: #228b22;">double</span> <span style="color: #a0522d;">PI</span> = 3.14159;
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #1c86ee;">const</span> <span style="color: #00688b;">double</span> <span style="color: #2e8b57;">PI</span> = 3.14159;
 <span class="linenr">2: </span>
 <span class="linenr">3: </span>PI = 3.0;
 </pre>
@@ -677,18 +676,18 @@ Instead, we can use the <code>typedef</code> statement to define types:
 
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">Define "int_type" to be a short int.</span>
-<span class="linenr"> 2: </span><span style="color: #a020f0;">typedef</span> <span style="color: #228b22;">short</span> <span style="color: #228b22;">int</span> <span style="color: #228b22;">int_type</span>;
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">Define "int_type" to be a short int.</span>
+<span class="linenr"> 2: </span><span style="color: #1c86ee;">typedef</span> <span style="color: #00688b;">short</span> <span style="color: #00688b;">int</span> <span style="color: #00688b;">int_type</span>;
 <span class="linenr"> 3: </span>
-<span class="linenr"> 4: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">Define "float_type" to be single precision float.</span>
-<span class="linenr"> 5: </span><span style="color: #a020f0;">typedef</span> <span style="color: #228b22;">float</span> <span style="color: #228b22;">float_type</span>;
+<span class="linenr"> 4: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">Define "float_type" to be single precision float.</span>
+<span class="linenr"> 5: </span><span style="color: #1c86ee;">typedef</span> <span style="color: #00688b;">float</span> <span style="color: #00688b;">float_type</span>;
 <span class="linenr"> 6: </span>
-<span class="linenr"> 7: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">Define "array_index_type" to be unsigned long int.</span>
-<span class="linenr"> 8: </span><span style="color: #a020f0;">typedef</span> <span style="color: #228b22;">unsigned</span> <span style="color: #228b22;">long</span> <span style="color: #228b22;">int</span> <span style="color: #228b22;">array_index_type</span>;
+<span class="linenr"> 7: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">Define "array_index_type" to be unsigned long int.</span>
+<span class="linenr"> 8: </span><span style="color: #1c86ee;">typedef</span> <span style="color: #00688b;">unsigned</span> <span style="color: #00688b;">long</span> <span style="color: #00688b;">int</span> <span style="color: #00688b;">array_index_type</span>;
 <span class="linenr"> 9: </span>
-<span class="linenr">10: </span><span style="color: #228b22;">int_type</span> <span style="color: #a0522d;">a</span> = -17; 
-<span class="linenr">11: </span><span style="color: #228b22;">float_type</span> <span style="color: #a0522d;">b</span> = 1.14; 
-<span class="linenr">12: </span><span style="color: #228b22;">array_index_type</span> <span style="color: #a0522d;">c</span> = 9;
+<span class="linenr">10: </span><span style="color: #00688b;">int_type</span> <span style="color: #2e8b57;">a</span> = -17; 
+<span class="linenr">11: </span><span style="color: #00688b;">float_type</span> <span style="color: #2e8b57;">b</span> = 1.14; 
+<span class="linenr">12: </span><span style="color: #00688b;">array_index_type</span> <span style="color: #2e8b57;">c</span> = 9;
 </pre>
 </div>
 </div>
@@ -712,14 +711,14 @@ The memory address for a variable can be obtained by the <code>&amp;</code> oper
 
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #228b22;">double</span> * <span style="color: #a0522d;">a</span>;
-<span class="linenr">2: </span><span style="color: #228b22;">double</span> <span style="color: #a0522d;">b</span> = 7;
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #00688b;">double</span> * <span style="color: #2e8b57;">a</span>;
+<span class="linenr">2: </span><span style="color: #00688b;">double</span> <span style="color: #2e8b57;">b</span> = 7;
 <span class="linenr">3: </span>
-<span class="linenr">4: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">This obtains the memory address of `b`.</span>
+<span class="linenr">4: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">This obtains the memory address of `b`.</span>
 <span class="linenr">5: </span>a = &amp;b;
 <span class="linenr">6: </span>
-<span class="linenr">7: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">Prints some memory address (starts with 0x)</span>
-<span class="linenr">8: </span><span style="color: #008b8b;">std</span>::cout &lt;&lt; a &lt;&lt; <span style="color: #008b8b;">std</span>::endl;
+<span class="linenr">7: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">Prints some memory address (starts with 0x)</span>
+<span class="linenr">8: </span><span style="color: #6e8b3d;">std</span>::cout &lt;&lt; a &lt;&lt; <span style="color: #6e8b3d;">std</span>::endl;
 </pre>
 </div>
 
@@ -737,19 +736,19 @@ understood with a short example:
 
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #228b22;">double</span> * <span style="color: #a0522d;">a</span>;
-<span class="linenr"> 2: </span><span style="color: #228b22;">double</span> <span style="color: #a0522d;">b</span> = 7.3;
-<span class="linenr"> 3: </span><span style="color: #228b22;">double</span> <span style="color: #a0522d;">c</span>;
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #00688b;">double</span> * <span style="color: #2e8b57;">a</span>;
+<span class="linenr"> 2: </span><span style="color: #00688b;">double</span> <span style="color: #2e8b57;">b</span> = 7.3;
+<span class="linenr"> 3: </span><span style="color: #00688b;">double</span> <span style="color: #2e8b57;">c</span>;
 <span class="linenr"> 4: </span>
-<span class="linenr"> 5: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">Now `a` holds the memory address of `b`.</span>
+<span class="linenr"> 5: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">Now `a` holds the memory address of `b`.</span>
 <span class="linenr"> 6: </span>a = &amp;b;
 <span class="linenr"> 7: </span>
-<span class="linenr"> 8: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">`*a` obtains the value of the variable</span>
-<span class="linenr"> 9: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">at the memory address held by `a`.</span>
-<span class="linenr">10: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">So, `c` is 7.3.</span>
+<span class="linenr"> 8: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">`*a` obtains the value of the variable</span>
+<span class="linenr"> 9: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">at the memory address held by `a`.</span>
+<span class="linenr">10: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">So, `c` is 7.3.</span>
 <span class="linenr">11: </span>c = *a;
 <span class="linenr">12: </span>
-<span class="linenr">13: </span><span style="color: #008b8b;">std</span>::cout &lt;&lt; c &lt;&lt; <span style="color: #8b2252;">"\n"</span>;
+<span class="linenr">13: </span><span style="color: #6e8b3d;">std</span>::cout &lt;&lt; c &lt;&lt; <span style="color: #8b7355;">"\n"</span>;
 </pre>
 </div>
 
@@ -771,22 +770,22 @@ treat it more-or-less like the original variable, but it's not the original.
 
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #228b22;">double</span> <span style="color: #a0522d;">a</span> = 1.1;
-<span class="linenr"> 2: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">`b` is a reference to `a`.</span>
-<span class="linenr"> 3: </span><span style="color: #228b22;">double</span> &amp; <span style="color: #a0522d;">b</span> = a;
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #00688b;">double</span> <span style="color: #2e8b57;">a</span> = 1.1;
+<span class="linenr"> 2: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">`b` is a reference to `a`.</span>
+<span class="linenr"> 3: </span><span style="color: #00688b;">double</span> &amp; <span style="color: #2e8b57;">b</span> = a;
 <span class="linenr"> 4: </span>
-<span class="linenr"> 5: </span><span style="color: #008b8b;">std</span>::cout &lt;&lt; <span style="color: #8b2252;">"a: "</span> &lt;&lt; a &lt;&lt; <span style="color: #8b2252;">", b: "</span> &lt;&lt; b &lt;&lt; <span style="color: #8b2252;">"\n"</span>;
+<span class="linenr"> 5: </span><span style="color: #6e8b3d;">std</span>::cout &lt;&lt; <span style="color: #8b7355;">"a: "</span> &lt;&lt; a &lt;&lt; <span style="color: #8b7355;">", b: "</span> &lt;&lt; b &lt;&lt; <span style="color: #8b7355;">"\n"</span>;
 <span class="linenr"> 6: </span>
 <span class="linenr"> 7: </span>a = 2.1;
 <span class="linenr"> 8: </span>
-<span class="linenr"> 9: </span><span style="color: #008b8b;">std</span>::cout &lt;&lt; <span style="color: #8b2252;">"a: "</span> &lt;&lt; a &lt;&lt; <span style="color: #8b2252;">", b: "</span> &lt;&lt; b &lt;&lt; <span style="color: #8b2252;">"\n"</span>;
+<span class="linenr"> 9: </span><span style="color: #6e8b3d;">std</span>::cout &lt;&lt; <span style="color: #8b7355;">"a: "</span> &lt;&lt; a &lt;&lt; <span style="color: #8b7355;">", b: "</span> &lt;&lt; b &lt;&lt; <span style="color: #8b7355;">"\n"</span>;
 <span class="linenr">10: </span>
 <span class="linenr">11: </span>b = 3.1;
 <span class="linenr">12: </span>
-<span class="linenr">13: </span><span style="color: #008b8b;">std</span>::cout &lt;&lt; <span style="color: #8b2252;">"a: "</span> &lt;&lt; a &lt;&lt; <span style="color: #8b2252;">", b: "</span> &lt;&lt; b &lt;&lt; <span style="color: #8b2252;">"\n"</span>;
+<span class="linenr">13: </span><span style="color: #6e8b3d;">std</span>::cout &lt;&lt; <span style="color: #8b7355;">"a: "</span> &lt;&lt; a &lt;&lt; <span style="color: #8b7355;">", b: "</span> &lt;&lt; b &lt;&lt; <span style="color: #8b7355;">"\n"</span>;
 <span class="linenr">14: </span>
-<span class="linenr">15: </span><span style="color: #008b8b;">std</span>::cout &lt;&lt; <span style="color: #8b2252;">"\n\n"</span>;
-<span class="linenr">16: </span><span style="color: #008b8b;">std</span>::cout &lt;&lt; <span style="color: #8b2252;">"&amp;a: "</span> &lt;&lt; &amp;a &lt;&lt; <span style="color: #8b2252;">"\n"</span> &lt;&lt; <span style="color: #8b2252;">"&amp;b: "</span> &lt;&lt; &amp;b &lt;&lt; <span style="color: #8b2252;">"\n"</span>;
+<span class="linenr">15: </span><span style="color: #6e8b3d;">std</span>::cout &lt;&lt; <span style="color: #8b7355;">"\n\n"</span>;
+<span class="linenr">16: </span><span style="color: #6e8b3d;">std</span>::cout &lt;&lt; <span style="color: #8b7355;">"&amp;a: "</span> &lt;&lt; &amp;a &lt;&lt; <span style="color: #8b7355;">"\n"</span> &lt;&lt; <span style="color: #8b7355;">"&amp;b: "</span> &lt;&lt; &amp;b &lt;&lt; <span style="color: #8b7355;">"\n"</span>;
 </pre>
 </div>
 
@@ -826,10 +825,10 @@ declare the array depends on this. Array indexing starts at 0 in C++
 <div class="outline-text-4" id="text-3-8-1">
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #228b22;">double</span> <span style="color: #a0522d;">a</span>[5];
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #00688b;">double</span> <span style="color: #2e8b57;">a</span>[5];
 <span class="linenr">2: </span>
 <span class="linenr">3: </span>a[0] = 1.0;
-<span class="linenr">4: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">etc.</span>
+<span class="linenr">4: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">etc.</span>
 </pre>
 </div>
 </div>
@@ -844,24 +843,24 @@ Dynamic length arrays are made possible through pointers:
 
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">This allocates memory for 5 double types.</span>
-<span class="linenr"> 2: </span><span style="color: #228b22;">double</span> * <span style="color: #a0522d;">a</span> = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">double</span>[5];
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">This allocates memory for 5 double types.</span>
+<span class="linenr"> 2: </span><span style="color: #00688b;">double</span> * <span style="color: #2e8b57;">a</span> = <span style="color: #1c86ee;">new</span> <span style="color: #00688b;">double</span>[5];
 <span class="linenr"> 3: </span>
-<span class="linenr"> 4: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">Afterwards, you can treat `a` like a normal array.</span>
+<span class="linenr"> 4: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">Afterwards, you can treat `a` like a normal array.</span>
 <span class="linenr"> 5: </span>a[0] = 1.0;
-<span class="linenr"> 6: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">etc...</span>
+<span class="linenr"> 6: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">etc...</span>
 <span class="linenr"> 7: </span>
-<span class="linenr"> 8: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">Whenever you use the `new` keyword, you must</span>
-<span class="linenr"> 9: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">delete the memory allocated when you're done by hand.</span>
-<span class="linenr">10: </span><span style="color: #a020f0;">delete</span> [] a;
+<span class="linenr"> 8: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">Whenever you use the `new` keyword, you must</span>
+<span class="linenr"> 9: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">delete the memory allocated when you're done by hand.</span>
+<span class="linenr">10: </span><span style="color: #1c86ee;">delete</span> [] a;
 <span class="linenr">11: </span>
-<span class="linenr">12: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">We can change the size of `a`.</span>
-<span class="linenr">13: </span>a = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">double</span> [10];
+<span class="linenr">12: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">We can change the size of `a`.</span>
+<span class="linenr">13: </span>a = <span style="color: #1c86ee;">new</span> <span style="color: #00688b;">double</span> [10];
 <span class="linenr">14: </span>
 <span class="linenr">15: </span>a[0] = 2.0;
-<span class="linenr">16: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">etc...</span>
+<span class="linenr">16: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">etc...</span>
 <span class="linenr">17: </span>
-<span class="linenr">18: </span><span style="color: #a020f0;">delete</span> [] a;
+<span class="linenr">18: </span><span style="color: #1c86ee;">delete</span> [] a;
 </pre>
 </div>
 
@@ -895,39 +894,39 @@ print whether or not the number was greater than 0.5.
 
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;iostream&gt;</span>
-<span class="linenr"> 2: </span><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;stdlib.h&gt;</span>
-<span class="linenr"> 3: </span><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;time.h&gt;</span>
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #cdad00;">#include</span> <span style="color: #8b7355;">&lt;iostream&gt;</span>
+<span class="linenr"> 2: </span><span style="color: #cdad00;">#include</span> <span style="color: #8b7355;">&lt;stdlib.h&gt;</span>
+<span class="linenr"> 3: </span><span style="color: #cdad00;">#include</span> <span style="color: #8b7355;">&lt;time.h&gt;</span>
 <span class="linenr"> 4: </span>
-<span class="linenr"> 5: </span><span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>() {
-<span class="linenr"> 6: </span>  <span style="color: #b22222;">// </span><span style="color: #b22222;">Seed a random number generator.</span>
+<span class="linenr"> 5: </span><span style="color: #00688b;">int</span> <span style="color: #cd9b1d;">main</span>() {
+<span class="linenr"> 6: </span>  <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">Seed a random number generator.</span>
 <span class="linenr"> 7: </span>  srand(123);
 <span class="linenr"> 8: </span>
-<span class="linenr"> 9: </span>  <span style="color: #b22222;">// </span><span style="color: #b22222;">rand() produces a random integer between 0 and RAND_MAX.</span>
-<span class="linenr">10: </span>  <span style="color: #228b22;">double</span> <span style="color: #a0522d;">num</span> = rand() / ((<span style="color: #228b22;">double</span>) RAND_MAX);
+<span class="linenr"> 9: </span>  <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">rand() produces a random integer between 0 and RAND_MAX.</span>
+<span class="linenr">10: </span>  <span style="color: #00688b;">double</span> <span style="color: #2e8b57;">num</span> = rand() / ((<span style="color: #00688b;">double</span>) RAND_MAX);
 <span class="linenr">11: </span>
-<span class="linenr">12: </span>  <span style="color: #008b8b;">std</span>::cout &lt;&lt; <span style="color: #8b2252;">"num: "</span> &lt;&lt; num &lt;&lt; <span style="color: #8b2252;">"\n"</span>;
+<span class="linenr">12: </span>  <span style="color: #6e8b3d;">std</span>::cout &lt;&lt; <span style="color: #8b7355;">"num: "</span> &lt;&lt; num &lt;&lt; <span style="color: #8b7355;">"\n"</span>;
 <span class="linenr">13: </span>
-<span class="linenr">14: </span>  <span style="color: #a020f0;">if</span> (num &lt; 0.5) {
-<span class="linenr">15: </span>    <span style="color: #008b8b;">std</span>::cout &lt;&lt; <span style="color: #8b2252;">"num was less than 0.5.\n"</span>;
+<span class="linenr">14: </span>  <span style="color: #1c86ee;">if</span> (num &lt; 0.5) {
+<span class="linenr">15: </span>    <span style="color: #6e8b3d;">std</span>::cout &lt;&lt; <span style="color: #8b7355;">"num was less than 0.5.\n"</span>;
 <span class="linenr">16: </span>  }
-<span class="linenr">17: </span>  <span style="color: #a020f0;">else</span> {
-<span class="linenr">18: </span>    <span style="color: #008b8b;">std</span>::cout &lt;&lt; <span style="color: #8b2252;">"num was greater than 0.5.\n"</span>;
+<span class="linenr">17: </span>  <span style="color: #1c86ee;">else</span> {
+<span class="linenr">18: </span>    <span style="color: #6e8b3d;">std</span>::cout &lt;&lt; <span style="color: #8b7355;">"num was greater than 0.5.\n"</span>;
 <span class="linenr">19: </span>  }
 <span class="linenr">20: </span>
-<span class="linenr">21: </span>  <span style="color: #b22222;">// </span><span style="color: #b22222;">Do it again.</span>
-<span class="linenr">22: </span>  num = rand() / ((<span style="color: #228b22;">double</span>) RAND_MAX);
+<span class="linenr">21: </span>  <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">Do it again.</span>
+<span class="linenr">22: </span>  num = rand() / ((<span style="color: #00688b;">double</span>) RAND_MAX);
 <span class="linenr">23: </span>
-<span class="linenr">24: </span>  <span style="color: #008b8b;">std</span>::cout &lt;&lt; <span style="color: #8b2252;">"num: "</span> &lt;&lt; num &lt;&lt; <span style="color: #8b2252;">"\n"</span>;
+<span class="linenr">24: </span>  <span style="color: #6e8b3d;">std</span>::cout &lt;&lt; <span style="color: #8b7355;">"num: "</span> &lt;&lt; num &lt;&lt; <span style="color: #8b7355;">"\n"</span>;
 <span class="linenr">25: </span>
-<span class="linenr">26: </span>  <span style="color: #a020f0;">if</span> (num &lt; 0.5) {
-<span class="linenr">27: </span>    <span style="color: #008b8b;">std</span>::cout &lt;&lt; <span style="color: #8b2252;">"num was less than 0.5.\n"</span>;
+<span class="linenr">26: </span>  <span style="color: #1c86ee;">if</span> (num &lt; 0.5) {
+<span class="linenr">27: </span>    <span style="color: #6e8b3d;">std</span>::cout &lt;&lt; <span style="color: #8b7355;">"num was less than 0.5.\n"</span>;
 <span class="linenr">28: </span>  }
-<span class="linenr">29: </span>  <span style="color: #a020f0;">else</span> {
-<span class="linenr">30: </span>    <span style="color: #008b8b;">std</span>::cout &lt;&lt; <span style="color: #8b2252;">"num was greater than 0.5.\n"</span>;
+<span class="linenr">29: </span>  <span style="color: #1c86ee;">else</span> {
+<span class="linenr">30: </span>    <span style="color: #6e8b3d;">std</span>::cout &lt;&lt; <span style="color: #8b7355;">"num was greater than 0.5.\n"</span>;
 <span class="linenr">31: </span>  }
 <span class="linenr">32: </span>
-<span class="linenr">33: </span>  <span style="color: #a020f0;">return</span> 0;
+<span class="linenr">33: </span>  <span style="color: #1c86ee;">return</span> 0;
 <span class="linenr">34: </span>}
 </pre>
 </div>
@@ -951,33 +950,33 @@ exclusive blocks:
 
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;iostream&gt;</span>
-<span class="linenr"> 2: </span><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;stdlib.h&gt;</span>
-<span class="linenr"> 3: </span><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;time.h&gt;</span>
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #cdad00;">#include</span> <span style="color: #8b7355;">&lt;iostream&gt;</span>
+<span class="linenr"> 2: </span><span style="color: #cdad00;">#include</span> <span style="color: #8b7355;">&lt;stdlib.h&gt;</span>
+<span class="linenr"> 3: </span><span style="color: #cdad00;">#include</span> <span style="color: #8b7355;">&lt;time.h&gt;</span>
 <span class="linenr"> 4: </span>
-<span class="linenr"> 5: </span><span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>() {
-<span class="linenr"> 6: </span>  <span style="color: #b22222;">// </span><span style="color: #b22222;">Seed the random number generator based on the current time.</span>
-<span class="linenr"> 7: </span>  srand(time(<span style="color: #008b8b;">NULL</span>));
+<span class="linenr"> 5: </span><span style="color: #00688b;">int</span> <span style="color: #cd9b1d;">main</span>() {
+<span class="linenr"> 6: </span>  <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">Seed the random number generator based on the current time.</span>
+<span class="linenr"> 7: </span>  srand(time(<span style="color: #6e8b3d;">NULL</span>));
 <span class="linenr"> 8: </span>
-<span class="linenr"> 9: </span>  <span style="color: #b22222;">// </span><span style="color: #b22222;">rand() produces a random integer between 0 and RAND_MAX.</span>
-<span class="linenr">10: </span>  <span style="color: #228b22;">double</span> <span style="color: #a0522d;">num</span> = rand() / ((<span style="color: #228b22;">double</span>) RAND_MAX);
+<span class="linenr"> 9: </span>  <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">rand() produces a random integer between 0 and RAND_MAX.</span>
+<span class="linenr">10: </span>  <span style="color: #00688b;">double</span> <span style="color: #2e8b57;">num</span> = rand() / ((<span style="color: #00688b;">double</span>) RAND_MAX);
 <span class="linenr">11: </span>
-<span class="linenr">12: </span>  <span style="color: #008b8b;">std</span>::cout &lt;&lt; <span style="color: #8b2252;">"num: "</span> &lt;&lt; num &lt;&lt; <span style="color: #8b2252;">"\n"</span>;
+<span class="linenr">12: </span>  <span style="color: #6e8b3d;">std</span>::cout &lt;&lt; <span style="color: #8b7355;">"num: "</span> &lt;&lt; num &lt;&lt; <span style="color: #8b7355;">"\n"</span>;
 <span class="linenr">13: </span>
-<span class="linenr">14: </span>  <span style="color: #a020f0;">if</span> (num &gt;= 0.75) {
-<span class="linenr">15: </span>    <span style="color: #008b8b;">std</span>::cout &lt;&lt; <span style="color: #8b2252;">"num was between 0.75 and 1.\n"</span>;
+<span class="linenr">14: </span>  <span style="color: #1c86ee;">if</span> (num &gt;= 0.75) {
+<span class="linenr">15: </span>    <span style="color: #6e8b3d;">std</span>::cout &lt;&lt; <span style="color: #8b7355;">"num was between 0.75 and 1.\n"</span>;
 <span class="linenr">16: </span>  }
-<span class="linenr">17: </span>  <span style="color: #a020f0;">else</span> <span style="color: #a020f0;">if</span> (num &gt;= 0.5) {
-<span class="linenr">18: </span>    <span style="color: #008b8b;">std</span>::cout &lt;&lt; <span style="color: #8b2252;">"num was between 0.5 and 0.75."</span>;
+<span class="linenr">17: </span>  <span style="color: #1c86ee;">else</span> <span style="color: #1c86ee;">if</span> (num &gt;= 0.5) {
+<span class="linenr">18: </span>    <span style="color: #6e8b3d;">std</span>::cout &lt;&lt; <span style="color: #8b7355;">"num was between 0.5 and 0.75."</span>;
 <span class="linenr">19: </span>  }
-<span class="linenr">20: </span>  <span style="color: #a020f0;">else</span> <span style="color: #a020f0;">if</span> (num &gt;= 0.25) {
-<span class="linenr">21: </span>    <span style="color: #008b8b;">std</span>::cout &lt;&lt; <span style="color: #8b2252;">"num was between 0.25 and 0.5."</span>;
+<span class="linenr">20: </span>  <span style="color: #1c86ee;">else</span> <span style="color: #1c86ee;">if</span> (num &gt;= 0.25) {
+<span class="linenr">21: </span>    <span style="color: #6e8b3d;">std</span>::cout &lt;&lt; <span style="color: #8b7355;">"num was between 0.25 and 0.5."</span>;
 <span class="linenr">22: </span>  }
-<span class="linenr">23: </span>  <span style="color: #a020f0;">else</span> {
-<span class="linenr">24: </span>    <span style="color: #008b8b;">std</span>::cout &lt;&lt; <span style="color: #8b2252;">"num was between 0 and 0.25"</span>;
+<span class="linenr">23: </span>  <span style="color: #1c86ee;">else</span> {
+<span class="linenr">24: </span>    <span style="color: #6e8b3d;">std</span>::cout &lt;&lt; <span style="color: #8b7355;">"num was between 0 and 0.25"</span>;
 <span class="linenr">25: </span>  }
 <span class="linenr">26: </span>
-<span class="linenr">27: </span>  <span style="color: #a020f0;">return</span> 0;
+<span class="linenr">27: </span>  <span style="color: #1c86ee;">return</span> 0;
 <span class="linenr">28: </span>}
 </pre>
 </div>
@@ -1017,15 +1016,15 @@ the screen.
 
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #228b22;">int</span> <span style="color: #a0522d;">length</span> = 11;
-<span class="linenr"> 2: </span><span style="color: #228b22;">double</span> <span style="color: #a0522d;">x</span>[length];
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #00688b;">int</span> <span style="color: #2e8b57;">length</span> = 11;
+<span class="linenr"> 2: </span><span style="color: #00688b;">double</span> <span style="color: #2e8b57;">x</span>[length];
 <span class="linenr"> 3: </span>
-<span class="linenr"> 4: </span><span style="color: #a020f0;">for</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">i</span>=0; i &lt; length; i++) {
-<span class="linenr"> 5: </span>  <span style="color: #b22222;">// </span><span style="color: #b22222;">Assign to each array component.</span>
-<span class="linenr"> 6: </span>  x[i] = (<span style="color: #228b22;">double</span>) i / (length - 1);
+<span class="linenr"> 4: </span><span style="color: #1c86ee;">for</span>(<span style="color: #00688b;">int</span> <span style="color: #2e8b57;">i</span>=0; i &lt; length; i++) {
+<span class="linenr"> 5: </span>  <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">Assign to each array component.</span>
+<span class="linenr"> 6: </span>  x[i] = (<span style="color: #00688b;">double</span>) i / (length - 1);
 <span class="linenr"> 7: </span>
-<span class="linenr"> 8: </span>  <span style="color: #b22222;">// </span><span style="color: #b22222;">Print the current component.</span>
-<span class="linenr"> 9: </span>  <span style="color: #008b8b;">std</span>::cout &lt;&lt; <span style="color: #8b2252;">"x["</span> &lt;&lt; i &lt;&lt; <span style="color: #8b2252;">"] = "</span> &lt;&lt; x[i] &lt;&lt; <span style="color: #008b8b;">std</span>::endl;
+<span class="linenr"> 8: </span>  <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">Print the current component.</span>
+<span class="linenr"> 9: </span>  <span style="color: #6e8b3d;">std</span>::cout &lt;&lt; <span style="color: #8b7355;">"x["</span> &lt;&lt; i &lt;&lt; <span style="color: #8b7355;">"] = "</span> &lt;&lt; x[i] &lt;&lt; <span style="color: #6e8b3d;">std</span>::endl;
 <span class="linenr">10: </span>}
 </pre>
 </div>
@@ -1063,48 +1062,48 @@ the second <code>n_cols</code> elements of <code>matrix</code> will contain the 
 
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #228b22;">int</span> <span style="color: #a0522d;">n_rows</span> = 4;
-<span class="linenr"> 2: </span><span style="color: #228b22;">int</span> <span style="color: #a0522d;">n_cols</span> = 3;
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #00688b;">int</span> <span style="color: #2e8b57;">n_rows</span> = 4;
+<span class="linenr"> 2: </span><span style="color: #00688b;">int</span> <span style="color: #2e8b57;">n_cols</span> = 3;
 <span class="linenr"> 3: </span>
-<span class="linenr"> 4: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">Row-major matrix array.</span>
-<span class="linenr"> 5: </span><span style="color: #228b22;">double</span> <span style="color: #a0522d;">matrix</span> [n_rows*n_cols];
+<span class="linenr"> 4: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">Row-major matrix array.</span>
+<span class="linenr"> 5: </span><span style="color: #00688b;">double</span> <span style="color: #2e8b57;">matrix</span> [n_rows*n_cols];
 <span class="linenr"> 6: </span>
-<span class="linenr"> 7: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">temporary index.</span>
-<span class="linenr"> 8: </span><span style="color: #228b22;">int</span> <span style="color: #a0522d;">k</span>;
+<span class="linenr"> 7: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">temporary index.</span>
+<span class="linenr"> 8: </span><span style="color: #00688b;">int</span> <span style="color: #2e8b57;">k</span>;
 <span class="linenr"> 9: </span>
-<span class="linenr">10: </span><span style="color: #a020f0;">for</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">i</span>=0; i &lt; n_rows; i++) {
-<span class="linenr">11: </span>  <span style="color: #a020f0;">for</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">j</span>=0; j &lt; n_cols; j++) {
-<span class="linenr">12: </span>    <span style="color: #b22222;">// </span><span style="color: #b22222;">Convert the (i,j) matrix index to the "flat" row-major index.</span>
+<span class="linenr">10: </span><span style="color: #1c86ee;">for</span>(<span style="color: #00688b;">int</span> <span style="color: #2e8b57;">i</span>=0; i &lt; n_rows; i++) {
+<span class="linenr">11: </span>  <span style="color: #1c86ee;">for</span>(<span style="color: #00688b;">int</span> <span style="color: #2e8b57;">j</span>=0; j &lt; n_cols; j++) {
+<span class="linenr">12: </span>    <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">Convert the (i,j) matrix index to the "flat" row-major index.</span>
 <span class="linenr">13: </span>    k = i*n_cols + j;
 <span class="linenr">14: </span>
-<span class="linenr">15: </span>    <span style="color: #b22222;">// </span><span style="color: #b22222;">Assign a value of 1.0 to the diagonal,</span>
-<span class="linenr">16: </span>    <span style="color: #b22222;">// </span><span style="color: #b22222;">2 to the off-diagonal, and 0 otherwise.</span>
-<span class="linenr">17: </span>    <span style="color: #a020f0;">if</span> (i == j) {
+<span class="linenr">15: </span>    <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">Assign a value of 1.0 to the diagonal,</span>
+<span class="linenr">16: </span>    <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">2 to the off-diagonal, and 0 otherwise.</span>
+<span class="linenr">17: </span>    <span style="color: #1c86ee;">if</span> (i == j) {
 <span class="linenr">18: </span>      matrix[k] = 1.0;
 <span class="linenr">19: </span>    }
-<span class="linenr">20: </span>    <span style="color: #a020f0;">else</span> <span style="color: #a020f0;">if</span> ((i == (j+1)) || (i == (j-1))){
+<span class="linenr">20: </span>    <span style="color: #1c86ee;">else</span> <span style="color: #1c86ee;">if</span> ((i == (j+1)) || (i == (j-1))){
 <span class="linenr">21: </span>      matrix[k] = 2.0;
 <span class="linenr">22: </span>    }
-<span class="linenr">23: </span>    <span style="color: #a020f0;">else</span> {
+<span class="linenr">23: </span>    <span style="color: #1c86ee;">else</span> {
 <span class="linenr">24: </span>      matrix[k] = 0.0;
 <span class="linenr">25: </span>    }
 <span class="linenr">26: </span>  }
 <span class="linenr">27: </span>}
 <span class="linenr">28: </span>
 <span class="linenr">29: </span>
-<span class="linenr">30: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">Print the matrix elements.</span>
-<span class="linenr">31: </span><span style="color: #a020f0;">for</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">i</span>=0; i &lt; n_rows; i++) {
-<span class="linenr">32: </span>  <span style="color: #a020f0;">for</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">j</span>=0; j &lt; n_cols; j++) {
+<span class="linenr">30: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">Print the matrix elements.</span>
+<span class="linenr">31: </span><span style="color: #1c86ee;">for</span>(<span style="color: #00688b;">int</span> <span style="color: #2e8b57;">i</span>=0; i &lt; n_rows; i++) {
+<span class="linenr">32: </span>  <span style="color: #1c86ee;">for</span>(<span style="color: #00688b;">int</span> <span style="color: #2e8b57;">j</span>=0; j &lt; n_cols; j++) {
 <span class="linenr">33: </span>    k = i*n_cols + j;
 <span class="linenr">34: </span>
-<span class="linenr">35: </span>    <span style="color: #008b8b;">std</span>::cout &lt;&lt; matrix[k];
-<span class="linenr">36: </span>    <span style="color: #a020f0;">if</span> (j != (n_cols-1)) {
-<span class="linenr">37: </span>      <span style="color: #008b8b;">std</span>::cout &lt;&lt; <span style="color: #8b2252;">", "</span>;
+<span class="linenr">35: </span>    <span style="color: #6e8b3d;">std</span>::cout &lt;&lt; matrix[k];
+<span class="linenr">36: </span>    <span style="color: #1c86ee;">if</span> (j != (n_cols-1)) {
+<span class="linenr">37: </span>      <span style="color: #6e8b3d;">std</span>::cout &lt;&lt; <span style="color: #8b7355;">", "</span>;
 <span class="linenr">38: </span>    }
 <span class="linenr">39: </span>  }
 <span class="linenr">40: </span>
-<span class="linenr">41: </span>  <span style="color: #a020f0;">if</span> (i != (n_rows-1)) {
-<span class="linenr">42: </span>    <span style="color: #008b8b;">std</span>::cout &lt;&lt; <span style="color: #8b2252;">"\n"</span>;
+<span class="linenr">41: </span>  <span style="color: #1c86ee;">if</span> (i != (n_rows-1)) {
+<span class="linenr">42: </span>    <span style="color: #6e8b3d;">std</span>::cout &lt;&lt; <span style="color: #8b7355;">"\n"</span>;
 <span class="linenr">43: </span>  }
 <span class="linenr">44: </span>}
 </pre>
@@ -1158,21 +1157,21 @@ is less than some specified tolerance, <code>tol</code>.
 
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #228b22;">double</span> <span style="color: #a0522d;">sum</span> = 0.0;
-<span class="linenr"> 2: </span><span style="color: #228b22;">double</span> <span style="color: #a0522d;">base</span> = 0.5;
-<span class="linenr"> 3: </span><span style="color: #228b22;">double</span> <span style="color: #a0522d;">pow</span> = base; <span style="color: #b22222;">// </span><span style="color: #b22222;">initialize to base^1</span>
-<span class="linenr"> 4: </span><span style="color: #228b22;">double</span> <span style="color: #a0522d;">tol</span> = 1e-4;
-<span class="linenr"> 5: </span><span style="color: #228b22;">int</span> <span style="color: #a0522d;">iter</span> = 1;
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #00688b;">double</span> <span style="color: #2e8b57;">sum</span> = 0.0;
+<span class="linenr"> 2: </span><span style="color: #00688b;">double</span> <span style="color: #2e8b57;">base</span> = 0.5;
+<span class="linenr"> 3: </span><span style="color: #00688b;">double</span> <span style="color: #2e8b57;">pow</span> = base; <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">initialize to base^1</span>
+<span class="linenr"> 4: </span><span style="color: #00688b;">double</span> <span style="color: #2e8b57;">tol</span> = 1e-4;
+<span class="linenr"> 5: </span><span style="color: #00688b;">int</span> <span style="color: #2e8b57;">iter</span> = 1;
 <span class="linenr"> 6: </span>
-<span class="linenr"> 7: </span><span style="color: #a020f0;">while</span>((1-sum) &gt;= tol) {
-<span class="linenr"> 8: </span>  <span style="color: #b22222;">// </span><span style="color: #b22222;">Add `pow` to `sum`.</span>
+<span class="linenr"> 7: </span><span style="color: #1c86ee;">while</span>((1-sum) &gt;= tol) {
+<span class="linenr"> 8: </span>  <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">Add `pow` to `sum`.</span>
 <span class="linenr"> 9: </span>  sum += pow;
-<span class="linenr">10: </span>  <span style="color: #b22222;">// </span><span style="color: #b22222;">Update `pow` by one power of `base`.</span>
+<span class="linenr">10: </span>  <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">Update `pow` by one power of `base`.</span>
 <span class="linenr">11: </span>  pow *= base;
 <span class="linenr">12: </span>
-<span class="linenr">13: </span>  printf(<span style="color: #8b2252;">"Iter: %03d, Sum: %.5f, Abs Err: %.5f\n"</span>, iter, sum, 1-sum); 
+<span class="linenr">13: </span>  printf(<span style="color: #8b7355;">"Iter: %03d, Sum: %.5f, Abs Err: %.5f\n"</span>, iter, sum, 1-sum); 
 <span class="linenr">14: </span>
-<span class="linenr">15: </span>  <span style="color: #b22222;">// </span><span style="color: #b22222;">Update the `iter` val by 1.</span>
+<span class="linenr">15: </span>  <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">Update the `iter` val by 1.</span>
 <span class="linenr">16: </span>  iter += 1;
 <span class="linenr">17: </span>}
 </pre>
@@ -1202,16 +1201,16 @@ Iter: 014, Sum: 0.99994, Abs Err: 0.00006
 <div class="outline-text-5" id="text-4-2-2-2">
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #228b22;">double</span> <span style="color: #a0522d;">eps</span> = 1;
-<span class="linenr"> 2: </span><span style="color: #228b22;">int</span> <span style="color: #a0522d;">count</span> = 1;
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #00688b;">double</span> <span style="color: #2e8b57;">eps</span> = 1;
+<span class="linenr"> 2: </span><span style="color: #00688b;">int</span> <span style="color: #2e8b57;">count</span> = 1;
 <span class="linenr"> 3: </span>
-<span class="linenr"> 4: </span><span style="color: #a020f0;">while</span>(1.0 + eps*0.5 &gt; 1.0) {
+<span class="linenr"> 4: </span><span style="color: #1c86ee;">while</span>(1.0 + eps*0.5 &gt; 1.0) {
 <span class="linenr"> 5: </span>    eps *= 0.5;
 <span class="linenr"> 6: </span>    count += 1;
 <span class="linenr"> 7: </span>}
 <span class="linenr"> 8: </span>
-<span class="linenr"> 9: </span><span style="color: #008b8b;">std</span>::cout &lt;&lt; eps &lt;&lt; <span style="color: #8b2252;">", "</span> &lt;&lt; <span style="color: #008b8b;">std</span>::<span style="color: #008b8b;">numeric_limits</span>&lt;<span style="color: #228b22;">double</span>&gt;::epsilon() &lt;&lt; <span style="color: #8b2252;">"\n"</span>
-<span class="linenr">10: </span>          &lt;&lt; count &lt;&lt; <span style="color: #8b2252;">", "</span> &lt;&lt; <span style="color: #008b8b;">std</span>::<span style="color: #008b8b;">numeric_limits</span>&lt;<span style="color: #228b22;">double</span>&gt;::digits;
+<span class="linenr"> 9: </span><span style="color: #6e8b3d;">std</span>::cout &lt;&lt; eps &lt;&lt; <span style="color: #8b7355;">", "</span> &lt;&lt; <span style="color: #6e8b3d;">std</span>::<span style="color: #6e8b3d;">numeric_limits</span>&lt;<span style="color: #00688b;">double</span>&gt;::epsilon() &lt;&lt; <span style="color: #8b7355;">"\n"</span>
+<span class="linenr">10: </span>          &lt;&lt; count &lt;&lt; <span style="color: #8b7355;">", "</span> &lt;&lt; <span style="color: #6e8b3d;">std</span>::<span style="color: #6e8b3d;">numeric_limits</span>&lt;<span style="color: #00688b;">double</span>&gt;::digits;
 </pre>
 </div>
 
@@ -1233,12 +1232,12 @@ for which the <code>break</code> statement is placed. For example:
 
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #a020f0;">for</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">i</span>=0; i &lt; 3; i++) {
-<span class="linenr">2: </span>  <span style="color: #a020f0;">while</span>(<span style="color: #008b8b;">true</span>) {
-<span class="linenr">3: </span>    <span style="color: #008b8b;">std</span>::cout &lt;&lt; <span style="color: #8b2252;">"Entering infinite loop number "</span> &lt;&lt; (i+1) &lt;&lt; <span style="color: #8b2252;">"\n"</span>;
-<span class="linenr">4: </span>    <span style="color: #a020f0;">break</span>;
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #1c86ee;">for</span>(<span style="color: #00688b;">int</span> <span style="color: #2e8b57;">i</span>=0; i &lt; 3; i++) {
+<span class="linenr">2: </span>  <span style="color: #1c86ee;">while</span>(<span style="color: #6e8b3d;">true</span>) {
+<span class="linenr">3: </span>    <span style="color: #6e8b3d;">std</span>::cout &lt;&lt; <span style="color: #8b7355;">"Entering infinite loop number "</span> &lt;&lt; (i+1) &lt;&lt; <span style="color: #8b7355;">"\n"</span>;
+<span class="linenr">4: </span>    <span style="color: #1c86ee;">break</span>;
 <span class="linenr">5: </span>  }
-<span class="linenr">6: </span>  <span style="color: #008b8b;">std</span>::cout &lt;&lt; <span style="color: #8b2252;">"We escaped the infinite loop!\n"</span>;
+<span class="linenr">6: </span>  <span style="color: #6e8b3d;">std</span>::cout &lt;&lt; <span style="color: #8b7355;">"We escaped the infinite loop!\n"</span>;
 <span class="linenr">7: </span>}
 </pre>
 </div>
@@ -1291,15 +1290,15 @@ name is always the first argument. The second, <code>argv</code>, is a double po
 
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;iostream&gt;</span>
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #cdad00;">#include</span> <span style="color: #8b7355;">&lt;iostream&gt;</span>
 <span class="linenr"> 2: </span>
-<span class="linenr"> 3: </span><span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">argc</span>, <span style="color: #228b22;">char</span> ** <span style="color: #a0522d;">argv</span>) {
-<span class="linenr"> 4: </span>  <span style="color: #008b8b;">std</span>::cout &lt;&lt; <span style="color: #8b2252;">"argc = "</span> &lt;&lt; argc &lt;&lt; <span style="color: #8b2252;">"\n"</span>;
+<span class="linenr"> 3: </span><span style="color: #00688b;">int</span> <span style="color: #cd9b1d;">main</span>(<span style="color: #00688b;">int</span> <span style="color: #2e8b57;">argc</span>, <span style="color: #00688b;">char</span> ** <span style="color: #2e8b57;">argv</span>) {
+<span class="linenr"> 4: </span>  <span style="color: #6e8b3d;">std</span>::cout &lt;&lt; <span style="color: #8b7355;">"argc = "</span> &lt;&lt; argc &lt;&lt; <span style="color: #8b7355;">"\n"</span>;
 <span class="linenr"> 5: </span>
-<span class="linenr"> 6: </span>  <span style="color: #a020f0;">for</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">i</span>=0; i &lt; argc; i++) {
-<span class="linenr"> 7: </span>    <span style="color: #008b8b;">std</span>::cout &lt;&lt; <span style="color: #8b2252;">"argv["</span> &lt;&lt; i &lt;&lt; <span style="color: #8b2252;">"] = "</span> &lt;&lt; argv[i] &lt;&lt; <span style="color: #8b2252;">"\n"</span>;
+<span class="linenr"> 6: </span>  <span style="color: #1c86ee;">for</span>(<span style="color: #00688b;">int</span> <span style="color: #2e8b57;">i</span>=0; i &lt; argc; i++) {
+<span class="linenr"> 7: </span>    <span style="color: #6e8b3d;">std</span>::cout &lt;&lt; <span style="color: #8b7355;">"argv["</span> &lt;&lt; i &lt;&lt; <span style="color: #8b7355;">"] = "</span> &lt;&lt; argv[i] &lt;&lt; <span style="color: #8b7355;">"\n"</span>;
 <span class="linenr"> 8: </span>  }
-<span class="linenr"> 9: </span>  <span style="color: #a020f0;">return</span> 0;
+<span class="linenr"> 9: </span>  <span style="color: #1c86ee;">return</span> 0;
 <span class="linenr">10: </span>}
 </pre>
 </div>
@@ -1359,18 +1358,18 @@ particular fashion. Suppose a text file exists in the directory,
 
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;iostream&gt;</span>
-<span class="linenr"> 2: </span><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;fstream&gt;</span>
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #cdad00;">#include</span> <span style="color: #8b7355;">&lt;iostream&gt;</span>
+<span class="linenr"> 2: </span><span style="color: #cdad00;">#include</span> <span style="color: #8b7355;">&lt;fstream&gt;</span>
 <span class="linenr"> 3: </span>
-<span class="linenr"> 4: </span><span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>() {
-<span class="linenr"> 5: </span>    <span style="color: #008b8b;">std</span>::<span style="color: #228b22;">fstream</span> <span style="color: #a0522d;">fin</span>(<span style="color: #8b2252;">"./data/vector.txt"</span>, <span style="color: #008b8b;">std</span>::<span style="color: #008b8b;">ios_base</span>::in);
-<span class="linenr"> 6: </span>    <span style="color: #228b22;">double</span> <span style="color: #a0522d;">vector</span>[6];
-<span class="linenr"> 7: </span>    <span style="color: #228b22;">int</span> <span style="color: #a0522d;">i</span> = 0;
-<span class="linenr"> 8: </span>    <span style="color: #a020f0;">while</span>(fin &gt;&gt; vector[i]) {
-<span class="linenr"> 9: </span>      <span style="color: #008b8b;">std</span>::cout &lt;&lt; vector[i] &lt;&lt; <span style="color: #8b2252;">" "</span>;
+<span class="linenr"> 4: </span><span style="color: #00688b;">int</span> <span style="color: #cd9b1d;">main</span>() {
+<span class="linenr"> 5: </span>    <span style="color: #6e8b3d;">std</span>::<span style="color: #00688b;">fstream</span> <span style="color: #2e8b57;">fin</span>(<span style="color: #8b7355;">"./data/vector.txt"</span>, <span style="color: #6e8b3d;">std</span>::<span style="color: #6e8b3d;">ios_base</span>::in);
+<span class="linenr"> 6: </span>    <span style="color: #00688b;">double</span> <span style="color: #2e8b57;">vector</span>[6];
+<span class="linenr"> 7: </span>    <span style="color: #00688b;">int</span> <span style="color: #2e8b57;">i</span> = 0;
+<span class="linenr"> 8: </span>    <span style="color: #1c86ee;">while</span>(fin &gt;&gt; vector[i]) {
+<span class="linenr"> 9: </span>      <span style="color: #6e8b3d;">std</span>::cout &lt;&lt; vector[i] &lt;&lt; <span style="color: #8b7355;">" "</span>;
 <span class="linenr">10: </span>      i++;
 <span class="linenr">11: </span>    }
-<span class="linenr">12: </span>    <span style="color: #a020f0;">return</span> 0;
+<span class="linenr">12: </span>    <span style="color: #1c86ee;">return</span> 0;
 <span class="linenr">13: </span>}
 </pre>
 </div>
@@ -1409,23 +1408,23 @@ Writing to a file is similar, using the <code>&lt;fstream&gt;</code> library.
 
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;fstream&gt;</span>
-<span class="linenr"> 2: </span><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;cmath&gt;</span>
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #cdad00;">#include</span> <span style="color: #8b7355;">&lt;fstream&gt;</span>
+<span class="linenr"> 2: </span><span style="color: #cdad00;">#include</span> <span style="color: #8b7355;">&lt;cmath&gt;</span>
 <span class="linenr"> 3: </span>
-<span class="linenr"> 4: </span><span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>() {
-<span class="linenr"> 5: </span>  <span style="color: #008b8b;">std</span>::<span style="color: #228b22;">fstream</span> <span style="color: #a0522d;">fout</span>(<span style="color: #8b2252;">"./data/new_shiny_data.txt"</span>, <span style="color: #008b8b;">std</span>::<span style="color: #008b8b;">ios_base</span>::out);
-<span class="linenr"> 6: </span>  <span style="color: #228b22;">double</span> <span style="color: #a0522d;">x</span>;
+<span class="linenr"> 4: </span><span style="color: #00688b;">int</span> <span style="color: #cd9b1d;">main</span>() {
+<span class="linenr"> 5: </span>  <span style="color: #6e8b3d;">std</span>::<span style="color: #00688b;">fstream</span> <span style="color: #2e8b57;">fout</span>(<span style="color: #8b7355;">"./data/new_shiny_data.txt"</span>, <span style="color: #6e8b3d;">std</span>::<span style="color: #6e8b3d;">ios_base</span>::out);
+<span class="linenr"> 6: </span>  <span style="color: #00688b;">double</span> <span style="color: #2e8b57;">x</span>;
 <span class="linenr"> 7: </span>
-<span class="linenr"> 8: </span>  fout &lt;&lt; <span style="color: #8b2252;">"x\tsin(x)\n"</span>;
+<span class="linenr"> 8: </span>  fout &lt;&lt; <span style="color: #8b7355;">"x\tsin(x)\n"</span>;
 <span class="linenr"> 9: </span>
-<span class="linenr">10: </span>  <span style="color: #a020f0;">for</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">i</span>=0; i &lt; 11; i++) {
+<span class="linenr">10: </span>  <span style="color: #1c86ee;">for</span>(<span style="color: #00688b;">int</span> <span style="color: #2e8b57;">i</span>=0; i &lt; 11; i++) {
 <span class="linenr">11: </span>    x = i / 10.0;
-<span class="linenr">12: </span>    fout &lt;&lt; x &lt;&lt; <span style="color: #8b2252;">"\t"</span> &lt;&lt; sin(x) &lt;&lt; <span style="color: #8b2252;">"\n"</span>;
+<span class="linenr">12: </span>    fout &lt;&lt; x &lt;&lt; <span style="color: #8b7355;">"\t"</span> &lt;&lt; sin(x) &lt;&lt; <span style="color: #8b7355;">"\n"</span>;
 <span class="linenr">13: </span>  }
 <span class="linenr">14: </span>
 <span class="linenr">15: </span>  fout.close();
 <span class="linenr">16: </span>
-<span class="linenr">17: </span>  <span style="color: #a020f0;">return</span> 0;
+<span class="linenr">17: </span>  <span style="color: #1c86ee;">return</span> 0;
 <span class="linenr">18: </span>}
 </pre>
 </div>
@@ -1484,46 +1483,46 @@ the declaration before <code>main</code> and the implementation after <code>main
 <div class="outline-text-4" id="text-6-1-1">
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;iostream&gt;</span>
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #cdad00;">#include</span> <span style="color: #8b7355;">&lt;iostream&gt;</span>
 <span class="linenr"> 2: </span>
-<span class="linenr"> 3: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">This is the function declaration.</span>
-<span class="linenr"> 4: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">You should describe the functions arguments</span>
-<span class="linenr"> 5: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">and what is returned by the function in comments</span>
-<span class="linenr"> 6: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">near the declaration.</span>
-<span class="linenr"> 7: </span><span style="color: #b22222;">//</span>
-<span class="linenr"> 8: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">`linspace` returns an array of doubles containing</span>
-<span class="linenr"> 9: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">`n_points` entries which are equally-spaced, starting</span>
-<span class="linenr">10: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">at `start` and ending at `stop`.</span>
-<span class="linenr">11: </span><span style="color: #228b22;">double</span> * <span style="color: #0000ff;">linspace</span>(<span style="color: #228b22;">double</span> <span style="color: #a0522d;">start</span>, <span style="color: #228b22;">double</span> <span style="color: #a0522d;">stop</span>, <span style="color: #228b22;">int</span> <span style="color: #a0522d;">n_points</span>);
+<span class="linenr"> 3: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">This is the function declaration.</span>
+<span class="linenr"> 4: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">You should describe the functions arguments</span>
+<span class="linenr"> 5: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">and what is returned by the function in comments</span>
+<span class="linenr"> 6: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">near the declaration.</span>
+<span class="linenr"> 7: </span><span style="color: #7f7f7f;">//</span>
+<span class="linenr"> 8: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">`linspace` returns an array of doubles containing</span>
+<span class="linenr"> 9: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">`n_points` entries which are equally-spaced, starting</span>
+<span class="linenr">10: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">at `start` and ending at `stop`.</span>
+<span class="linenr">11: </span><span style="color: #00688b;">double</span> * <span style="color: #cd9b1d;">linspace</span>(<span style="color: #00688b;">double</span> <span style="color: #2e8b57;">start</span>, <span style="color: #00688b;">double</span> <span style="color: #2e8b57;">stop</span>, <span style="color: #00688b;">int</span> <span style="color: #2e8b57;">n_points</span>);
 <span class="linenr">12: </span>
-<span class="linenr">13: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">`void` is a function with no return type.</span>
-<span class="linenr">14: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">`print_array` takes an array and prints it to std out.</span>
-<span class="linenr">15: </span><span style="color: #228b22;">void</span> <span style="color: #0000ff;">print_array</span>(<span style="color: #228b22;">double</span> * <span style="color: #a0522d;">arr</span>, <span style="color: #228b22;">int</span> <span style="color: #a0522d;">arr_len</span>);
+<span class="linenr">13: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">`void` is a function with no return type.</span>
+<span class="linenr">14: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">`print_array` takes an array and prints it to std out.</span>
+<span class="linenr">15: </span><span style="color: #00688b;">void</span> <span style="color: #cd9b1d;">print_array</span>(<span style="color: #00688b;">double</span> * <span style="color: #2e8b57;">arr</span>, <span style="color: #00688b;">int</span> <span style="color: #2e8b57;">arr_len</span>);
 <span class="linenr">16: </span>
-<span class="linenr">17: </span><span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>() {
-<span class="linenr">18: </span>  <span style="color: #228b22;">double</span> * <span style="color: #a0522d;">xs</span> = linspace(-1, 1, 5);
+<span class="linenr">17: </span><span style="color: #00688b;">int</span> <span style="color: #cd9b1d;">main</span>() {
+<span class="linenr">18: </span>  <span style="color: #00688b;">double</span> * <span style="color: #2e8b57;">xs</span> = linspace(-1, 1, 5);
 <span class="linenr">19: </span>  print_array(xs, 5);
-<span class="linenr">20: </span>  <span style="color: #a020f0;">delete</span> [] xs;
+<span class="linenr">20: </span>  <span style="color: #1c86ee;">delete</span> [] xs;
 <span class="linenr">21: </span>
-<span class="linenr">22: </span>  <span style="color: #a020f0;">return</span> 0;
+<span class="linenr">22: </span>  <span style="color: #1c86ee;">return</span> 0;
 <span class="linenr">23: </span>}
 <span class="linenr">24: </span>
-<span class="linenr">25: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">Implementation of `linspace`.</span>
-<span class="linenr">26: </span><span style="color: #228b22;">double</span> * <span style="color: #0000ff;">linspace</span>(<span style="color: #228b22;">double</span> <span style="color: #a0522d;">start</span>, <span style="color: #228b22;">double</span> <span style="color: #a0522d;">stop</span>, <span style="color: #228b22;">int</span> <span style="color: #a0522d;">n_points</span>) {
-<span class="linenr">27: </span>  <span style="color: #228b22;">double</span> * <span style="color: #a0522d;">arr</span> = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">double</span> [n_points];
-<span class="linenr">28: </span>  <span style="color: #228b22;">double</span> <span style="color: #a0522d;">dx</span> = (stop-start) / (n_points-1.0);
+<span class="linenr">25: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">Implementation of `linspace`.</span>
+<span class="linenr">26: </span><span style="color: #00688b;">double</span> * <span style="color: #cd9b1d;">linspace</span>(<span style="color: #00688b;">double</span> <span style="color: #2e8b57;">start</span>, <span style="color: #00688b;">double</span> <span style="color: #2e8b57;">stop</span>, <span style="color: #00688b;">int</span> <span style="color: #2e8b57;">n_points</span>) {
+<span class="linenr">27: </span>  <span style="color: #00688b;">double</span> * <span style="color: #2e8b57;">arr</span> = <span style="color: #1c86ee;">new</span> <span style="color: #00688b;">double</span> [n_points];
+<span class="linenr">28: </span>  <span style="color: #00688b;">double</span> <span style="color: #2e8b57;">dx</span> = (stop-start) / (n_points-1.0);
 <span class="linenr">29: </span>
-<span class="linenr">30: </span>  <span style="color: #a020f0;">for</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">i</span>=0; i &lt; n_points; i++) {
+<span class="linenr">30: </span>  <span style="color: #1c86ee;">for</span>(<span style="color: #00688b;">int</span> <span style="color: #2e8b57;">i</span>=0; i &lt; n_points; i++) {
 <span class="linenr">31: </span>    arr[i] = start + i*dx;
 <span class="linenr">32: </span>  }
 <span class="linenr">33: </span>
-<span class="linenr">34: </span>  <span style="color: #a020f0;">return</span> arr;
+<span class="linenr">34: </span>  <span style="color: #1c86ee;">return</span> arr;
 <span class="linenr">35: </span>}
 <span class="linenr">36: </span>
-<span class="linenr">37: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">Implementation of `print_array`.</span>
-<span class="linenr">38: </span><span style="color: #228b22;">void</span> <span style="color: #0000ff;">print_array</span>(<span style="color: #228b22;">double</span> * <span style="color: #a0522d;">arr</span>, <span style="color: #228b22;">int</span> <span style="color: #a0522d;">arr_len</span>) {
-<span class="linenr">39: </span>  <span style="color: #a020f0;">for</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">i</span>=0; i &lt; arr_len; i++) {
-<span class="linenr">40: </span>    <span style="color: #008b8b;">std</span>::cout &lt;&lt; arr[i] &lt;&lt; <span style="color: #8b2252;">"\n"</span>;
+<span class="linenr">37: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">Implementation of `print_array`.</span>
+<span class="linenr">38: </span><span style="color: #00688b;">void</span> <span style="color: #cd9b1d;">print_array</span>(<span style="color: #00688b;">double</span> * <span style="color: #2e8b57;">arr</span>, <span style="color: #00688b;">int</span> <span style="color: #2e8b57;">arr_len</span>) {
+<span class="linenr">39: </span>  <span style="color: #1c86ee;">for</span>(<span style="color: #00688b;">int</span> <span style="color: #2e8b57;">i</span>=0; i &lt; arr_len; i++) {
+<span class="linenr">40: </span>    <span style="color: #6e8b3d;">std</span>::cout &lt;&lt; arr[i] &lt;&lt; <span style="color: #8b7355;">"\n"</span>;
 <span class="linenr">41: </span>  }
 <span class="linenr">42: </span>}
 </pre>
@@ -1560,23 +1559,23 @@ Put the declarations from the into a header file, called <code>my_library.h</cod
 
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #483d8b;">#if</span><span style="color: #483d8b;">n</span><span style="color: #483d8b;">def</span> MY_LIBRARY_H
-<span class="linenr"> 2: </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">MY_LIBRARY_H</span>
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #cdad00;">#if</span><span style="color: #cdad00;">n</span><span style="color: #cdad00;">def</span> MY_LIBRARY_H
+<span class="linenr"> 2: </span><span style="color: #cdad00;">#define</span> <span style="color: #2e8b57;">MY_LIBRARY_H</span>
 <span class="linenr"> 3: </span>
-<span class="linenr"> 4: </span><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;iostream&gt;</span>
+<span class="linenr"> 4: </span><span style="color: #cdad00;">#include</span> <span style="color: #8b7355;">&lt;iostream&gt;</span>
 <span class="linenr"> 5: </span>
-<span class="linenr"> 6: </span><span style="color: #a020f0;">namespace</span> <span style="color: #008b8b;">my_namespace</span> {
-<span class="linenr"> 7: </span>    <span style="color: #b22222;">// </span><span style="color: #b22222;">`linspace` returns an array of doubles containing</span>
-<span class="linenr"> 8: </span>    <span style="color: #b22222;">// </span><span style="color: #b22222;">`n_points` entries which are equally-spaced, starting</span>
-<span class="linenr"> 9: </span>    <span style="color: #b22222;">// </span><span style="color: #b22222;">at `start` and ending at `stop`.</span>
-<span class="linenr">10: </span>    <span style="color: #228b22;">double</span> * <span style="color: #0000ff;">linspace</span>(<span style="color: #228b22;">double</span> <span style="color: #a0522d;">start</span>, <span style="color: #228b22;">double</span> <span style="color: #a0522d;">stop</span>, <span style="color: #228b22;">int</span> <span style="color: #a0522d;">n_points</span>);
+<span class="linenr"> 6: </span><span style="color: #1c86ee;">namespace</span> <span style="color: #6e8b3d;">my_namespace</span> {
+<span class="linenr"> 7: </span>    <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">`linspace` returns an array of doubles containing</span>
+<span class="linenr"> 8: </span>    <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">`n_points` entries which are equally-spaced, starting</span>
+<span class="linenr"> 9: </span>    <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">at `start` and ending at `stop`.</span>
+<span class="linenr">10: </span>    <span style="color: #00688b;">double</span> * <span style="color: #cd9b1d;">linspace</span>(<span style="color: #00688b;">double</span> <span style="color: #2e8b57;">start</span>, <span style="color: #00688b;">double</span> <span style="color: #2e8b57;">stop</span>, <span style="color: #00688b;">int</span> <span style="color: #2e8b57;">n_points</span>);
 <span class="linenr">11: </span>
-<span class="linenr">12: </span>    <span style="color: #b22222;">// </span><span style="color: #b22222;">`void` is a function with no return type.</span>
-<span class="linenr">13: </span>    <span style="color: #b22222;">// </span><span style="color: #b22222;">`print_array` takes an array and prints it to std out.</span>
-<span class="linenr">14: </span>    <span style="color: #228b22;">void</span> <span style="color: #0000ff;">print_array</span>(<span style="color: #228b22;">double</span> * <span style="color: #a0522d;">arr</span>, <span style="color: #228b22;">int</span> <span style="color: #a0522d;">arr_len</span>);
+<span class="linenr">12: </span>    <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">`void` is a function with no return type.</span>
+<span class="linenr">13: </span>    <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">`print_array` takes an array and prints it to std out.</span>
+<span class="linenr">14: </span>    <span style="color: #00688b;">void</span> <span style="color: #cd9b1d;">print_array</span>(<span style="color: #00688b;">double</span> * <span style="color: #2e8b57;">arr</span>, <span style="color: #00688b;">int</span> <span style="color: #2e8b57;">arr_len</span>);
 <span class="linenr">15: </span>}
 <span class="linenr">16: </span>
-<span class="linenr">17: </span><span style="color: #483d8b;">#endif</span>
+<span class="linenr">17: </span><span style="color: #cdad00;">#endif</span>
 </pre>
 </div>
 
@@ -1605,24 +1604,24 @@ Create a file called <code>my_library.cpp</code> containing the implementations 
 
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">"my_library.h"</span>
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #cdad00;">#include</span> <span style="color: #8b7355;">"my_library.h"</span>
 <span class="linenr"> 2: </span>
-<span class="linenr"> 3: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">Implementation of `linspace`.</span>
-<span class="linenr"> 4: </span><span style="color: #228b22;">double</span> * <span style="color: #008b8b;">my_namespace</span>::<span style="color: #0000ff;">linspace</span>(<span style="color: #228b22;">double</span> <span style="color: #a0522d;">start</span>, <span style="color: #228b22;">double</span> <span style="color: #a0522d;">stop</span>, <span style="color: #228b22;">int</span> <span style="color: #a0522d;">n_points</span>) {
-<span class="linenr"> 5: </span>  <span style="color: #228b22;">double</span> * <span style="color: #a0522d;">arr</span> = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">double</span> [n_points];
-<span class="linenr"> 6: </span>  <span style="color: #228b22;">double</span> <span style="color: #a0522d;">dx</span> = (stop-start) / (n_points-1.0);
+<span class="linenr"> 3: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">Implementation of `linspace`.</span>
+<span class="linenr"> 4: </span><span style="color: #00688b;">double</span> * <span style="color: #6e8b3d;">my_namespace</span>::<span style="color: #cd9b1d;">linspace</span>(<span style="color: #00688b;">double</span> <span style="color: #2e8b57;">start</span>, <span style="color: #00688b;">double</span> <span style="color: #2e8b57;">stop</span>, <span style="color: #00688b;">int</span> <span style="color: #2e8b57;">n_points</span>) {
+<span class="linenr"> 5: </span>  <span style="color: #00688b;">double</span> * <span style="color: #2e8b57;">arr</span> = <span style="color: #1c86ee;">new</span> <span style="color: #00688b;">double</span> [n_points];
+<span class="linenr"> 6: </span>  <span style="color: #00688b;">double</span> <span style="color: #2e8b57;">dx</span> = (stop-start) / (n_points-1.0);
 <span class="linenr"> 7: </span>
-<span class="linenr"> 8: </span>  <span style="color: #a020f0;">for</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">i</span>=0; i &lt; n_points; i++) {
+<span class="linenr"> 8: </span>  <span style="color: #1c86ee;">for</span>(<span style="color: #00688b;">int</span> <span style="color: #2e8b57;">i</span>=0; i &lt; n_points; i++) {
 <span class="linenr"> 9: </span>    arr[i] = start + i*dx;
 <span class="linenr">10: </span>  }
 <span class="linenr">11: </span>
-<span class="linenr">12: </span>  <span style="color: #a020f0;">return</span> arr;
+<span class="linenr">12: </span>  <span style="color: #1c86ee;">return</span> arr;
 <span class="linenr">13: </span>}
 <span class="linenr">14: </span>
-<span class="linenr">15: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">Implementation of `print_array`.</span>
-<span class="linenr">16: </span><span style="color: #228b22;">void</span> <span style="color: #008b8b;">my_namespace</span>::<span style="color: #0000ff;">print_array</span>(<span style="color: #228b22;">double</span> * <span style="color: #a0522d;">arr</span>, <span style="color: #228b22;">int</span> <span style="color: #a0522d;">arr_len</span>) {
-<span class="linenr">17: </span>  <span style="color: #a020f0;">for</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">i</span>=0; i &lt; arr_len; i++) {
-<span class="linenr">18: </span>    <span style="color: #008b8b;">std</span>::cout &lt;&lt; arr[i] &lt;&lt; <span style="color: #8b2252;">"\n"</span>;
+<span class="linenr">15: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">Implementation of `print_array`.</span>
+<span class="linenr">16: </span><span style="color: #00688b;">void</span> <span style="color: #6e8b3d;">my_namespace</span>::<span style="color: #cd9b1d;">print_array</span>(<span style="color: #00688b;">double</span> * <span style="color: #2e8b57;">arr</span>, <span style="color: #00688b;">int</span> <span style="color: #2e8b57;">arr_len</span>) {
+<span class="linenr">17: </span>  <span style="color: #1c86ee;">for</span>(<span style="color: #00688b;">int</span> <span style="color: #2e8b57;">i</span>=0; i &lt; arr_len; i++) {
+<span class="linenr">18: </span>    <span style="color: #6e8b3d;">std</span>::cout &lt;&lt; arr[i] &lt;&lt; <span style="color: #8b7355;">"\n"</span>;
 <span class="linenr">19: </span>  }
 <span class="linenr">20: </span>}
 </pre>
@@ -1645,15 +1644,15 @@ Create a file with the main function, say <code>main.cpp</code>:
 
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;iostream&gt;</span>
-<span class="linenr"> 2: </span><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">"my_library.h"</span>
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #cdad00;">#include</span> <span style="color: #8b7355;">&lt;iostream&gt;</span>
+<span class="linenr"> 2: </span><span style="color: #cdad00;">#include</span> <span style="color: #8b7355;">"my_library.h"</span>
 <span class="linenr"> 3: </span>
-<span class="linenr"> 4: </span><span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>() {
-<span class="linenr"> 5: </span>    <span style="color: #228b22;">double</span> * <span style="color: #a0522d;">xs</span> = <span style="color: #008b8b;">my_namespace</span>::linspace(-1,1,5);
-<span class="linenr"> 6: </span>    <span style="color: #008b8b;">my_namespace</span>::print_array(xs, 5);
-<span class="linenr"> 7: </span>    <span style="color: #a020f0;">delete</span> [] xs;
+<span class="linenr"> 4: </span><span style="color: #00688b;">int</span> <span style="color: #cd9b1d;">main</span>() {
+<span class="linenr"> 5: </span>    <span style="color: #00688b;">double</span> * <span style="color: #2e8b57;">xs</span> = <span style="color: #6e8b3d;">my_namespace</span>::linspace(-1,1,5);
+<span class="linenr"> 6: </span>    <span style="color: #6e8b3d;">my_namespace</span>::print_array(xs, 5);
+<span class="linenr"> 7: </span>    <span style="color: #1c86ee;">delete</span> [] xs;
 <span class="linenr"> 8: </span>
-<span class="linenr"> 9: </span>    <span style="color: #a020f0;">return</span> 0;
+<span class="linenr"> 9: </span>    <span style="color: #1c86ee;">return</span> 0;
 <span class="linenr">10: </span>}
 </pre>
 </div>
@@ -1665,11 +1664,11 @@ must compile into one executable. This is done as follows:
 
 <div class="org-src-container">
 
-<pre class="src src-bash"><span style="color: #b22222;"># </span><span style="color: #b22222;">Convert the library into an object file.</span>
+<pre class="src src-bash"><span style="color: #7f7f7f;"># </span><span style="color: #7f7f7f;">Convert the library into an object file.</span>
 g++ -c my_library.cpp
-<span style="color: #b22222;"># </span><span style="color: #b22222;">Compile the main to an executable.</span>
+<span style="color: #7f7f7f;"># </span><span style="color: #7f7f7f;">Compile the main to an executable.</span>
 g++ my_library.o main.cpp
-<span style="color: #b22222;"># </span><span style="color: #b22222;">Run it.</span>
+<span style="color: #7f7f7f;"># </span><span style="color: #7f7f7f;">Run it.</span>
 ./a.out
 </pre>
 </div>
@@ -1726,52 +1725,52 @@ Let's consider \(f(x) = x^2 - 2\).
 
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;cmath&gt;</span>
-<span class="linenr"> 2: </span><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;iostream&gt;</span>
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #cdad00;">#include</span> <span style="color: #8b7355;">&lt;cmath&gt;</span>
+<span class="linenr"> 2: </span><span style="color: #cdad00;">#include</span> <span style="color: #8b7355;">&lt;iostream&gt;</span>
 <span class="linenr"> 3: </span>
-<span class="linenr"> 4: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">The function to find the root of.</span>
-<span class="linenr"> 5: </span><span style="color: #228b22;">double</span> <span style="color: #0000ff;">func</span>(<span style="color: #228b22;">double</span> <span style="color: #a0522d;">x</span>);
-<span class="linenr"> 6: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">Its derivative.</span>
-<span class="linenr"> 7: </span><span style="color: #228b22;">double</span> <span style="color: #0000ff;">dfunc</span>(<span style="color: #228b22;">double</span> <span style="color: #a0522d;">x</span>);
+<span class="linenr"> 4: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">The function to find the root of.</span>
+<span class="linenr"> 5: </span><span style="color: #00688b;">double</span> <span style="color: #cd9b1d;">func</span>(<span style="color: #00688b;">double</span> <span style="color: #2e8b57;">x</span>);
+<span class="linenr"> 6: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">Its derivative.</span>
+<span class="linenr"> 7: </span><span style="color: #00688b;">double</span> <span style="color: #cd9b1d;">dfunc</span>(<span style="color: #00688b;">double</span> <span style="color: #2e8b57;">x</span>);
 <span class="linenr"> 8: </span>
-<span class="linenr"> 9: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">Find the root of `f` using Newton's method,</span>
-<span class="linenr">10: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">starting from `x0` until |f(x)| &lt; `tol` or `max_iters`</span>
-<span class="linenr">11: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">is reached.</span>
-<span class="linenr">12: </span><span style="color: #b22222;">//</span>
-<span class="linenr">13: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">Note the first and second arguments are function pointers.</span>
-<span class="linenr">14: </span><span style="color: #228b22;">double</span> <span style="color: #0000ff;">newton_root</span>(<span style="color: #228b22;">double</span> (*<span style="color: #a0522d;">f</span>)(<span style="color: #228b22;">double</span>), <span style="color: #228b22;">double</span> (*<span style="color: #a0522d;">df</span>)(<span style="color: #228b22;">double</span>), <span style="color: #228b22;">double</span> <span style="color: #a0522d;">x0</span>,
-<span class="linenr">15: </span>                   <span style="color: #228b22;">double</span> <span style="color: #a0522d;">tol</span>, <span style="color: #228b22;">int</span> <span style="color: #a0522d;">max_iters</span>, <span style="color: #228b22;">bool</span> <span style="color: #a0522d;">print_iters</span>); 
+<span class="linenr"> 9: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">Find the root of `f` using Newton's method,</span>
+<span class="linenr">10: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">starting from `x0` until |f(x)| &lt; `tol` or `max_iters`</span>
+<span class="linenr">11: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">is reached.</span>
+<span class="linenr">12: </span><span style="color: #7f7f7f;">//</span>
+<span class="linenr">13: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">Note the first and second arguments are function pointers.</span>
+<span class="linenr">14: </span><span style="color: #00688b;">double</span> <span style="color: #cd9b1d;">newton_root</span>(<span style="color: #00688b;">double</span> (*<span style="color: #2e8b57;">f</span>)(<span style="color: #00688b;">double</span>), <span style="color: #00688b;">double</span> (*<span style="color: #2e8b57;">df</span>)(<span style="color: #00688b;">double</span>), <span style="color: #00688b;">double</span> <span style="color: #2e8b57;">x0</span>,
+<span class="linenr">15: </span>                   <span style="color: #00688b;">double</span> <span style="color: #2e8b57;">tol</span>, <span style="color: #00688b;">int</span> <span style="color: #2e8b57;">max_iters</span>, <span style="color: #00688b;">bool</span> <span style="color: #2e8b57;">print_iters</span>); 
 <span class="linenr">16: </span>
-<span class="linenr">17: </span><span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>() {
-<span class="linenr">18: </span>  <span style="color: #228b22;">double</span> <span style="color: #a0522d;">x</span> = newton_root(&amp;func, &amp;dfunc, 1.0, 1e-6, 1000, <span style="color: #008b8b;">true</span>);
+<span class="linenr">17: </span><span style="color: #00688b;">int</span> <span style="color: #cd9b1d;">main</span>() {
+<span class="linenr">18: </span>  <span style="color: #00688b;">double</span> <span style="color: #2e8b57;">x</span> = newton_root(&amp;func, &amp;dfunc, 1.0, 1e-6, 1000, <span style="color: #6e8b3d;">true</span>);
 <span class="linenr">19: </span>
-<span class="linenr">20: </span>  <span style="color: #a020f0;">return</span> 0;
+<span class="linenr">20: </span>  <span style="color: #1c86ee;">return</span> 0;
 <span class="linenr">21: </span>}
 <span class="linenr">22: </span>
-<span class="linenr">23: </span><span style="color: #228b22;">double</span> <span style="color: #0000ff;">func</span>( <span style="color: #228b22;">double</span> <span style="color: #a0522d;">x</span>) { <span style="color: #a020f0;">return</span> x*x - 2; }
-<span class="linenr">24: </span><span style="color: #228b22;">double</span> <span style="color: #0000ff;">dfunc</span>(<span style="color: #228b22;">double</span> <span style="color: #a0522d;">x</span>) { <span style="color: #a020f0;">return</span> 2*x; }
+<span class="linenr">23: </span><span style="color: #00688b;">double</span> <span style="color: #cd9b1d;">func</span>( <span style="color: #00688b;">double</span> <span style="color: #2e8b57;">x</span>) { <span style="color: #1c86ee;">return</span> x*x - 2; }
+<span class="linenr">24: </span><span style="color: #00688b;">double</span> <span style="color: #cd9b1d;">dfunc</span>(<span style="color: #00688b;">double</span> <span style="color: #2e8b57;">x</span>) { <span style="color: #1c86ee;">return</span> 2*x; }
 <span class="linenr">25: </span>
-<span class="linenr">26: </span><span style="color: #228b22;">double</span> <span style="color: #0000ff;">newton_root</span>(<span style="color: #228b22;">double</span> (*<span style="color: #a0522d;">f</span>)(<span style="color: #228b22;">double</span>), <span style="color: #228b22;">double</span> (*<span style="color: #a0522d;">df</span>)(<span style="color: #228b22;">double</span>), <span style="color: #228b22;">double</span> <span style="color: #a0522d;">x0</span>,
-<span class="linenr">27: </span>                   <span style="color: #228b22;">double</span> <span style="color: #a0522d;">tol</span>, <span style="color: #228b22;">int</span> <span style="color: #a0522d;">max_iters</span>, <span style="color: #228b22;">bool</span> <span style="color: #a0522d;">print_iters</span>) {
-<span class="linenr">28: </span>  <span style="color: #228b22;">double</span> <span style="color: #a0522d;">x</span>  = x0;
-<span class="linenr">29: </span>  <span style="color: #228b22;">int</span> <span style="color: #a0522d;">iter</span>  = 0;
+<span class="linenr">26: </span><span style="color: #00688b;">double</span> <span style="color: #cd9b1d;">newton_root</span>(<span style="color: #00688b;">double</span> (*<span style="color: #2e8b57;">f</span>)(<span style="color: #00688b;">double</span>), <span style="color: #00688b;">double</span> (*<span style="color: #2e8b57;">df</span>)(<span style="color: #00688b;">double</span>), <span style="color: #00688b;">double</span> <span style="color: #2e8b57;">x0</span>,
+<span class="linenr">27: </span>                   <span style="color: #00688b;">double</span> <span style="color: #2e8b57;">tol</span>, <span style="color: #00688b;">int</span> <span style="color: #2e8b57;">max_iters</span>, <span style="color: #00688b;">bool</span> <span style="color: #2e8b57;">print_iters</span>) {
+<span class="linenr">28: </span>  <span style="color: #00688b;">double</span> <span style="color: #2e8b57;">x</span>  = x0;
+<span class="linenr">29: </span>  <span style="color: #00688b;">int</span> <span style="color: #2e8b57;">iter</span>  = 0;
 <span class="linenr">30: </span>
-<span class="linenr">31: </span>  <span style="color: #a020f0;">while</span> (<span style="color: #008b8b;">std</span>::abs(f(x)) &gt; tol &amp;&amp; iter &lt; max_iters) {
-<span class="linenr">32: </span>    <span style="color: #a020f0;">if</span> (print_iters) { 
-<span class="linenr">33: </span>      <span style="color: #008b8b;">std</span>::cout &lt;&lt; <span style="color: #8b2252;">"f("</span> &lt;&lt; x &lt;&lt; <span style="color: #8b2252;">") = "</span> &lt;&lt; f(x) &lt;&lt; <span style="color: #8b2252;">"\n"</span>;
+<span class="linenr">31: </span>  <span style="color: #1c86ee;">while</span> (<span style="color: #6e8b3d;">std</span>::abs(f(x)) &gt; tol &amp;&amp; iter &lt; max_iters) {
+<span class="linenr">32: </span>    <span style="color: #1c86ee;">if</span> (print_iters) { 
+<span class="linenr">33: </span>      <span style="color: #6e8b3d;">std</span>::cout &lt;&lt; <span style="color: #8b7355;">"f("</span> &lt;&lt; x &lt;&lt; <span style="color: #8b7355;">") = "</span> &lt;&lt; f(x) &lt;&lt; <span style="color: #8b7355;">"\n"</span>;
 <span class="linenr">34: </span>    }
 <span class="linenr">35: </span>
-<span class="linenr">36: </span>    <span style="color: #b22222;">// </span><span style="color: #b22222;">Newton's method update.</span>
+<span class="linenr">36: </span>    <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">Newton's method update.</span>
 <span class="linenr">37: </span>    x -= f(x) / df(x);
 <span class="linenr">38: </span>    iter++;
 <span class="linenr">39: </span>  }
 <span class="linenr">40: </span>
-<span class="linenr">41: </span>  <span style="color: #b22222;">// </span><span style="color: #b22222;">One last print if necessary.</span>
-<span class="linenr">42: </span>  <span style="color: #a020f0;">if</span> (print_iters) { 
-<span class="linenr">43: </span>    <span style="color: #008b8b;">std</span>::cout &lt;&lt; <span style="color: #8b2252;">"f("</span> &lt;&lt; x &lt;&lt; <span style="color: #8b2252;">") = "</span> &lt;&lt; f(x) &lt;&lt; <span style="color: #8b2252;">"\n"</span>;
+<span class="linenr">41: </span>  <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">One last print if necessary.</span>
+<span class="linenr">42: </span>  <span style="color: #1c86ee;">if</span> (print_iters) { 
+<span class="linenr">43: </span>    <span style="color: #6e8b3d;">std</span>::cout &lt;&lt; <span style="color: #8b7355;">"f("</span> &lt;&lt; x &lt;&lt; <span style="color: #8b7355;">") = "</span> &lt;&lt; f(x) &lt;&lt; <span style="color: #8b7355;">"\n"</span>;
 <span class="linenr">44: </span>  }
 <span class="linenr">45: </span>
-<span class="linenr">46: </span>  <span style="color: #a020f0;">return</span> x;
+<span class="linenr">46: </span>  <span style="color: #1c86ee;">return</span> x;
 <span class="linenr">47: </span>}
 </pre>
 </div>
@@ -1820,44 +1819,44 @@ Let's consider \(f(x) = \frac{1}{x}\) on \([1, e]\).
 
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;iostream&gt;</span>
-<span class="linenr"> 2: </span><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;cmath&gt;</span>
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #cdad00;">#include</span> <span style="color: #8b7355;">&lt;iostream&gt;</span>
+<span class="linenr"> 2: </span><span style="color: #cdad00;">#include</span> <span style="color: #8b7355;">&lt;cmath&gt;</span>
 <span class="linenr"> 3: </span>
-<span class="linenr"> 4: </span><span style="color: #a020f0;">const</span> <span style="color: #228b22;">double</span> <span style="color: #a0522d;">E</span> = <span style="color: #008b8b;">std</span>::exp(1.0);
+<span class="linenr"> 4: </span><span style="color: #1c86ee;">const</span> <span style="color: #00688b;">double</span> <span style="color: #2e8b57;">E</span> = <span style="color: #6e8b3d;">std</span>::exp(1.0);
 <span class="linenr"> 5: </span>
-<span class="linenr"> 6: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">The function to be integrated.</span>
-<span class="linenr"> 7: </span><span style="color: #228b22;">double</span> <span style="color: #0000ff;">func</span>(<span style="color: #228b22;">double</span> <span style="color: #a0522d;">x</span>);
+<span class="linenr"> 6: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">The function to be integrated.</span>
+<span class="linenr"> 7: </span><span style="color: #00688b;">double</span> <span style="color: #cd9b1d;">func</span>(<span style="color: #00688b;">double</span> <span style="color: #2e8b57;">x</span>);
 <span class="linenr"> 8: </span>
-<span class="linenr"> 9: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">Compute the midpoint rule approximation to</span>
-<span class="linenr">10: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">the definite integral of `f` from `a` to `b`</span>
-<span class="linenr">11: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">using `n` subintervals.</span>
-<span class="linenr">12: </span><span style="color: #228b22;">double</span> <span style="color: #0000ff;">midpoint_rule</span>(<span style="color: #228b22;">double</span> (*<span style="color: #a0522d;">f</span>)(<span style="color: #228b22;">double</span>), <span style="color: #228b22;">double</span> <span style="color: #a0522d;">a</span>, <span style="color: #228b22;">double</span> <span style="color: #a0522d;">b</span>, <span style="color: #228b22;">int</span> <span style="color: #a0522d;">n</span>);
+<span class="linenr"> 9: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">Compute the midpoint rule approximation to</span>
+<span class="linenr">10: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">the definite integral of `f` from `a` to `b`</span>
+<span class="linenr">11: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">using `n` subintervals.</span>
+<span class="linenr">12: </span><span style="color: #00688b;">double</span> <span style="color: #cd9b1d;">midpoint_rule</span>(<span style="color: #00688b;">double</span> (*<span style="color: #2e8b57;">f</span>)(<span style="color: #00688b;">double</span>), <span style="color: #00688b;">double</span> <span style="color: #2e8b57;">a</span>, <span style="color: #00688b;">double</span> <span style="color: #2e8b57;">b</span>, <span style="color: #00688b;">int</span> <span style="color: #2e8b57;">n</span>);
 <span class="linenr">13: </span>
 <span class="linenr">14: </span>
-<span class="linenr">15: </span><span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>() {
-<span class="linenr">16: </span>  <span style="color: #a020f0;">for</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">n</span>=2; n &lt;= 20; n += 2) {
-<span class="linenr">17: </span>    <span style="color: #008b8b;">std</span>::cout &lt;&lt; <span style="color: #8b2252;">"n = "</span> &lt;&lt; n &lt;&lt; <span style="color: #8b2252;">", "</span>
-<span class="linenr">18: </span>              &lt;&lt; <span style="color: #8b2252;">"M_n = "</span> &lt;&lt; midpoint_rule(&amp;func, 1, E, n) &lt;&lt; <span style="color: #8b2252;">"\n"</span>;
+<span class="linenr">15: </span><span style="color: #00688b;">int</span> <span style="color: #cd9b1d;">main</span>() {
+<span class="linenr">16: </span>  <span style="color: #1c86ee;">for</span>(<span style="color: #00688b;">int</span> <span style="color: #2e8b57;">n</span>=2; n &lt;= 20; n += 2) {
+<span class="linenr">17: </span>    <span style="color: #6e8b3d;">std</span>::cout &lt;&lt; <span style="color: #8b7355;">"n = "</span> &lt;&lt; n &lt;&lt; <span style="color: #8b7355;">", "</span>
+<span class="linenr">18: </span>              &lt;&lt; <span style="color: #8b7355;">"M_n = "</span> &lt;&lt; midpoint_rule(&amp;func, 1, E, n) &lt;&lt; <span style="color: #8b7355;">"\n"</span>;
 <span class="linenr">19: </span>  }
 <span class="linenr">20: </span>
-<span class="linenr">21: </span>  <span style="color: #a020f0;">return</span> 0;
+<span class="linenr">21: </span>  <span style="color: #1c86ee;">return</span> 0;
 <span class="linenr">22: </span>}
 <span class="linenr">23: </span>
-<span class="linenr">24: </span><span style="color: #228b22;">double</span> <span style="color: #0000ff;">func</span>(<span style="color: #228b22;">double</span> <span style="color: #a0522d;">x</span>) { <span style="color: #a020f0;">return</span> 1.0 / x; }
+<span class="linenr">24: </span><span style="color: #00688b;">double</span> <span style="color: #cd9b1d;">func</span>(<span style="color: #00688b;">double</span> <span style="color: #2e8b57;">x</span>) { <span style="color: #1c86ee;">return</span> 1.0 / x; }
 <span class="linenr">25: </span>
-<span class="linenr">26: </span><span style="color: #228b22;">double</span> <span style="color: #0000ff;">midpoint_rule</span>(<span style="color: #228b22;">double</span> (*<span style="color: #a0522d;">f</span>)(<span style="color: #228b22;">double</span>), <span style="color: #228b22;">double</span> <span style="color: #a0522d;">a</span>, <span style="color: #228b22;">double</span> <span style="color: #a0522d;">b</span>, <span style="color: #228b22;">int</span> <span style="color: #a0522d;">n</span>) {
-<span class="linenr">27: </span>  <span style="color: #228b22;">double</span> <span style="color: #a0522d;">xi</span>;
-<span class="linenr">28: </span>  <span style="color: #228b22;">double</span> <span style="color: #a0522d;">xi_prev</span> = a;
-<span class="linenr">29: </span>  <span style="color: #228b22;">double</span> <span style="color: #a0522d;">dx</span> = (b-a) / n;
-<span class="linenr">30: </span>  <span style="color: #228b22;">double</span> <span style="color: #a0522d;">sum</span>;
+<span class="linenr">26: </span><span style="color: #00688b;">double</span> <span style="color: #cd9b1d;">midpoint_rule</span>(<span style="color: #00688b;">double</span> (*<span style="color: #2e8b57;">f</span>)(<span style="color: #00688b;">double</span>), <span style="color: #00688b;">double</span> <span style="color: #2e8b57;">a</span>, <span style="color: #00688b;">double</span> <span style="color: #2e8b57;">b</span>, <span style="color: #00688b;">int</span> <span style="color: #2e8b57;">n</span>) {
+<span class="linenr">27: </span>  <span style="color: #00688b;">double</span> <span style="color: #2e8b57;">xi</span>;
+<span class="linenr">28: </span>  <span style="color: #00688b;">double</span> <span style="color: #2e8b57;">xi_prev</span> = a;
+<span class="linenr">29: </span>  <span style="color: #00688b;">double</span> <span style="color: #2e8b57;">dx</span> = (b-a) / n;
+<span class="linenr">30: </span>  <span style="color: #00688b;">double</span> <span style="color: #2e8b57;">sum</span>;
 <span class="linenr">31: </span>
-<span class="linenr">32: </span>  <span style="color: #a020f0;">for</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">i</span>=1; i &lt;= n; i++) {
+<span class="linenr">32: </span>  <span style="color: #1c86ee;">for</span>(<span style="color: #00688b;">int</span> <span style="color: #2e8b57;">i</span>=1; i &lt;= n; i++) {
 <span class="linenr">33: </span>    xi = a + i*dx;
 <span class="linenr">34: </span>    sum += f(0.5*(xi_prev + xi));
 <span class="linenr">35: </span>    xi_prev = xi;
 <span class="linenr">36: </span>  }
 <span class="linenr">37: </span>
-<span class="linenr">38: </span>  <span style="color: #a020f0;">return</span> sum*dx;
+<span class="linenr">38: </span>  <span style="color: #1c86ee;">return</span> sum*dx;
 <span class="linenr">39: </span>}
 </pre>
 </div>
@@ -1902,34 +1901,34 @@ Create the header file, <code>vector.h</code>:
 
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #483d8b;">#if</span><span style="color: #483d8b;">n</span><span style="color: #483d8b;">def</span> VECTOR_H
-<span class="linenr"> 2: </span><span style="color: #483d8b;">#define</span> <span style="color: #a0522d;">VECTOR_H</span>
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #cdad00;">#if</span><span style="color: #cdad00;">n</span><span style="color: #cdad00;">def</span> VECTOR_H
+<span class="linenr"> 2: </span><span style="color: #cdad00;">#define</span> <span style="color: #2e8b57;">VECTOR_H</span>
 <span class="linenr"> 3: </span>
-<span class="linenr"> 4: </span><span style="color: #a020f0;">namespace</span> <span style="color: #008b8b;">vec</span> {
-<span class="linenr"> 5: </span>  <span style="color: #a020f0;">class</span> <span style="color: #228b22;">vector</span> {
-<span class="linenr"> 6: </span>  <span style="color: #a020f0;">public</span>:
-<span class="linenr"> 7: </span>    <span style="color: #b22222;">// </span><span style="color: #b22222;">Constructor. This function is called when the object is created.</span>
-<span class="linenr"> 8: </span>    <span style="color: #0000ff;">vector</span>(<span style="color: #228b22;">unsigned</span> <span style="color: #a0522d;">len</span>);
+<span class="linenr"> 4: </span><span style="color: #1c86ee;">namespace</span> <span style="color: #6e8b3d;">vec</span> {
+<span class="linenr"> 5: </span>  <span style="color: #1c86ee;">class</span> <span style="color: #00688b;">vector</span> {
+<span class="linenr"> 6: </span>  <span style="color: #1c86ee;">public</span>:
+<span class="linenr"> 7: </span>    <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">Constructor. This function is called when the object is created.</span>
+<span class="linenr"> 8: </span>    <span style="color: #cd9b1d;">vector</span>(<span style="color: #00688b;">unsigned</span> <span style="color: #2e8b57;">len</span>);
 <span class="linenr"> 9: </span>
-<span class="linenr">10: </span>    <span style="color: #b22222;">// </span><span style="color: #b22222;">Destructor. This function is called when the object is destroyed.</span>
-<span class="linenr">11: </span>    ~<span style="color: #0000ff;">vector</span>();
+<span class="linenr">10: </span>    <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">Destructor. This function is called when the object is destroyed.</span>
+<span class="linenr">11: </span>    ~<span style="color: #cd9b1d;">vector</span>();
 <span class="linenr">12: </span>
-<span class="linenr">13: </span>    <span style="color: #b22222;">// </span><span style="color: #b22222;">length accessor.</span>
-<span class="linenr">14: </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #0000ff;">len</span>();
+<span class="linenr">13: </span>    <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">length accessor.</span>
+<span class="linenr">14: </span>    <span style="color: #00688b;">unsigned</span> <span style="color: #cd9b1d;">len</span>();
 <span class="linenr">15: </span>
-<span class="linenr">16: </span>    <span style="color: #b22222;">// </span><span style="color: #b22222;">data accessor.</span>
-<span class="linenr">17: </span>    <span style="color: #228b22;">double</span> &amp; <span style="color: #0000ff;">element</span>(<span style="color: #228b22;">unsigned</span> <span style="color: #a0522d;">i</span>);
+<span class="linenr">16: </span>    <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">data accessor.</span>
+<span class="linenr">17: </span>    <span style="color: #00688b;">double</span> &amp; <span style="color: #cd9b1d;">element</span>(<span style="color: #00688b;">unsigned</span> <span style="color: #2e8b57;">i</span>);
 <span class="linenr">18: </span>
-<span class="linenr">19: </span>    <span style="color: #b22222;">// </span><span style="color: #b22222;">Simple print function.</span>
-<span class="linenr">20: </span>    <span style="color: #228b22;">void</span> <span style="color: #0000ff;">print</span>();
+<span class="linenr">19: </span>    <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">Simple print function.</span>
+<span class="linenr">20: </span>    <span style="color: #00688b;">void</span> <span style="color: #cd9b1d;">print</span>();
 <span class="linenr">21: </span>
-<span class="linenr">22: </span>  <span style="color: #a020f0;">private</span>:
-<span class="linenr">23: </span>    <span style="color: #228b22;">unsigned</span> <span style="color: #a0522d;">length</span>;
-<span class="linenr">24: </span>    <span style="color: #228b22;">double</span> * <span style="color: #a0522d;">data</span>;
-<span class="linenr">25: </span>    <span style="color: #228b22;">void</span> <span style="color: #0000ff;">check_index</span>(<span style="color: #228b22;">unsigned</span> <span style="color: #a0522d;">i</span>);
+<span class="linenr">22: </span>  <span style="color: #1c86ee;">private</span>:
+<span class="linenr">23: </span>    <span style="color: #00688b;">unsigned</span> <span style="color: #2e8b57;">length</span>;
+<span class="linenr">24: </span>    <span style="color: #00688b;">double</span> * <span style="color: #2e8b57;">data</span>;
+<span class="linenr">25: </span>    <span style="color: #00688b;">void</span> <span style="color: #cd9b1d;">check_index</span>(<span style="color: #00688b;">unsigned</span> <span style="color: #2e8b57;">i</span>);
 <span class="linenr">26: </span>  };
 <span class="linenr">27: </span>}
-<span class="linenr">28: </span><span style="color: #483d8b;">#endif</span>
+<span class="linenr">28: </span><span style="color: #cdad00;">#endif</span>
 </pre>
 </div>
 
@@ -1980,43 +1979,43 @@ Create the implementation file, <code>vector.cpp</code>:
 
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;iostream&gt;</span>
-<span class="linenr"> 2: </span><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;cstdlib&gt;</span>
-<span class="linenr"> 3: </span><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">"vector.h"</span>
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #cdad00;">#include</span> <span style="color: #8b7355;">&lt;iostream&gt;</span>
+<span class="linenr"> 2: </span><span style="color: #cdad00;">#include</span> <span style="color: #8b7355;">&lt;cstdlib&gt;</span>
+<span class="linenr"> 3: </span><span style="color: #cdad00;">#include</span> <span style="color: #8b7355;">"vector.h"</span>
 <span class="linenr"> 4: </span>
-<span class="linenr"> 5: </span><span style="color: #a020f0;">namespace</span> <span style="color: #008b8b;">vec</span> {
-<span class="linenr"> 6: </span>  <span style="color: #008b8b;">vector</span>::<span style="color: #0000ff;">vector</span>(<span style="color: #228b22;">unsigned</span> <span style="color: #a0522d;">len</span>) {
-<span class="linenr"> 7: </span>    <span style="color: #a020f0;">this</span>-&gt;length = len;
-<span class="linenr"> 8: </span>    <span style="color: #a020f0;">this</span>-&gt;data = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">double</span>[len];
-<span class="linenr"> 9: </span>    <span style="color: #b22222;">// </span><span style="color: #b22222;">Initialize data to zeros.</span>
-<span class="linenr">10: </span>    <span style="color: #a020f0;">for</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">i</span>=0; i &lt; <span style="color: #a020f0;">this</span>-&gt;len(); i++) { <span style="color: #a020f0;">this</span>-&gt;data[i] = 0.0; }
+<span class="linenr"> 5: </span><span style="color: #1c86ee;">namespace</span> <span style="color: #6e8b3d;">vec</span> {
+<span class="linenr"> 6: </span>  <span style="color: #6e8b3d;">vector</span>::<span style="color: #cd9b1d;">vector</span>(<span style="color: #00688b;">unsigned</span> <span style="color: #2e8b57;">len</span>) {
+<span class="linenr"> 7: </span>    <span style="color: #1c86ee;">this</span>-&gt;length = len;
+<span class="linenr"> 8: </span>    <span style="color: #1c86ee;">this</span>-&gt;data = <span style="color: #1c86ee;">new</span> <span style="color: #00688b;">double</span>[len];
+<span class="linenr"> 9: </span>    <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">Initialize data to zeros.</span>
+<span class="linenr">10: </span>    <span style="color: #1c86ee;">for</span>(<span style="color: #00688b;">int</span> <span style="color: #2e8b57;">i</span>=0; i &lt; <span style="color: #1c86ee;">this</span>-&gt;len(); i++) { <span style="color: #1c86ee;">this</span>-&gt;data[i] = 0.0; }
 <span class="linenr">11: </span>  }
 <span class="linenr">12: </span>
-<span class="linenr">13: </span>  <span style="color: #008b8b;">vector</span>::~<span style="color: #0000ff;">vector</span>() {
-<span class="linenr">14: </span>    <span style="color: #a020f0;">delete</span> [] <span style="color: #a020f0;">this</span>-&gt;data;
+<span class="linenr">13: </span>  <span style="color: #6e8b3d;">vector</span>::~<span style="color: #cd9b1d;">vector</span>() {
+<span class="linenr">14: </span>    <span style="color: #1c86ee;">delete</span> [] <span style="color: #1c86ee;">this</span>-&gt;data;
 <span class="linenr">15: </span>  }
 <span class="linenr">16: </span>
-<span class="linenr">17: </span>  <span style="color: #228b22;">unsigned</span> <span style="color: #008b8b;">vector</span>::<span style="color: #0000ff;">len</span>() {
-<span class="linenr">18: </span>    <span style="color: #a020f0;">return</span> <span style="color: #a020f0;">this</span>-&gt;length;
+<span class="linenr">17: </span>  <span style="color: #00688b;">unsigned</span> <span style="color: #6e8b3d;">vector</span>::<span style="color: #cd9b1d;">len</span>() {
+<span class="linenr">18: </span>    <span style="color: #1c86ee;">return</span> <span style="color: #1c86ee;">this</span>-&gt;length;
 <span class="linenr">19: </span>  }
 <span class="linenr">20: </span>
-<span class="linenr">21: </span>  <span style="color: #228b22;">double</span> &amp; <span style="color: #008b8b;">vector</span>::<span style="color: #0000ff;">element</span>(<span style="color: #228b22;">unsigned</span> <span style="color: #a0522d;">i</span>) {
-<span class="linenr">22: </span><span style="color: #483d8b;">    #if</span><span style="color: #483d8b;">n</span><span style="color: #483d8b;">def</span> NDEBUG
+<span class="linenr">21: </span>  <span style="color: #00688b;">double</span> &amp; <span style="color: #6e8b3d;">vector</span>::<span style="color: #cd9b1d;">element</span>(<span style="color: #00688b;">unsigned</span> <span style="color: #2e8b57;">i</span>) {
+<span class="linenr">22: </span><span style="color: #cdad00;">    #if</span><span style="color: #cdad00;">n</span><span style="color: #cdad00;">def</span> NDEBUG
 <span class="linenr">23: </span>    check_index(i);
-<span class="linenr">24: </span><span style="color: #483d8b;">    #endif</span>
-<span class="linenr">25: </span>    <span style="color: #a020f0;">return</span> <span style="color: #a020f0;">this</span>-&gt;data[i];
+<span class="linenr">24: </span><span style="color: #cdad00;">    #endif</span>
+<span class="linenr">25: </span>    <span style="color: #1c86ee;">return</span> <span style="color: #1c86ee;">this</span>-&gt;data[i];
 <span class="linenr">26: </span>  }
 <span class="linenr">27: </span>
-<span class="linenr">28: </span>  <span style="color: #228b22;">void</span> <span style="color: #008b8b;">vector</span>::<span style="color: #0000ff;">print</span>() {
-<span class="linenr">29: </span>    <span style="color: #a020f0;">for</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">i</span>=0; i &lt; <span style="color: #a020f0;">this</span>-&gt;len(); i++) {
-<span class="linenr">30: </span>      <span style="color: #008b8b;">std</span>::cout &lt;&lt; <span style="color: #a020f0;">this</span>-&gt;data[i] &lt;&lt; <span style="color: #8b2252;">'\n'</span>;
+<span class="linenr">28: </span>  <span style="color: #00688b;">void</span> <span style="color: #6e8b3d;">vector</span>::<span style="color: #cd9b1d;">print</span>() {
+<span class="linenr">29: </span>    <span style="color: #1c86ee;">for</span>(<span style="color: #00688b;">int</span> <span style="color: #2e8b57;">i</span>=0; i &lt; <span style="color: #1c86ee;">this</span>-&gt;len(); i++) {
+<span class="linenr">30: </span>      <span style="color: #6e8b3d;">std</span>::cout &lt;&lt; <span style="color: #1c86ee;">this</span>-&gt;data[i] &lt;&lt; <span style="color: #8b7355;">'\n'</span>;
 <span class="linenr">31: </span>    }
 <span class="linenr">32: </span>  }
 <span class="linenr">33: </span>
-<span class="linenr">34: </span>  <span style="color: #228b22;">void</span> <span style="color: #008b8b;">vector</span>::<span style="color: #0000ff;">check_index</span>(<span style="color: #228b22;">unsigned</span> <span style="color: #a0522d;">i</span>) {
-<span class="linenr">35: </span>    <span style="color: #a020f0;">if</span> (i &lt; 0 || i &gt;= <span style="color: #a020f0;">this</span>-&gt;length) {
-<span class="linenr">36: </span>      <span style="color: #008b8b;">std</span>::cerr &lt;&lt; <span style="color: #8b2252;">"ERROR: index, "</span> &lt;&lt; i &lt;&lt; <span style="color: #8b2252;">", is out-of-bounds.\n"</span>
-<span class="linenr">37: </span>                &lt;&lt; <span style="color: #8b2252;">"(valid indices are 0-"</span> &lt;&lt; (<span style="color: #a020f0;">this</span>-&gt;length-1) &lt;&lt; <span style="color: #8b2252;">")\n"</span>;
+<span class="linenr">34: </span>  <span style="color: #00688b;">void</span> <span style="color: #6e8b3d;">vector</span>::<span style="color: #cd9b1d;">check_index</span>(<span style="color: #00688b;">unsigned</span> <span style="color: #2e8b57;">i</span>) {
+<span class="linenr">35: </span>    <span style="color: #1c86ee;">if</span> (i &lt; 0 || i &gt;= <span style="color: #1c86ee;">this</span>-&gt;length) {
+<span class="linenr">36: </span>      <span style="color: #6e8b3d;">std</span>::cerr &lt;&lt; <span style="color: #8b7355;">"ERROR: index, "</span> &lt;&lt; i &lt;&lt; <span style="color: #8b7355;">", is out-of-bounds.\n"</span>
+<span class="linenr">37: </span>                &lt;&lt; <span style="color: #8b7355;">"(valid indices are 0-"</span> &lt;&lt; (<span style="color: #1c86ee;">this</span>-&gt;length-1) &lt;&lt; <span style="color: #8b7355;">")\n"</span>;
 <span class="linenr">38: </span>      exit(1);
 <span class="linenr">39: </span>    }
 <span class="linenr">40: </span>  }
@@ -2060,13 +2059,13 @@ Ok. Let's see some example usage, by creating a <code>main.cpp</code>, containin
 
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;iostream&gt;</span>
-<span class="linenr"> 2: </span><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">"vector.h"</span>
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #cdad00;">#include</span> <span style="color: #8b7355;">&lt;iostream&gt;</span>
+<span class="linenr"> 2: </span><span style="color: #cdad00;">#include</span> <span style="color: #8b7355;">"vector.h"</span>
 <span class="linenr"> 3: </span>
-<span class="linenr"> 4: </span><span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>() {
-<span class="linenr"> 5: </span>    <span style="color: #008b8b;">vec</span>::<span style="color: #228b22;">vector</span> <span style="color: #a0522d;">v</span>(5);
+<span class="linenr"> 4: </span><span style="color: #00688b;">int</span> <span style="color: #cd9b1d;">main</span>() {
+<span class="linenr"> 5: </span>    <span style="color: #6e8b3d;">vec</span>::<span style="color: #00688b;">vector</span> <span style="color: #2e8b57;">v</span>(5);
 <span class="linenr"> 6: </span>
-<span class="linenr"> 7: </span>    <span style="color: #008b8b;">std</span>::cout &lt;&lt; <span style="color: #8b2252;">"`v` has length = "</span> &lt;&lt; v.len() &lt;&lt; <span style="color: #8b2252;">"\n"</span>;
+<span class="linenr"> 7: </span>    <span style="color: #6e8b3d;">std</span>::cout &lt;&lt; <span style="color: #8b7355;">"`v` has length = "</span> &lt;&lt; v.len() &lt;&lt; <span style="color: #8b7355;">"\n"</span>;
 <span class="linenr"> 8: </span>
 <span class="linenr"> 9: </span>    v.element(0) = -1.27;
 <span class="linenr">10: </span>    v.element(3) = 3.1;
@@ -2075,7 +2074,7 @@ Ok. Let's see some example usage, by creating a <code>main.cpp</code>, containin
 <span class="linenr">13: </span>
 <span class="linenr">14: </span>    v.element(5) = 1234.0;
 <span class="linenr">15: </span>
-<span class="linenr">16: </span>    <span style="color: #a020f0;">return</span> 0;
+<span class="linenr">16: </span>    <span style="color: #1c86ee;">return</span> 0;
 <span class="linenr">17: </span>}
 </pre>
 </div>
@@ -2149,8 +2148,8 @@ In the header file, replace the <code>element</code> function declaration with:
 
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">data accessor.</span>
-<span class="linenr">2: </span><span style="color: #228b22;">double</span> &amp; <span style="color: #a020f0;">operator</span><span style="color: #0000ff;">[]</span>(<span style="color: #228b22;">unsigned</span> <span style="color: #a0522d;">i</span>);
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">data accessor.</span>
+<span class="linenr">2: </span><span style="color: #00688b;">double</span> &amp; <span style="color: #1c86ee;">operator</span><span style="color: #cd9b1d;">[]</span>(<span style="color: #00688b;">unsigned</span> <span style="color: #2e8b57;">i</span>);
 </pre>
 </div>
 
@@ -2160,11 +2159,11 @@ and in the implementation file, replace the <code>element</code> implementation 
 
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #228b22;">double</span> &amp; <span style="color: #008b8b;">vector</span>::<span style="color: #a020f0;">operator</span><span style="color: #0000ff;">[]</span>(<span style="color: #228b22;">unsigned</span> <span style="color: #a0522d;">i</span>) {
-<span class="linenr">2: </span><span style="color: #483d8b;">  #if</span><span style="color: #483d8b;">n</span><span style="color: #483d8b;">def</span> NDEBUG
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #00688b;">double</span> &amp; <span style="color: #6e8b3d;">vector</span>::<span style="color: #1c86ee;">operator</span><span style="color: #cd9b1d;">[]</span>(<span style="color: #00688b;">unsigned</span> <span style="color: #2e8b57;">i</span>) {
+<span class="linenr">2: </span><span style="color: #cdad00;">  #if</span><span style="color: #cdad00;">n</span><span style="color: #cdad00;">def</span> NDEBUG
 <span class="linenr">3: </span>  check_index(i);
-<span class="linenr">4: </span><span style="color: #483d8b;">  #endif</span>
-<span class="linenr">5: </span>  <span style="color: #a020f0;">return</span> <span style="color: #a020f0;">this</span>-&gt;data[i];
+<span class="linenr">4: </span><span style="color: #cdad00;">  #endif</span>
+<span class="linenr">5: </span>  <span style="color: #1c86ee;">return</span> <span style="color: #1c86ee;">this</span>-&gt;data[i];
 <span class="linenr">6: </span>}
 </pre>
 </div>
@@ -2226,8 +2225,8 @@ Let's add a declaration to the header file,
 
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">assignment operator.</span>
-<span class="linenr">2: </span><span style="color: #228b22;">vector</span> &amp; <span style="color: #a020f0;">operator</span><span style="color: #0000ff;">=</span>(<span style="color: #228b22;">vector</span> &amp; <span style="color: #a0522d;">src</span>);
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">assignment operator.</span>
+<span class="linenr">2: </span><span style="color: #00688b;">vector</span> &amp; <span style="color: #1c86ee;">operator</span><span style="color: #cd9b1d;">=</span>(<span style="color: #00688b;">vector</span> &amp; <span style="color: #2e8b57;">src</span>);
 </pre>
 </div>
 
@@ -2237,20 +2236,20 @@ and let's add to the implementation file,
 
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #228b22;">vector</span> &amp; <span style="color: #008b8b;">vector</span>::<span style="color: #a020f0;">operator</span><span style="color: #0000ff;">=</span>(<span style="color: #228b22;">vector</span> &amp; <span style="color: #a0522d;">src</span>) {
-<span class="linenr"> 2: </span>  <span style="color: #b22222;">// </span><span style="color: #b22222;">Delete the old data.</span>
-<span class="linenr"> 3: </span>  <span style="color: #a020f0;">delete</span> [] <span style="color: #a020f0;">this</span>-&gt;data;
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #00688b;">vector</span> &amp; <span style="color: #6e8b3d;">vector</span>::<span style="color: #1c86ee;">operator</span><span style="color: #cd9b1d;">=</span>(<span style="color: #00688b;">vector</span> &amp; <span style="color: #2e8b57;">src</span>) {
+<span class="linenr"> 2: </span>  <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">Delete the old data.</span>
+<span class="linenr"> 3: </span>  <span style="color: #1c86ee;">delete</span> [] <span style="color: #1c86ee;">this</span>-&gt;data;
 <span class="linenr"> 4: </span>
-<span class="linenr"> 5: </span>  <span style="color: #b22222;">// </span><span style="color: #b22222;">Initialize the new data.</span>
-<span class="linenr"> 6: </span>  <span style="color: #a020f0;">this</span>-&gt;length = src.len();
-<span class="linenr"> 7: </span>  <span style="color: #a020f0;">this</span>-&gt;data = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">double</span>[<span style="color: #a020f0;">this</span>-&gt;len()];
+<span class="linenr"> 5: </span>  <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">Initialize the new data.</span>
+<span class="linenr"> 6: </span>  <span style="color: #1c86ee;">this</span>-&gt;length = src.len();
+<span class="linenr"> 7: </span>  <span style="color: #1c86ee;">this</span>-&gt;data = <span style="color: #1c86ee;">new</span> <span style="color: #00688b;">double</span>[<span style="color: #1c86ee;">this</span>-&gt;len()];
 <span class="linenr"> 8: </span>
-<span class="linenr"> 9: </span>  <span style="color: #b22222;">// </span><span style="color: #b22222;">Copy over the new data.</span>
-<span class="linenr">10: </span>  <span style="color: #a020f0;">for</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">i</span>=0; i &lt; <span style="color: #a020f0;">this</span>-&gt;len(); i++) {
-<span class="linenr">11: </span>    <span style="color: #a020f0;">this</span>-&gt;data[i] = src[i];
+<span class="linenr"> 9: </span>  <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">Copy over the new data.</span>
+<span class="linenr">10: </span>  <span style="color: #1c86ee;">for</span>(<span style="color: #00688b;">int</span> <span style="color: #2e8b57;">i</span>=0; i &lt; <span style="color: #1c86ee;">this</span>-&gt;len(); i++) {
+<span class="linenr">11: </span>    <span style="color: #1c86ee;">this</span>-&gt;data[i] = src[i];
 <span class="linenr">12: </span>  }
 <span class="linenr">13: </span>
-<span class="linenr">14: </span>  <span style="color: #a020f0;">return</span> *<span style="color: #a020f0;">this</span>;
+<span class="linenr">14: </span>  <span style="color: #1c86ee;">return</span> *<span style="color: #1c86ee;">this</span>;
 <span class="linenr">15: </span>}
 </pre>
 </div>
@@ -2262,7 +2261,7 @@ we'll create a new vector:
 
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #008b8b;">vec</span>::<span style="color: #228b22;">vector</span> <span style="color: #0000ff;">w</span>(14);
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #6e8b3d;">vec</span>::<span style="color: #00688b;">vector</span> <span style="color: #cd9b1d;">w</span>(14);
 <span class="linenr">2: </span>w = v;
 <span class="linenr">3: </span>w.print();
 </pre>
@@ -2299,7 +2298,7 @@ directly:
 
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #008b8b;">vec</span>::<span style="color: #228b22;">vector</span> <span style="color: #a0522d;">w</span> = v;
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #6e8b3d;">vec</span>::<span style="color: #00688b;">vector</span> <span style="color: #2e8b57;">w</span> = v;
 </pre>
 </div>
 
@@ -2313,7 +2312,7 @@ code is essentially equivalent to
 
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #008b8b;">vec</span>::<span style="color: #228b22;">vector</span> <span style="color: #0000ff;">w</span>(v);
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #6e8b3d;">vec</span>::<span style="color: #00688b;">vector</span> <span style="color: #cd9b1d;">w</span>(v);
 </pre>
 </div>
 
@@ -2336,8 +2335,8 @@ Let's add the copy constructor declaration to the header file:
 
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">Copy constructor.</span>
-<span class="linenr">2: </span><span style="color: #0000ff;">vector</span>(<span style="color: #228b22;">vector</span> &amp; <span style="color: #a0522d;">src</span>);
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">Copy constructor.</span>
+<span class="linenr">2: </span><span style="color: #cd9b1d;">vector</span>(<span style="color: #00688b;">vector</span> &amp; <span style="color: #2e8b57;">src</span>);
 </pre>
 </div>
 
@@ -2347,13 +2346,13 @@ and let's add its implementation:
 
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #008b8b;">vector</span>::<span style="color: #0000ff;">vector</span>(<span style="color: #228b22;">vector</span> &amp; <span style="color: #a0522d;">src</span>) {
-<span class="linenr">2: </span>  <span style="color: #a020f0;">this</span>-&gt;length = src.len();
-<span class="linenr">3: </span>  <span style="color: #a020f0;">this</span>-&gt;data = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">double</span>[<span style="color: #a020f0;">this</span>-&gt;len()];
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #6e8b3d;">vector</span>::<span style="color: #cd9b1d;">vector</span>(<span style="color: #00688b;">vector</span> &amp; <span style="color: #2e8b57;">src</span>) {
+<span class="linenr">2: </span>  <span style="color: #1c86ee;">this</span>-&gt;length = src.len();
+<span class="linenr">3: </span>  <span style="color: #1c86ee;">this</span>-&gt;data = <span style="color: #1c86ee;">new</span> <span style="color: #00688b;">double</span>[<span style="color: #1c86ee;">this</span>-&gt;len()];
 <span class="linenr">4: </span>
-<span class="linenr">5: </span>  <span style="color: #b22222;">// </span><span style="color: #b22222;">Copy over the data.</span>
-<span class="linenr">6: </span>  <span style="color: #a020f0;">for</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">i</span>=0; i &lt; <span style="color: #a020f0;">this</span>-&gt;len(); i++) {
-<span class="linenr">7: </span>    <span style="color: #a020f0;">this</span>-&gt;data[i] = src[i];
+<span class="linenr">5: </span>  <span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">Copy over the data.</span>
+<span class="linenr">6: </span>  <span style="color: #1c86ee;">for</span>(<span style="color: #00688b;">int</span> <span style="color: #2e8b57;">i</span>=0; i &lt; <span style="color: #1c86ee;">this</span>-&gt;len(); i++) {
+<span class="linenr">7: </span>    <span style="color: #1c86ee;">this</span>-&gt;data[i] = src[i];
 <span class="linenr">8: </span>  }
 <span class="linenr">9: </span>}
 </pre>
@@ -2365,7 +2364,7 @@ Now we compile and run something like:
 
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #008b8b;">vec</span>::<span style="color: #228b22;">vector</span> <span style="color: #a0522d;">w</span> = v;
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #6e8b3d;">vec</span>::<span style="color: #00688b;">vector</span> <span style="color: #2e8b57;">w</span> = v;
 <span class="linenr">2: </span>w.print();
 </pre>
 </div>
@@ -2394,8 +2393,8 @@ the header file:
 
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #b22222;">// </span><span style="color: #b22222;">Arithmetic operators...</span>
-<span class="linenr">2: </span><span style="color: #228b22;">vector</span> &amp; <span style="color: #a020f0;">operator</span><span style="color: #0000ff;">+</span>(<span style="color: #228b22;">vector</span> &amp; <span style="color: #a0522d;">src</span>);
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #7f7f7f;">// </span><span style="color: #7f7f7f;">Arithmetic operators...</span>
+<span class="linenr">2: </span><span style="color: #00688b;">vector</span> &amp; <span style="color: #1c86ee;">operator</span><span style="color: #cd9b1d;">+</span>(<span style="color: #00688b;">vector</span> &amp; <span style="color: #2e8b57;">src</span>);
 </pre>
 </div>
 
@@ -2405,7 +2404,7 @@ also add:
 
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #228b22;">void</span> <span style="color: #0000ff;">check_same_len</span>(<span style="color: #228b22;">vector</span> &amp; <span style="color: #a0522d;">src</span>);
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #00688b;">void</span> <span style="color: #cd9b1d;">check_same_len</span>(<span style="color: #00688b;">vector</span> &amp; <span style="color: #2e8b57;">src</span>);
 </pre>
 </div>
 
@@ -2419,29 +2418,29 @@ Next, let's add the implementation of these two functions:
 
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #228b22;">vector</span> &amp; <span style="color: #008b8b;">vector</span>::<span style="color: #a020f0;">operator</span><span style="color: #0000ff;">+</span>(<span style="color: #228b22;">vector</span> &amp; <span style="color: #a0522d;">src</span>) {
-<span class="linenr"> 2: </span><span style="color: #483d8b;">  #if</span><span style="color: #483d8b;">n</span><span style="color: #483d8b;">def</span> NDEBUG
-<span class="linenr"> 3: </span>  <span style="color: #a020f0;">this</span>-&gt;check_same_len(src);
-<span class="linenr"> 4: </span><span style="color: #483d8b;">  #endif</span>
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #00688b;">vector</span> &amp; <span style="color: #6e8b3d;">vector</span>::<span style="color: #1c86ee;">operator</span><span style="color: #cd9b1d;">+</span>(<span style="color: #00688b;">vector</span> &amp; <span style="color: #2e8b57;">src</span>) {
+<span class="linenr"> 2: </span><span style="color: #cdad00;">  #if</span><span style="color: #cdad00;">n</span><span style="color: #cdad00;">def</span> NDEBUG
+<span class="linenr"> 3: </span>  <span style="color: #1c86ee;">this</span>-&gt;check_same_len(src);
+<span class="linenr"> 4: </span><span style="color: #cdad00;">  #endif</span>
 <span class="linenr"> 5: </span>
-<span class="linenr"> 6: </span>  <span style="color: #228b22;">vector</span> * <span style="color: #a0522d;">result</span> = <span style="color: #a020f0;">new</span> <span style="color: #228b22;">vector</span>(<span style="color: #a020f0;">this</span>-&gt;len());
+<span class="linenr"> 6: </span>  <span style="color: #00688b;">vector</span> * <span style="color: #2e8b57;">result</span> = <span style="color: #1c86ee;">new</span> <span style="color: #00688b;">vector</span>(<span style="color: #1c86ee;">this</span>-&gt;len());
 <span class="linenr"> 7: </span>
-<span class="linenr"> 8: </span>  <span style="color: #a020f0;">for</span>(<span style="color: #228b22;">int</span> <span style="color: #a0522d;">i</span>=0; i &lt; <span style="color: #a020f0;">this</span>-&gt;len(); i++) {
-<span class="linenr"> 9: </span>    result-&gt;data[i] = <span style="color: #a020f0;">this</span>-&gt;data[i] + src[i];
+<span class="linenr"> 8: </span>  <span style="color: #1c86ee;">for</span>(<span style="color: #00688b;">int</span> <span style="color: #2e8b57;">i</span>=0; i &lt; <span style="color: #1c86ee;">this</span>-&gt;len(); i++) {
+<span class="linenr"> 9: </span>    result-&gt;data[i] = <span style="color: #1c86ee;">this</span>-&gt;data[i] + src[i];
 <span class="linenr">10: </span>  }
 <span class="linenr">11: </span>
-<span class="linenr">12: </span>  <span style="color: #a020f0;">return</span> *result;
+<span class="linenr">12: </span>  <span style="color: #1c86ee;">return</span> *result;
 <span class="linenr">13: </span>}
 </pre>
 </div>
 
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #228b22;">void</span> <span style="color: #008b8b;">vector</span>::<span style="color: #0000ff;">check_same_len</span>(<span style="color: #228b22;">vector</span> &amp; <span style="color: #a0522d;">src</span>) {
-<span class="linenr">2: </span>  <span style="color: #a020f0;">if</span> (<span style="color: #a020f0;">this</span>-&gt;len() != src.len()) {
-<span class="linenr">3: </span>    <span style="color: #008b8b;">std</span>::cerr &lt;&lt; <span style="color: #8b2252;">"ERROR: length mismatch.\n"</span>
-<span class="linenr">4: </span>              &lt;&lt; <span style="color: #8b2252;">"(left len: "</span> &lt;&lt; <span style="color: #a020f0;">this</span>-&gt;len() &lt;&lt; <span style="color: #8b2252;">", "</span>
-<span class="linenr">5: </span>              &lt;&lt; <span style="color: #8b2252;">"right len: "</span> &lt;&lt; src.len() &lt;&lt; <span style="color: #8b2252;">")\n"</span>;
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #00688b;">void</span> <span style="color: #6e8b3d;">vector</span>::<span style="color: #cd9b1d;">check_same_len</span>(<span style="color: #00688b;">vector</span> &amp; <span style="color: #2e8b57;">src</span>) {
+<span class="linenr">2: </span>  <span style="color: #1c86ee;">if</span> (<span style="color: #1c86ee;">this</span>-&gt;len() != src.len()) {
+<span class="linenr">3: </span>    <span style="color: #6e8b3d;">std</span>::cerr &lt;&lt; <span style="color: #8b7355;">"ERROR: length mismatch.\n"</span>
+<span class="linenr">4: </span>              &lt;&lt; <span style="color: #8b7355;">"(left len: "</span> &lt;&lt; <span style="color: #1c86ee;">this</span>-&gt;len() &lt;&lt; <span style="color: #8b7355;">", "</span>
+<span class="linenr">5: </span>              &lt;&lt; <span style="color: #8b7355;">"right len: "</span> &lt;&lt; src.len() &lt;&lt; <span style="color: #8b7355;">")\n"</span>;
 <span class="linenr">6: </span>    exit(1);
 <span class="linenr">7: </span>  }
 <span class="linenr">8: </span>}
@@ -2462,24 +2461,24 @@ Let's look at an example usage where
 
 <div class="org-src-container">
 
-<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">&lt;iostream&gt;</span>
-<span class="linenr"> 2: </span><span style="color: #483d8b;">#include</span> <span style="color: #8b2252;">"vector.h"</span>
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #cdad00;">#include</span> <span style="color: #8b7355;">&lt;iostream&gt;</span>
+<span class="linenr"> 2: </span><span style="color: #cdad00;">#include</span> <span style="color: #8b7355;">"vector.h"</span>
 <span class="linenr"> 3: </span>
-<span class="linenr"> 4: </span><span style="color: #228b22;">int</span> <span style="color: #0000ff;">main</span>() {
-<span class="linenr"> 5: </span>    <span style="color: #008b8b;">vec</span>::<span style="color: #228b22;">vector</span> <span style="color: #a0522d;">v</span>(5);
+<span class="linenr"> 4: </span><span style="color: #00688b;">int</span> <span style="color: #cd9b1d;">main</span>() {
+<span class="linenr"> 5: </span>    <span style="color: #6e8b3d;">vec</span>::<span style="color: #00688b;">vector</span> <span style="color: #2e8b57;">v</span>(5);
 <span class="linenr"> 6: </span>
 <span class="linenr"> 7: </span>    v[0] = -1.27;
 <span class="linenr"> 8: </span>    v[3] = 3.1;
 <span class="linenr"> 9: </span>
-<span class="linenr">10: </span>    <span style="color: #008b8b;">vec</span>::<span style="color: #228b22;">vector</span> <span style="color: #a0522d;">w</span> = v;
+<span class="linenr">10: </span>    <span style="color: #6e8b3d;">vec</span>::<span style="color: #00688b;">vector</span> <span style="color: #2e8b57;">w</span> = v;
 <span class="linenr">11: </span>
-<span class="linenr">12: </span>    <span style="color: #008b8b;">vec</span>::<span style="color: #228b22;">vector</span> <span style="color: #a0522d;">z</span> = w+v;
+<span class="linenr">12: </span>    <span style="color: #6e8b3d;">vec</span>::<span style="color: #00688b;">vector</span> <span style="color: #2e8b57;">z</span> = w+v;
 <span class="linenr">13: </span>    z.print();
 <span class="linenr">14: </span>
-<span class="linenr">15: </span>    <span style="color: #008b8b;">vec</span>::<span style="color: #228b22;">vector</span> <span style="color: #a0522d;">q</span>(6);
+<span class="linenr">15: </span>    <span style="color: #6e8b3d;">vec</span>::<span style="color: #00688b;">vector</span> <span style="color: #2e8b57;">q</span>(6);
 <span class="linenr">16: </span>    q+v;
 <span class="linenr">17: </span>
-<span class="linenr">18: </span>    <span style="color: #a020f0;">return</span> 0;
+<span class="linenr">18: </span>    <span style="color: #1c86ee;">return</span> 0;
 <span class="linenr">19: </span>}
 </pre>
 </div>
