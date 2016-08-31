@@ -28,7 +28,7 @@ checked when the program is compiled (i.e., translated into a machine
 executable file).
 
 One key difference between C++ and C, however, is that C++ provides 
-many mechanisms to allow for [[https://en.wikipedia.org/wiki/Object-oriented_programming][object-oriented programming paradigm]]. This 
+many mechanisms to allow for the [[https://en.wikipedia.org/wiki/Object-oriented_programming][object-oriented programming paradigm]]. This 
 essentially allows the software writer to create custom, complex, 
 reusable data structures. The object-oriented paradigm is extremely useful, 
 but we will only touch the surface of it in this guide.
