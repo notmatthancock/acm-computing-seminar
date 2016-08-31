@@ -1,13 +1,17 @@
 module matrix_module
   implicit none
 
+  public :: zeros
+  public :: identity
+  public :: random
+
   type matrix
      integer :: shape(2)
      real, allocatable :: data(:,:)
    contains
      procedure :: construct => matrix_construct
      procedure :: destruct => matrix_destruct
-     procedure :: max_eig
+     procedure :: norm => matrix_norm
   end type matrix
 
   type vector
@@ -16,12 +20,15 @@ module matrix_module
    contains
      procedure :: construct => vector_construct
      procedure :: destruct => vector_destruct
+     procedure :: norm => vector_norm
   end type vector
 
+  ! assignments
   interface assignment(=)
      procedure vec_num_assign, vec_vec_assign, mat_num_assign, mat_mat_assign
   end interface assignment(=)
 
+  ! operations
   interface operator(+)
      procedure vec_vec_sum, mat_mat_sum
   end interface operator(+)
@@ -38,9 +45,23 @@ module matrix_module
      procedure vec_num_quot, mat_num_quot
   end interface operator(/)
 
-  interface norm2
-     procedure vec_norm2
-  end interface norm2
+  interface operator(**)
+     procedure mat_pow
+  end interface operator(**)
+
+  ! functions
+  interface norm
+     procedure vector_norm, matrix_norm
+  end interface norm
+
+  ! structured vectors/matrices
+  interface zeros
+     procedure zeros_vector, zeros_matrix
+  end interface zeros
+
+  interface random
+     procedure random_vector, random_matrix
+  end interface random
 
 contains
 
@@ -68,82 +89,32 @@ contains
     deallocate(this%data)
   end subroutine vector_destruct
 
-  subroutine max_eig(this, iter, val, vec)
-    class(matrix), intent(in) :: this
-    integer, intent(inout) :: iter
-    real, intent(inout) :: val
-    type(vector), intent(inout) :: vec
-    type(vector) :: last_vec
-    real :: tol=1e-6
-    integer :: max_iters, i
-
-    vec = random_vector(this%shape(2))
-    vec = vec/norm2(vec)
-
-    call last_vec%construct(this%shape(2))
-    last_vec%data = 0.0
-    max_iters = iter
-    iter = 0
-
-    do while (norm2(vec-last_vec)>tol.and.iter<max_iters)
-       last_vec%data = vec%data
-       vec = this*last_vec
-       vec = vec/norm2(vec)
-       iter = iter+1
-    end do
-
-    val = norm2(this*vec)
-
-  end subroutine max_eig
-
-  function random_matrix(m,n) result(mat)
-    integer :: m,n,i,j
-    type(matrix) :: mat
-    call mat%construct(m,n)
-    call srand(time())
-    do i = 1,m
-       do j = 1,n
-          mat%data(i,j) = rand()
-       end do
-    end do
-  end function random_matrix
-
-  function random_vector(n) result(vec)
-    integer :: n,i
-    type(vector) :: vec
-    call vec%construct(n)
-    call srand(time())
-    do i = 1,n
-       vec%data(i) = rand()
-    end do
-  end function random_vector
-
   ! assignment
   subroutine vec_num_assign(vec,num)
-    type(vector), intent(out) :: vec
+    type(vector), intent(inout) :: vec
     real, intent(in) :: num
     vec%data = num
   end subroutine vec_num_assign
 
   subroutine vec_vec_assign(vec1,vec2)
-    type(vector), intent(out) :: vec1
+    type(vector), intent(inout) :: vec1
     type(vector), intent(in) :: vec2
     vec1%data = vec2%data
   end subroutine vec_vec_assign
 
   subroutine mat_num_assign(mat,num)
-    type(matrix), intent(out) :: mat
+    type(matrix), intent(inout) :: mat
     real, intent(in) :: num
     mat%data = num
   end subroutine mat_num_assign
 
   subroutine mat_mat_assign(mat1,mat2)
-    type(matrix), intent(out) :: mat1
+    type(matrix), intent(inout) :: mat1
     type(matrix), intent(in) :: mat2
     mat1%data = mat2%data
   end subroutine mat_mat_assign
 
-  ! addition
+  ! operations
   function vec_vec_sum(vec1,vec2) result(s)
     type(vector), intent(in) :: vec1, vec2
     type(vector) :: s
@@ -158,7 +129,6 @@ contains
     s%data = mat1%data+mat2%data
   end function mat_mat_sum
 
-  ! subtraction
   function vec_vec_diff(vec1,vec2) result(diff)
     type(vector), intent(in) :: vec1, vec2
     type(vector) :: diff
@@ -173,7 +143,6 @@ contains
     diff%data = mat1%data-mat2%data
   end function mat_mat_diff
 
-  ! multiplication
   function num_vec_prod(num,vec) result(prod)
     real, intent(in) :: num
     type(vector), intent(in) :: vec
@@ -192,10 +161,9 @@ contains
 
   function mat_vec_prod(mat,vec) result(prod)
     type(matrix), intent(in) :: mat
-    type(vector), intent(in) :: vec 
+    type(vector), intent(in) :: vec
     type(vector) :: prod
     call prod%construct(mat%shape(1))
-    print*, mat%shape, vec%length
     prod%data = matmul(mat%data,vec%data)
   end function mat_vec_prod
 
@@ -203,11 +171,9 @@ contains
     type(matrix), intent(in) :: mat1, mat2
     type(matrix) :: prod
     call prod%construct(mat1%shape(1),mat2%shape(2))
-    print*, mat1%shape, mat2%shape
     prod%data = matmul(mat1%data,mat2%data)
   end function mat_mat_prod
 
-  ! division
   function vec_num_quot(vec,num) result(quot)
     type(vector), intent(in) :: vec
     real, intent(in) :: num
@@ -224,11 +190,112 @@ contains
     quot%data = mat%data/num
   end function mat_num_quot
 
-  ! norm
-  function vec_norm2(vec) result(norm)
-    type(vector), intent(in) :: vec
-    real :: norm
-    norm = norm2(vec%data)
-  end function vec_norm2
+  function mat_pow(mat1,pow) result(mat2)
+    type(matrix), intent(in) :: mat1
+    integer, intent(in) :: pow
+    type(matrix) :: mat2
+    integer :: i
+    mat2 = mat1
+    do i = 2,pow
+       mat2 = mat1*mat2
+    end do
+  end function mat_pow
+
+  ! functions
+  function vector_norm(this,p) result(mag)
+    class(vector), intent(in) :: this
+    integer, intent(in) :: p
+    real :: mag
+    integer :: i
+    ! inf-norm
+    if (p==0) then
+       mag = 0.0
+       do i = 1,this%length
+          mag = max(mag,abs(this%data(i)))
+       end do
+    ! p-norm
+    else if (p>0) then
+       mag = (sum(abs(this%data)**p))**(1./p)
+    end if
+  end function vector_norm
+
+  function matrix_norm(this, p) result(mag)
+    class(matrix), intent(in) :: this
+    integer, intent(in) :: p
+    real ::  mag, tol = 1e-6
+    integer :: m, n, row, col, iter, max_iters = 1000
+    type(vector) :: vec, last_vec
+    m = size(this%data(:,1)); n = size(this%data(1,:))
+
+    ! entry-wise norms
+    if (p<0) then
+       mag = (sum(abs(this%data)**(-p)))**(-1./p)
+    ! inf-norm
+    else if (p==0) then
+       mag = 0.0
+       do row = 1,m
+          mag = max(mag,sum(abs(this%data(row,:))))
+       end do
+    ! 1-norm
+    else if (p==1) then
+       mag = 0.0
+       do col = 1,n
+          mag = max(mag,sum(abs(this%data(:,col))))
+       end do
+    ! p-norm
+    else if (p>0) then
+       vec = random(n)
+       vec = vec/vec%norm(p)
+       last_vec = zeros(n)
+       mag = 0.0
+       do iter = 1,max_iters
+          last_vec = vec
+          vec = this*last_vec
+          vec = vec/vec%norm(p)
+          if (vector_norm(vec-last_vec,p)<tol) exit
+       end do
+       mag = vector_norm(this*vec,p)
+    end if
+  end function matrix_norm
+
+  ! structured vectors/matrices
+  function random_matrix(m,n) result(mat)
+    integer :: m,n
+    type(matrix) :: mat
+    call mat%construct(m,n)
+    call random_seed()
+    call random_number(mat%data)
+  end function random_matrix
+
+  function random_vector(n) result(vec)
+    integer :: n
+    type(vector) :: vec
+    call vec%construct(n)
+    call random_seed()
+    call random_number(vec%data)
+  end function random_vector
+
+  function zeros_vector(n) result(vec)
+    integer :: n
+    type(vector) :: vec
+    call vec%construct(n)
+    vec = 0.0
+  end function zeros_vector
+
+  function zeros_matrix(m,n) result(mat)
+    integer :: m,n
+    type(matrix) :: mat
+    call mat%construct(m,n)
+    mat = 0.0
+  end function zeros_matrix
+
+  function identity(m,n) result(mat)
+    integer :: m,n,i
+    type(matrix) :: mat
+    call mat%construct(m,n)
+    do i = 1,min(m,n)
+       mat%data(i,i) = 1.0
+    end do
+  end function identity
 
 end module matrix_module
