@@ -19,6 +19,13 @@
 | <c>                |                                                     |
 |--------------------+-----------------------------------------------------|
 | 1 <2016-08-29 Mon> | Install gcc / g++; write and compile "hello world". |
+| 2 <2016-09-12 Mon> | Compute the value of the truncated sum,             |
+|                    | $s_N := \sum_{n=1}^N \frac{1}{n^2}$                 |
+|                    | and the absolute error,                             |
+|                    | $a_N := \vert{}\frac{\pi^2}{6} - s_N\vert{}$        |
+|                    | while $a_N > 10^{-5}$. For each iteration, print    |
+|                    | $N$, $s_N$, $a_N$                                   |
+|                    | if $N$ is a multiple of $100$.                      |
 
 * Resources
 ** Programming Language Guides
@@ -31,3 +38,4 @@
 + [[./resources/prog/example-assignment.zip][Example programming assignment and solution]]
 
 #+html: </div>
+

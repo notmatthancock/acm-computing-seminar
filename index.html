@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>MAT5939-03 ACM Computing Seminar – Fall 2016</title>
-<!-- 2016-08-29 Mon 09:33 -->
+<!-- 2016-09-12 Mon 11:04 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Matt Hancock" />
@@ -135,6 +135,48 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
+<script type="text/javascript" src="http://orgmode.org/mathjax/MathJax.js"></script>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+    MathJax.Hub.Config({
+        // Only one of the two following lines, depending on user settings
+        // First allows browser-native MathML display, second forces HTML/CSS
+        //  config: ["MMLorHTML.js"], jax: ["input/TeX"],
+            jax: ["input/TeX", "output/HTML-CSS"],
+        extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js",
+                     "TeX/noUndefined.js"],
+        tex2jax: {
+            inlineMath: [ ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"], ["\\begin{displaymath}","\\end{displaymath}"] ],
+            skipTags: ["script","noscript","style","textarea","pre","code"],
+            ignoreClass: "tex2jax_ignore",
+            processEscapes: false,
+            processEnvironments: true,
+            preview: "TeX"
+        },
+        showProcessingMessages: true,
+        displayAlign: "center",
+        displayIndent: "2em",
+
+        "HTML-CSS": {
+             scale: 100,
+             availableFonts: ["STIX","TeX"],
+             preferredFont: "TeX",
+             webFont: "TeX",
+             imageFont: "TeX",
+             showMathMenu: true,
+        },
+        MMLorHTML: {
+             prefer: {
+                 MSIE:    "MML",
+                 Firefox: "MML",
+                 Opera:   "HTML",
+                 other:   "HTML"
+             }
+        }
+    });
+/*]]>*///-->
+</script>
 </head>
 <body>
 <div id="content">
@@ -198,6 +240,41 @@ for the JavaScript code in this tag.
 <tr>
 <td class="center">1 <span class="timestamp-wrapper"><span class="timestamp">&lt;2016-08-29 Mon&gt;</span></span></td>
 <td class="left">Install gcc / g++; write and compile "hello world".</td>
+</tr>
+
+<tr>
+<td class="center">2 <span class="timestamp-wrapper"><span class="timestamp">&lt;2016-09-12 Mon&gt;</span></span></td>
+<td class="left">Compute the value of the truncated sum,</td>
+</tr>
+
+<tr>
+<td class="center">&#xa0;</td>
+<td class="left">\(s_N := \sum_{n=1}^N \frac{1}{n^2}\)</td>
+</tr>
+
+<tr>
+<td class="center">&#xa0;</td>
+<td class="left">and the absolute error,</td>
+</tr>
+
+<tr>
+<td class="center">&#xa0;</td>
+<td class="left">\(a_N := \vert{}\frac{\pi^2}{6} - s_N\vert{}\)</td>
+</tr>
+
+<tr>
+<td class="center">&#xa0;</td>
+<td class="left">while \(a_N > 10^{-5}\). For each iteration, print</td>
+</tr>
+
+<tr>
+<td class="center">&#xa0;</td>
+<td class="left">\(N\), \(s_N\), \(a_N\)</td>
+</tr>
+
+<tr>
+<td class="center">&#xa0;</td>
+<td class="left">if \(N\) is a multiple of \(100\).</td>
 </tr>
 </tbody>
 </table>
