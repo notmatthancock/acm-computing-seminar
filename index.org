@@ -44,6 +44,8 @@
 |                    | the values given, using the [[https://en.wikipedia.org/wiki/Trapezoidal_rule][trapezoidal rule]].          |
 |                    | Modularize your code, i.e., use header and             |
 |                    | implementation files                                   |
+
+#+begin_comment
 |--------------------+--------------------------------------------------------|
 | 4 <2016-09-26 Mon> | Write a member function of the =vector= class          |
 |                    | discussed in the C++ guide that has the declaration:   |
@@ -63,7 +65,7 @@
 |                    |                                                        |
 |                    | Show that your =dot= function satisfies [[https://en.wikipedia.org/wiki/Inner_product_space#Definition][the properties]] |
 |                    | of an inner product using a few examples.              |
-
+#+end_comment
 
 
 #+html: </div>
