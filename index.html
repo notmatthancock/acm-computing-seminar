@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2016-09-26 Mon 16:28 -->
+<!-- 2016-09-27 Tue 09:08 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title>MAT5939-03 ACM Computing Seminar – Fall 2016</title>
@@ -321,6 +321,92 @@ for the JavaScript code in this tag.
 <tr>
 <td class="org-center">&#xa0;</td>
 <td class="org-left">implementation files</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-center">4 <span class="timestamp-wrapper"><span class="timestamp">&lt;2016-09-26 Mon&gt;</span></span></td>
+<td class="org-left">Add a member function, <code>norm</code>, to the vector class</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">discussed in the C++ guide. The function should</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">have the signature:</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left"><code>double norm(double p);</code></td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">and should implement the <a href="https://en.wikipedia.org/wiki/Norm_(mathematics)#p-norm">vector p-norm</a>. The function</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">would be then called like:</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left"><code>x.norm(1.53);</code></td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">where <code>x</code> is a vector object. Write a test script</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">that loops through values of <code>p=1, 1.1, ..., 1.9, 2</code></td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">and for each value of <code>p</code>, prints the average p-norm</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">of 100 vectors of length 10 whose components are</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">uniform random on [0,1] (see the C++ guide section</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">on generating random numbers).</td>
 </tr>
 </tbody>
 </table>
