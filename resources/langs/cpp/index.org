@@ -1478,4 +1478,35 @@ prints:
 : 3.1
 : 0
 
+Other binary arithmetic operators could also be implements as =friend= 
+functions, e.g., vector addition and subtraction and component-wise 
+multiplication and division. Component-wise multiplication would overload 
+=operator*= for a third time but would accept two vectors as function 
+arguments.
+
+**** Overloading =operator<<=
+We may overload =operator<<= to send things to the output stream. This 
+is a more C++ way to print than our current =print= function. We overload
+this operator by adding the following =friend= declaration to the header:
+
+#+include: ./src/vector/operator-ostream/vector.h :lines "30-31" src cpp -n
+
+Note that the =ostream= object belongs to the =std= namespace. Next, we
+add to the implementation file:
+
+#+include: ./src/vector/operator-ostream/vector.cpp :lines "68-72" src cpp -n
+
+So now we stream the vector to =std::cout= just as we do for printing 
+numbers and strings to the screen:
+
+#+include: ./src/vector/operator-ostream/main.cpp src cpp -n
+
+which prints
+
+: -1.27
+: 0
+: 0
+: 3.1
+: 0
+
 #+html: </div>

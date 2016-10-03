@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2016-10-03 Mon 16:52 -->
+<!-- 2016-10-03 Mon 18:03 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title>ACM Computing Seminar C++ Guide</title>
@@ -269,7 +269,7 @@ for the JavaScript code in this tag.
 </li>
 <li><a href="#orgheadline9">7. Object-oriented programming</a>
 <ul>
-<li><a href="#orgheadline58">7.1. Example: a vector <code>class</code></a>
+<li><a href="#orgheadline59">7.1. Example: a vector <code>class</code></a>
 <ul>
 <li><a href="#orgheadline49">7.1.1. The header file</a></li>
 <li><a href="#orgheadline50">7.1.2. The implementation file</a></li>
@@ -281,9 +281,10 @@ for the JavaScript code in this tag.
 </ul>
 </li>
 <li><a href="#orgheadline55">7.1.5. The copy constructor</a></li>
-<li><a href="#orgheadline57">7.1.6. Friend functions</a>
+<li><a href="#orgheadline58">7.1.6. Friend functions</a>
 <ul>
-<li><a href="#orgheadline56">7.1.6.1. <code>operator*</code></a></li>
+<li><a href="#orgheadline56">7.1.6.1. Overloading <code>operator*</code></a></li>
+<li><a href="#orgheadline57">7.1.6.2. Overloading <code>operator&lt;&lt;</code></a></li>
 </ul>
 </li>
 </ul>
@@ -1893,8 +1894,8 @@ improves upon the default <code>double</code> array.
 </p>
 </div>
 
-<div id="outline-container-orgheadline58" class="outline-3">
-<h3 id="orgheadline58"><span class="section-number-3">7.1</span> Example: a vector <code>class</code></h3>
+<div id="outline-container-orgheadline59" class="outline-3">
+<h3 id="orgheadline59"><span class="section-number-3">7.1</span> Example: a vector <code>class</code></h3>
 <div class="outline-text-3" id="text-7-1">
 </div><div id="outline-container-orgheadline49" class="outline-4">
 <h4 id="orgheadline49"><span class="section-number-4">7.1.1</span> The header file</h4>
@@ -2395,8 +2396,8 @@ we will see:
 </div>
 </div>
 
-<div id="outline-container-orgheadline57" class="outline-4">
-<h4 id="orgheadline57"><span class="section-number-4">7.1.6</span> Friend functions</h4>
+<div id="outline-container-orgheadline58" class="outline-4">
+<h4 id="orgheadline58"><span class="section-number-4">7.1.6</span> Friend functions</h4>
 <div class="outline-text-4" id="text-7-1-6">
 <p>
 Non-member functions may access private member variables and private member 
@@ -2409,7 +2410,7 @@ is necessary for member functions.
 </div>
 
 <div id="outline-container-orgheadline56" class="outline-5">
-<h5 id="orgheadline56"><span class="section-number-5">7.1.6.1</span> <code>operator*</code></h5>
+<h5 id="orgheadline56"><span class="section-number-5">7.1.6.1</span> Overloading <code>operator*</code></h5>
 <div class="outline-text-5" id="text-7-1-6-1">
 <p>
 As an example, we'll overload <code>operator*</code> to implement scalar multiplication.
@@ -2503,6 +2504,80 @@ prints:
 6.2
 0
 
+-1.27
+0
+0
+3.1
+0
+</pre>
+
+<p>
+Other binary arithmetic operators could also be implements as <code>friend</code> 
+functions, e.g., vector addition and subtraction and component-wise 
+multiplication and division. Component-wise multiplication would overload 
+<code>operator*</code> for a third time but would accept two vectors as function 
+arguments.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline57" class="outline-5">
+<h5 id="orgheadline57"><span class="section-number-5">7.1.6.2</span> Overloading <code>operator&lt;&lt;</code></h5>
+<div class="outline-text-5" id="text-7-1-6-2">
+<p>
+We may overload <code>operator&lt;&lt;</code> to send things to the output stream. This 
+is a more C++ way to print than our current <code>print</code> function. We overload
+this operator by adding the following <code>friend</code> declaration to the header:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #56b4e9; font-weight: bold;">friend</span> <span style="color: #d55e00; font-weight: bold;">std</span>::<span style="color: #0072b2; font-weight: bold;">ostream</span> &amp; <span style="color: #56b4e9; font-weight: bold;">operator</span><span style="color: #d55e00;">&lt;&lt;</span>(<span style="color: #d55e00; font-weight: bold;">std</span>::<span style="color: #0072b2; font-weight: bold;">ostream</span> &amp; <span style="color: #e69f00; font-weight: bold;">outs</span>, <span style="color: #56b4e9; font-weight: bold;">const</span> <span style="color: #0072b2; font-weight: bold;">vector</span> &amp; <span style="color: #e69f00; font-weight: bold;">v</span>);
+</pre>
+</div>
+
+<p>
+Note that the <code>ostream</code> object belongs to the <code>std</code> namespace. Next, we
+add to the implementation file:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #d55e00; font-weight: bold;">std</span>::<span style="color: #0072b2; font-weight: bold;">ostream</span> &amp; <span style="color: #56b4e9; font-weight: bold;">operator</span><span style="color: #d55e00;">&lt;&lt;</span>(<span style="color: #d55e00; font-weight: bold;">std</span>::<span style="color: #0072b2; font-weight: bold;">ostream</span> &amp; <span style="color: #e69f00; font-weight: bold;">outs</span>, <span style="color: #56b4e9; font-weight: bold;">const</span> <span style="color: #0072b2; font-weight: bold;">vector</span> &amp; <span style="color: #e69f00; font-weight: bold;">v</span>) {
+<span class="linenr">2: </span>    <span style="color: #56b4e9; font-weight: bold;">for</span>(<span style="color: #0072b2; font-weight: bold;">int</span> <span style="color: #e69f00; font-weight: bold;">i</span>=0; i &lt; v.len(); i++) {
+<span class="linenr">3: </span>        outs &lt;&lt; v.data[i] &lt;&lt; <span style="color: #848ea9;">"\n"</span>;
+<span class="linenr">4: </span>    }
+</pre>
+</div>
+
+<p>
+So now we stream the vector to <code>std::cout</code> just as we do for printing 
+numbers and strings to the screen:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #0072b2;">#include</span> <span style="color: #848ea9;">&lt;iostream&gt;</span>
+<span class="linenr"> 2: </span><span style="color: #0072b2;">#include</span> <span style="color: #848ea9;">"vector.h"</span>
+<span class="linenr"> 3: </span>
+<span class="linenr"> 4: </span><span style="color: #0072b2; font-weight: bold;">int</span> <span style="color: #d55e00;">main</span>() {
+<span class="linenr"> 5: </span>    <span style="color: #d55e00; font-weight: bold;">vec</span>::<span style="color: #0072b2; font-weight: bold;">vector</span> <span style="color: #e69f00; font-weight: bold;">v</span>(5);
+<span class="linenr"> 6: </span>
+<span class="linenr"> 7: </span>    v[0] = -1.27;
+<span class="linenr"> 8: </span>    v[3] = 3.1;
+<span class="linenr"> 9: </span>
+<span class="linenr">10: </span>    <span style="color: #d55e00; font-weight: bold;">std</span>::cout &lt;&lt; v;
+<span class="linenr">11: </span>
+<span class="linenr">12: </span>    <span style="color: #56b4e9; font-weight: bold;">return</span> 0;
+<span class="linenr">13: </span>}
+</pre>
+</div>
+
+<p>
+which prints
+</p>
+
+<pre class="example">
 -1.27
 0
 0
