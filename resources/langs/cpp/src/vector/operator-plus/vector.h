@@ -14,18 +14,19 @@ namespace vec {
     unsigned len();
 
     // data accessor.
-    double & operator[](unsigned i);
+    double & operator[](unsigned i) const;
 
-    // assignment operator.
-    vector & operator=(vector & src);
+    // component-wise addition, overloading opeator+
+    vector & operator+(const vector & src);
 
     // Simple print function.
-    void print();
+    void print() const;
 
   private:
     unsigned length;
     double * data;
-    void check_index(unsigned i);
+    void check_index(unsigned i) const;
+    void check_same_len(const vector & src) const;
   };
 }
 #endif

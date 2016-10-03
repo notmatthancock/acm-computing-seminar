@@ -51,7 +51,7 @@ namespace vec {
     return *this;
   }
 
-  vector & vector::operator+(vector & src) {
+  vector & vector::operator+(vector & src) const {
     #ifndef NDEBUG
     this->check_same_len(src);
     #endif
@@ -66,12 +66,12 @@ namespace vec {
   }
 
   void vector::print() {
-    for(int i=0; i < this->len(); i++) {
+    for(int i=0; i < this->len(); i++) const{
       std::cout << this->data[i] << '\n';
     }
   }
 
-  void vector::check_index(unsigned i) {
+  void vector::check_index(unsigned i) const {
     if (i < 0 || i >= this->length) {
       std::cerr << "ERROR: index, " << i << ", is out-of-bounds.\n"
                 << "(valid indices are 0-" << (this->length-1) << ")\n";
@@ -79,7 +79,7 @@ namespace vec {
     }
   }
 
-  void vector::check_same_len(vector & src) {
+  void vector::check_same_len(const vector & src) const {
     if (this->len() != src.len()) {
       std::cerr << "ERROR: length mismatch.\n"
                 << "(left len: " << this->len() << ", "

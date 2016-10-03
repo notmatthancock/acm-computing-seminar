@@ -14,7 +14,10 @@ namespace vec {
     unsigned len();
 
     // data accessor.
-    double & operator[](unsigned i);
+    double & operator[](unsigned i) const;
+
+    // assignment operator.
+    vector & operator=(const vector & src);
 
     // Simple print function.
     void print();
@@ -22,7 +25,7 @@ namespace vec {
   private:
     unsigned length;
     double * data;
-    void check_index(unsigned i);
+    void check_index(unsigned i) const;
   };
 }
 #endif

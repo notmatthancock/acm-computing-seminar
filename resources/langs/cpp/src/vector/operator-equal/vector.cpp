@@ -18,11 +18,27 @@ namespace vec {
     return this->length;
   }
 
-  double & vector::operator[](unsigned i) {
+  double & vector::operator[](unsigned i) const {
     #ifndef NDEBUG
     check_index(i);
     #endif
     return this->data[i];
+  }
+
+  vector & vector::operator=(const vector & src) {
+    // Delete the old data.
+    delete [] this->data;
+
+    // Initialize the new data.
+    this->length = src.len();
+    this->data = new double[this->len()];
+
+    // Copy over the new data.
+    for(int i=0; i < this->len(); i++) {
+      this->data[i] = src[i];
+    }
+
+    return *this;
   }
 
   void vector::print() {

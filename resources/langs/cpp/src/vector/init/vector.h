@@ -11,18 +11,18 @@ namespace vec {
     ~vector();
 
     // length accessor.
-    unsigned len();
+    unsigned len() const;
 
     // data accessor.
-    double & element(unsigned i);
+    double & element(unsigned i) const;
 
     // Simple print function.
-    void print();
+    void print() const;
 
   private:
     unsigned length;
     double * data;
-    void check_index(unsigned i);
+    void check_index(unsigned i) const;
   };
 }
 #endif

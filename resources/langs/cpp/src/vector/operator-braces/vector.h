@@ -7,32 +7,22 @@ namespace vec {
     // Constructor. This function is called when the object is created.
     vector(unsigned len);
 
-    // Copy constructor.
-    vector(vector & src);
-
     // Destructor. This function is called when the object is destroyed.
     ~vector();
 
     // length accessor.
-    unsigned len();
+    unsigned len() const;
 
     // data accessor.
-    double & operator[](unsigned i);
-
-    // assignment operator.
-    vector & operator=(vector & src);
-
-    // Arithmetic operators...
-    vector & operator+(vector & src);
+    double & operator[](unsigned i) const;
 
     // Simple print function.
-    void print();
+    void print() const;
 
   private:
     unsigned length;
     double * data;
-    void check_index(unsigned i);
-    void check_same_len(vector & src);
+    void check_index(unsigned i) const;
   };
 }
 #endif

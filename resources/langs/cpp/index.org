@@ -1212,10 +1212,9 @@ improves upon the default =double= array.
 ** Example: a vector =class=
    
 *** The header file
-
 Create the header file, =vector.h=:
 
-#+include: ./vector/init/vector.h src cpp -n
+#+include: ./src/vector/init/vector.h src cpp -n
 
 First note the macro guards, =#ifndef=, =#define=, and =#endif=, as well as the 
 namespace, =vec=, wrapping the =class= declaration. Macro guards and namespaces 
@@ -1245,11 +1244,15 @@ to use this function on both the left side of assignment operators, i.e., to
 assign values to =vector= components, and on the right side of assignments, 
 i.e., to treat it as the value of the component.
 
-*** The implementation file
+Finally, notice that some member function declarations end with the keyword, 
+=const=. Functions with such a signature are not allowed to modify member 
+variables, and they are also not allowed to call other non =const= member 
+functions.
 
+*** The implementation file
 Create the implementation file, =vector.cpp=:
 
-#+include: ./vector/init/vector.cpp src cpp -n
+#+include: ./src/vector/init/vector.cpp src cpp -n
 
 Note that we again wrap the implementations in the same namespace as wrapped 
 by the class declaration. Also observe how each member-function is prepended 
@@ -1271,10 +1274,9 @@ with informative messages are a good practice, and will likely save you lots
 of headaches in the future.
 
 *** Example usage
-
 Ok. Let's see some example usage, by creating a =main.cpp=, containing:
 
-#+include: ./vector/init/main.cpp src cpp -n
+#+include: ./src/vector/init/main.cpp src cpp -n
 
 Let's first compile with our =check_index= debugger function in place:
 
@@ -1309,28 +1311,30 @@ by liberally sprinkling these sorts of assertions through your code, you
 will (sometimes) find debugging much easier. After you're fairly certain 
 that your code is working, you can simply compile with =-DNEDUBG=.
 
-** Example cont'd: operator overloading
+*** Operator overloading
    
 The =v.element(i)= accessor is a bit clunky. We can replace this with the 
 more natural, =v[i]=, by *overloading* the =[]= operator. Indeed,
- [[http://en.cppreference.com/w/cpp/language/operators][we can overload many]] of the normal C++ operators, e.g. =+=, =-=, ===, etc.
+ [[http://en.cppreference.com/w/cpp/language/operators][we can overload many]] of the normal C++ operators, e.g. =+=, =-=, ~=~, etc.
+Some of these operators require more careful consideration when implementing 
+class that utilizes dynamic memory allocation, such as our =vector= class.
 
-*** Overloading =operator[]=
+**** Overloading =operator[]=
 
 In the header file, replace the =element= function declaration with:
 
-#+include: ./vector/operator=/vector.h :lines "16-18" src cpp -n
+#+include: ./src/vector/operator-braces/vector.h :lines "16-18" src cpp -n
 
 and in the implementation file, replace the =element= implementation with:
 
-#+include: ./vector/operator=/vector.cpp :lines "21-27" src cpp -n
+#+include: ./src/vector/operator-braces/vector.cpp :lines "21-27" src cpp -n
 
 Just think of =operator[]= as the new name of the function, =element=. We 
 can now use the overloaded operator just like how we would use the =[]= for 
 operator for accessing array components, expect now our overloaded operator 
 function is called instead.
 
-#+include: ./vector/operator=/main.cpp :lines "7-9" src cpp -n
+#+include: ./src/vector/operator-braces/main.cpp :lines "7-9" src cpp -n
 
 Compile and run:
 
@@ -1348,7 +1352,46 @@ and you should see:
 
 just like before.
 
-*** Overloading ~operator=~
+**** Overloading =operator-plus=
+
+Let's overload the =+= operator so we can add two vectors. First add to 
+the header file:
+
+#+include: ./src/vector/operator-plus/vector.h :lines "25-27" src cpp -n
+
+also add:
+
+#+include: ./src/vector/operator-plus/vector.h :lines "35-36" src cpp -n
+
+to the list of private declarations in =vector.h=
+
+Next, let's add the implementation of these two functions:
+
+#+include: ./src/vector/operator-plus/vector.cpp :lines "54-67" src cpp -n
+
+#+include: ./src/vector/operator-plus/vector.cpp :lines "82-90" src cpp -n
+
+Note how we create the =result= vector in =operator-plus= as a pointer, and then 
+we deference it when its returned. This matches the return type of the function, 
+which should a reference type. Next, note how we've again added a macro guard, 
+around the =check_same_len= function, which will allow this safeguard to be 
+skipped by adding the =-DNDEBUG= flag during compile time.
+
+Let's look at an example usage where 
+
+#+include: ./src/vector/operator-plus/main.cpp src cpp -n
+
+This will print the sum for =z=, but it will error when we add =q= and =z=:
+
+: -2.54
+: 0
+: 0
+: 6.2
+: 0
+: ERROR: length mismatch.
+: (left len: 6, right len: 5)
+
+**** COMMENT Overloading ~operator-equal~
     
 Let's overload the ~=~ operator so we can assign one vector to another. 
 We'll write in a way such that the vector on the left hand side is 
@@ -1356,16 +1399,16 @@ overwritten by the one on the right.
 
 Let's add a declaration to the header file,
 
-#+include: ./vector/operator=/vector.h :lines "19-21" src cpp -n
+#+include: ./src/vector/operator-equal/vector.h :lines "19-21" src cpp -n
 
 and let's add to the implementation file,
 
-#+include: ./vector/operator=/vector.cpp :lines "28-43" src cpp -n
+#+include: ./src/vector/operator-equal/vector.cpp :lines "28-43" src cpp -n
 
 Now, let's assume the =vector= instance, =v=, from above is still defined, and
 we'll create a new vector:
 
-#+include: ./vector/operator=/main.cpp :lines "10-13" src cpp -n
+#+include: ./src/vector/operator-equal/main.cpp :lines "10-13" src cpp -n
 
 This should print, 
 
@@ -1379,7 +1422,7 @@ Notice that =w= is intially defined to be of length =14=, but this is
 overwritten, and its new length is the length of =v=. Also note that all of
 =w='s old data is deleted.
 
-** Example cont'd: the copy constructor
+*** COMMENT The copy constructor
 
 It may be tempting at this point to attempt to initialize =w= from =v=
 directly:
@@ -1409,15 +1452,15 @@ in C++.
 
 Let's add the copy constructor declaration to the header file:
 
-#+include: ./vector/copy-construct/vector.h :lines "10-12" src cpp -n
+#+include: ./src/vector/copy-construct/vector.h :lines "10-12" src cpp -n
 
 and let's add its implementation:
 
-#+include: ./vector/copy-construct/vector.cpp :lines "13-22" src cpp -n
+#+include: ./src/vector/copy-construct/vector.cpp :lines "13-22" src cpp -n
 
 Now we compile and run something like:
 
-#+include: ./vector/copy-construct/main.cpp :lines "10-12" src cpp -n
+#+include: ./src/vector/copy-construct/main.cpp :lines "10-12" src cpp -n
 
 we will see:
 
@@ -1426,44 +1469,5 @@ we will see:
 : 0
 : 3.1
 : 0
-
-** Exampled cont'd: more overloading - =operator+=
-   
-Let's overload the =+= operator so we can add two vectors. First add to 
-the header file:
-
-#+include: ./vector/operator+/vector.h :lines "25-27" src cpp -n
-
-also add:
-
-#+include: ./vector/operator+/vector.h :lines "35-36" src cpp -n
-
-to the list of private declarations in =vector.h=
-
-Next, let's add the implementation of these two functions:
-
-#+include: ./vector/operator+/vector.cpp :lines "54-67" src cpp -n
-
-#+include: ./vector/operator+/vector.cpp :lines "82-90" src cpp -n
-
-Note how we create the =result= vector in =operator+= as a pointer, and then 
-we deference it when its returned. This matches the return type of the function, 
-which should a reference type. Next, note how we've again added a macro guard, 
-around the =check_same_len= function, which will allow this safeguard to be 
-skipped by adding the =-DNDEBUG= flag during compile time.
-
-Let's look at an example usage where 
-
-#+include: ./vector/operator+/main.cpp src cpp -n
-
-This will print the sum for =z=, but it will error when we add =q= and =z=:
-
-: -2.54
-: 0
-: 0
-: 6.2
-: 0
-: ERROR: length mismatch.
-: (left len: 6, right len: 5)
 
 #+html: </div>
