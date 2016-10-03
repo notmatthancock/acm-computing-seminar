@@ -24,6 +24,7 @@
 + [[./resources/prog/example-assignment.zip][Example programming assignment and solution]]
 * Assignments
 
+|--------------------+------------------------------------------------------|
 | Week               | Assignment                                           |
 | <c>                |                                                      |
 |--------------------+------------------------------------------------------|

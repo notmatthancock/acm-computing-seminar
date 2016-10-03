@@ -10,7 +10,7 @@ namespace vec {
     for(int i=0; i < this->len(); i++) { this->data[i] = 0.0; }
   }
 
-  vector::vector(vector & src) {
+  vector::vector(const vector & src) {
     this->length = src.len();
     this->data = new double[this->len()];
 
@@ -24,18 +24,18 @@ namespace vec {
     delete [] this->data;
   }
 
-  unsigned vector::len() {
+  unsigned vector::len() const {
     return this->length;
   }
 
-  double & vector::operator[](unsigned i) {
+  double & vector::operator[](unsigned i) const {
     #ifndef NDEBUG
     check_index(i);
     #endif
     return this->data[i];
   }
 
-  vector & vector::operator=(vector & src) {
+  vector & vector::operator=(const vector & src) {
     // Delete the old data.
     delete [] this->data;
 
@@ -51,22 +51,22 @@ namespace vec {
     return *this;
   }
 
-  vector & vector::operator+(vector & src) const {
-    #ifndef NDEBUG
-    this->check_same_len(src);
-    #endif
-
-    vector * result = new vector(this->len());
-
-    for(int i=0; i < this->len(); i++) {
-      result->data[i] = this->data[i] + src[i];
-    }
-    
-    return *result;
+  vector operator*(const vector & v, double s) {
+      // Copy v to start.
+      vector result = v;
+      // Then multiply all entries by scalar, s.
+      for(int i=0; i < v.len(); i++) {
+          result[i] *= s;
+      }
+      return result;
+  }
+        
+  vector operator*(double s, const vector & v) {
+      return v*s;
   }
 
-  void vector::print() {
-    for(int i=0; i < this->len(); i++) const{
+  void vector::print() const {
+    for(int i=0; i < this->len(); i++) {
       std::cout << this->data[i] << '\n';
     }
   }
@@ -75,15 +75,6 @@ namespace vec {
     if (i < 0 || i >= this->length) {
       std::cerr << "ERROR: index, " << i << ", is out-of-bounds.\n"
                 << "(valid indices are 0-" << (this->length-1) << ")\n";
-      exit(1);
-    }
-  }
-
-  void vector::check_same_len(const vector & src) const {
-    if (this->len() != src.len()) {
-      std::cerr << "ERROR: length mismatch.\n"
-                << "(left len: " << this->len() << ", "
-                << "right len: " << src.len() << ")\n";
       exit(1);
     }
   }

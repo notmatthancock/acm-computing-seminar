@@ -1352,46 +1352,7 @@ and you should see:
 
 just like before.
 
-**** Overloading =operator-plus=
-
-Let's overload the =+= operator so we can add two vectors. First add to 
-the header file:
-
-#+include: ./src/vector/operator-plus/vector.h :lines "25-27" src cpp -n
-
-also add:
-
-#+include: ./src/vector/operator-plus/vector.h :lines "35-36" src cpp -n
-
-to the list of private declarations in =vector.h=
-
-Next, let's add the implementation of these two functions:
-
-#+include: ./src/vector/operator-plus/vector.cpp :lines "54-67" src cpp -n
-
-#+include: ./src/vector/operator-plus/vector.cpp :lines "82-90" src cpp -n
-
-Note how we create the =result= vector in =operator-plus= as a pointer, and then 
-we deference it when its returned. This matches the return type of the function, 
-which should a reference type. Next, note how we've again added a macro guard, 
-around the =check_same_len= function, which will allow this safeguard to be 
-skipped by adding the =-DNDEBUG= flag during compile time.
-
-Let's look at an example usage where 
-
-#+include: ./src/vector/operator-plus/main.cpp src cpp -n
-
-This will print the sum for =z=, but it will error when we add =q= and =z=:
-
-: -2.54
-: 0
-: 0
-: 6.2
-: 0
-: ERROR: length mismatch.
-: (left len: 6, right len: 5)
-
-**** COMMENT Overloading ~operator-equal~
+**** Overloading ~operator=~
     
 Let's overload the ~=~ operator so we can assign one vector to another. 
 We'll write in a way such that the vector on the left hand side is 
@@ -1422,7 +1383,7 @@ Notice that =w= is intially defined to be of length =14=, but this is
 overwritten, and its new length is the length of =v=. Also note that all of
 =w='s old data is deleted.
 
-*** COMMENT The copy constructor
+*** The copy constructor
 
 It may be tempting at this point to attempt to initialize =w= from =v=
 directly:
@@ -1464,6 +1425,53 @@ Now we compile and run something like:
 
 we will see:
 
+: -1.27
+: 0
+: 0
+: 3.1
+: 0
+
+*** Friend functions
+
+Non-member functions may access private member variables and private member 
+functions of by labeling them as =friend=. This is useful in situations where 
+it is not clear that function should be "called on" an object, i.e. 
+=object.method(params)=. Friend functions should be declared in the class 
+declaration, but their implementation is not prepended with =class::=, which 
+is necessary for member functions.
+
+**** Overloading =operator*=
+
+As an example, we'll overload =operator*= to implement scalar multiplication.
+
+Because scalar multiplication should commute, let's add the following
+two declarations to our header file:
+
+#+include: ./src/vector/operator-star/vector.h :lines "25-27" src cpp -n
+
+Let's implement the first by adding to the declaration file:
+
+#+include: ./src/vector/operator-star/vector.cpp :lines "54-63" src cpp -n
+
+Observe how we didn't prepend =vector::= before =operator*= because 
+these are =friend= functions.
+
+Now, we can use the first implementation to achieve the second:
+
+#+include: ./src/vector/operator-star/vector.cpp :lines "64-67" src cpp -n
+
+And let's try it out:
+
+#+include: ./src/vector/operator-star/main.cpp src cpp -n
+
+prints:
+
+: -2.54
+: 0
+: 0
+: 6.2
+: 0
+: 
 : -1.27
 : 0
 : 0

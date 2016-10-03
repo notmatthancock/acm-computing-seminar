@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2016-10-03 Mon 15:23 -->
+<!-- 2016-10-03 Mon 16:52 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title>ACM Computing Seminar C++ Guide</title>
@@ -269,14 +269,21 @@ for the JavaScript code in this tag.
 </li>
 <li><a href="#orgheadline9">7. Object-oriented programming</a>
 <ul>
-<li><a href="#orgheadline54">7.1. Example: a vector <code>class</code></a>
+<li><a href="#orgheadline58">7.1. Example: a vector <code>class</code></a>
 <ul>
 <li><a href="#orgheadline49">7.1.1. The header file</a></li>
 <li><a href="#orgheadline50">7.1.2. The implementation file</a></li>
 <li><a href="#orgheadline51">7.1.3. Example usage</a></li>
-<li><a href="#orgheadline53">7.1.4. Operator overloading</a>
+<li><a href="#orgheadline54">7.1.4. Operator overloading</a>
 <ul>
 <li><a href="#orgheadline52">7.1.4.1. Overloading <code>operator[]</code></a></li>
+<li><a href="#orgheadline53">7.1.4.2. Overloading <code>operator=</code></a></li>
+</ul>
+</li>
+<li><a href="#orgheadline55">7.1.5. The copy constructor</a></li>
+<li><a href="#orgheadline57">7.1.6. Friend functions</a>
+<ul>
+<li><a href="#orgheadline56">7.1.6.1. <code>operator*</code></a></li>
 </ul>
 </li>
 </ul>
@@ -1886,8 +1893,8 @@ improves upon the default <code>double</code> array.
 </p>
 </div>
 
-<div id="outline-container-orgheadline54" class="outline-3">
-<h3 id="orgheadline54"><span class="section-number-3">7.1</span> Example: a vector <code>class</code></h3>
+<div id="outline-container-orgheadline58" class="outline-3">
+<h3 id="orgheadline58"><span class="section-number-3">7.1</span> Example: a vector <code>class</code></h3>
 <div class="outline-text-3" id="text-7-1">
 </div><div id="outline-container-orgheadline49" class="outline-4">
 <h4 id="orgheadline49"><span class="section-number-4">7.1.1</span> The header file</h4>
@@ -2132,8 +2139,8 @@ that your code is working, you can simply compile with <code>-DNEDUBG</code>.
 </div>
 </div>
 
-<div id="outline-container-orgheadline53" class="outline-4">
-<h4 id="orgheadline53"><span class="section-number-4">7.1.4</span> Operator overloading</h4>
+<div id="outline-container-orgheadline54" class="outline-4">
+<h4 id="orgheadline54"><span class="section-number-4">7.1.4</span> Operator overloading</h4>
 <div class="outline-text-4" id="text-7-1-4">
 <p>
 The <code>v.element(i)</code> accessor is a bit clunky. We can replace this with the 
@@ -2212,6 +2219,298 @@ and you should see:
 <p>
 just like before.
 </p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline53" class="outline-5">
+<h5 id="orgheadline53"><span class="section-number-5">7.1.4.2</span> Overloading <code>operator=</code></h5>
+<div class="outline-text-5" id="text-7-1-4-2">
+<p>
+Let's overload the <code>=</code> operator so we can assign one vector to another. 
+We'll write in a way such that the vector on the left hand side is 
+overwritten by the one on the right.
+</p>
+
+<p>
+Let's add a declaration to the header file,
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #009e73; font-style: italic;">// </span><span style="color: #009e73; font-style: italic;">assignment operator.</span>
+<span class="linenr">2: </span><span style="color: #0072b2; font-weight: bold;">vector</span> &amp; <span style="color: #56b4e9; font-weight: bold;">operator</span><span style="color: #d55e00;">=</span>(<span style="color: #56b4e9; font-weight: bold;">const</span> <span style="color: #0072b2; font-weight: bold;">vector</span> &amp; <span style="color: #e69f00; font-weight: bold;">src</span>);
+</pre>
+</div>
+
+<p>
+and let's add to the implementation file,
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #0072b2; font-weight: bold;">vector</span> &amp; <span style="color: #d55e00; font-weight: bold;">vector</span>::<span style="color: #56b4e9; font-weight: bold;">operator</span><span style="color: #d55e00;">=</span>(<span style="color: #56b4e9; font-weight: bold;">const</span> <span style="color: #0072b2; font-weight: bold;">vector</span> &amp; <span style="color: #e69f00; font-weight: bold;">src</span>) {
+<span class="linenr"> 2: </span>  <span style="color: #009e73; font-style: italic;">// </span><span style="color: #009e73; font-style: italic;">Delete the old data.</span>
+<span class="linenr"> 3: </span>  <span style="color: #56b4e9; font-weight: bold;">delete</span> [] <span style="color: #56b4e9; font-weight: bold;">this</span>-&gt;data;
+<span class="linenr"> 4: </span>
+<span class="linenr"> 5: </span>  <span style="color: #009e73; font-style: italic;">// </span><span style="color: #009e73; font-style: italic;">Initialize the new data.</span>
+<span class="linenr"> 6: </span>  <span style="color: #56b4e9; font-weight: bold;">this</span>-&gt;length = src.len();
+<span class="linenr"> 7: </span>  <span style="color: #56b4e9; font-weight: bold;">this</span>-&gt;data = <span style="color: #56b4e9; font-weight: bold;">new</span> <span style="color: #0072b2; font-weight: bold;">double</span>[<span style="color: #56b4e9; font-weight: bold;">this</span>-&gt;len()];
+<span class="linenr"> 8: </span>
+<span class="linenr"> 9: </span>  <span style="color: #009e73; font-style: italic;">// </span><span style="color: #009e73; font-style: italic;">Copy over the new data.</span>
+<span class="linenr">10: </span>  <span style="color: #56b4e9; font-weight: bold;">for</span>(<span style="color: #0072b2; font-weight: bold;">int</span> <span style="color: #e69f00; font-weight: bold;">i</span>=0; i &lt; <span style="color: #56b4e9; font-weight: bold;">this</span>-&gt;len(); i++) {
+<span class="linenr">11: </span>    <span style="color: #56b4e9; font-weight: bold;">this</span>-&gt;data[i] = src[i];
+<span class="linenr">12: </span>  }
+<span class="linenr">13: </span>
+<span class="linenr">14: </span>  <span style="color: #56b4e9; font-weight: bold;">return</span> *<span style="color: #56b4e9; font-weight: bold;">this</span>;
+<span class="linenr">15: </span>}
+</pre>
+</div>
+
+<p>
+Now, let's assume the <code>vector</code> instance, <code>v</code>, from above is still defined, and
+we'll create a new vector:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #d55e00; font-weight: bold;">vec</span>::<span style="color: #0072b2; font-weight: bold;">vector</span> <span style="color: #d55e00;">w</span>(14);
+<span class="linenr">2: </span>w = v;
+<span class="linenr">3: </span>w.print();
+</pre>
+</div>
+
+<p>
+This should print, 
+</p>
+
+<pre class="example">
+-1.27
+0
+0
+3.1
+0
+</pre>
+
+<p>
+Notice that <code>w</code> is intially defined to be of length <code>14</code>, but this is 
+overwritten, and its new length is the length of <code>v</code>. Also note that all of
+<code>w</code>'s old data is deleted.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline55" class="outline-4">
+<h4 id="orgheadline55"><span class="section-number-4">7.1.5</span> The copy constructor</h4>
+<div class="outline-text-4" id="text-7-1-5">
+<p>
+It may be tempting at this point to attempt to initialize <code>w</code> from <code>v</code>
+directly:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #d55e00; font-weight: bold;">vec</span>::<span style="color: #0072b2; font-weight: bold;">vector</span> <span style="color: #e69f00; font-weight: bold;">w</span> = v;
+</pre>
+</div>
+
+<p>
+If you attempt this currently, you will see all sorts of errors. This is 
+because this type of intialization does not call the assignment operator. 
+It calls the <b>copy constructor</b>. The assignment operator is only called 
+when the object has already been intialized. Writing the previous line of 
+code is essentially equivalent to
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #d55e00; font-weight: bold;">vec</span>::<span style="color: #0072b2; font-weight: bold;">vector</span> <span style="color: #d55e00;">w</span>(v);
+</pre>
+</div>
+
+<p>
+In other words, the constructor is called with the existing vector, <code>v</code>, as
+the argument, but we have not written a constructor yet with such a call 
+signature.
+</p>
+
+<p>
+The constructor can be overloaded, i.e., we can write multiple versions of the 
+constructor function, and the one that matches the correct call signature will 
+be used. This function overloading behavior actually applies to all functions 
+in C++.
+</p>
+
+<p>
+Let's add the copy constructor declaration to the header file:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #009e73; font-style: italic;">// </span><span style="color: #009e73; font-style: italic;">Copy constructor.</span>
+<span class="linenr">2: </span><span style="color: #d55e00;">vector</span>(<span style="color: #56b4e9; font-weight: bold;">const</span> <span style="color: #0072b2; font-weight: bold;">vector</span> &amp; <span style="color: #e69f00; font-weight: bold;">src</span>);
+</pre>
+</div>
+
+<p>
+and let's add its implementation:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #d55e00; font-weight: bold;">vector</span>::<span style="color: #d55e00;">vector</span>(<span style="color: #56b4e9; font-weight: bold;">const</span> <span style="color: #0072b2; font-weight: bold;">vector</span> &amp; <span style="color: #e69f00; font-weight: bold;">src</span>) {
+<span class="linenr">2: </span>  <span style="color: #56b4e9; font-weight: bold;">this</span>-&gt;length = src.len();
+<span class="linenr">3: </span>  <span style="color: #56b4e9; font-weight: bold;">this</span>-&gt;data = <span style="color: #56b4e9; font-weight: bold;">new</span> <span style="color: #0072b2; font-weight: bold;">double</span>[<span style="color: #56b4e9; font-weight: bold;">this</span>-&gt;len()];
+<span class="linenr">4: </span>
+<span class="linenr">5: </span>  <span style="color: #009e73; font-style: italic;">// </span><span style="color: #009e73; font-style: italic;">Copy over the data.</span>
+<span class="linenr">6: </span>  <span style="color: #56b4e9; font-weight: bold;">for</span>(<span style="color: #0072b2; font-weight: bold;">int</span> <span style="color: #e69f00; font-weight: bold;">i</span>=0; i &lt; <span style="color: #56b4e9; font-weight: bold;">this</span>-&gt;len(); i++) {
+<span class="linenr">7: </span>    <span style="color: #56b4e9; font-weight: bold;">this</span>-&gt;data[i] = src[i];
+<span class="linenr">8: </span>  }
+<span class="linenr">9: </span>}
+</pre>
+</div>
+
+<p>
+Now we compile and run something like:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #d55e00; font-weight: bold;">vec</span>::<span style="color: #0072b2; font-weight: bold;">vector</span> <span style="color: #e69f00; font-weight: bold;">w</span> = v;
+<span class="linenr">2: </span>w.print();
+</pre>
+</div>
+
+<p>
+we will see:
+</p>
+
+<pre class="example">
+-1.27
+0
+0
+3.1
+0
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline57" class="outline-4">
+<h4 id="orgheadline57"><span class="section-number-4">7.1.6</span> Friend functions</h4>
+<div class="outline-text-4" id="text-7-1-6">
+<p>
+Non-member functions may access private member variables and private member 
+functions of by labeling them as <code>friend</code>. This is useful in situations where 
+it is not clear that function should be "called on" an object, i.e. 
+<code>object.method(params)</code>. Friend functions should be declared in the class 
+declaration, but their implementation is not prepended with <code>class::</code>, which 
+is necessary for member functions.
+</p>
+</div>
+
+<div id="outline-container-orgheadline56" class="outline-5">
+<h5 id="orgheadline56"><span class="section-number-5">7.1.6.1</span> <code>operator*</code></h5>
+<div class="outline-text-5" id="text-7-1-6-1">
+<p>
+As an example, we'll overload <code>operator*</code> to implement scalar multiplication.
+</p>
+
+<p>
+Because scalar multiplication should commute, let's add the following
+two declarations to our header file:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #56b4e9; font-weight: bold;">friend</span> <span style="color: #0072b2; font-weight: bold;">vector</span> <span style="color: #56b4e9; font-weight: bold;">operator</span><span style="color: #d55e00;">*</span>(<span style="color: #56b4e9; font-weight: bold;">const</span> <span style="color: #0072b2; font-weight: bold;">vector</span> &amp; <span style="color: #e69f00; font-weight: bold;">v</span>, <span style="color: #0072b2; font-weight: bold;">double</span> <span style="color: #e69f00; font-weight: bold;">s</span>);
+<span class="linenr">2: </span><span style="color: #56b4e9; font-weight: bold;">friend</span> <span style="color: #0072b2; font-weight: bold;">vector</span> <span style="color: #56b4e9; font-weight: bold;">operator</span><span style="color: #d55e00;">*</span>(<span style="color: #0072b2; font-weight: bold;">double</span> <span style="color: #e69f00; font-weight: bold;">s</span>, <span style="color: #56b4e9; font-weight: bold;">const</span> <span style="color: #0072b2; font-weight: bold;">vector</span> &amp; <span style="color: #e69f00; font-weight: bold;">v</span>);
+</pre>
+</div>
+
+<p>
+Let's implement the first by adding to the declaration file:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #0072b2; font-weight: bold;">vector</span> <span style="color: #56b4e9; font-weight: bold;">operator</span><span style="color: #d55e00;">*</span>(<span style="color: #56b4e9; font-weight: bold;">const</span> <span style="color: #0072b2; font-weight: bold;">vector</span> &amp; <span style="color: #e69f00; font-weight: bold;">v</span>, <span style="color: #0072b2; font-weight: bold;">double</span> <span style="color: #e69f00; font-weight: bold;">s</span>) {
+<span class="linenr">2: </span>    <span style="color: #009e73; font-style: italic;">// </span><span style="color: #009e73; font-style: italic;">Copy v to start.</span>
+<span class="linenr">3: </span>    <span style="color: #0072b2; font-weight: bold;">vector</span> <span style="color: #e69f00; font-weight: bold;">result</span> = v;
+<span class="linenr">4: </span>    <span style="color: #009e73; font-style: italic;">// </span><span style="color: #009e73; font-style: italic;">Then multiply all entries by scalar, s.</span>
+<span class="linenr">5: </span>    <span style="color: #56b4e9; font-weight: bold;">for</span>(<span style="color: #0072b2; font-weight: bold;">int</span> <span style="color: #e69f00; font-weight: bold;">i</span>=0; i &lt; v.len(); i++) {
+<span class="linenr">6: </span>        result[i] *= s;
+<span class="linenr">7: </span>    }
+<span class="linenr">8: </span>    <span style="color: #56b4e9; font-weight: bold;">return</span> result;
+<span class="linenr">9: </span>}
+</pre>
+</div>
+
+<p>
+Observe how we didn't prepend <code>vector::</code> before <code>operator*</code> because 
+these are <code>friend</code> functions.
+</p>
+
+<p>
+Now, we can use the first implementation to achieve the second:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr">1: </span><span style="color: #0072b2; font-weight: bold;">vector</span> <span style="color: #56b4e9; font-weight: bold;">operator</span><span style="color: #d55e00;">*</span>(<span style="color: #0072b2; font-weight: bold;">double</span> <span style="color: #e69f00; font-weight: bold;">s</span>, <span style="color: #56b4e9; font-weight: bold;">const</span> <span style="color: #0072b2; font-weight: bold;">vector</span> &amp; <span style="color: #e69f00; font-weight: bold;">v</span>) {
+<span class="linenr">2: </span>    <span style="color: #56b4e9; font-weight: bold;">return</span> v*s;
+<span class="linenr">3: </span>}
+</pre>
+</div>
+
+<p>
+And let's try it out:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #0072b2;">#include</span> <span style="color: #848ea9;">&lt;iostream&gt;</span>
+<span class="linenr"> 2: </span><span style="color: #0072b2;">#include</span> <span style="color: #848ea9;">"vector.h"</span>
+<span class="linenr"> 3: </span>
+<span class="linenr"> 4: </span><span style="color: #0072b2; font-weight: bold;">int</span> <span style="color: #d55e00;">main</span>() {
+<span class="linenr"> 5: </span>    <span style="color: #d55e00; font-weight: bold;">vec</span>::<span style="color: #0072b2; font-weight: bold;">vector</span> <span style="color: #e69f00; font-weight: bold;">v</span>(5);
+<span class="linenr"> 6: </span>
+<span class="linenr"> 7: </span>    v[0] = -1.27;
+<span class="linenr"> 8: </span>    v[3] = 3.1;
+<span class="linenr"> 9: </span>
+<span class="linenr">10: </span>    <span style="color: #d55e00; font-weight: bold;">vec</span>::<span style="color: #0072b2; font-weight: bold;">vector</span> <span style="color: #e69f00; font-weight: bold;">w</span> = 2*v;
+<span class="linenr">11: </span>
+<span class="linenr">12: </span>    w.print();
+<span class="linenr">13: </span>
+<span class="linenr">14: </span>    <span style="color: #d55e00; font-weight: bold;">std</span>::cout &lt;&lt; <span style="color: #848ea9;">"\n"</span>;
+<span class="linenr">15: </span>
+<span class="linenr">16: </span>    w = w*0.5;
+<span class="linenr">17: </span>
+<span class="linenr">18: </span>    w.print();
+<span class="linenr">19: </span>
+<span class="linenr">20: </span>    <span style="color: #56b4e9; font-weight: bold;">return</span> 0;
+<span class="linenr">21: </span>}
+</pre>
+</div>
+
+<p>
+prints:
+</p>
+
+<pre class="example">
+-2.54
+0
+0
+6.2
+0
+
+-1.27
+0
+0
+3.1
+0
+</pre>
+
+</div>
 </div>
 </div>
 </div>

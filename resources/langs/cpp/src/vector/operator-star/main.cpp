@@ -7,13 +7,15 @@ int main() {
     v[0] = -1.27;
     v[3] = 3.1;
 
-    vec::vector w = v;
+    vec::vector w = 2*v;
 
-    vec::vector z = w+v;
-    z.print();
+    w.print();
 
-    vec::vector q(6);
-    q+v;
+    std::cout << "\n";
+
+    w = w*0.5;
+
+    w.print();
 
     return 0;
 }
