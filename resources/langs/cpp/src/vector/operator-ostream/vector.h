@@ -22,6 +22,13 @@ namespace vec {
     // assignment operator.
     vector & operator=(const vector & src);
 
+    // Scalar multiplication.
+    friend vector operator*(const vector & v, double s);
+    friend vector operator*(double s, const vector & v);
+
+    // Print operator.
+    friend std::ostream & operator<<(std::ostream & outs, const vector & v);
+
     // Simple print function.
     void print() const;
 

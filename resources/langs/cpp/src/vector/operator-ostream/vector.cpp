@@ -51,6 +51,26 @@ namespace vec {
     return *this;
   }
 
+  vector operator*(const vector & v, double s) {
+      // Copy v to start.
+      vector result = v;
+      // Then multiply all entries by scalar, s.
+      for(int i=0; i < v.len(); i++) {
+          result[i] *= s;
+      }
+      return result;
+  }
+        
+  vector operator*(double s, const vector & v) {
+      return v*s;
+  }
+
+  std::ostream & operator<<(std::ostream & outs, const vector & v) {
+      for(int i=0; i < v.len(); i++) {
+          outs << v.data[i] << "\n";
+      }
+  }
+
   void vector::print() const {
     for(int i=0; i < this->len(); i++) {
       std::cout << this->data[i] << '\n';

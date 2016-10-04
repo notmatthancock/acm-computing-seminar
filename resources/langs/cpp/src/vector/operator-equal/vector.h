@@ -11,7 +11,7 @@ namespace vec {
     ~vector();
 
     // length accessor.
-    unsigned len();
+    unsigned len() const;
 
     // data accessor.
     double & operator[](unsigned i) const;
@@ -20,7 +20,7 @@ namespace vec {
     vector & operator=(const vector & src);
 
     // Simple print function.
-    void print();
+    void print() const;
 
   private:
     unsigned length;
