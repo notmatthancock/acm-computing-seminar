@@ -62,6 +62,21 @@
 |                    | of 100 vectors of length 10 whose components are     |
 |                    | uniform random on [0,1] (see the C++ guide section   |
 |                    | on generating random numbers).                       |
+|--------------------+------------------------------------------------------|
+| 5 <2016-10-03 Mon> | Extend the =vector= class given in the guide, by     |
+|                    | adding functions =dot=, =operator+=, =operator-=,    |
+|                    | and ~operator==~. Implement these as =friend=        |
+|                    | functions.                                           |
+|                    |                                                      |
+|                    | ~dot~ should implement the inner product between     |
+|                    | two vectors, ~x~ and ~y~, while ~operator+~ and      |
+|                    | ~operator-~ should implement component-wise addition |
+|                    | and subtraction.                                     |
+|                    |                                                      |
+|                    | The behavior of ~operator==~ should be               |
+|                    | such that ~x==y~ returns true for vectors if         |
+|                    | =abs(x[i]-y[i]) < 1e-10=                             |
+|                    | for all the components of the vectors, =x= and =y=.  |
 
 #+begin_comment
 |--------------------+--------------------------------------------------------|
