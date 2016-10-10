@@ -88,6 +88,9 @@
 |                    | algorithm on square matrices, $A \in R^{n \times n}$, |
 |                    | where $A_{ij} = ni + j$, where $i=0,\ldots,n-1$ and   |
 |                    | $j=0,\ldots,n-1$ for $n=2,3,\ldots,100$.              |
+|                    |                                                       |
+|                    | HINT: Consider writing a helper function that returns |
+|                    | a desired [[https://en.wikipedia.org/wiki/Minor_(linear_algebra)][minor]] of a matrix.                          |
 |--------------------+-------------------------------------------------------|
 
 #+begin_comment
