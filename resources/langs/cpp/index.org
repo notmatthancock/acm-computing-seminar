@@ -1509,4 +1509,25 @@ which prints
 : 3.1
 : 0
 
+** Templating: a matrix class
+
+Template classes allow you to generalize your classes. Below is a bare-bones 
+template class for a matrix type. Note that the implementations for templates 
+must all go in the header file; they cannot be split into seperate 
+implementation files.
+
+#+include: ./src/matrix/init/matrix.h src cpp -n
+
+Example usage (may require =g++ -std=c++11 main.cpp=):
+
+#+include: ./src/matrix/init/main.cpp src cpp -n
+
+: 3.14
+: -6.28
+: -6.28
+: Invalid column index, 12.
+: Valid column indices are: 0-11.
+
+** Inherited, structured matrix template classes
+
 #+html: </div>

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2016-10-03 Mon 18:03 -->
+<!-- 2016-10-09 Sun 20:08 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title>ACM Computing Seminar C++ Guide</title>
@@ -289,6 +289,8 @@ for the JavaScript code in this tag.
 </li>
 </ul>
 </li>
+<li><a href="#orgheadline60">7.2. Templating: a matrix class</a></li>
+<li><a href="#orgheadline61">7.3. Inherited, structured matrix template classes</a></li>
 </ul>
 </li>
 </ul>
@@ -2584,9 +2586,132 @@ which prints
 3.1
 0
 </pre>
+</div>
+</div>
+</div>
+</div>
 
+<div id="outline-container-orgheadline60" class="outline-3">
+<h3 id="orgheadline60"><span class="section-number-3">7.2</span> Templating: a matrix class</h3>
+<div class="outline-text-3" id="text-7-2">
+<p>
+Template classes allow you to generalize your classes. Below is a bare-bones 
+template class for a matrix type. Note that the implementations for templates 
+must all go in the header file; they cannot be split into seperate 
+implementation files.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #0072b2;">#if</span><span style="color: #0072b2;">n</span><span style="color: #0072b2;">def</span> MATRIX_H
+<span class="linenr"> 2: </span><span style="color: #0072b2;">#define</span> <span style="color: #e69f00; font-weight: bold;">MATRIX_H</span>
+<span class="linenr"> 3: </span>
+<span class="linenr"> 4: </span><span style="color: #0072b2;">#include</span> <span style="color: #848ea9;">&lt;iostream&gt;</span>
+<span class="linenr"> 5: </span><span style="color: #0072b2;">#include</span> <span style="color: #848ea9;">&lt;cstdlib&gt;</span>
+<span class="linenr"> 6: </span>
+<span class="linenr"> 7: </span><span style="color: #56b4e9; font-weight: bold;">namespace</span> <span style="color: #d55e00; font-weight: bold;">mtx</span> {
+<span class="linenr"> 8: </span>    <span style="color: #56b4e9; font-weight: bold;">template</span>&lt;<span style="color: #56b4e9; font-weight: bold;">class</span> <span style="color: #0072b2; font-weight: bold;">T</span>&gt;
+<span class="linenr"> 9: </span>    <span style="color: #56b4e9; font-weight: bold;">class</span> <span style="color: #0072b2; font-weight: bold;">matrix</span> {
+<span class="linenr">10: </span>    <span style="color: #56b4e9; font-weight: bold;">public</span>:
+<span class="linenr">11: </span>        <span style="color: #d55e00;">matrix</span>() {}
+<span class="linenr">12: </span>        <span style="color: #009e73; font-style: italic;">// </span><span style="color: #009e73; font-style: italic;">Constructor.</span>
+<span class="linenr">13: </span>        <span style="color: #d55e00;">matrix</span>(<span style="color: #0072b2; font-weight: bold;">int</span> <span style="color: #e69f00; font-weight: bold;">m</span>, <span style="color: #0072b2; font-weight: bold;">int</span> <span style="color: #e69f00; font-weight: bold;">n</span>) {
+<span class="linenr">14: </span>            <span style="color: #56b4e9; font-weight: bold;">this</span>-&gt;m = m; <span style="color: #56b4e9; font-weight: bold;">this</span>-&gt;n = n;
+<span class="linenr">15: </span>            <span style="color: #56b4e9; font-weight: bold;">this</span>-&gt;data = <span style="color: #56b4e9; font-weight: bold;">new</span> <span style="color: #0072b2; font-weight: bold;">T</span>[m*n];
+<span class="linenr">16: </span>        }
+<span class="linenr">17: </span>
+<span class="linenr">18: </span>        <span style="color: #009e73; font-style: italic;">// </span><span style="color: #009e73; font-style: italic;">Copy constructor.</span>
+<span class="linenr">19: </span>        <span style="color: #d55e00;">matrix</span>(<span style="color: #56b4e9; font-weight: bold;">const</span> <span style="color: #0072b2; font-weight: bold;">matrix</span> &amp; <span style="color: #e69f00; font-weight: bold;">src</span>) : matrix(src.m, src.n) {
+<span class="linenr">20: </span>            <span style="color: #56b4e9; font-weight: bold;">for</span>(<span style="color: #0072b2; font-weight: bold;">int</span> <span style="color: #e69f00; font-weight: bold;">i</span>=0; i &lt; m; i++) {
+<span class="linenr">21: </span>                <span style="color: #56b4e9; font-weight: bold;">for</span>(<span style="color: #0072b2; font-weight: bold;">int</span> <span style="color: #e69f00; font-weight: bold;">j</span>=0; j &lt; n; j++) {
+<span class="linenr">22: </span>                    (*<span style="color: #56b4e9; font-weight: bold;">this</span>)(i,j) = src(i,j);
+<span class="linenr">23: </span>                }
+<span class="linenr">24: </span>            }
+<span class="linenr">25: </span>        }
+<span class="linenr">26: </span>
+<span class="linenr">27: </span>        <span style="color: #009e73; font-style: italic;">// </span><span style="color: #009e73; font-style: italic;">Destructor.</span>
+<span class="linenr">28: </span>        ~<span style="color: #d55e00;">matrix</span>() { <span style="color: #56b4e9; font-weight: bold;">delete</span> [] <span style="color: #56b4e9; font-weight: bold;">this</span>-&gt;data; }
+<span class="linenr">29: </span>
+<span class="linenr">30: </span>        <span style="color: #56b4e9; font-weight: bold;">inline</span> <span style="color: #0072b2; font-weight: bold;">int</span> <span style="color: #d55e00;">n_rows</span>() <span style="color: #56b4e9; font-weight: bold;">const</span> { <span style="color: #56b4e9; font-weight: bold;">return</span> <span style="color: #56b4e9; font-weight: bold;">this</span>-&gt;m; }
+<span class="linenr">31: </span>        <span style="color: #56b4e9; font-weight: bold;">inline</span> <span style="color: #0072b2; font-weight: bold;">int</span> <span style="color: #d55e00;">n_cols</span>() <span style="color: #56b4e9; font-weight: bold;">const</span> { <span style="color: #56b4e9; font-weight: bold;">return</span> <span style="color: #56b4e9; font-weight: bold;">this</span>-&gt;n; }
+<span class="linenr">32: </span>
+<span class="linenr">33: </span>        <span style="color: #009e73; font-style: italic;">// </span><span style="color: #009e73; font-style: italic;">Element accessor.</span>
+<span class="linenr">34: </span>        <span style="color: #0072b2; font-weight: bold;">T</span> &amp; <span style="color: #56b4e9; font-weight: bold;">operator</span><span style="color: #d55e00;">()</span>(<span style="color: #0072b2; font-weight: bold;">int</span> <span style="color: #e69f00; font-weight: bold;">i</span>, <span style="color: #0072b2; font-weight: bold;">int</span> <span style="color: #e69f00; font-weight: bold;">j</span>) <span style="color: #56b4e9; font-weight: bold;">const</span> {
+<span class="linenr">35: </span><span style="color: #0072b2;">            #if</span><span style="color: #0072b2;">n</span><span style="color: #0072b2;">def</span> NDEBUG
+<span class="linenr">36: </span>            check_indices(i,j);
+<span class="linenr">37: </span><span style="color: #0072b2;">            #endif</span>
+<span class="linenr">38: </span>
+<span class="linenr">39: </span>            <span style="color: #009e73; font-style: italic;">// </span><span style="color: #009e73; font-style: italic;">Data stored in row-major.</span>
+<span class="linenr">40: </span>            <span style="color: #0072b2; font-weight: bold;">int</span> <span style="color: #e69f00; font-weight: bold;">k</span> = i*<span style="color: #56b4e9; font-weight: bold;">this</span>-&gt;n + j;
+<span class="linenr">41: </span>
+<span class="linenr">42: </span>            <span style="color: #56b4e9; font-weight: bold;">return</span> <span style="color: #56b4e9; font-weight: bold;">this</span>-&gt;data[k];
+<span class="linenr">43: </span>        }
+<span class="linenr">44: </span>    <span style="color: #56b4e9; font-weight: bold;">protected</span>:
+<span class="linenr">45: </span>        <span style="color: #0072b2; font-weight: bold;">T</span> * <span style="color: #e69f00; font-weight: bold;">data</span>;
+<span class="linenr">46: </span>        <span style="color: #0072b2; font-weight: bold;">int</span> <span style="color: #e69f00; font-weight: bold;">m</span>; <span style="color: #009e73; font-style: italic;">// </span><span style="color: #009e73; font-style: italic;">n_rows</span>
+<span class="linenr">47: </span>        <span style="color: #0072b2; font-weight: bold;">int</span> <span style="color: #e69f00; font-weight: bold;">n</span>; <span style="color: #009e73; font-style: italic;">// </span><span style="color: #009e73; font-style: italic;">n_cols</span>
+<span class="linenr">48: </span>        <span style="color: #0072b2; font-weight: bold;">bool</span> <span style="color: #d55e00;">check_indices</span>(<span style="color: #0072b2; font-weight: bold;">int</span> <span style="color: #e69f00; font-weight: bold;">i</span>, <span style="color: #0072b2; font-weight: bold;">int</span> <span style="color: #e69f00; font-weight: bold;">j</span>) <span style="color: #56b4e9; font-weight: bold;">const</span> {
+<span class="linenr">49: </span>            <span style="color: #56b4e9; font-weight: bold;">if</span> (i &lt; 0 || i &gt;= <span style="color: #56b4e9; font-weight: bold;">this</span>-&gt;m) {
+<span class="linenr">50: </span>                <span style="color: #d55e00; font-weight: bold;">std</span>::cerr &lt;&lt; <span style="color: #848ea9;">"Invalid row index, "</span> &lt;&lt; i &lt;&lt; <span style="color: #848ea9;">".\n"</span>
+<span class="linenr">51: </span>                         &lt;&lt; <span style="color: #848ea9;">"Valid row indices are: 0-"</span> &lt;&lt; (<span style="color: #56b4e9; font-weight: bold;">this</span>-&gt;m-1) &lt;&lt; <span style="color: #848ea9;">".\n"</span>;
+<span class="linenr">52: </span>                exit(1);
+<span class="linenr">53: </span>            }
+<span class="linenr">54: </span>            <span style="color: #56b4e9; font-weight: bold;">if</span> (j &lt; 0 || j &gt;= <span style="color: #56b4e9; font-weight: bold;">this</span>-&gt;n) {
+<span class="linenr">55: </span>                <span style="color: #d55e00; font-weight: bold;">std</span>::cerr &lt;&lt; <span style="color: #848ea9;">"Invalid column index, "</span> &lt;&lt; j &lt;&lt; <span style="color: #848ea9;">".\n"</span>
+<span class="linenr">56: </span>                         &lt;&lt; <span style="color: #848ea9;">"Valid column indices are: 0-"</span> &lt;&lt; (<span style="color: #56b4e9; font-weight: bold;">this</span>-&gt;n-1) &lt;&lt; <span style="color: #848ea9;">".\n"</span>;
+<span class="linenr">57: </span>                exit(1);
+<span class="linenr">58: </span>            }
+<span class="linenr">59: </span>        }
+<span class="linenr">60: </span>    };
+<span class="linenr">61: </span>}
+<span class="linenr">62: </span>
+<span class="linenr">63: </span><span style="color: #0072b2;">#endif</span>
+</pre>
+</div>
+
+<p>
+Example usage (may require <code>g++ -std=c++11 main.cpp</code>):
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span class="linenr"> 1: </span><span style="color: #0072b2;">#include</span> <span style="color: #848ea9;">&lt;iostream&gt;</span>
+<span class="linenr"> 2: </span><span style="color: #0072b2;">#include</span> <span style="color: #848ea9;">"matrix.h"</span>
+<span class="linenr"> 3: </span>
+<span class="linenr"> 4: </span><span style="color: #0072b2; font-weight: bold;">int</span> <span style="color: #d55e00;">main</span>() {
+<span class="linenr"> 5: </span>    <span style="color: #d55e00; font-weight: bold;">mtx</span>::<span style="color: #0072b2; font-weight: bold;">matrix</span>&lt;<span style="color: #0072b2; font-weight: bold;">float</span>&gt;  <span style="color: #e69f00; font-weight: bold;">A</span>(10, 10);
+<span class="linenr"> 6: </span>    <span style="color: #d55e00; font-weight: bold;">mtx</span>::<span style="color: #0072b2; font-weight: bold;">matrix</span>&lt;<span style="color: #0072b2; font-weight: bold;">double</span>&gt; <span style="color: #e69f00; font-weight: bold;">B</span>(10, 12);
+<span class="linenr"> 7: </span>
+<span class="linenr"> 8: </span>    A(0,0) = 3.14;
+<span class="linenr"> 9: </span>    B(2,4) = -2*A(0,0);
+<span class="linenr">10: </span>
+<span class="linenr">11: </span>    <span style="color: #d55e00; font-weight: bold;">std</span>::cout &lt;&lt; A(0,0) &lt;&lt; <span style="color: #848ea9;">"\n"</span>;
+<span class="linenr">12: </span>    <span style="color: #d55e00; font-weight: bold;">std</span>::cout &lt;&lt; B(2,4) &lt;&lt; <span style="color: #848ea9;">"\n"</span>;
+<span class="linenr">13: </span>
+<span class="linenr">14: </span>    <span style="color: #d55e00; font-weight: bold;">mtx</span>::<span style="color: #0072b2; font-weight: bold;">matrix</span>&lt;<span style="color: #0072b2; font-weight: bold;">double</span>&gt; <span style="color: #e69f00; font-weight: bold;">C</span> = B;
+<span class="linenr">15: </span>
+<span class="linenr">16: </span>    <span style="color: #d55e00; font-weight: bold;">std</span>::cout &lt;&lt; C(2,4) &lt;&lt; <span style="color: #848ea9;">"\n"</span>;
+<span class="linenr">17: </span>
+<span class="linenr">18: </span>    C(0,12);
+<span class="linenr">19: </span>
+<span class="linenr">20: </span>    <span style="color: #56b4e9; font-weight: bold;">return</span> 0;
+<span class="linenr">21: </span>}
+</pre>
+</div>
+
+<pre class="example">
+3.14
+-6.28
+-6.28
+Invalid column index, 12.
+Valid column indices are: 0-11.
+</pre>
 </div>
 </div>
+
+<div id="outline-container-orgheadline61" class="outline-3">
+<h3 id="orgheadline61"><span class="section-number-3">7.3</span> Inherited, structured matrix template classes</h3>
+<div class="outline-text-3" id="text-7-3">
 </div>
 </div>
 </div>

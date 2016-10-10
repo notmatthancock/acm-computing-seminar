@@ -15,10 +15,8 @@
 
 * Resources
 ** Programming Language Guides
-   
-+ [[./resources/langs/cpp/][C++ guide]]
++ [[./resources/langs/cpp/][C++ guide]] ([[./resources/langs/cpp/index.pdf][pdf]])
 + [[./resources/langs/fortran/][Fortran guide]]
-  
 ** Programming assignment resources
 + [[./resources/prog/assignment-template.zip][Programming assignment template]] (Read the README!)
 + [[./resources/prog/example-assignment.zip][Example programming assignment and solution]]
