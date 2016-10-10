@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2016-10-10 Mon 16:15 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="viewport" content="width=device-width, initial-scale=1" />
+<title>MAT5939-03 ACM Computing Seminar – Fall 2016</title>
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="Matt" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="css/main.css">
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">MAT5939-03 ACM Computing Seminar – Fall 2016</h1>
+<div id="main">
+
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1">Course Information <a href="./syllabus.html">(syllabus)</a></h2>
+<div class="outline-text-2" id="text-orgheadline1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left"><b>Time &amp; Place:</b></td>
+<td class="org-left">Monday 6:45PM - 8:00PM, LOV 102</td>
+</tr>
+
+<tr>
+<td class="org-left"><b>Instructor:</b></td>
+<td class="org-left">Matt Hancock</td>
+</tr>
+
+<tr>
+<td class="org-left"><b>Office Hours:</b></td>
+<td class="org-left">Tues 12-2, Thurs 2-4, 409 B MCH</td>
+</tr>
+
+<tr>
+<td class="org-left"><b>Email:</b></td>
+<td class="org-left"><a href="mailto:mhancock@math.fsu.edu?subject=MAT5939%20...%20">mhancock@math.fsu.edu</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orgheadline4" class="outline-2">
+<h2 id="orgheadline4">Resources</h2>
+<div class="outline-text-2" id="text-orgheadline4">
+</div><div id="outline-container-orgheadline2" class="outline-3">
+<h3 id="orgheadline2">Programming Language Guides</h3>
+<div class="outline-text-3" id="text-orgheadline2">
+<ul class="org-ul">
+<li><a href="./resources/langs/cpp/">C++ guide</a> (<a href="./resources/langs/cpp/index.pdf">pdf</a>)</li>
+<li><a href="./resources/langs/fortran/">Fortran guide</a> (<a href="./resources/langs/fortran/index.pdf">pdf</a>)</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline3" class="outline-3">
+<h3 id="orgheadline3">Programming assignment resources</h3>
+<div class="outline-text-3" id="text-orgheadline3">
+<ul class="org-ul">
+<li><a href="./resources/prog/assignment-template.zip">Programming assignment template</a> (Read the README!)</li>
+<li><a href="./resources/prog/example-assignment.zip">Example programming assignment and solution</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline5" class="outline-2">
+<h2 id="orgheadline5">Assignments</h2>
+<div class="outline-text-2" id="text-orgheadline5">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-center" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-center">Week</th>
+<th scope="col" class="org-left">Assignment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-center">1 <span class="timestamp-wrapper"><span class="timestamp">&lt;2016-08-29 Mon&gt;</span></span></td>
+<td class="org-left">Install gcc / g++; write and compile "hello world".</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-center">2 <span class="timestamp-wrapper"><span class="timestamp">&lt;2016-09-12 Mon&gt;</span></span></td>
+<td class="org-left">Compute the value of the truncated sum,</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">\(s_N := \sum_{n=1}^N \frac{1}{n^2}\)</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">and the absolute error,</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">\(a_N := \vert{}\frac{\pi^2}{6} - s_N\vert{}\)</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">while \(a_N > 10^{-5}\). For each iteration, print</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">\(N\), \(s_N\), \(a_N\)</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">if \(N\) is a multiple of \(100\).</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-center">3 <span class="timestamp-wrapper"><span class="timestamp">&lt;2016-09-19 Mon&gt;</span></span></td>
+<td class="org-left">The files, <a href="./resources/data/x.txt">x.txt</a>, and <a href="./resources/data/y.txt">y.txt</a> contain 101 sampled</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">points. The x values are not sampled equidistantly.</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">Write functions to read both files, and approximate</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">the definite integral of the sampled function over</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">the values given, using the <a href="https://en.wikipedia.org/wiki/Trapezoidal_rule">trapezoidal rule</a>.</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">Modularize your code, i.e., use header and</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">implementation files</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-center">4 <span class="timestamp-wrapper"><span class="timestamp">&lt;2016-09-26 Mon&gt;</span></span></td>
+<td class="org-left">Add a member function, <code>norm</code>, to the vector class</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">discussed in the C++ guide. The function should</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">have the signature:</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left"><code>double norm(double p);</code></td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">and should implement the <a href="https://en.wikipedia.org/wiki/Norm_(mathematics)#p-norm">vector p-norm</a>. The function</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">would be then called like:</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left"><code>x.norm(1.53);</code></td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">where <code>x</code> is a vector object. Write a test script</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">that loops through values of <code>p=1, 1.1, ..., 1.9, 2</code></td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">and for each value of <code>p</code>, prints the average p-norm</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">of 100 vectors of length 10 whose components are</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">uniform random on [0,1] (see the C++ guide section</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">on generating random numbers).</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-center">5 <span class="timestamp-wrapper"><span class="timestamp">&lt;2016-10-03 Mon&gt;</span></span></td>
+<td class="org-left">Extend the <code>vector</code> class given in the guide, by</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">adding functions <code>dot</code>, <code>operator+</code>, <code>operator-</code>,</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">and <code>operator==</code>. Implement these as <code>friend</code></td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">functions.</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left"><code>dot</code> should implement the inner product between</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">two vectors, <code>x</code> and <code>y</code>, while <code>operator+</code> and</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left"><code>operator-</code> should implement component-wise addition</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">and subtraction.</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">The behavior of <code>operator==</code> should be</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">such that <code>x==y</code> returns true for vectors if</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left"><code>abs(x[i]-y[i]) &lt; 1e-10</code></td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">for all the components of the vectors, <code>x</code> and <code>y</code>.</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-center">6 <span class="timestamp-wrapper"><span class="timestamp">&lt;2016-10-10 Mon&gt;</span></span></td>
+<td class="org-left">Write a <code>squarematrix</code> class that inherits from the</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left"><code>matrix</code> template class. The constructor should only</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">accept a single argument to create the matrix, rather</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">than two like the normal <code>matrix</code> class.</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">Add a member function, unique to the <code>squarematrix</code></td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">class, that computes the matrix determinant</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">recursively using the <a href="https://en.wikipedia.org/wiki/Laplace_expansion">Laplace expansion</a>. Test your</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">algorithm on square matrices, \(A \in R^{n \times n}\),</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">where \(A_{ij} = ni + j\), where \(i=0,\ldots,n-1\) and</td>
+</tr>
+
+<tr>
+<td class="org-center">&#xa0;</td>
+<td class="org-left">\(j=0,\ldots,n-1\) for \(n=2,3,\ldots,100\).</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1511,23 +1511,159 @@ which prints
 
 ** Templating: a matrix class
 
-Template classes allow you to generalize your classes. Below is a bare-bones 
+Template classes allow you to generalize your classes. We will introduce the 
+concept of templating by creating a templated matrix class. Below is a bare-bones 
 template class for a matrix type. Note that the implementations for templates 
 must all go in the header file; they cannot be split into seperate 
 implementation files.
 
 #+include: ./src/matrix/init/matrix.h src cpp -n
 
-Example usage (may require =g++ -std=c++11 main.cpp=):
+Observe how the class declaration begins with the statement, =template<class T>=.
+When new instances of the class, =matrix=, are instantiated, the type, =T=, must 
+be specified. Notice that the private variable now holds a pointer to type, =T=, 
+and the element accessor returns a reference to to type, =T=. Compare this to 
+our previous =vector= class where each vector instance held type, =double=.
+
+Also notice that the copy constructor uses something called an argument list. 
+We've used it to call the initial constructor before proceeding with the copying
+of components from the =matrix= instance, =src=. To use this type of syntax (i.e., 
+initializer lists) you may have to compiel with the flag ~-std=c++11~, e.g.,
+=g++ -std=c++11 main.cpp=.
+
+Finally, observe that rather the keyword, =private=, we have used the keyword 
+=protected=. This will allow inherited classes to use the private member variables 
+and functions. We will talk about inheritance later, but for now, it essentially
+the same as marking these things as =private=.
+
+Here is some example usage:
 
 #+include: ./src/matrix/init/main.cpp src cpp -n
+
+Outputs:
 
 : 3.14
 : -6.28
 : -6.28
+: 0
 : Invalid column index, 12.
 : Valid column indices are: 0-11.
 
-** Inherited, structured matrix template classes
+*** Overloading =operator*=
+
+Let us overload =operator*= to implement matrix multiplication. It would also
+make sense to overload =operator*= with other call signatures to implement scalar 
+multiplication or vector broadcasting, but for now we will just stick with 
+matrix multiplication.
+
+Add the following two non-friend, non-member functions. They should be defined 
+just after the class definition, but they should remain in the body of namespace,
+=mtx=.
+
+#+include: ./src/matrix/operator-star/matrix.h :lines "68-97" src cpp -n
+
+Note that because we've chosen to implement these functions as non-member 
+and non-friend, we must prefix the function definitions with 
+=template<class T>=. This isn't necessary when the functions were declared 
+inside of the class body (i.e., member or friend functions) since the class 
+declaration already begins with =template<class T>=.
+
+We've added a simple matrix multiplcation function above and a debugger 
+functions to ensure that if two matrices are multiplied, that it is well-
+defined to do so. Otherwise, we print an error message and abort, as with 
+the element accessor function. We've also wrapped the debugger function 
+with compiler macros, so that it can be left out if we choose to do so.
+
+Here is some example usage:
+
+#+include: ./src/matrix/operator-star/main.cpp src cpp -n
+
+Output:
+
+: 2, -2, 6
+: 0, 0, 0
+: Size mismatch for matrix multiplication.
+: Left matrix has 3 cols, but
+: right matrix has 2 rows.
+
+** Inheritance
+
+Often classes have a natural, hierarchical structure.
+For example, a row or column vector could be seen as natural
+"subclass" of the matrix class. So, supposing we had only 
+written the matrix class, it would be nice if we could write 
+a row or column vector class that inherited many of the properties 
+of the parent matrix class, but with additional properties, 
+unique to the vector classes. This is what inheritance may allow 
+us to do.
+
+Let's create another couple of vector classes, called =rowvec= and
+=colvec= in a file called =vectors.h=:
+
+#+include: ./src/inheritance/init/vectors.h src cpp -n
+
+We have defined two classes in the =vec= namespace, =rowvec= and =colvec=.
+Notice that the declaration of the =rowvec= class is slightly augmented,
+
+#+begin_src cpp -n
+class rowvec : public mtx::matrix<T> {
+// ...
+};
+#+end_src
+
+This says that the =rowvec= class inherits all the methods and
+variables defined for the =matrix= class. The keyword =protected=, 
+rather than =private= in the =matrix= class allows derived classes 
+access to these variables and functions. The keyword, =public=, in 
+the class declaration above signals that every =rowvec<T>= instance 
+may be cast as a =matrix<T>= instance. This means that functions (such
+as our =operator*= in the =mtx= namespace) which expect =matrix= types
+in argument, can also now accept =rowvec= types: =rowvec= instances 
+will be cast as =matrix= instances when possible.
+
+
+Next, observe that the constructor simply calls the parent class 
+constructor, with an argument of =1= for the number of rows. We also 
+add a =len()= function which returns `n_cols()`, calling the parent 
+class function. =len()= is more natural for a vector class.
+
+Finally, =operator()= is overwritten so that only a single argument is 
+necessary. In the body, we simply call the parent class method. We also 
+add =operator[]=, which duplicates the functionality of =operator()=.
+
+Notice that any other methods that exist for the parent class, =matrix=, 
+have been inherited. For example, it is not necessary to write a new 
+destructor function since this already exists for the parent and the 
+functionality is the same.
+
+In the same, =vec=, namespace we have declared a =colvec= class which 
+is analogous to the =rowvec= class except with the dimensions swapped.
+
+Let's check out an example:
+
+#+include: ./src/inheritance/init/main.cpp src cpp -n
+
+This prints:
+
+: 1, 1 ... -30
+
+So =operator*= works by casting both the =rowvec= and =colvec= arguments 
+as =matrix= types. The dimensions of these matrices match for matrix 
+multiplication and the resulting 1x1 matrix is returned. Let's overwrite
+this behavior to return a scalar instead of a matrix when the operation,
+=rowvec*colvec= is performed. Add the inside the =vec= namespace but outside 
+the class declarations:
+
+#+include: ./src/inheritance/operator-star/vectors.h :lines "42-54" src cpp -n
+
+Observe that we can call the =operator*= function in the =mtx= namespace,
+just like any other function. Now, the product between a =rowvec= and a =colvec=
+is more natural:
+
+#+include: ./src/inheritance/operator-star/main.cpp src cpp -n
+
+Output:
+
+: -30
 
 #+html: </div>

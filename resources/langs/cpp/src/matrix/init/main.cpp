@@ -12,8 +12,10 @@ int main() {
     std::cout << B(2,4) << "\n";
 
     mtx::matrix<double> C = B;
+    mtx::matrix<bool> D(3,3);
 
     std::cout << C(2,4) << "\n";
+    std::cout << D(0,0) << "\n";
 
     C(0,12);
 

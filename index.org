@@ -16,66 +16,79 @@
 * Resources
 ** Programming Language Guides
 + [[./resources/langs/cpp/][C++ guide]] ([[./resources/langs/cpp/index.pdf][pdf]])
-+ [[./resources/langs/fortran/][Fortran guide]]
++ [[./resources/langs/fortran/][Fortran guide]] ([[./resources/langs/fortran/index.pdf][pdf]])
 ** Programming assignment resources
 + [[./resources/prog/assignment-template.zip][Programming assignment template]] (Read the README!)
 + [[./resources/prog/example-assignment.zip][Example programming assignment and solution]]
 * Assignments
 
-|--------------------+------------------------------------------------------|
-| Week               | Assignment                                           |
-| <c>                |                                                      |
-|--------------------+------------------------------------------------------|
-| 1 <2016-08-29 Mon> | Install gcc / g++; write and compile "hello world".  |
-|--------------------+------------------------------------------------------|
-| 2 <2016-09-12 Mon> | Compute the value of the truncated sum,              |
-|                    | $s_N := \sum_{n=1}^N \frac{1}{n^2}$                  |
-|                    | and the absolute error,                              |
-|                    | $a_N := \vert{}\frac{\pi^2}{6} - s_N\vert{}$         |
-|                    | while $a_N > 10^{-5}$. For each iteration, print     |
-|                    | $N$, $s_N$, $a_N$                                    |
-|                    | if $N$ is a multiple of $100$.                       |
-|--------------------+------------------------------------------------------|
-| 3 <2016-09-19 Mon> | The files, [[./resources/data/x.txt][x.txt]], and [[./resources/data/y.txt][y.txt]] contain 101 sampled      |
-|                    | points. The x values are not sampled equidistantly.  |
-|                    | Write functions to read both files, and approximate  |
-|                    | the definite integral of the sampled function over   |
-|                    | the values given, using the [[https://en.wikipedia.org/wiki/Trapezoidal_rule][trapezoidal rule]].        |
-|                    | Modularize your code, i.e., use header and           |
-|                    | implementation files                                 |
-|--------------------+------------------------------------------------------|
-| 4 <2016-09-26 Mon> | Add a member function, =norm=, to the vector class   |
-|                    | discussed in the C++ guide. The function should      |
-|                    | have the signature:                                  |
-|                    |                                                      |
-|                    | ~double norm(double p);~                             |
-|                    |                                                      |
-|                    | and should implement the [[https://en.wikipedia.org/wiki/Norm_(mathematics)#p-norm][vector p-norm]]. The function |
-|                    | would be then called like:                           |
-|                    |                                                      |
-|                    | ~x.norm(1.53);~                                      |
-|                    |                                                      |
-|                    | where ~x~ is a vector object. Write a test script    |
-|                    | that loops through values of ~p=1, 1.1, ..., 1.9, 2~ |
-|                    | and for each value of ~p~, prints the average p-norm |
-|                    | of 100 vectors of length 10 whose components are     |
-|                    | uniform random on [0,1] (see the C++ guide section   |
-|                    | on generating random numbers).                       |
-|--------------------+------------------------------------------------------|
-| 5 <2016-10-03 Mon> | Extend the =vector= class given in the guide, by     |
-|                    | adding functions =dot=, =operator+=, =operator-=,    |
-|                    | and ~operator==~. Implement these as =friend=        |
-|                    | functions.                                           |
-|                    |                                                      |
-|                    | ~dot~ should implement the inner product between     |
-|                    | two vectors, ~x~ and ~y~, while ~operator+~ and      |
-|                    | ~operator-~ should implement component-wise addition |
-|                    | and subtraction.                                     |
-|                    |                                                      |
-|                    | The behavior of ~operator==~ should be               |
-|                    | such that ~x==y~ returns true for vectors if         |
-|                    | =abs(x[i]-y[i]) < 1e-10=                             |
-|                    | for all the components of the vectors, =x= and =y=.  |
+|--------------------+-------------------------------------------------------|
+| Week               | Assignment                                            |
+| <c>                |                                                       |
+|--------------------+-------------------------------------------------------|
+| 1 <2016-08-29 Mon> | Install gcc / g++; write and compile "hello world".   |
+|--------------------+-------------------------------------------------------|
+| 2 <2016-09-12 Mon> | Compute the value of the truncated sum,               |
+|                    | $s_N := \sum_{n=1}^N \frac{1}{n^2}$                   |
+|                    | and the absolute error,                               |
+|                    | $a_N := \vert{}\frac{\pi^2}{6} - s_N\vert{}$          |
+|                    | while $a_N > 10^{-5}$. For each iteration, print      |
+|                    | $N$, $s_N$, $a_N$                                     |
+|                    | if $N$ is a multiple of $100$.                        |
+|--------------------+-------------------------------------------------------|
+| 3 <2016-09-19 Mon> | The files, [[./resources/data/x.txt][x.txt]], and [[./resources/data/y.txt][y.txt]] contain 101 sampled       |
+|                    | points. The x values are not sampled equidistantly.   |
+|                    | Write functions to read both files, and approximate   |
+|                    | the definite integral of the sampled function over    |
+|                    | the values given, using the [[https://en.wikipedia.org/wiki/Trapezoidal_rule][trapezoidal rule]].         |
+|                    | Modularize your code, i.e., use header and            |
+|                    | implementation files                                  |
+|--------------------+-------------------------------------------------------|
+| 4 <2016-09-26 Mon> | Add a member function, =norm=, to the vector class    |
+|                    | discussed in the C++ guide. The function should       |
+|                    | have the signature:                                   |
+|                    |                                                       |
+|                    | ~double norm(double p);~                              |
+|                    |                                                       |
+|                    | and should implement the [[https://en.wikipedia.org/wiki/Norm_(mathematics)#p-norm][vector p-norm]]. The function  |
+|                    | would be then called like:                            |
+|                    |                                                       |
+|                    | ~x.norm(1.53);~                                       |
+|                    |                                                       |
+|                    | where ~x~ is a vector object. Write a test script     |
+|                    | that loops through values of ~p=1, 1.1, ..., 1.9, 2~  |
+|                    | and for each value of ~p~, prints the average p-norm  |
+|                    | of 100 vectors of length 10 whose components are      |
+|                    | uniform random on [0,1] (see the C++ guide section    |
+|                    | on generating random numbers).                        |
+|--------------------+-------------------------------------------------------|
+| 5 <2016-10-03 Mon> | Extend the =vector= class given in the guide, by      |
+|                    | adding functions =dot=, =operator+=, =operator-=,     |
+|                    | and ~operator==~. Implement these as =friend=         |
+|                    | functions.                                            |
+|                    |                                                       |
+|                    | ~dot~ should implement the inner product between      |
+|                    | two vectors, ~x~ and ~y~, while ~operator+~ and       |
+|                    | ~operator-~ should implement component-wise addition  |
+|                    | and subtraction.                                      |
+|                    |                                                       |
+|                    | The behavior of ~operator==~ should be                |
+|                    | such that ~x==y~ returns true for vectors if          |
+|                    | =abs(x[i]-y[i]) < 1e-10=                              |
+|                    | for all the components of the vectors, =x= and =y=.   |
+|--------------------+-------------------------------------------------------|
+| 6 <2016-10-10 Mon> | Write a =squarematrix= class that inherits from the   |
+|                    | ~matrix~ template class. The constructor should only  |
+|                    | accept a single argument to create the matrix, rather |
+|                    | than two like the normal ~matrix~ class.              |
+|                    |                                                       |
+|                    | Add a member function, unique to the =squarematrix=   |
+|                    | class, that computes the matrix determinant           |
+|                    | recursively using the [[https://en.wikipedia.org/wiki/Laplace_expansion][Laplace expansion]]. Test your    |
+|                    | algorithm on square matrices, $A \in R^{n \times n}$, |
+|                    | where $A_{ij} = ni + j$, where $i=0,\ldots,n-1$ and   |
+|                    | $j=0,\ldots,n-1$ for $n=2,3,\ldots,100$.              |
+|--------------------+-------------------------------------------------------|
 
 #+begin_comment
 |--------------------+--------------------------------------------------------|
