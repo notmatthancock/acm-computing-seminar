@@ -85,8 +85,7 @@
 |                    | recursively using the [[https://en.wikipedia.org/wiki/Laplace_expansion][Laplace expansion]]. Test your                                                      |
 |                    | algorithm on square matrices, $A \in R^{n \times n}$,                                                   |
 |                    | where $A_{ij} = \begin{cases} -2 & i=j \\ 1 & i=j+1\text{ or }i=j-1 \\ 0 & \text{otherwise}\end{cases}$ |
-|                    | for $n=2,3,\ldots,100$, and plot $\text{det}(A)$ as                                                     |
-|                    | a function of $n$.                                                                                      |
+|                    | for $n=2,3,\ldots,10$.                                                                                  |
 |                    |                                                                                                         |
 |                    | HINT: Consider writing a helper function that returns                                                   |
 |                    | a desired [[https://en.wikipedia.org/wiki/Minor_(linear_algebra)][minor]] of a matrix.                                                                            |
