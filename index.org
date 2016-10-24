@@ -77,7 +77,7 @@
 |                    | =abs(x[i]-y[i]) < 1e-10=                              |
 |                    | for all the components of the vectors, =x= and =y=.   |
 |--------------------+-------------------------------------------------------|
-| 6 <2016-10-10 Mon> | Write a =squarematrix= class that inherits from the   |
+| 7 <2016-10-17 Mon> | Write a =squarematrix= class that inherits from the   |
 |                    | ~matrix~ template class. The constructor should only  |
 |                    | accept a single argument to create the matrix, rather |
 |                    | than two like the normal ~matrix~ class.              |
