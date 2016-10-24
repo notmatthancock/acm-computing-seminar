@@ -7,12 +7,10 @@
 #+html: <div id="main">
 
 * Course Information [[./syllabus.html][(syllabus)]]
-
 | *Time & Place:* | Monday 6:45PM - 8:00PM, LOV 102 |
 | *Instructor:*   | Matt Hancock                    |
 | *Office Hours:* | Tues 12-2, Thurs 2-4, 409 B MCH |
 | *Email:*        | [[mailto:mhancock@math.fsu.edu?subject=MAT5939 ... ][mhancock@math.fsu.edu]]           |
-
 * Resources
 ** Programming Language Guides
 + [[./resources/langs/cpp/][C++ guide]] ([[./resources/langs/cpp/index.pdf][pdf]])
@@ -89,28 +87,6 @@
 |                    | where $A_{ij} = ni + j$, where $i=0,\ldots,n-1$ and   |
 |                    | $j=0,\ldots,n-1$ for $n=2,3,\ldots,100$.              |
 |--------------------+-------------------------------------------------------|
-
-#+begin_comment
-|--------------------+--------------------------------------------------------|
-| 4 <2016-09-26 Mon> | Write a member function of the =vector= class          |
-|                    | discussed in the C++ guide that has the declaration:   |
-|                    |                                                        |
-|                    | =vector operator*(double scalar);=                     |
-|                    |                                                        |
-|                    | This function would be used like, =x*1.5=              |
-|                    | where =x= is a vector instance, and the operation      |
-|                    | should result in scalar multiplication. Note that this |
-|                    | implementation would not allow for =1.5*x=.            |
-|                    |                                                        |
-|                    | Also write a non-member function, =dot=, that          |
-|                    | the vector inner product. It should have the           |
-|                    | declaration:                                           |
-|                    |                                                        |
-|                    | =vector dot(vector & x, vector & y);=                  |
-|                    |                                                        |
-|                    | Show that your =dot= function satisfies [[https://en.wikipedia.org/wiki/Inner_product_space#Definition][the properties]] |
-|                    | of an inner product using a few examples.              |
-#+end_comment
 
 
 #+html: </div>
